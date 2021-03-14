@@ -3,34 +3,23 @@
 
 alias c="clear"
 alias r="exec zsh"
-alias q="exit"
-alias :q="exit"
+alias {:q,q}="exit"
 alias so="source"
+
+# ALias for dotbare
+alias dtb=dotbare
+alias dtba=dotbare fadd
+alias dtbe=dotbare fedit
+alias dtbl=dotbare flog
 
 # Programming Lang
 alias py="python"
-
-# Games
-alias tetris="autoload -Uz tetriscurses; tetriscurses"
-
-# File Manager
-alias fm=nnn
-alias fmq=qnnn
-alias fmp=pnnn
-alias gfm=nemo
 
 # Use exa instead of ls
 alias ls="exa --icons --group-directories-first"
 alias lsa="exa --icons --group-directories-first -a"
 alias ll="exa --icons --group-directories-first -lgh"
 alias lla="exa --icons --group-directories-first -algh"
-
-# Neovim Alias
-alias {e,vim,vi}="nvim"
-alias {envim,evim,ev}="nvim ~/.config/nvim/init.lua"
-
-# Kitty Terminal
-alias icat="kitty +kitten icat"
 
 # User Trash Instead of rm 
 # alias rm='echo "Use tr please"'
@@ -41,6 +30,22 @@ alias trs="trash-restore"
 
 # FZF alias
 alias fzfp="fzf --reverse --preview 'bat --style=numbers --color=always {}'"
+
+# Neovim Alias
+alias {e,vim,vi}="nvim"
+alias {envim,evim,ev}="nvim ~/.config/nvim/init.lua"
+
+# File Manager
+alias fm=nnn
+alias fmq=qnnn
+alias fmp=pnnn
+alias gfm=nemo
+
+# Kitty Terminal
+alias icat="kitty +kitten icat"
+
+# Games
+alias tetris="autoload -Uz tetriscurses; tetriscurses"
 
 # cpupower
 alias performance="sudo cpupower frequency-set -g performance"
