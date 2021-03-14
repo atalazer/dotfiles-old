@@ -7,10 +7,10 @@ alias {:q,q}="exit"
 alias so="source"
 
 # ALias for dotbare
-alias dtb=dotbare
-alias dtba=dotbare fadd
-alias dtbe=dotbare fedit
-alias dtbl=dotbare flog
+alias dtb="dotbare"
+alias dtba="dotbare fadd"
+alias dtbe="dotbare fedit"
+alias dtbl="dotbare flog"
 
 # Programming Lang
 alias py="python"
