@@ -1,0 +1,13 @@
+!! Apps
+#include "/home/atalariq/.Xresources.d/urxvt"
+#include "/home/atalariq/.Xresources.d/xterm"
+
+!! Colorscheme
+#include "/home/atalariq/.Xresources.d/color/ayu_dark"
+! #include "/home/atalariq/.Xresources.d/color/owl4ce"
+#include "/home/atalariq/.Xresources.d/color/wal"
+
+!! Settings
+#include "/home/atalariq/.Xresources.d/cursor"
+#include "/home/atalariq/.Xresources.d/font"
+

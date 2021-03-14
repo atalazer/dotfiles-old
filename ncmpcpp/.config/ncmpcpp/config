@@ -1,0 +1,68 @@
+# mpd [[[
+mpd_music_dir = "~/music"
+mpd_host = "localhost"
+mpd_port = "6600"
+# ]]]
+
+#global [[[
+colors_enabled = "yes"
+user_interface = "classic"
+main_window_color = "default"
+follow_now_playing_lyrics = "yes"
+autocenter_mode = "yes"
+centered_cursor = "yes"
+
+mouse_support = "yes"
+mouse_list_scroll_whole_page = "yes"
+cyclic_scrolling = "yes"
+lines_scrolled = "1"
+
+enable_window_title = "yes"
+external_editor = "nvim"
+execute_on_song_change = "~/.ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
+# ]]]
+
+#visualizer [[[
+visualizer_data_source = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_in_stereo = "no"
+visualizer_fps = 60
+visualizer_type = "wave"
+visualizer_look = "●┃"
+visualizer_color = "red,magenta,cyan,green,yellow"
+# ]]]
+
+#header [[[
+header_visibility = "no"
+header_window_color = "default"
+volume_color = "default"
+state_line_color = "black"
+# ]]]
+
+#statusbar [[[
+progressbar_look = "━━━"
+progressbar_color = "black"
+progressbar_elapsed_color = "blue"
+
+statusbar_visibility = "no"
+statusbar_color = "default"
+song_status_format = "{{%a{ - %t}}|{ - %f}{ - %b{ (%y)}}}"
+# ]]]
+
+#playlist [[[
+playlist_display_mode = "columns"
+playlist_editor_display_mode = "columns"
+song_columns_list_format = "(10)[8]{ar} (20)[5]{t|f:Song} (5)[8]{l:Time} "
+song_list_format = "{{$8%a $4 ● $8%t}|{$8%f}}{$4%l}"
+
+now_playing_prefix = "$b$5"
+now_playing_suffix = "$/b$9"
+# ]]]
+
+#library [[[
+browser_display_mode = "columns"
+search_engine_display_mode = "columns"
+song_library_format = "{{$8%t $4 ● $8%a}|{$8%f}}{$4$R%l}"
+empty_tag_color = 8
+# ]]]
+

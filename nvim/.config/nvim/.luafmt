@@ -1,0 +1,37 @@
+column_limit: 80
+use_tab: true
+tab_width: 4
+indent_width: 4
+continuation_indent_width: 4
+
+break_after_operator: false
+single_quote_to_double_quote: true
+double_quote_to_single_quote: false
+
+keep_simple_control_block_one_line: false
+keep_simple_function_one_line: false
+
+align_parameter: true
+break_before_functiondef_rp: false
+break_after_functiondef_lp: true
+spaces_inside_functiondef_parens: true
+
+align_args: true
+break_before_functioncall_rp: false
+break_after_functioncall_lp: true
+chop_down_parameter: false
+spaces_inside_functioncall_parens: false
+spaces_before_call: 0
+line_breaks_after_function_body: 0
+
+align_table_field: false
+break_before_table_rb: false
+break_after_table_lb: true
+chop_down_table: false
+chop_down_kv_table: true
+column_table_limit: column_limit
+table_sep: ","
+extra_sep_at_table_end: true
+spaces_inside_table_braces: true
+spaces_around_equals_in_field: true
+
