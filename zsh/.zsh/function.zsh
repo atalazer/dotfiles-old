@@ -2,13 +2,11 @@
 # Function Section
 # ----------------------
 fa(){
-    alias | grep $1
+    alias | rg --smart-case $1 
 }
 
 # Weather Check
 weather(){
-    $1=1
-    $2=Boyolali
-    curl wttr.in/$2\?$1
+    curl wttr.in/${2:-Boyolali}\?${1:-1}
 }
 
