@@ -28,7 +28,6 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-setopt promptsubst
 zinit wait lucid for \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
@@ -44,8 +43,6 @@ zinit wait lucid for \
     OMZP::systemd \
   atload"unalias grv" \
     OMZP::git \
-    # OMZP::tmux \
-    # OMZP::ssh-agent \
 
 zinit wait'0' lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
@@ -55,12 +52,12 @@ zinit wait'0' lucid for \
  atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
 
-zinit ice lucid atload'zsh-startify'
+zinit ice atload'zsh-startify'
 zinit light zdharma/zsh-startify
 zstyle ":plugin:zsh-startify:shellutils" size 5
 zstyle ":plugin:zsh-startify:vim" size 5
 
-zinit ice wait"0" lucid
+zinit ice wait lucid
 zinit light zdharma/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
 zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"
@@ -69,33 +66,21 @@ zstyle ":plugin:history-search-multi-word" active "underline"
 zstyle ":plugin:history-search-multi-word" check-paths "yes"
 zstyle ":plugin:history-search-multi-word" clear-on-cancel "no"
 
-# zinit light Aloxaf/fzf-tab
-# zstyle ':completion:*:git-checkout:*' sort false
-# zstyle ':completion:*:descriptions' format '[%d]'
-# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# zstyle ':fzf-tab:*' switch-group ',' '.'
-
 zinit ice wait lucid
 zinit light kazhala/dotbare
 export DOTBARE_DIR="$HOME/.dotfiles/.git"
 export DOTBARE_TREE="$HOME/.dotfiles"
-# zinit ice wait lucid
-# zinit light unixorn/fzf-zsh-plugin
-# zinit ice wait lucid
-# zinit load 'wfxr/forgit'
-
-# zinit light-mode wait'0' lucid for \
-#     b4b4r07/emoji-cli \
-#     pschmitt/emoji-fzf.zsh
-# EMOJI_FZF_BIN_PATH="emoji-fzf"
-# EMOJI_FZF_BINDKEY="^k"
-# EMOJI_FZF_FUZZY_FINDER=fzf
-# EMOJI_FZF_FUZZY_FINDER_ARGS=
-# EMOJI_FZF_CUSTOM_ALIASES=
-# EMOJI_FZF_PREPEND_EMOJIS=1
-# EMOJI_FZF_NO_ALIAS=
-# EMOJI_FZF_CLIPBOARD="xsel -b"
+export DOTBARE_BACKUP="${XDG_DATA_HOME:-$HOME/.local/share}/dotbare"
+export DOTBARE_KEY="
+  --bind=alt-a:toggle-all
+  --bind=alt-j:jump
+  --bind=alt-0:top
+  --bind=alt-s:toggle-sort
+  --bind=alt-t:toggle-preview
+"
+# export DOTBARE_FZF_DEFAULT_OPTS=""
+# export DOTBARE_PREVIEW=""
+# export DOTBARE_DIFF_PAGER="delta --diff-so-fancy --line-numbers"
 
 zinit ice wait"0c" lucid reset \
     atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
@@ -106,20 +91,15 @@ zinit ice wait"0c" lucid reset \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zinit light trapd00r/LS_COLORS
 
-# zinit ice wait"1" lucid
-# zinit load zdharma/zui
-# zinit wait lucid for zinit-zsh/zinit-console
-# zinit load zpm-zsh/tmux
-zinit ice wait'0' lucid
+zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
 # Initialize Themes
-# Load the pure theme, with zsh-async library that's bundled with it.
-zinit ice pick"async.zsh" src"pure.zsh"
-zinit light sindresorhus/pure
 
-# zinit ice wait'!' lucid atload'true; _p9k_precmd' nocd
-# zinit light romkatv/powerlevel10k
+# zinit ice pick"async.zsh" src"pure.zsh"
+# zinit light sindresorhus/pure
+
+zinit light romkatv/powerlevel10k
 
 # ------------------
 # Initialize User Configs
@@ -146,8 +126,6 @@ source_path ${Z_DIR}/function.zsh
 # Start Section
 # ----------------------
 eval "$(zoxide init zsh)"
-
-stty -ixon
 
 # -----------------
 # Zsh configuration

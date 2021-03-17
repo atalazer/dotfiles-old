@@ -39,8 +39,8 @@ paru -S xdg-user-dirs xorg-xrdb zsh tmux mpd mpc ncmpcpp bat htop neovim-nightly
 Clone This Repo:
 ```bash
 cd ~
-git clone https://github.com/atalazer/dotfiles.git
-cd dotfiles
+git clone https://github.com/atalazer/dotfiles.git .dotfiles
+cd .dotfiles
 ```
 Add Symlinks with stow:
 ```bash

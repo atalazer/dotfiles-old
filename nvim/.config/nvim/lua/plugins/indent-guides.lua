@@ -6,19 +6,20 @@ require('indent_guides').setup({
     indent_guide_size = 2;
     indent_start_level = 1;
     indent_space_guides = true;
-    indent_tab_guides = false;
+    indent_tab_guides = true;
     indent_soft_pattern = '\\s';
     exclude_filetypes = {
         'help', 'startuptime',
         'dashboard','dashpreview', 'startify',
         'NvimTree','vista','sagahover',
+        'packer',
     };
     even_colors = {
-        fg = '#1a2129', 
+        fg = '#1a2129',
         bg = '#14191F',
     };
-    odd_colors = { 
+    odd_colors = {
         fg = '#14191F',
-        bg = '#1a2129', 
+        bg = '#1a2129',
     };
 })

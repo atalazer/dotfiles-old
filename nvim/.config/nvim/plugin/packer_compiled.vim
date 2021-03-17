@@ -49,39 +49,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/colorbuddy.vim"
   },
-  ["completion-buffers"] = {
-    after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-buffers/after/plugin/completion_buffers.vim" },
-    load_after = {
-      ["completion-nvim"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-buffers"
-  },
-  ["completion-nvim"] = {
-    after = { "completion-tags", "completion-buffers", "completion-tmux" },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-nvim"
-  },
-  ["completion-tags"] = {
-    after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-tags/after/plugin/completion_tags.vim" },
-    load_after = {
-      ["completion-nvim"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-tags"
-  },
-  ["completion-tmux"] = {
-    after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-tmux/after/plugin/completion_tmux.vim" },
-    load_after = {
-      ["completion-nvim"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/completion-tmux"
-  },
   ["editorconfig-vim"] = {
     loaded = false,
     needs_bufread = false,
@@ -111,11 +78,6 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/hop.nvim"
-  },
-  ["indent-blankline.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim"
   },
   ["indent-guides.nvim"] = {
     loaded = false,
@@ -324,7 +286,7 @@ vim.cmd [[command! -nargs=* -range -bang -complete=file Sayonara lua require("pa
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'goyo.vim', 'vim-markdown', 'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown', 'markdown-preview.nvim', 'goyo.vim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType text ++once lua require("packer.load")({'goyo.vim'}, { ft = "text" }, _G.packer_plugins)]]
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

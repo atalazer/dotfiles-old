@@ -62,6 +62,8 @@ vnoremap{"<", "<gv"}
 vnoremap{">", ">gv"}
 
 -- ===================================== Workspace
+
+-- Split
 nnoremap{"<Leader>sd", ":vsplit<CR>"}
 nnoremap{"<Leader>ss", ":split<CR>"}
 
@@ -78,5 +80,9 @@ nnoremap{"<leader>s", "<C-W>j"}
 nnoremap{"<leader>d", "<C-W>l"}
 
 -- ===================================== Function
+-- Vim Session
+map{"<F2>", ":mksession! ~/.config/nvim/.last_session<cr>"}
+map{"<F3>", ":source ~/.config/nvim/.last_session<cr>"}
 nnoremap{"<F4>", "<cmd>!xdg-open %", { silent = true }}
+map{"<F8>", ":set autochdir! autochdir?<CR>"}
 

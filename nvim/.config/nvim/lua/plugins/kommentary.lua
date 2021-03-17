@@ -18,7 +18,7 @@ lang("rust",{
     multi_line_comment_strings = { "/*", "*/" },
 })
 
-lang({ "sh", "zsh", "bash", "dosini" },{
+lang({ "sh", "zsh", "bash", "dosini", "desktop" },{
     single_line_comment_string = "#",
 })
 
@@ -29,7 +29,7 @@ lang("xdefaults",{
 
 -- kommentary
 vim.g.kommentary_create_default_mappings = false
-nmap{ "//", "<Plug>kommentary_line_default", {}}
-vmap{ "//", "<Plug>kommentary_visual_default", {}}
-nmap{ "<leader>//", "<Plug>kommentary_motion_default", {}}
+nmap{ "//", "<Plug>kommentary_line_default", {silent = true}}
+vmap{ "//", "<Plug>kommentary_visual_default", {silent = true}}
+nmap{ "<leader>//", "<Plug>kommentary_motion_default", {silent = true}}
 
