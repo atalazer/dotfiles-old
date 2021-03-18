@@ -128,7 +128,67 @@ require(string.format("%s.%s", P.appearance.notification, RC.appearance.notif_st
 
 -- Titlebars
 if RC.settings.nice_enabled == true then
-    require(P.module.nice)()
+    nice = require(P.module.nice);
+    nice({
+        titlebar_height = 24,
+        titlebar_radius = 12,
+        titlebar_padding_right = 3,
+        titlebar_padding_left = 3,
+        titlebar_font = RC.appearance.font,
+        titlebar_color = beautiful.border_normal,
+        titlebar_items = {
+            left = {"close", "minimize", "maximize"},
+            middle = "title",
+            right = {} or {"sticky", "ontop", "floating"},
+        },
+        no_titlebar_maximized = false,
+
+        close_color    = "#ee4266",
+        minimize_color = "#ffb400",
+        maximize_color = "#4CBB17",
+        floating_color = "#f6a2ed",
+        ontop_color    = "#f6a2ed",
+        sticky_color   = "#f6a2ed",
+
+        button_size = 12,
+        button_margin_horizontal = 2,
+        button_margin_vertical = 0,
+        button_margin_top = 2,
+        button_margin_bottom = 0,
+        button_margin_left = 1,
+        button_margin_right = 1,
+
+        mb_move               = nice.MB_LEFT,
+        mb_resize             = nice.MB_RIGHT,
+        mb_contextmenu        = nice.MB_MIDDLE,
+        mb_win_shade_rollup   = nice.MB_SCROLL_DOWN,
+        mb_win_shade_rolldown = nice.MB_SCROLL_UP,
+
+        tooltips_enabled = true,
+        tooltip_messages = {
+            close             = "Close",
+            minimize          = "Minimize",
+            maximize_active   = "Unmaximize",
+            maximize_inactive = "Maximize",
+            floating_active   = "Enable tiling mode",
+            floating_inactive = "Enable floating mode",
+            ontop_active      = "Don't keep above other windows",
+            ontop_inactive    = "Keep above other windows",
+            sticky_active     = "Disable sticky mode",
+            sticky_inactive   = "Enable sticky mode",
+        },
+        context_menu_theme = {
+            bg_focus     = beautiful.bg_focus,
+            bg_normal    = beautiful.bg_normal,
+            border_color = beautiful.border_normal,
+            border_width = 0,
+            fg_focus     = beautiful.fg_focus,
+            fg_normal    = beautiful.fg_normal,
+            font         = RC.appearance.font,
+            height       = 25,
+            width        = 200,
+        },
+    })
 else
     require(string.format("%s.%s", P.appearance.decorations, RC.appearance.deco))
 end
@@ -145,9 +205,20 @@ require(P.config.mouse)
 -- handling revelation modules
 if RC.settings.revelation_enabled == true then
     revelation = require(P.module.revelation);
-    revelation.init();
+    revelation.init({
+        tag_name = 'Revelation',
+        exact = awful.rules.match,
+        exact = awful.rules.match,
+        charorder = "kluipyhmfdsatgvcewqzx123456780",
+    });
     awful.keyboard.append_global_keybindings({
-        awful.key({ W, A }, "/", revelation,
+        awful.key({ W, A }, "/", function()
+            revelation(
+                {   -- Excluded Client
+                    rule = { class = "Florence" },
+                    is_excluded = true
+                })
+        end,
         {description = "Expose", group = "tag"})
     })
 end
