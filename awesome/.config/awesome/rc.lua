@@ -1,8 +1,8 @@
 -- ===== User Configuration =====
 RC = {}
 RC.appearance = {
-    profiles  = os.getenv("HOME")..'/.face',
-    font      = "SF Pro Text Regular 9",
+    profiles = os.getenv("HOME") .. "/.face",
+    font = "SF Pro Text Regular 9",
     -- font      = "JetBrainsMono Nerd Font 9",
     sys_icons = "Papirus-Dark",
     wallpaper = "/home/atalariq/.wallpaper/mechanical/raindrops-1_FHD.jpg",
@@ -12,23 +12,23 @@ local themes = {
     "xresources",
     "gtk",
 }
-RC.appearance.theme = themes[1] or 'default'
+RC.appearance.theme = themes[1] or "default"
 
-local bars        = {
+local bars = {
     "tab",
     "online",
 }
-RC.appearance.bar = bars[1] or 'default'
+RC.appearance.bar = bars[1] or "default"
 
 local decorations = {
     "minimal",
 }
-RC.appearance.deco = decorations[1] or 'default'
+RC.appearance.deco = decorations[1] or "default"
 
 local notif_style = {
-    "simple"
+    "simple",
 }
-RC.appearance.notif_style = notif_style[1] or 'default'
+RC.appearance.notif_style = notif_style[1] or "default"
 
 RC.settings = {
     -- Collision - Windows management ( Boolean )
@@ -36,29 +36,35 @@ RC.settings = {
 
     -- Switcher - ALT-Tab Function
     switcher_enabled = true,
-    switcher_mode = 'normal',
+    switcher_mode = "normal",
+
+    -- Nice - MacOS like Titlebars ( and Its Rounded ) will override users titlebars config
+    nice_enabled = true,
+
+    -- Revelation, MacOS like expose
+    revelation_enabled = true,
 }
 
 -- List of apps to start once on start-up
 RC.autostart = {
-    'picom -b', 
-    '/lib/mate-polkit/polkit-mate-authentication-agent-1',
-    'fusuma -d -c ~/.config/fusuma/config-awesome.yml',
-    'mpd && mpDris2',
+    "picom -b --experimental-backends --config ~/.config/picom/picom.conf",
+    "/lib/mate-polkit/polkit-mate-authentication-agent-1",
+    "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
+    "mpd && mpDris2",
     -- 'keyboard-switch -s',
-    'florence',
+    "florence",
     -- 'kdeconnect-indicator',
-    'xfce4-power-manager',
-    'nm-applet',
-    'clipit',
-    -- [[
-    -- xidlehook --not-when-fullscreen --not-when-audio --timer 900 "awesome-client '_G.show_lockscreen()'" ""
-    -- ]]
+    "xfce4-power-manager",
+    "nm-applet",
+    "clipit",
+-- [[
+-- xidlehook --not-when-fullscreen --not-when-audio --timer 900 "awesome-client '_G.show_lockscreen()'" ""
+-- ]]
 
-    -- You can add more start-up applications here
+-- You can add more start-up applications here
 }
 if RC.appearance.theme == "xresources" then
-    table.insert(RC.autostart, "wal -n -i ".. RC.appearance.wallpaper)
+    table.insert(RC.autostart, "wal -n -i " .. RC.appearance.wallpaper)
     table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
 else
     table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
@@ -78,53 +84,74 @@ require("awful.autofocus")
 -- Path List
 P = {
     appearance = {
-        themes       = 'themes',
-        bars         = 'components.bars',
-        decorations  = 'components.decorations',
-        notification = 'components.notification'
+        themes = "themes",
+        bars = "components.bars",
+        decorations = "components.decorations",
+        notification = "components.notification",
     },
     config = {
-        apps   = 'configurations.apps',
-        config = 'configurations.config',
-        menu   = 'configurations.menu',
-        keys   = 'configurations.keys',
-        mouse  = 'configurations.mouse',
-        tag    = 'configurations.tag',
-        rules  = 'configurations.rules',
+        apps = "configurations.apps",
+        config = "configurations.config",
+        menu = "configurations.menu",
+        keys = "configurations.keys",
+        mouse = "configurations.mouse",
+        tag = "configurations.tag",
+        rules = "configurations.rules",
     },
     module = {
-        autostart      = 'modules.autostart',
-        error_handling = 'modules.error-handling',
-        set_wallpaper  = 'modules.set-wallpaper',
-        sloppy_focus   = 'modules.sloppy-focus',
-        quake_terminal = 'modules.quake-terminal',
-        collision      = 'modules.collision',
-        switcher       = 'modules.switcher',
+        autostart = "modules.autostart",
+        error_handling = "modules.error-handling",
+        set_wallpaper = "modules.set-wallpaper",
+        sloppy_focus = "modules.sloppy-focus",
+        quake_terminal = "modules.quake-terminal",
+        collision = "modules.collision",
+        nice = "modules.nice",
+        revelation = "modules.revelation",
+        switcher = "modules.switcher",
     },
     widget = {
-        default = 'widgets.default',
-        online  = 'widgets.online',
-        sick    = 'widgets.sick',
-    }
+        default = "widgets.default",
+        online = "widgets.online",
+        sick = "widgets.sick",
+    },
 }
--- initialize modules
+-- Error handling
 require(P.module.error_handling)
 
 -- initialize theme and set wallpaper
-beautiful.init(require(P.appearance.themes..'.'..RC.appearance.theme..'.theme'))
+beautiful.init(require(P.appearance.themes .. "." .. RC.appearance.theme .. ".theme"))
 require(P.module.set_wallpaper)
 
-require(string.format('%s.%s', P.appearance.bars, RC.appearance.bar))
-require(string.format('%s.%s', P.appearance.decorations, RC.appearance.deco))
-require(string.format('%s.%s', P.appearance.notification, RC.appearance.notif_style))
+-- Bars and Notification Appearance
+require(string.format("%s.%s", P.appearance.bars, RC.appearance.bar))
+require(string.format("%s.%s", P.appearance.notification, RC.appearance.notif_style))
 
+-- Titlebars
+if RC.settings.nice_enabled == true then
+    require(P.module.nice)()
+else
+    require(string.format("%s.%s", P.appearance.decorations, RC.appearance.deco))
+end
+
+-- Initialize Tag, Menu, and Rules
 require(P.config.tag)
 require(P.config.menu)
 require(P.config.rules)
 
-require(P.config.mouse)
+-- handling mousebinds and keybinds
 require(P.config.keys)
+require(P.config.mouse)
 
+-- handling revelation modules
+if RC.settings.revelation_enabled == true then
+    revelation = require(P.module.revelation);
+    revelation.init();
+    awful.keyboard.append_global_keybindings({
+        awful.key({ W, A }, "/", revelation,
+        {description = "Expose", group = "tag"})
+    })
+end
+-- initialize modules
 require(P.module.autostart)
 require(P.module.quake_terminal)
 -- require(P.module.sloppy_focus)
@@ -134,3 +161,4 @@ require(P.module.quake_terminal)
 -- ===================================================================
 collectgarbage("setpause", 100)
 collectgarbage("setstepmul", 1000)
+

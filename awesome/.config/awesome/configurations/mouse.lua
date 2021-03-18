@@ -1,10 +1,5 @@
 local awful = require('awful')
 
-local W = 'Mod4'
-local A = 'Mod1'
-local C = "Control"
-local S = "Shift"
-
 awful.mouse.append_global_mousebindings({
     awful.button({}, 3, function () mymainmenu:toggle() end),
     awful.button({}, 4, awful.tag.viewprev),
