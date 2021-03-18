@@ -3,31 +3,9 @@ vim.cmd([[packadd nvim-web-devicons]])
 
 local gl = require('galaxyline')
 local gls = gl.section
+local condition = require('galaxyline.condition')
 
--- Properties 	    Xresources
--- fg 	            foreground
--- bg 	            background
--- black 	        color0
--- red 	            color1
--- green 	        color2
--- yellow 	        color3
--- blue 	        color4
--- purple 	        color5
--- cyan 	        color6
--- white 	        color7
--- light_black 	    color8
--- light_red 	    color9
--- light_green 	    color10
--- light_yellow     color11
--- light_blue 	    color12
--- light_purple     color13
--- light_cyan 	    color14
--- light_white 	    color15
--- grey 	        background + 0xf0f10
--- grey1 	        background + 0x363940
--- none 	        NONE
 local colors = require("base.colorscheme.xresources") or require("xresources")
-
 
 -- =================================== Component
 local separators = {
@@ -116,22 +94,6 @@ local FileIcon ={
         condition = buffer_not_empty,
         highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.bg},
     },
-}
-local LEFT = {
-    BOOLNS = {
-        provider = function() end,
-        condition = buffer_not_empty,
-        separator = ' ▊',
-        separator_highlight = {colors.blue,colors.bg},
-    }
-}
-local RIGHT = {
-    BOOLNS = {
-        provider = function() end,
-        condition = buffer_not_empty,
-        separator = ' ▊ ',
-        separator_highlight = {colors.blue,colors.bg},
-    }
 }
 local FileSize = {
     FileSize = {
@@ -287,45 +249,28 @@ gl.short_line_list = {
     'term',
     'packer'
 }
+
 gls.short_line_left[1] = {
-    BufferType = {
-        provider = 'FileTypeName',
-        highlight = {colors.blue,colors.bg,'bold'},
-        condition = has_file_type,
-        -- separator = '',
-        separator = sep,
-        separator_highlight = {colors.blue,colors.bg},
-    }
+  BufferType = {
+    provider = 'FileTypeName',
+    separator = ' ',
+    separator_highlight = {'NONE',colors.bg},
+    highlight = {colors.blue,colors.bg,'bold'}
+  }
 }
+
 gls.short_line_left[2] = {
-    SFileName = {
-        provider = function ()
-            local fileinfo = require('galaxyline.provider_fileinfo')
-            local fname = fileinfo.get_current_file_name()
-            for _,v in ipairs(gl.short_line_list) do
-                if v == vim.bo.filetype then
-                    return ''
-                end
-            end
-            return fname
-        end,
-        condition = buffer_not_empty,
-        highlight = {colors.white,colors.bg,'bold'}
-    }
+  SFileName = {
+    provider =  'SFileName',
+    condition = condition.buffer_not_empty,
+    highlight = {colors.fg,colors.bg,'bold'}
+  }
 }
--- gls.short_line_right[1] = {
---     BufferIcon = {
---         provider= 'BufferIcon',
---         highlight = {colors.fg,colors.bg}
---     }
--- }
+
 gls.short_line_right[1] = {
   BufferIcon = {
     provider= 'BufferIcon',
-    highlight = {colors.fg,colors.bg},
-    condition = has_file_type,
-    separator = '█',
-    separator_highlight = {colors.blue,colors.bg},
+    highlight = {colors.fg,colors.bg}
   }
 }
 
@@ -337,38 +282,37 @@ local LeftSide = function()
         Mode,
         FileName, FileSize,
         GitIcon, GitBranch, DiffAdd, DiffModified, DiffRemove,
+        DiagnosticHint, DiagnosticInfo,
+        DiagnosticError, DiagnosticWarn,
     }
     for i,_ in ipairs(components) do
         gls.left[i] = components[i]
     end
 end
-LeftSide()
 -- Middle
 local Middle = function()
     local components = {
-        DiagnosticHint, DiagnosticInfo,
-        LEFT,
         ShowLspClient,
-        RIGHT,
-        DiagnosticError, DiagnosticWarn,
     }
     for i,_ in ipairs(components) do
         gls.mid[i] = components[i]
     end
 end
-Middle()
 -- Right
 local RightSide = function()
     local components = {
         FileType,
         FileIcon,
         LineColumn, LinePercent,
-        -- ScrollBar,
+        ScrollBar,
         LastElement
     }
     for i,_ in ipairs(components) do
         gls.right[i] = components[i]
     end
 end
+
+LeftSide()
+-- Middle()
 RightSide()
 

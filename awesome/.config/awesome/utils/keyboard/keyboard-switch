@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+DIR="/home/atalariq/.scripts/keyboard/"
+
+INTBOARD="AT Translated Set 2 keyboard"
+EXTBOARD="SIGMACHIP"
+
+MODE="$(cat "$DIR/mode")"
+CHECKEXTBOARD="$(xinput list | grep "$EXTBOARD"  )"
+
+function startup {
+	if [[ $CHECKEXTBOARD = *"$EXTBOARD"* ]]; then
+		notify-send "External Keyboard Detected"
+		sleep 1
+		# echo "disable" > $DIR/mode
+		xinput disable "$INTBOARD"
+		notify-send "Internal Keyboard Has Been Disable"
+		# if [[ $MODE = "enable" ]]; then
+		# 	xinput disable "$INTBOARD"
+		# 	echo "disable" > $DIR/mode
+		# 	notify-send "Internal Keyboard Has Been Disable"
+		# elif [[ $MODE = "disable" ]]; then
+		# 	notify-send "Internal Keyboard Is Disable"
+		# else
+		# 	notify-send "WTF"
+		# fi
+	else
+		# echo "enable" > $DIR/mode
+		notify-send "No External Keyboard Detected"
+		xinput enable "$INTBOARD"
+	fi
+}
+
+case $1 in
+	startup|-s)
+		startup
+		;;
+	enable|-e)
+		xinput enable "$INTBOARD"
+		echo "Internal Keyboard Has Been Enable"
+		;;
+	disable|-d)
+		xinput disable "$INTBOARD"
+		echo "Internal Keyboard Has Been Disable"
+		;;
+esac

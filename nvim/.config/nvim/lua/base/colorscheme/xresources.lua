@@ -156,14 +156,14 @@ function xresources.load_syntax()
         DiffChange          = {fg    = xresources.bg       , bg    = xresources.yellow};
         DiffDelete          = {fg    = xresources.bg       , bg    = xresources.red};
         DiffText            = {fg    = xresources.bg       , bg    = xresources.fg};
-        Directory           = {fg    = xresources.gray     , bg    = xresources.none};
+        Directory           = {fg    = xresources.grey     , bg    = xresources.none};
         debugBreakpoint     = {fg    = xresources.bg       , bg    = xresources.red};
         EndOfBuffer         = {fg    = xresources.bg       , bg    = xresources.none};
         ErrorMsg            = {fg    = xresources.red      , bg    = xresources.none      , style     = 'bold'};
         FoldColumn          = {fg    = xresources.fg       , bg    = xresources.bg};
         Folded              = {fg    = xresources.grey     , bg    = xresources.grey};
         iCursor             = {fg    = xresources.none     , bg    = xresources.none       , style    = 'reverse'};
-        IncSearch           = {fg    = xresources.gray     , bg    = xresources.yellow     , style    = xresources.none};
+        IncSearch           = {fg    = xresources.grey     , bg    = xresources.yellow     , style    = xresources.none};
         lCursor             = {fg    = xresources.none     , bg    = xresources.none       , style    = 'reverse'};
         LineNr              = {fg    = xresources.grey1};
         ModeMsg             = {fg    = xresources.fg       , bg    = xresources.none     , style      = 'bold'};
@@ -397,8 +397,8 @@ function xresources.load_plugin_syntax()
         LspDiagnosticsUnderlineInformation   = {style = "undercurl",sp      = xresources.blue};
         LspDiagnosticsUnderlineHint          = {style = "undercurl",sp      = xresources.cyan};
 
-        CursorWord0 = {bg = xresources.gray};
-        CursorWord1 = {bg = xresources.gray};
+        CursorWord0 = {bg = xresources.grey};
+        CursorWord1 = {bg = xresources.grey};
 
         -- ==================
         -- Nvim Tree

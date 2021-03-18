@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+up="brightnessctl set 5%+"
+down="brightnessctl set 5%-"
+
+optimize (){
+    if [ ! -z $(pgrep redshift) ];
+    then
+        redshift -x && pkill redshift && killall redshift
+        echo 'OFF'
+    else
+        redshift -l 0:0 -t 4500:4500 -r &>/dev/null &
+        echo 'ON'
+    fi
+}
+
+current_bn() {
+    brightnessctl i | grep '%' | awk -F'(' '{print $2}' | awk -F'%' '{print $1}'; 
+}
+
+case $1 in
+    up) 
+        bash -c "$up"
+        notify-send $(current_bn)
+    ;;
+    down) 
+        bash -c "$down"
+        notify-send $(current_bn)
+    ;;
+    optimize) 
+        optimize
+        notify-send $(current_bn)
+    ;;
+esac

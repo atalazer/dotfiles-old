@@ -45,14 +45,15 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/barbar.nvim"
   },
-  ["colorbuddy.vim"] = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/colorbuddy.vim"
-  },
   ["editorconfig-vim"] = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/editorconfig-vim"
+  },
+  ["emmet-vim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/emmet-vim"
   },
   firenvim = {
     loaded = false,
@@ -68,6 +69,15 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/galaxyline.nvim"
+  },
+  ["gitsigns.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/gitsigns.nvim"
+  },
+  ["glow.nvim"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/glow.nvim"
   },
   ["goyo.vim"] = {
     loaded = false,
@@ -105,20 +115,10 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim"
   },
-  ["neoline.vim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/neoline.vim"
-  },
   ["nvim-autopairs"] = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-autopairs"
-  },
-  ["nvim-bufferline.lua"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-bufferline.lua"
   },
   ["nvim-colorizer.lua"] = {
     loaded = false,
@@ -126,7 +126,7 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
-    after = { "vim-vsnip", "vim-vsnip-integ" },
+    after = { "vim-vsnip-integ", "vim-vsnip" },
     after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_buffer.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_calc.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lsp.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lua.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_omni.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_path.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_snippets_nvim.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_spell.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_tags.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_treesitter.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_ultisnips.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsc.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsp.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vsnip.vim" },
     loaded = false,
     needs_bufread = false,
@@ -143,27 +143,19 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    after = { "nvim-treesitter-textobjects" },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter"
   },
-  ["nvim-treesitter-textobjects"] = {
-    load_after = {
-      ["nvim-treesitter"] = true
-    },
+  ["nvim-ts-autotag"] = {
     loaded = false,
     needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-textobjects"
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag"
   },
   ["nvim-web-devicons"] = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons"
-  },
-  onebuddy = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/onebuddy"
   },
   ["packer.nvim"] = {
     loaded = false,
@@ -216,6 +208,10 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/toggle-bool"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-fugitive"
   },
   ["vim-markdown"] = {
     loaded = false,
@@ -280,13 +276,13 @@ _G.packer_plugins = {
 
 
 -- Command lazy-loads
-vim.cmd [[command! -nargs=* -range -bang -complete=file MarkdownPreview lua require("packer.load")({'markdown-preview.nvim'}, { cmd = "MarkdownPreview", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Sayonara lua require("packer.load")({'vim-sayonara'}, { cmd = "Sayonara", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file MarkdownPreview lua require("packer.load")({'markdown-preview.nvim'}, { cmd = "MarkdownPreview", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown', 'markdown-preview.nvim', 'goyo.vim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim', 'vim-markdown', 'goyo.vim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType text ++once lua require("packer.load")({'goyo.vim'}, { ft = "text" }, _G.packer_plugins)]]
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

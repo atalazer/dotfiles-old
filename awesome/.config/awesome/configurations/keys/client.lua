@@ -1,19 +1,20 @@
 local awful = require("awful")
 
-local switcher = require(P.module.switcher .. "." .. RC.settings.switcher_mode) or "normal"
+-- local switcher_enabled = RC.settings.switcher_enabled or false
+-- local switcher = require(P.module.switcher .. "." .. RC.settings.switcher_mode) or "normal"
 -- ========================================= Client Related
--- ================= ALT TAB
-if RC.settings.switcher_enabled == true then
-    awful.keyboard.append_global_keybindings({
-        awful.key({ A }, "Tab", function()
-            switcher.switch(1, "Mod1", "Alt_L", "Shift", "Tab")
-        end, { description = "Next Client", group = "client" }),
+-- -- ================= ALT TAB
+-- if switcher_enabled == true then
+--     awful.keyboard.append_global_keybindings({
+--         awful.key({ A }, "Tab", function()
+--             switcher.switch(1, "Mod1", "Alt_L", "Shift", "Tab")
+--         end, { description = "Next Client", group = "client" }),
 
-        awful.key({ A, S }, "Tab", function()
-            switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
-        end, { description = "Previous Client", group = "client" }),
-    })
-end
+--         awful.key({ A, S }, "Tab", function()
+--             switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
+--         end, { description = "Previous Client", group = "client" }),
+--     })
+-- end
 
 awful.keyboard.append_global_keybindings({
     --awful.key({ W, C }, "j",

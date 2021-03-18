@@ -70,6 +70,7 @@ local options = {
     relativenumber = false,
     number = true,
     cursorline = true,
+    cursorcolumn = false,
     showmode = false,
     laststatus = 2,
 

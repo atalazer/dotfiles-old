@@ -1,0 +1,28 @@
+#!/bin/sh
+pstatus=~/.config/awesome/utils/florence-status
+status=$(cat $pstatus)
+
+toggle(){
+if [[ $status = "hide" ]]; then
+    echo "show" > $pstatus
+    florence show
+else
+    if [[ $status = "show" ]]; then
+        echo "hide" > $pstatus
+        florence hide
+    fi
+fi
+}
+
+case $1 in
+    show) 
+        florence show
+    ;;
+    hide) 
+        florence hide
+    ;;
+    toggle)
+        toggle
+    ;;
+esac
+

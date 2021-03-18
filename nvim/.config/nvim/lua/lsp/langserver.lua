@@ -39,10 +39,20 @@ local servers = {
     cssls    = {},
     emmetls  = {},
     tsserver = {},
-    -- efm      = {},
     yamlls   = {},
     jsonls   = {},
     vimls    = {},
+    efm      = {
+        init_options = {documentFormatting = true},
+        filetypes = {"lua", "vim", "markdown", "javascript", "html", "css"},
+        settings = {
+            languages = {
+                lua = {
+                    {formatCommand = "stylua --config-path ~/.config/nvim/.stylua.toml", formatStdin = true}
+                }
+            }
+        }
+    },
     pyls     = {
         root_dir= function() vim.fn.getcwd() end,
     },

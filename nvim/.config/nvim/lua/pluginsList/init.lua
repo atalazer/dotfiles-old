@@ -5,7 +5,7 @@ if ok then
     local use = packer.use
     packer.init({
         git = {
-            clone_timeout = 150, -- Timeout, in seconds, for git clones
+            clone_timeout = 120, -- Timeout, in seconds, for git clones
         },
         display = {
             open_cmd = 'leftabove 70vnew [packer]',
@@ -41,7 +41,6 @@ if ok then
         -- ------------------------------- Languange
         use {'nvim-treesitter/nvim-treesitter', opt = true,
             run = ':TSUpdate',
-            requires = {'nvim-treesitter/nvim-treesitter-textobjects'},
         }                                                                   -- Semantic Highlighting
         use {'tami5/sql.nvim', opt = false}                                 -- SQL Languange Support
         use {'plasticboy/vim-markdown', opt = true,
@@ -52,20 +51,27 @@ if ok then
             run = 'cd app && yarn install',
             cmd = 'MarkdownPreview',
         }
+        use {'npxbr/glow.nvim',
+            run = ':GlowInstall',
+        }
         use {'junegunn/goyo.vim', opt = true,
             ft = {'text', 'markdown'},
         }                                                                   -- Free Distraction-mode
 
         -- ------------------------------ Experience
         use {'editorconfig/editorconfig-vim', opt = true }
+        use {'mattn/emmet-vim', opt = true}                                 -- Emmet Support for vim
         use {'windwp/nvim-autopairs', opt = true }                          -- Autopairs
+        use { "windwp/nvim-ts-autotag", opt = true }                        -- Auto-close tag
         use {'mg979/vim-visual-multi', opt = false}                         -- Multi Cursor
-        use {'godlygeek/tabular'}                                           -- Align
         use {'phaazon/hop.nvim', opt = true}                                -- vim easy motion
         use {'b3nj5m1n/kommentary', opt = true}                             -- Eassy Commenting
-        use {'sagarrakshe/toggle-bool', opt = true}                         -- Quick toggle boolean value
-        use {'blackcauldron7/surround.nvim', opt = true}
+        use {'blackcauldron7/surround.nvim', opt = true}                    -- Vim surround
         use {'lukas-reineke/format.nvim', opt = true }                      -- Code formatter
+
+        use {'godlygeek/tabular'}                                           -- Align
+        use {'sagarrakshe/toggle-bool', opt = true}                         -- Quick toggle boolean value
+
         use {'glacambre/firenvim', opt = true,
             run = function() vim.fn['firenvim#install'](0) end,
         }                                                                   -- Browser Integration plugin
@@ -81,6 +87,11 @@ if ok then
             },
         }                                                                   -- Fuzzy Finder
         use {'lambdalisue/suda.vim', opt = true}                            -- Open root previllage files
+
+        -- -------------------------------- Git
+        use { "tpope/vim-fugitive", opt = false }                           -- git helpers inside neovim
+        use { "lewis6991/gitsigns.nvim", opt = true }                       -- show git stuff in signcolumn
+
         -- -------------------------------- Misc
         use {"tjdevries/astronauta.nvim", opt = false}                      -- For keybindings
         use {'TaDaa/vimade', opt = true}                                    -- Fade for unfocused window/buffer

@@ -1,5 +1,5 @@
 vim.cmd[[packadd nvim-treesitter]]
-vim.cmd[[packadd nvim-treesitter-textobjects]]
+vim.cmd [[packadd nvim-ts-autotag]]
 
 local ts_config = require("nvim-treesitter.configs")
 ts_config.setup {
@@ -17,29 +17,11 @@ ts_config.setup {
     indent = {
         enable = true,
     },
-    textobjects = {
-        select = {
-            enable = true,
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-                ["ab"] = "@block.outer",
-                ["ib"] = "@block.inner",
-            },
-        },
-        swap = {
-            enable = true,
-            swap_next = {
-                ["<leader>a"] = "@parameter.inner",
-            },
-            swap_previous = {
-                ["<leader>A"] = "@parameter.inner",
-            },
-        },
-        lsp_interop = {
-            enable = true,
+    autotag = {
+        enable = true,
+        filetypes = {
+            "javascript",
+            "html", "xml", "markdown",
         },
     },
 }

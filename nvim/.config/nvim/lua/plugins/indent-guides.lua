@@ -1,4 +1,5 @@
 vim.cmd[[packadd indent-guides.nvim]]
+local colors = require("base.colorscheme.xresources") or require("xresources")
 
 require('indent_guides').setup({
     -- put your options in here
@@ -13,13 +14,15 @@ require('indent_guides').setup({
         'dashboard','dashpreview', 'startify',
         'NvimTree','vista','sagahover',
         'packer',
+        'text', 'markdown'
     };
     even_colors = {
-        fg = '#1a2129',
-        bg = '#14191F',
+        fg = colors.grey,
+        bg = colors.grey1,
     };
     odd_colors = {
-        fg = '#14191F',
-        bg = '#1a2129',
+        fg = colors.grey1,
+        bg = colors.grey,
     };
 })
+nnoremap{"<leader>ii", "<CMD>IndentGuidesToggle<CR>"}

@@ -3,7 +3,7 @@ local awful         = require('awful')
 local gears         = require('gears')
 local hotkeys_popup = require("awful.hotkeys_popup")
 
-local apps     = require('configs.apps')
+local apps = require(P.config.apps)
 
 awful.keyboard.append_global_keybindings({
     -- =========================== Volume Control

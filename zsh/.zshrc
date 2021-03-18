@@ -58,43 +58,27 @@ zstyle ":plugin:zsh-startify:shellutils" size 5
 zstyle ":plugin:zsh-startify:vim" size 5
 
 zinit ice wait lucid
-zinit light zdharma/history-search-multi-word
-zstyle ":history-search-multi-word" page-size "11"
-zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"
-zstyle ":plugin:history-search-multi-word" synhl "yes"
-zstyle ":plugin:history-search-multi-word" active "underline"
-zstyle ":plugin:history-search-multi-word" check-paths "yes"
-zstyle ":plugin:history-search-multi-word" clear-on-cancel "no"
-
-zinit ice wait lucid
 zinit light kazhala/dotbare
 export DOTBARE_DIR="$HOME/.dotfiles/.git"
 export DOTBARE_TREE="$HOME/.dotfiles"
 export DOTBARE_BACKUP="${XDG_DATA_HOME:-$HOME/.local/share}/dotbare"
 export DOTBARE_KEY="
-  --bind=alt-a:toggle-all
-  --bind=alt-j:jump
-  --bind=alt-0:top
-  --bind=alt-s:toggle-sort
-  --bind=alt-t:toggle-preview
+    --bind=alt-a:toggle-all
+    --bind=alt-j:jump
+    --bind=alt-0:top
+    --bind=alt-s:toggle-sort
+    --bind=alt-t:toggle-preview
 "
-# export DOTBARE_FZF_DEFAULT_OPTS=""
-# export DOTBARE_PREVIEW=""
+export DOTBARE_FZF_DEFAULT_OPTS="--preview-window=right:50%"
+export DOTBARE_PREVIEW="bat {}"
 # export DOTBARE_DIFF_PAGER="delta --diff-so-fancy --line-numbers"
-
-zinit ice wait"0c" lucid reset \
-    atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
-            \${P}sed -i \
-            '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
-            \${P}dircolors -b LS_COLORS > c.zsh" \
-    atpull'%atclone' pick"c.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
 
 zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
+# =================
 # Initialize Themes
+# =================
 
 # zinit ice pick"async.zsh" src"pure.zsh"
 # zinit light sindresorhus/pure
@@ -133,7 +117,7 @@ eval "$(zoxide init zsh)"
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=$HOME/.zsh_history
 setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS

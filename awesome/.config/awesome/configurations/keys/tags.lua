@@ -1,8 +1,9 @@
 local awful         = require('awful')
 local gears         = require('gears')
+local collision_enabled = RC.settings.collision_enabled or false
 
 -- ========================================= Tag Related
-if RC.settings.collision_enabled == true then
+if  collision_enabled == true then
     require(P.module.collision)()
 else
     awful.keyboard.append_global_keybindings({
