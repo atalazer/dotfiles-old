@@ -21,6 +21,7 @@ ruled.client.connect_signal("request::rules", function()
             switch_to_tags = true,
             titlebars_enabled = false,
             size_hints_honor = false,
+            border_width = beautiful.border_width,
         },
     })
 

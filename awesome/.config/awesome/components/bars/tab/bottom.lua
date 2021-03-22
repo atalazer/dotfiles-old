@@ -34,6 +34,7 @@ local temp       = require(P.widget.sick..".temp")
 local volume     = require(P.widget.sick..".volume")
 local hddtemp    = require(P.widget.sick..".hddtemp")
 local brightness = require(P.widget.sick..".brightness")
+local battery    = require(P.widget.sick..".battery")
 local mpd        = require(P.widget.sick..".mpd")
 
 
@@ -89,6 +90,9 @@ function M.bar(s)
 
             icon_wrapper(volume.icon),
             text_wrapper(volume.widget),
+
+            icon_wrapper(battery.icon, 5, 5, 5, 5),
+            text_wrapper(battery.widget),
 
             icon_wrapper(clock.icon, 5, 5, 5, 5),
             text_wrapper(clock.widget),

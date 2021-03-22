@@ -1,9 +1,8 @@
 local cmd = vim.cmd
 
--- dark, light, mirage
-local ayu_theme = "dark"
--- xresources, ayu, onebuddy
-local colorscheme = "ayu"
+-- xresources, ayu
+local colorscheme = "xresources"
+local ayu_theme = "dark"                    -- dark, light, mirage
 
 cmd("syntax enable")
 cmd("let ayu_theme=\"" .. ayu_theme .. "\"")

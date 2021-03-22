@@ -51,8 +51,8 @@ local function mix(color1, color2, ratio)
     local channels2 = color2:gmatch(hex_color_match)
     for _ = 1,3 do
         local bg_numeric_value = math.ceil(
-          tonumber("0x"..channels1())*ratio +
-          tonumber("0x"..channels2())*(1-ratio)
+            tonumber("0x"..channels1())*ratio +
+            tonumber("0x"..channels2())*(1-ratio)
         )
         if bg_numeric_value < 0 then bg_numeric_value = 0 end
         if bg_numeric_value > 255 then bg_numeric_value = 255 end
@@ -100,6 +100,7 @@ theme.gtk.menubar_border_color = mix(
     0.7
 )
 
+theme.icon_theme = RC.appearance.icons
 theme.font          = RC.appearance.font or theme.gtk.font_family .. ' ' .. theme.gtk.font_size
 
 theme.bg_normal     = theme.gtk.bg_color
@@ -246,18 +247,18 @@ theme.titlebar_font_normal = theme.gtk.bold_font
 theme.titlebar_bg_normal = theme.gtk.wm_border_unfocused_color
 theme.titlebar_fg_normal = theme.gtk.wm_title_unfocused_color
 --theme.titlebar_fg_normal = choose_contrast_color(
-    --theme.titlebar_bg_normal,
-    --theme.gtk.menubar_fg_color,
-    --theme.gtk.menubar_bg_color
+--theme.titlebar_bg_normal,
+--theme.gtk.menubar_fg_color,
+--theme.gtk.menubar_bg_color
 --)
 
 theme.titlebar_font_focus = theme.gtk.bold_font
 theme.titlebar_bg_focus = theme.gtk.wm_border_focused_color
 theme.titlebar_fg_focus = theme.gtk.wm_title_focused_color
 --theme.titlebar_fg_focus = choose_contrast_color(
-    --theme.titlebar_bg_focus,
-    --theme.gtk.menubar_fg_color,
-    --theme.gtk.menubar_bg_color
+--theme.titlebar_bg_focus,
+--theme.gtk.menubar_fg_color,
+--theme.gtk.menubar_bg_color
 --)
 
 theme.tooltip_fg = theme.gtk.tooltip_fg_color
@@ -308,9 +309,6 @@ theme = theme_assets.recolor_titlebar(
     theme, theme.gtk.error_bg_color, "focus", "press"
 )
 
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = RC.appearance.icons
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
@@ -320,10 +318,10 @@ theme.awesome_icon = theme_assets.awesome_icon(
 -- Generate taglist squares:
 --local taglist_square_size = dpi(4)
 --theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    --taglist_square_size, theme.gtk.header_button_border_color
+--taglist_square_size, theme.gtk.header_button_border_color
 --)
 --theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    --taglist_square_size, theme.gtk.header_button_border_color
+--taglist_square_size, theme.gtk.header_button_border_color
 --)
 -- Or disable them:
 theme.taglist_squares_sel = nil
@@ -351,6 +349,10 @@ rnotification.connect_signal('request::rules', function()
         properties = { bg = '#ff0000', fg = '#ffffff' }
     }
 end)
+
+-- widget
+theme.widget_icon = theme.gtk.selected_bg_color
+theme.widget_text = theme.gtk.fg_color
 
 return theme
 

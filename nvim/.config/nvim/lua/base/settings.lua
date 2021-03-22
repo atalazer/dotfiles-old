@@ -19,9 +19,6 @@ local options = {
     ttyfast = true,
     mouse = "a",
 
-    sessionoptions = "curdir,help,tabpages,winsize",
-    viewoptions = "folds,cursor,curdir,slash,unix",
-
     fileformats = "unix",
     magic = true,
     virtualedit = "block",
@@ -46,8 +43,6 @@ local options = {
     -- clipboard = "unnamed",
     clipboard = "unnamedplus",
 
-    diffopt = "filler,iwhite,internal,algorithm:patience",
-    jumpoptions = "stack",
     completeopt = "menu,menuone,noselect,noinsert",
     pumblend = 10,
     pumheight = 10,
@@ -62,7 +57,6 @@ local options = {
     foldlevelstart = 99,
 
     title = true,
-    -- guifont = "JetBrainsMono\\ Nerd\\ Font\\ 11",
     termguicolors = true,
     background = "dark",
     t_Co = 256,
@@ -124,9 +118,9 @@ local options = {
 
     timeout = true,
     ttimeout = true,
-    timeoutlen = 500,
-    ttimeoutlen = 10,
-    updatetime = 100,
+    timeoutlen = 400,
+    ttimeoutlen = 30,
+    updatetime = 150,
     redrawtime = 500,
 
 }

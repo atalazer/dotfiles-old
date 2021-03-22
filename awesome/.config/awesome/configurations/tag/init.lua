@@ -105,8 +105,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
             })
         end
     elseif RC.settings.tags.icon.enable == false then
-        for name, tag in pairs(RC.tags) do
-            awful.tag.add(name, {
+        for i, tag in pairs(RC.tags) do
+            awful.tag.add(i, {
                 name = tag.name[RC.settings.tags.name] or tag.name[1],
                 layout = tag.layout or awful.layout.suit.floating,
                 layouts = tag.layouts or awful.layout.layouts,
@@ -114,7 +114,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 gap = tag.gap,
                 screen = s,
                 default_app = tag.default_app or apps.default.terminal,
-                selected = tag.id == 1,
+                selected = i == 1,
             })
         end
     else

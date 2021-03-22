@@ -1,5 +1,8 @@
 vim.cmd("packadd hop.nvim")
-require("hop").setup{}
+require("hop").setup{
+    keys = 'qwertyuipasdfghklzxcvbm',
+    term_seq_bias = 0.5
+}
 -- Hop
 map{"<space>m", ":HopWord<CR>"}
 map{"<space>w", ":HopWord<CR>"}

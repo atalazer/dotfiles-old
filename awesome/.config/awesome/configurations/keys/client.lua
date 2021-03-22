@@ -1,20 +1,46 @@
 local awful = require("awful")
+local bling = require("bling")
 
--- local switcher_enabled = RC.settings.switcher_enabled or false
--- local switcher = require(P.module.switcher .. "." .. RC.settings.switcher_mode) or "normal"
+local switcher_enabled = RC.settings.switcher_enabled or false
+local switcher = require(P.module.switcher .. "." .. RC.settings.switcher_mode) or "normal"
+
 -- ========================================= Client Related
--- -- ================= ALT TAB
--- if switcher_enabled == true then
---     awful.keyboard.append_global_keybindings({
---         awful.key({ A }, "Tab", function()
---             switcher.switch(1, "Mod1", "Alt_L", "Shift", "Tab")
---         end, { description = "Next Client", group = "client" }),
+-- ================= ALT TAB
+if switcher_enabled == true then
+    awful.keyboard.append_global_keybindings({
+        awful.key({ A }, "Tab", function()
+            switcher.switch(1, "Mod1", "Alt_L", "Shift", "Tab")
+        end, { description = "Next Client", group = "client" }),
 
---         awful.key({ A, S }, "Tab", function()
---             switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
---         end, { description = "Previous Client", group = "client" }),
---     })
--- end
+        awful.key({ A, S }, "Tab", function()
+            switcher.switch(-1, "Mod1", "Alt_L", "Shift", "Tab")
+        end, { description = "Previous Client", group = "client" }),
+    })
+end
+if collision_enabled ~= true then
+    awful.keyboard.append_global_keybindings({
+        awful.key({ W }, "Down", function()
+            awful.client.focus.bydirection("down")
+            bling.module.flash_focus.flashfocus(client.focus)
+        end, { description = "focus down", group = "client" }),
+
+        awful.key({ W }, "Up", function()
+            awful.client.focus.bydirection("up")
+            bling.module.flash_focus.flashfocus(client.focus)
+        end, { description = "focus up", group = "client" }),
+
+        awful.key({ W }, "Left", function()
+            awful.client.focus.bydirection("left")
+            bling.module.flash_focus.flashfocus(client.focus)
+        end, { description = "focus left", group = "client" }),
+
+        awful.key({ W }, "Right", function()
+            awful.client.focus.bydirection("right")
+            bling.module.flash_focus.flashfocus(client.focus)
+        end, { description = "focus right", group = "client" }),
+
+    })
+end
 
 awful.keyboard.append_global_keybindings({
     --awful.key({ W, C }, "j",

@@ -1,11 +1,12 @@
 vim.cmd[[packadd barbar.nvim]]
-vim.cmd[[packadd nvim-web-devicons]]
 
 vim.g.bufferline = {
-    animation = true,
+    animation = false,
     auto_hide = false,
 
     icons = true,
+    icon_separator_active = '',
+    icon_separator_inactive = '',
     icon_close_tab = '',
     icon_close_tab_modified = ' ',
 
@@ -13,7 +14,7 @@ vim.g.bufferline = {
     clickable = true,
 
     semantic_letters = true,
-    maximum_padding = 3
+    maximum_padding = 2
 }
 
 -- Barbar.nvim

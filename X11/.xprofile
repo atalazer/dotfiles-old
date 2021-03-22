@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Load .xinitrc
+[ -f ~/.xinitrc ] && . ~/.xinitrc
+

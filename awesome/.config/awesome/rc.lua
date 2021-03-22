@@ -12,7 +12,7 @@ local themes = {
     "xresources",
     "gtk",
 }
-RC.appearance.theme = themes[1] or "default"
+RC.appearance.theme = themes[2] or "default"
 
 local bars = {
     "tab",
@@ -31,24 +31,24 @@ local notif_style = {
 RC.appearance.notif_style = notif_style[1] or "default"
 
 RC.settings = {
+    -- Wal, color pallete generator based on wallpaper
+    wal_enabled = false,
     -- Collision - Windows management ( Boolean )
-    collision_enabled = true,
-
+    collision_enabled = false,
     -- Switcher - ALT-Tab Function
     switcher_enabled = true,
     switcher_mode = "normal",
-
     -- Nice - MacOS like Titlebars ( and Its Rounded ) will override users titlebars config
     nice_enabled = true,
-
     -- Revelation, MacOS like expose
     revelation_enabled = true,
+
 }
 
 -- List of apps to start once on start-up
 RC.autostart = {
-    "picom -b --experimental-backends --config ~/.config/picom/picom.conf",
     "/lib/mate-polkit/polkit-mate-authentication-agent-1",
+    "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
     "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
     "mpd && mpDris2",
     -- 'keyboard-switch -s',
@@ -57,15 +57,15 @@ RC.autostart = {
     "xfce4-power-manager",
     "nm-applet",
     "clipit",
--- [[
--- xidlehook --not-when-fullscreen --not-when-audio --timer 900 "awesome-client '_G.show_lockscreen()'" ""
--- ]]
+    [[
+        xidlehook --not-when-fullscreen --not-when-audio --timer 600 "betterlockscreen -l" ""
+    ]],
 
 -- You can add more start-up applications here
 }
-if RC.appearance.theme == "xresources" then
+if RC.appearance.theme == "xresources" and RC.settings.wal_enabled == true then
     table.insert(RC.autostart, "wal -n -i " .. RC.appearance.wallpaper)
-    table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
+    table.insert(RC.autostart, "xrdb -merge -I$HOME ~/.Xresources.d/color/wal ")
 else
     table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
 end
@@ -128,7 +128,7 @@ require(string.format("%s.%s", P.appearance.notification, RC.appearance.notif_st
 
 -- Titlebars
 if RC.settings.nice_enabled == true then
-    nice = require(P.module.nice);
+    nice = require(P.module.nice)
     nice({
         titlebar_height = 24,
         titlebar_radius = 12,
@@ -137,18 +137,18 @@ if RC.settings.nice_enabled == true then
         titlebar_font = RC.appearance.font,
         titlebar_color = beautiful.border_normal,
         titlebar_items = {
-            left = {"close", "minimize", "maximize"},
+            left = { "close", "minimize", "maximize" },
             middle = "title",
-            right = {} or {"sticky", "ontop", "floating"},
+            right = {} or { "sticky", "ontop", "floating" },
         },
         no_titlebar_maximized = false,
 
-        close_color    = "#ee4266",
+        close_color = "#ee4266",
         minimize_color = "#ffb400",
         maximize_color = "#4CBB17",
         floating_color = "#f6a2ed",
-        ontop_color    = "#f6a2ed",
-        sticky_color   = "#f6a2ed",
+        ontop_color = "#f6a2ed",
+        sticky_color = "#f6a2ed",
 
         button_size = 12,
         button_margin_horizontal = 2,
@@ -158,35 +158,35 @@ if RC.settings.nice_enabled == true then
         button_margin_left = 1,
         button_margin_right = 1,
 
-        mb_move               = nice.MB_LEFT,
-        mb_resize             = nice.MB_RIGHT,
-        mb_contextmenu        = nice.MB_MIDDLE,
-        mb_win_shade_rollup   = nice.MB_SCROLL_DOWN,
+        mb_move = nice.MB_LEFT,
+        mb_resize = nice.MB_RIGHT,
+        mb_contextmenu = nice.MB_MIDDLE,
+        mb_win_shade_rollup = nice.MB_SCROLL_DOWN,
         mb_win_shade_rolldown = nice.MB_SCROLL_UP,
 
         tooltips_enabled = true,
         tooltip_messages = {
-            close             = "Close",
-            minimize          = "Minimize",
-            maximize_active   = "Unmaximize",
+            close = "Close",
+            minimize = "Minimize",
+            maximize_active = "Unmaximize",
             maximize_inactive = "Maximize",
-            floating_active   = "Enable tiling mode",
+            floating_active = "Enable tiling mode",
             floating_inactive = "Enable floating mode",
-            ontop_active      = "Don't keep above other windows",
-            ontop_inactive    = "Keep above other windows",
-            sticky_active     = "Disable sticky mode",
-            sticky_inactive   = "Enable sticky mode",
+            ontop_active = "Don't keep above other windows",
+            ontop_inactive = "Keep above other windows",
+            sticky_active = "Disable sticky mode",
+            sticky_inactive = "Enable sticky mode",
         },
         context_menu_theme = {
-            bg_focus     = beautiful.bg_focus,
-            bg_normal    = beautiful.bg_normal,
+            bg_focus = beautiful.bg_focus,
+            bg_normal = beautiful.bg_normal,
             border_color = beautiful.border_normal,
             border_width = 0,
-            fg_focus     = beautiful.fg_focus,
-            fg_normal    = beautiful.fg_normal,
-            font         = RC.appearance.font,
-            height       = 25,
-            width        = 200,
+            fg_focus = beautiful.fg_focus,
+            fg_normal = beautiful.fg_normal,
+            font = RC.appearance.font,
+            height = 25,
+            width = 200,
         },
     })
 else
@@ -204,22 +204,20 @@ require(P.config.mouse)
 
 -- handling revelation modules
 if RC.settings.revelation_enabled == true then
-    revelation = require(P.module.revelation);
+    revelation = require(P.module.revelation)
     revelation.init({
-        tag_name = 'Revelation',
+        tag_name = "Revelation",
         exact = awful.rules.match,
         exact = awful.rules.match,
         charorder = "kluipyhmfdsatgvcewqzx123456780",
-    });
+    })
     awful.keyboard.append_global_keybindings({
         awful.key({ W, A }, "/", function()
-            revelation(
-                {   -- Excluded Client
-                    rule = { class = "Florence" },
-                    is_excluded = true
-                })
-        end,
-        {description = "Expose", group = "tag"})
+            revelation({ -- Excluded Client
+                rule = { class = "Florence" },
+                is_excluded = true,
+            })
+        end, { description = "Expose", group = "tag" }),
     })
 end
 -- initialize modules
@@ -230,6 +228,5 @@ require(P.module.quake_terminal)
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
-collectgarbage("setpause", 100)
-collectgarbage("setstepmul", 1000)
-
+collectgarbage("setpause", 150)
+collectgarbage("setstepmul", 1200)

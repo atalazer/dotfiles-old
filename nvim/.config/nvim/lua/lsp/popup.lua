@@ -20,7 +20,7 @@ require("lspsaga").init_lsp_saga({
 
     code_action_prompt = {
         enable = false,
-        sign = false,
+        sign = true,
         sign_priority = 20,
         virtual_text = false,
     },

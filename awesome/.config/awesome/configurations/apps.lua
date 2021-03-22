@@ -24,7 +24,7 @@ RC.apps = {
         multimedia     = "mpv",
         graphics       = "GTK_THEME=Adwaita:light inkscape",
         game           = "opsu",
-        lock           = 'awesome-client "_G.show_lockscreen()"',
+        lock           = 'betterlockscreen -l',
     },
     rofi = {
         drun      = 'j4-dmenu-desktop dmenu="rofi -show drun -modi drun"',

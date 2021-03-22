@@ -26,3 +26,4 @@
 #--map-syntax ".ignore:Git Ignore"
 
 --style="plain"
+--pager 'less -rf'

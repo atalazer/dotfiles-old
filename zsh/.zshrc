@@ -31,18 +31,16 @@ zinit light-mode for \
 zinit wait lucid for \
     OMZL::clipboard.zsh \
     OMZL::completion.zsh \
-    OMZL::directories.zsh \
     OMZL::git.zsh \
-    OMZL::key-bindings.zsh \
-    OMZL::spectrum.zsh
+    OMZL::key-bindings.zsh
 
 zinit wait lucid for \
     OMZP::archlinux \
     OMZP::thefuck \
     OMZP::sudo \
     OMZP::systemd \
-  atload"unalias grv" \
     OMZP::git \
+    OMZP::command-not-found
 
 zinit wait'0' lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
@@ -76,6 +74,8 @@ export DOTBARE_PREVIEW="bat {}"
 zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
+zinit load lukechilds/zsh-better-npm-completion
+
 # =================
 # Initialize Themes
 # =================
@@ -93,13 +93,11 @@ export Z_DIR="/home/atalariq/.zsh"
 
 # source zinit config
 # source_path ${Z_DIR}/init.zsh
-source_path /usr/share/doc/pkgfile/command-not-found.zsh
 # ----------------------
 # User Section
 # ----------------------
 export VISUAL="nvim"
 export EDITOR="nvim"
-
 
 source_path ~/.config/nnn/nnn
 
@@ -110,6 +108,7 @@ source_path ${Z_DIR}/function.zsh
 # Start Section
 # ----------------------
 eval "$(zoxide init zsh)"
+eval "$(pip completion --zsh)"
 
 # -----------------
 # Zsh configuration

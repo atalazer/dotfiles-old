@@ -1,10 +1,6 @@
 vim.cmd[[packadd lspsaga.nvim]]
 vim.cmd[[packadd telescope.nvim]]
 
-local k = require("astronauta.keymap")
-local nnoremap = k.nnoremap
-local inoremap = k.inoremap
-
 local M = {}
 
 local hover      = require("lspsaga.hover")
