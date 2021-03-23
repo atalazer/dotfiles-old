@@ -4,6 +4,8 @@
 **/*.log
 **/*.pid
 **/__pycache__/*
+**/.lastd
+**/.aliases
+**/appearance.lua
 **/api.json
 mpd/.config/mpd/mpdstate
-*/.lastf
