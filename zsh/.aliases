@@ -39,6 +39,7 @@ alias ls="exa --icons --group-directories-first"
 alias lsa="exa --icons --group-directories-first -a"
 alias ll="exa --icons --group-directories-first -lgh"
 alias lla="exa --icons --group-directories-first -algh"
+alias tree="exa --icons --group-directories-first --tree"
 
 # User Trash Instead of rm 
 alias rm="trash"
@@ -50,12 +51,19 @@ alias trs="trash-restore"
 alias fzfp="fzf --reverse --preview 'bat --style=numbers --color=always {}'"
 
 # Neovim Alias
-alias {e,vim,vi}="nvim"
-alias {envim,evim,ev}="nvim ~/.config/nvim/init.lua"
+alias {e,vim,vi}="${EDITOR}"
+alias {envim,evim,ev}="${EDITOR} ~/.config/nvim/init.lua"
+alias {zshrc,ez}="${EDITOR} ~/.zshrc"
+alias {xrc,exr}="${EDITOR} ~/.Xresources"
+alias {awc,eawe}="${EDITOR} ~/.config/awesome/rc.lua"
+
+# Xresources Alias
+alias xload="xrdb -load ~/.Xresources"
+alias xmerge="xrdb -merge ~/.Xresources"
 
 # File Manager
 alias fm=nnn
-alias fmq=qnnn
+alias {fmcd,fmq}=qnnn
 alias fmp=pnnn
 alias gfm=nemo
 

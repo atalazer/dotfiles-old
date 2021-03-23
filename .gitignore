@@ -3,9 +3,8 @@
 **/.uuid
 **/*.log
 **/*.pid
-**/__pycache__/*
 **/.lastd
-**/.aliases
 **/appearance.lua
 **/api.json
+**/__pycache__/*
 mpd/.config/mpd/mpdstate
