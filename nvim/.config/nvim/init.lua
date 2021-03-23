@@ -8,7 +8,7 @@ require("pluginsList.init")
 -- ==================================== neovim basic configuration
 require("base.settings")
 require("base.events")
--- require("base.commands")
+require("base.commands")
 require("mappings.keys")
 
 -- ==================================== UI Related
@@ -45,7 +45,7 @@ require("plugins.surround")
 
 -- ==================================== Language support
 require("plugins.markdown")
-require("plugins.treesitter")           -- Syntax highlighting
+require("plugins.treesitter") -- Syntax highlighting
 
 -- ==================================== Plugins Keys
 require("mappings.pkeys")

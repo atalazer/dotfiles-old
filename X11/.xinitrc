@@ -1,5 +1,5 @@
 #!/bin/sh
-Load .xprofile
+# Load .xprofile
 [ -f ~/.profile ] && . ~/.profile
 
 xset -b 

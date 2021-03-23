@@ -1,4 +1,4 @@
-vim.cmd([[packadd nvim-lspconfig]])
+vim.cmd[[packadd nvim-lspconfig]]
 
 local keys = require("lsp.keys")
 local aerial = require("lsp.aerial")
@@ -19,28 +19,24 @@ local custom_on_init = function()
     print("Language Server Protocol Initialized")
 end
 
-require("lsp.custom.emmetls")
+-- require("lsp.custom.emmetls")
 local sumneko_root = os.getenv("HOME") .. "/.local/bin/lsp/lua-language-server"
 -- local sumneko_cmd = sumneko_root .. "/bin/Linux/lua-language-server"
 local sumneko_cmd = "lua-language-server"
 
 local servers = {
     bashls = {},
-    clangd = {
-        root_dir = function()
-            vim.fn.getcwd()
-        end,
-    },
+    clangd = {},
     html = {},
     cssls = {},
-    emmetls  = {},
-    -- tsserver = {},
-    rome = {
-        filetypes = { "javascript", "json", "typescript" },
-        root_dir = function()
-            vim.fn.getcwd()
-        end,
-    },
+    -- emmetls  = {},
+    tsserver = {},
+    -- rome = {
+    --     filetypes = { "javascript", "json", "typescript" },
+    --     root_dir = function()
+    --         vim.fn.getcwd()
+    --     end,
+    -- },
     yamlls = {},
     jsonls = {},
     vimls = {},
@@ -67,21 +63,11 @@ local servers = {
             },
         },
     },
-    pyls = {
-        root_dir = function()
-            vim.fn.getcwd()
-        end,
-    },
-    gopls = {
-        root_dir = function()
-            vim.fn.getcwd()
-        end,
-    },
+    pyls = {},
+    gopls = {},
     -- rls      = {},
     rust_analyzer = {
-        root_dir = function()
-            vim.fn.getcwd()
-        end,
+        root_dir = function() vim.fn.getcwd() end,
         settings = {
             ["rust-analyzer"] = {
                 cargo = {

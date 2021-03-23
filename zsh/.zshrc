@@ -103,7 +103,7 @@ source_path ~/.config/nnn/nnn
 
 source_path ${HOME}/.aliases
 source_path ${Z_DIR}/function.zsh
-
+source_path ${HOME}/.fzf.zsh
 # ----------------------
 # Start Section
 # ----------------------
@@ -113,16 +113,21 @@ eval "$(pip completion --zsh)"
 # -----------------
 # Zsh configuration
 # -----------------
+bindkey -e
+setopt autocd   # automatically cd into typed directory.
+
+# Find new executables in path
+zstyle ':completion:*' rehash true
+
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
 setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_VERIFY
-setopt SHARE_HISTORY
 
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

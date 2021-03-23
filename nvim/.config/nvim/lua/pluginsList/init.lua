@@ -57,13 +57,13 @@ if ok then
 
         -- ------------------------------ Experience
         use({ "editorconfig/editorconfig-vim", opt = true })
-        use({ "mattn/emmet-vim", opt = true }) -- Emmet Support for vim
+        use({ "mattn/emmet-vim", opt = false }) -- Emmet Support for vim
         use({ "windwp/nvim-autopairs", opt = true }) -- Autopairs
         use({ "windwp/nvim-ts-autotag", opt = true }) -- Auto-close tag
         use({ "mg979/vim-visual-multi", opt = false }) -- Multi Cursor
-        use({ "phaazon/hop.nvim", opt = true }) -- vim easy motion
-        use({ "b3nj5m1n/kommentary", opt = true }) -- Eassy Commenting
-        use({ "blackcauldron7/surround.nvim", opt = true }) -- Vim surround
+        use({ "phaazon/hop.nvim", opt = false }) -- vim easy motion
+        use({ "b3nj5m1n/kommentary", opt = false }) -- Eassy Commenting
+        use({ "blackcauldron7/surround.nvim", opt = false }) -- Vim surround
         use({ "lukas-reineke/format.nvim", opt = true }) -- Code formatter
 
         use({ "godlygeek/tabular" }) -- Align

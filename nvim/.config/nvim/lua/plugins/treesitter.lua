@@ -19,9 +19,5 @@ ts_config.setup {
     },
     autotag = {
         enable = true,
-        filetypes = {
-            "javascript",
-            "html", "xml", "markdown",
-        },
     },
 }

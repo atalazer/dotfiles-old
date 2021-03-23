@@ -83,6 +83,6 @@ nnoremap{"<leader>d", "<C-W>l"}
 -- Vim Session
 map{"<F2>", ":mksession! ~/.config/nvim/.last_session<cr>"}
 map{"<F3>", ":source ~/.config/nvim/.last_session<cr>"}
-nnoremap{"<F4>", "<cmd>!xdg-open %", { silent = true }}
+nnoremap{"<F4>", "<cmd>!xdg-open %<CR>", { silent = true }}
 map{"<F8>", ":set autochdir! autochdir?<CR>"}
 
