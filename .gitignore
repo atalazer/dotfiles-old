@@ -1,0 +1,9 @@
+**/*.dat
+**/*.db
+**/.uuid
+**/*.log
+**/*.pid
+**/__pycache__/*
+**/api.json
+mpd/.config/mpd/mpdstate
+*/.lastf
