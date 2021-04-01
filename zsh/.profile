@@ -1,5 +1,6 @@
 #!/bin/sh
-export TERMINAL="alacritty"
+export BROWSER="firefox"
+export TERMINAL="kitty"     # kitty, alacritty, st
 export DOTS="/home/atalariq/.dotfiles"
 export TERMINFO=~/.terminfo
 
@@ -12,16 +13,17 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --ignore-file ".gitignore"'
 export SKIM_DEFAULT_COMMAND='rg --files --no-ignore --ignore-file ".gitignore"'
 
-export_path(){
+_export_path(){
     if [[ -z $(printf $PATH | grep $1) ]]; then
         export PATH="$1:$PATH"
     fi
 }
-export_path ${HOME}/.local/bin
-export_path ${HOME}/.local/bin/appimage
-export_path ${HOME}/.local/bin/link
+_export_path ${HOME}/.local/bin
+_export_path ${HOME}/.local/bin/appimage
+_export_path ${HOME}/.local/bin/link
+_export_path ${HOME}/.local/bin/script
 
-# Node.js 
+# Node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 

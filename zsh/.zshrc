@@ -1,10 +1,38 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# =================================================
+# Zsh configuration
+# =================================================
+precmd () {
+    print -Pn "\e]0;%~\a"
+}
+preexec () {
+    print -Pn "\e]0;%~:$1\a"
+}
 
+: ${HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory}
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_FIND_NO_DUPS; setopt HIST_IGNORE_DUPS;
+setopt HIST_IGNORE_SPACE; setopt HIST_VERIFY; setopt SHARE_HISTORY;
+
+DIRSTACKSIZE=16
+setopt AUTO_CD; setopt AUTO_PUSHD; setopt PUSHD_SILENT;
+setopt PUSHD_IGNORE_DUPS; setopt PUSHD_TO_HOME;
+
+setopt INTERACTIVE_COMMENTS; setopt EXTENDED_GLOB;
+# setopt NO_CLOBBER;
+
+setopt LONG_LIST_JOBS; setopt NO_BG_NICE;
+setopt NO_CHECK_JOBS; setopt NO_HUP;
+
+bindkey -e
+
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+# =================================================
+# Zinit
+# =================================================
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
@@ -17,48 +45,41 @@ fi
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
-
 ### End of Zinit's installer chunk
 
-zinit wait lucid for \
-    OMZL::clipboard.zsh \
-    OMZL::completion.zsh \
-    OMZL::git.zsh \
-    OMZL::key-bindings.zsh
+# =================================================
+# Users Plugins
+# =================================================
 
-zinit wait lucid for \
-    OMZP::archlinux \
-    OMZP::thefuck \
-    OMZP::sudo \
-    OMZP::systemd \
-    OMZP::git \
-    OMZP::command-not-found
+# ----------------------------------- Autosuggestions & fast-syntax-highlighting
+# fast-syntax-highlighting
+zinit ice wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zinit light zdharma/fast-syntax-highlighting
 
-zinit wait'0' lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
- blockf \
-    zsh-users/zsh-completions \
- atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
+# zsh-autosuggestions
+zinit ice wait lucid atload"!_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
 
-zinit ice atload'zsh-startify'
-zinit light zdharma/zsh-startify
-zstyle ":plugin:zsh-startify:shellutils" size 5
-zstyle ":plugin:zsh-startify:vim" size 5
-
+# zsh-autopair bracket
 zinit ice wait lucid
-zinit light kazhala/dotbare
-export DOTBARE_DIR="$HOME/.dotfiles/.git"
-export DOTBARE_TREE="$HOME/.dotfiles"
+zinit light hlissner/zsh-autopair
+
+# ----------------------------------- Completions
+eval "$(thefuck --alias)"
+eval "$(pip completion --zsh)"
+
+zinit wait lucid for \
+    lukechilds/zsh-better-npm-completion
+
+zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
+    zsh-users/zsh-completions
+
+# ----------------------------------- Misc
+# --- Dotfiles Manager
+zinit ice wait lucid
+zinit load kazhala/dotbare
+export DOTBARE_DIR="${DOTS:-$HOME/.dotfiles}/.git"
+export DOTBARE_TREE="${DOTS:-$HOME/.dotfiles}"
 export DOTBARE_BACKUP="${XDG_DATA_HOME:-$HOME/.local/share}/dotbare"
 export DOTBARE_KEY="
     --bind=alt-a:toggle-all
@@ -71,63 +92,34 @@ export DOTBARE_FZF_DEFAULT_OPTS="--preview-window=right:50%"
 export DOTBARE_PREVIEW="bat {}"
 # export DOTBARE_DIFF_PAGER="delta --diff-so-fancy --line-numbers"
 
-zinit ice wait lucid
-zinit light hlissner/zsh-autopair
-
-zinit load lukechilds/zsh-better-npm-completion
-
-# =================
+# =================================================
 # Initialize Themes
-# =================
+# =================================================
+eval "$(starship init zsh)"
+# zinit light romkatv/powerlevel10k
 
-# zinit ice pick"async.zsh" src"pure.zsh"
-# zinit light sindresorhus/pure
-
-zinit light romkatv/powerlevel10k
-
-# ------------------
+# =================================================
 # Initialize User Configs
-# ------------------
-source_path(){ [ -f $1 ] && source $1 }
+# =================================================
+_source_path(){ [ -f $1 ] && source $1 }
 export Z_DIR="/home/atalariq/.zsh"
 
-# source zinit config
+# source zsh config
 # source_path ${Z_DIR}/init.zsh
-# ----------------------
+_source_path ${Z_DIR}/compe.zsh
+_source_path ${Z_DIR}/function.zsh
+_source_path ${Z_DIR}/keys.zsh
+_source_path ${HOME}/.fzf.zsh
+_source_path /usr/share/doc/pkgfile/command-not-found.zsh
+
+# =================================================
 # User Section
-# ----------------------
+# =================================================
 export VISUAL="nvim"
 export EDITOR="nvim"
 
-source_path ~/.config/nnn/nnn
-
-source_path ${HOME}/.aliases
-source_path ${Z_DIR}/function.zsh
-source_path ${HOME}/.fzf.zsh
-# ----------------------
-# Start Section
-# ----------------------
 eval "$(zoxide init zsh)"
-eval "$(pip completion --zsh)"
 
-# -----------------
-# Zsh configuration
-# -----------------
-bindkey -e
-setopt autocd   # automatically cd into typed directory.
+_source_path ${HOME}/.aliases
+_source_path ${HOME}/.config/nnn/nnn
 
-# Find new executables in path
-zstyle ':completion:*' rehash true
-
-# History in cache directory:
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=$HOME/.zsh_history
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
-
-# Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
