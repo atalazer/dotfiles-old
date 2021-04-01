@@ -7,7 +7,7 @@ if  collision_enabled == true then
     require(P.module.collision)()
 else
     awful.keyboard.append_global_keybindings({
-        awful.key({ W, S }, "Left",
+        awful.key({ W, A, S }, "Left",
             function ()
                 -- get current tag
                 local t = client.focus and client.focus.first_tag or nil
@@ -21,7 +21,7 @@ else
             end,
         {description = "move client to previous tag and switch to it", group = "tag"}),
 
-        awful.key({ W, S }, "Right",
+        awful.key({ W, A, S }, "Right",
             function ()
               -- get current tag
               local t = client.focus and client.focus.first_tag or nil
@@ -34,23 +34,23 @@ else
               awful.tag.viewnext()
             end,
         {description = "move client to next tag and switch to it", group = "tag"}),
-        
+
         awful.key({ W, A }, "Left",
         --awful.key({ W }, "Left",
             awful.tag.viewprev,
         {description = "view previous", group = "tag"}),
-        
+
         awful.key({ W, A }, "Right",  
         --awful.key({ W }, "Right",  
             awful.tag.viewnext,
         {description = "view next", group = "tag"}),
-        
+
     })
 end
 
 awful.keyboard.append_global_keybindings({
     -- restore previous tag
-    awful.key({ W }, "Escape", 
+    awful.key({ W, C }, "Escape", 
         awful.tag.history.restore,
     {description = "go back", group = "tag"}),
 
@@ -66,7 +66,7 @@ awful.keyboard.append_global_keybindings({
          awful.tag.incgap(-5, nil)
       end,
       {description = "decrement gap size for the current tag", group = "gaps"}),
-    
+
     -- Tag Move
     awful.key {
         modifiers   = { W },

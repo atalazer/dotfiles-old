@@ -1,19 +1,17 @@
+local menubar = require("menubar")
 local filesystem = require('gears.filesystem')
 local config_dir = filesystem.get_configuration_dir()
 
 local utils_dir = config_dir .. 'utils/'
-local controller_dir = {
-    music      = config_dir .. 'utils/music/',
-    brightness = config_dir .. 'utils/',
-    volume     = config_dir .. 'utils/',
-    vk         = config_dir .. 'utils/',
-}
 
 RC.apps = {
     default = {
-        terminal       = os.getenv("TERMINAL") or "alacritty",
-        terminal_float = "kitty --class Float",
-        terminal_quake = "kitty --name QuakeTerminal",
+        terminal        = os.getenv("TERMINAL") or "kitty",
+        terminal_float  = "kitty --class Float",
+        terminal_quake  = "kitty --name QuakeTerminal",
+        terminal_lyrics = "kitty "..
+            "--config ~/.config/kitty/kitty-lyrics.conf --class lyricsQuake " ..
+            "-e ncmpcpp -c ~/.config/ncmpcpp/lyrics.conf -s lyrics",
         t_editor       = "nvim",
         editor         = "subl",
         t_file_manager = "kitty --class Files -e nnn",
@@ -41,22 +39,28 @@ RC.apps = {
     },
     controller = {
         -- Volume Control
-        vol_up      = controller_dir.volume .. "volume-controller up",
-        vol_down    = controller_dir.volume .. "volume-controller down",
-        vol_mute    = controller_dir.volume .. "volume-controller mute",
+        vol_up      = utils_dir .. "volume-controller up",
+        vol_down    = utils_dir .. "volume-controller down",
+        vol_mute    = utils_dir .. "volume-controller mute",
         -- Brightness Control
-        bn_up       = controller_dir.brightness .. "brightness-controller up",
-        bn_down     = controller_dir.brightness .. "brightness-controller down",
-        bn_opt      = controller_dir.brightness .. "brightness-controller optimize",
+        bn_up       = utils_dir .. "brightness-controller up",
+        bn_down     = utils_dir .. "brightness-controller down",
+        bn_opt      = utils_dir .. "brightness-controller optimize",
         -- Music Control
-        mus_n       = controller_dir.music .. "music-controller next",
-        mus_p       = controller_dir.music .. "music-controller prev",
-        mus_t       = controller_dir.music .. "music-controller toggle",
-        mus_s       = controller_dir.music .. "music-controller stop",
-        mus_c       = controller_dir.music .. "music-controller current",
+        mus_n       = utils_dir .. "music/music-controller next",
+        mus_p       = utils_dir .. "music/music-controller prev",
+        mus_t       = utils_dir .. "music/music-controller toggle",
+        mus_s       = utils_dir .. "music/music-controller stop",
+        mus_c       = utils_dir .. "music/music-controller current",
+        -- Shot
+        shot        = utils_dir .. 'shot save',
+        shot_clip   = utils_dir .. 'shot clipboard',
+        shot_active = utils_dir .. 'shot active',
+        shot_sleep  = utils_dir .. 'shot sleep',
+        shot_select = utils_dir .. 'shot select',
         -- Keyboard Control
-        vk_show = controller_dir.vk .. 'florence-toggle toggle' or controller_dir.vk .. 'florence-toggle show',
-        vk_hide = controller_dir.vk .. 'florence-toggle toggle' or controller_dir.vk .. 'florence-toggle hide',
+        vk_show = utils_dir .. 'florence-toggle toggle' or utils_dir .. 'florence-toggle show',
+        vk_hide = utils_dir .. 'florence-toggle toggle' or utils_dir .. 'florence-toggle hide',
     },
     utils = {
         -- Fullscreen screenshot
@@ -67,5 +71,6 @@ RC.apps = {
         update_profile  = utils_dir .. 'profile-image'
     }
 }
+menubar.utils.terminal = RC.apps.default.terminal
 
 return RC.apps

@@ -61,6 +61,10 @@ awful.keyboard.append_global_keybindings({
         function () awful.spawn(apps.default.t_music) end,
         {description = "Open a music player", group = "launcher"}),
 
+    awful.key({ W, A }, 'm',
+        function() awesome.emit_signal('module::lyricsQuake:toggle') end,
+        {description = 'Open Quake Terminal', group = 'launcher'}),
+
     -- ========= Rofi
     awful.key({ W }, "r", 
         function () awful.spawn(apps.rofi.drun) end,

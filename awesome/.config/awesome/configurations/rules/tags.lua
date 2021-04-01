@@ -3,24 +3,27 @@ local gears = require("gears")
 local ruled = require("ruled")
 local beautiful = require("beautiful")
 
+local tag = require(P.config.tag)
+
+local get_tag_name = function(id)
+    t = awful.screen.focused().tags[id].name
+    return t
+end
+
 ruled.client.connect_signal("request::rules", function()
     -- Terminal emulators
     ruled.client.append_rule({
         id = "terminals",
         rule_any = {
             class = {
-                "Alacritty",
-                "kitty",
-                "Tym",
-                "URxvt",
-                "XTerm",
+                "Alacritty" , "kitty" , "Tym" ,
+                "URxvt"     , "XTerm" , "st"
             },
         },
         properties = {
-            tag = "1",
+            tag = get_tag_name(1),
             switch_to_tags = true,
             titlebars_enabled = false,
-            size_hints_honor = false,
             border_width = beautiful.border_width,
         },
     })
@@ -37,7 +40,7 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             focus = awful.client.focus.filter,
             raise = true,
-            placement = awful.placement.centered,
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Browsers and chats
@@ -47,14 +50,15 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "discord",
                 "TelegramDesktop",
-                "firefox",
+                "Navigator",
             },
         },
         properties = {
-            tag = "2",
+            tag = get_tag_name(2),
             switch_to_tags = true,
             titlebars_enabled = true,
-            placement = awful.placement.centered,
+            skip_decoration = false,
+            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- File managers
@@ -70,11 +74,10 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            tag = "3",
+            tag = get_tag_name(3),
             switch_to_tags = true,
             titlebars_enabled = true,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
-
+            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Docs
@@ -89,9 +92,9 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            tag = "3",
+            tag = get_tag_name(3),
             switch_to_tags = true,
-            titlebars_enabled = false,
+            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Multimedia
@@ -105,10 +108,8 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             titlebars_enabled = true,
-            size_hints_honor = false,
-            skip_decoration = true,
             floating = true,
-            placement = awful.placement.centered,
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Graphics
@@ -120,8 +121,11 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            tag = "3",
+            tag = get_tag_name(3),
             switch_to_tags = true,
+            titlebars_enabled = true,
+            floating = true,
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Games
@@ -135,13 +139,13 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            -- tag = "4",
+            -- tag = get_tag_name(4),
             -- switch_to_tags = true,
             titlebars_enabled = false,
             size_hints_honor = false,
             floating = true,
             skip_decoration = true,
-            placement = awful.placement.centered,
+            placement = awful.placement.centered
         },
     })
 end)

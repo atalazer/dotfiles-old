@@ -3,26 +3,23 @@
 up="pamixer -i 5"
 down="pamixer -d 5"
 mute="pamixer -t"
-current_vol() { 
-    amixer -D pulse get Master | grep '%' | head -n 1 | awk -F'[' '{print $2}' | awk -F'%' '{print $1}'; 
-}
-
+get="pamixer --get-volume-human"
 
 case $1 in
-    up) 
+    up)
         bash -c "$up"
-        notify-send $(current_vol)
+        notify-send $(bash -c "$get")
     ;;
-    down) 
+    down)
         bash -c "$down"
-        notify-send $(current_vol)
+        notify-send $(bash -c "$get")
     ;;
-    mute) 
+    mute)
         bash -c "$mute"
-        notify-send $(current_vol)
+        notify-send $(bash -c "$get")
     ;;
-    get) 
-        current_vol
+    get)
+        bash -c "$get"
     ;;
 esac
 

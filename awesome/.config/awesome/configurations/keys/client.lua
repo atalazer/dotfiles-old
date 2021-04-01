@@ -21,22 +21,22 @@ if collision_enabled ~= true then
     awful.keyboard.append_global_keybindings({
         awful.key({ W }, "Down", function()
             awful.client.focus.bydirection("down")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end, { description = "focus down", group = "client" }),
 
         awful.key({ W }, "Up", function()
             awful.client.focus.bydirection("up")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end, { description = "focus up", group = "client" }),
 
         awful.key({ W }, "Left", function()
             awful.client.focus.bydirection("left")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end, { description = "focus left", group = "client" }),
 
         awful.key({ W }, "Right", function()
             awful.client.focus.bydirection("right")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end, { description = "focus right", group = "client" }),
 
     })

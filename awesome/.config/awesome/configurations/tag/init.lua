@@ -38,7 +38,11 @@ RC.tags = {
         name = { "Inet", "❷ Inet", "二" },
         icon = icons.web_browser,
         default_app = apps.default.web_browser,
-        layout = awful.layout.suit.max,
+        layout = awful.layout.suit.floating,
+        layouts = {
+            awful.layout.suit.max,
+            awful.layout.suit.floating,
+        },
     },
     {
         type = "files",
@@ -92,29 +96,30 @@ screen.connect_signal("request::desktop_decoration", function(s)
     if RC.settings.tags.icon.enable == true then
         for i, tag in pairs(RC.tags) do
             awful.tag.add(i, {
-                name = tag.name[RC.settings.tags.name] or tag.name[1],
-                icon = tag.icon or icons.close,
-                icon_only = RC.settings.tags.icon.icon_only or true,
-                layout = tag.layout or awful.layout.suit.floating,
-                layouts = tag.layouts or awful.layout.layouts,
+                index             = i,
+                icon              = tag.icon or icons.close,
+                icon_only         = RC.settings.tags.icon.icon_only or true,
+                layout            = tag.layout or awful.layout.suit.floating,
+                layouts           = tag.layouts or awful.layout.layouts,
                 gap_single_client = RC.settings.tags.gap_single_client or true,
-                gap = tag.gap,
-                screen = s,
-                default_app = tag.default_app or apps.default.terminal,
-                selected = i == 1,
+                gap               = tag.gap,
+                screen            = s,
+                default_app       = tag.default_app or apps.default.terminal,
+                selected          = i == 1,
             })
         end
     elseif RC.settings.tags.icon.enable == false then
         for i, tag in pairs(RC.tags) do
             awful.tag.add(i, {
-                name = tag.name[RC.settings.tags.name] or tag.name[1],
-                layout = tag.layout or awful.layout.suit.floating,
-                layouts = tag.layouts or awful.layout.layouts,
+                index             = i,
+                name              = tag.name[RC.settings.tags.name] or tag.name[1],
+                layout            = tag.layout or awful.layout.suit.floating,
+                layouts           = tag.layouts or awful.layout.layouts,
                 gap_single_client = RC.settings.tags.gap_single_client or true,
-                gap = tag.gap,
-                screen = s,
-                default_app = tag.default_app or apps.default.terminal,
-                selected = i == 1,
+                gap               = tag.gap,
+                screen            = s,
+                default_app       = tag.default_app or apps.default.terminal,
+                selected          = i == 1,
             })
         end
     else
@@ -174,3 +179,5 @@ awful.tag.attached_connect_signal(s, "property::selected", function()
         end
     end
 end)
+
+return RC.tags

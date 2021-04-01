@@ -32,6 +32,7 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
+            skip_taskbar = true,
             focusable = false,
             titlebars_enabled = false,
             skip_decoration = true,

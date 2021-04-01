@@ -31,7 +31,6 @@ ruled.client.connect_signal('request::rules',function()
             name = {'Discord Updater'}
         },
         properties = {
-            round_corners = true,
             shape         = beautiful.client_shape_rounded
         }
     }
@@ -127,15 +126,19 @@ ruled.client.connect_signal('request::rules',function()
                 'Mugshot', 'Gcolor3', 'Pulseeffects',
                 'scrcpy',
             },
+            name = {
+                "Event Tester",
+                "Open File",
+                "Media viewer",
+            },
             role    = {
                 "_NET_WM_STATE_FULLSCREEN",
                 'AlarmWindow', 'ConfigManager', 'pop-up',
+                "GtkFileChooserDialog",
             }
         },
         properties = {
             floating          = true,
-            raise             = true,
-            focus             = awful.client.focus.filter,
             placement         = awful.placement.centered
         }
     }

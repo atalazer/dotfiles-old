@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-up="brightnessctl set 5%+"
-down="brightnessctl set 5%-"
+up="light -A 5"
+down="light -U 5"
+
+current_bn() {
+    light -G | cut -c 1-2
+}
 
 optimize (){
     if [ ! -z $(pgrep redshift) ];
@@ -13,20 +17,16 @@ optimize (){
     fi
 }
 
-current_bn() {
-    brightnessctl i | grep '%' | awk -F'(' '{print $2}' | awk -F'%' '{print $1}'; 
-}
-
 case $1 in
-    up) 
+    up)
         bash -c "$up"
         notify-send $(current_bn)
     ;;
-    down) 
+    down)
         bash -c "$down"
         notify-send $(current_bn)
     ;;
-    optimize) 
+    optimize)
         optimize
         notify-send $(current_bn)
     ;;

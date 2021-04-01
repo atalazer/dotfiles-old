@@ -5,14 +5,14 @@ RC.appearance = {
     font = "SF Pro Text Regular 9",
     -- font      = "JetBrainsMono Nerd Font 9",
     sys_icons = "Papirus-Dark",
-    wallpaper = "/home/atalariq/.wallpaper/mechanical/raindrops-1_FHD.jpg",
+    wallpaper = "/home/atalariq/.wallpaper/eyecandy/mountain-4_3K.jpg",
 }
 
 local themes = {
     "xresources",
     "gtk",
 }
-RC.appearance.theme = themes[2] or "default"
+RC.appearance.theme = themes[1] or "default"
 
 local bars = {
     "tab",
@@ -32,7 +32,7 @@ RC.appearance.notif_style = notif_style[1] or "default"
 
 RC.settings = {
     -- Wal, color pallete generator based on wallpaper
-    wal_enabled = false,
+    wal_enabled = true,
     -- Collision - Windows management ( Boolean )
     collision_enabled = false,
     -- Switcher - ALT-Tab Function
@@ -58,13 +58,13 @@ RC.autostart = {
     "nm-applet",
     "clipit",
     [[
-        xidlehook --not-when-fullscreen --not-when-audio --timer 600 "betterlockscreen -l" ""
+        xidlehook --not-when-fullscreen --not-when-audio --timer 300 "betterlockscreen -l" ""
     ]],
 
 -- You can add more start-up applications here
 }
-if RC.appearance.theme == "xresources" and RC.settings.wal_enabled == true then
-    table.insert(RC.autostart, "wal -n -i " .. RC.appearance.wallpaper)
+if RC.settings.wal_enabled == true then
+    table.insert(RC.autostart, "wal --backend haishoku -n -i " .. RC.appearance.wallpaper)
     table.insert(RC.autostart, "xrdb -merge -I$HOME ~/.Xresources.d/color/wal ")
 else
     table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
@@ -72,15 +72,37 @@ end
 
 -- ===== Initialize =====
 pcall(require, "luarocks.loader")
--- Theme handling library
-local beautiful = require("beautiful")
--- Make dpi function global
 -- Awesome Library
 -- Load AwesomeWM libraries
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
+-- Theme handling library
+local beautiful = require("beautiful")
+local xrdb = beautiful.xresources.get_current_theme()
+dpi = beautiful.xresources.apply_dpi
+x = {
+    --  xrdb variable
+    background = xrdb.background,
+    foreground = xrdb.foreground,
+    black   = xrdb.color0,
+    red     = xrdb.color1,
+    green   = xrdb.color2,
+    yellow  = xrdb.color3,
+    blue    = xrdb.color4,
+    magenta = xrdb.color5,
+    cyan    = xrdb.color6,
+    white   = xrdb.color7,
+    grey    = xrdb.color8,
+    color9  = xrdb.color9,
+    color10 = xrdb.color10,
+    color11 = xrdb.color11,
+    color12 = xrdb.color12,
+    color13 = xrdb.color13,
+    color14 = xrdb.color14,
+    color15 = xrdb.color15,
+}
 -- Path List
 P = {
     appearance = {
@@ -104,6 +126,9 @@ P = {
         set_wallpaper = "modules.set-wallpaper",
         sloppy_focus = "modules.sloppy-focus",
         quake_terminal = "modules.quake-terminal",
+        mpd = {
+            lyrics = "modules.mpd.lyrics"
+        },
         collision = "modules.collision",
         nice = "modules.nice",
         revelation = "modules.revelation",
@@ -143,12 +168,12 @@ if RC.settings.nice_enabled == true then
         },
         no_titlebar_maximized = false,
 
-        close_color = "#ee4266",
+        close_color    = "#ee4266",
         minimize_color = "#ffb400",
         maximize_color = "#4CBB17",
         floating_color = "#f6a2ed",
-        ontop_color = "#f6a2ed",
-        sticky_color = "#f6a2ed",
+        ontop_color    = "#f6a2ed",
+        sticky_color   = "#f6a2ed",
 
         button_size = 12,
         button_margin_horizontal = 2,
@@ -206,23 +231,25 @@ require(P.config.mouse)
 if RC.settings.revelation_enabled == true then
     revelation = require(P.module.revelation)
     revelation.init({
-        tag_name = "Revelation",
+        tag_name = "--",
         exact = awful.rules.match,
-        exact = awful.rules.match,
-        charorder = "kluipyhmfdsatgvcewqzx123456780",
+        -- charorder = "kluipyhmfdsatgvcewqzx123456780",
+        charorder = "kl;'m,./ip[]",
     })
     awful.keyboard.append_global_keybindings({
         awful.key({ W, A }, "/", function()
-            revelation({ -- Excluded Client
-                rule = { class = "Florence" },
-                is_excluded = true,
-            })
+            revelation(
+                {rule = { class = "Florence"},is_excluded = true,},
+                {rule = { class = "lyricsQuake"},is_excluded = true,},
+                {rule = { class = "quakeTerminal"},is_excluded = true,}
+            )
         end, { description = "Expose", group = "tag" }),
     })
 end
 -- initialize modules
 require(P.module.autostart)
 require(P.module.quake_terminal)
+require(P.module.mpd.lyrics)
 -- require(P.module.sloppy_focus)
 
 -- Garbage collection
