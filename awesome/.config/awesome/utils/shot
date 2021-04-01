@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+
+SCREENSHOT_DIR=$(xdg-user-dir PICTURES)/Screenshots
+SAVED_NAME=$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S).png
+TMP_IMG=/tmp/image.png
+
+background_color=#ffffff
+background_size="10"
+color_fg=#ffffff
+color_bg=#555555
+
+sleep=3
+border_size=2
+shadow_size="50x10+0+10"
+color_profile="/usr/share/color/icc/colord/sRGB.icc"
+font='JetBrains-Mono-Bold-Nerd-Font-Complete'
+font_size="11"
+
+author_position=("South" "+0+26")
+author="By: $USER"
+
+check(){
+    if [ ! -d "$SCREENSHOT_DIR" ];
+    then
+        /bin/mkdir -p "$SCREENSHOT_DIR"
+    fi
+
+    if [ -f "$TMP_IMG" ];
+    then
+        /bin/rm "$TMP_IMG"
+    fi
+}
+
+parse(){
+    IMG=$TMP_IMG
+
+    convert $TMP_IMG -bordercolor ${color_bg} -border ${border_size} \
+    $IMG \
+
+    convert $IMG \( +clone -background black \
+    -shadow ${shadow_size} \) +swap -background none \
+    -layers merge +repage $IMG \
+
+    convert $IMG -bordercolor ${background_color} \
+    -border ${background_size} $IMG \
+
+    echo -n " ${author} " | convert $IMG \
+    -gravity ${author_position[0]} -pointsize ${font_size} -fill ${color_fg} \
+    -undercolor ${color_bg} -font ${font} \
+    -annotate ${author_position[1]} @- $IMG \
+
+    convert $IMG -gravity South -chop 0x$(( $background_size / 2)) \
+    $IMG \
+
+    convert $IMG -gravity North -background ${background_color} \
+    -splice 0x$(( $background_size / 2)) $IMG \
+
+    convert $IMG -profile ${color_profile} $IMG \
+
+}
+
+notify() {
+    _MSG=$1
+    _FILE=$SAVED_NAME
+
+    awesome-client "
+    -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
+    naughty = require('naughty')
+    awful = require('awful')
+    beautiful = require('beautiful')
+    dpi = beautiful.xresources.apply_dpi
+
+    local open_image = naughty.action {
+        name = 'Open',
+        icon_only = false,
+    }
+
+    local open_folder = naughty.action {
+        name = 'Open Folder',
+        icon_only = false,
+    }
+
+    local delete_image = naughty.action {
+        name = 'Delete',
+        icon_only = false,
+    }
+
+    -- Execute the callback when 'Open' is pressed
+    open_image:connect_signal('invoked', function()
+        awful.spawn('xdg-open ' .. '${_FILE}', false)
+    end)
+
+    open_folder:connect_signal('invoked', function()
+        awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
+    end)
+
+    -- Execute the callback when 'Delete' is pressed
+    delete_image:connect_signal('invoked', function()
+        awful.spawn('gio trash ' .. '${_FILE}', false)
+    end)
+
+    -- Show notification
+    naughty.notification ({
+        app_name = 'Screenshot Tool',
+        icon = '${_FILE}',
+        timeout = 10,
+        title = '<b>Snap!</b>',
+        message = '${_MSG}',
+        actions = { open_image, open_folder, delete_image }
+    })
+    "
+}
+
+case $1 in
+    clipboard)
+        check && \
+        maim -u -m 1 -n $TMP_IMG && \
+        parse && \
+        notify "Screenshot Saved to Clipboard" && \
+        xclip -selection clipboard -i $TMP_IMG -t image/png
+        ;;
+    save)
+        check && \
+        maim -u -m 1 $TMP_IMG && \
+        parse && \
+        mv $TMP_IMG $SAVED_NAME && \
+        notify "Screenshot Saved" 
+        ;;
+    sleep)
+        check && \
+        notify-send "Shot" "Shot After ${sleep} Sec" && \
+        maim -u -m 1 -d $sleep $TMP_IMG && \
+        parse && \
+        mv $TMP_IMG $SAVED_NAME && \
+        notify "Screenshot Saved" 
+        ;;
+    select)
+        check && \
+        maim -u -m 1 -s $TMP_IMG && \
+        parse && \
+        mv $TMP_IMG $SAVED_NAME && \
+        notify "Screenshot Selected Has been Saved" 
+        ;;
+    active)
+        check && \
+        maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG && \
+        parse && \
+        mv $TMP_IMG $SAVED_NAME && \
+        notify "Screenshot from Active Windows Saved"
+        ;;
+esac
