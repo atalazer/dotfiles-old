@@ -2,20 +2,21 @@
 # Load .xprofile
 [ -f ~/.profile ] && . ~/.profile
 
-xset -b 
-xset r rate 300 25
-xsetroot -cursor_name left_ptr
-
 # Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 xsettingsd &
 wal -n -R
+light -S 30
 
-session=${1:-awesome}
-case $session in
-    awesome|aw         ) exec dbus-launch --auto-syntax --exit-with-session awesome ;;
-    openbox|ob         ) exec dbus-launch --auto-syntax --exit-with-session openbox-session;;
-    # No known session, try to run it as command
-    * ) exec dbus-launch --auto-syntax --exit-with-session $1;;
-esac
+xset -b
+xset r rate 300 25
+xsetroot -cursor_name left_ptr
 
+# Start pulse/pipewire
+pulseaudio --start
+# /usr/bin/pipewire &
+# /usr/bin/pipewire-pulse &
+# /usr/bin/pipewire-media-session &
+
+# Start session
+exec dbus-launch --auto-syntax awesome
