@@ -12,3 +12,9 @@ map{"<C-j>", "<Plug>(SmoothieDownwards)"}
 map{"<C-Down>", "<Plug>(SmoothieDownwards)"}
 map{"<PageDown>", "<Plug>(SmoothieDownwards)"}
 
+-- Glow VIM
+nnoremap {"<leader>gg", "<CMD>Glow<CR>"}
+
+-- Goyo
+nnoremap {"<leader>g", "<CMD>Goyo<CR>"}
+

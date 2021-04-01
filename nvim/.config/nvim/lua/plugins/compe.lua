@@ -1,24 +1,23 @@
 vim.cmd([[packadd nvim-compe]])
 vim.cmd([[packadd vim-vsnip]])
-vim.cmd([[packadd vim-vsnip-integ]])
 
 require("compe").setup({
-    enabled = true,
-    autocomplete = true,
-    min_length = 1,
-    preselect = "disable",
-    source_timeout = 200,
-    incomplete_delay = 400,
+    enabled              = true,
+    autocomplete         = true,
     allow_prefix_unmatch = false,
+    preselect            = "enable",
+    min_length           = 1,
+    source_timeout       = 200,
+    incomplete_delay     = 400,
     source = {
-        buffer = true,
-        calc = true,
-        path = true,
-        spell = true,
-        tags = true,
-        vsnip = true,
+        buffer   = true,
+        calc     = true,
+        path     = true,
+        tag      = true,
+        spell    = true,
         nvim_lsp = true,
         nvim_lua = true,
+        vsnip    = true,
     },
 })
 
@@ -64,3 +63,4 @@ keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
 keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
 keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+

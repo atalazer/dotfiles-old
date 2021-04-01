@@ -1,8 +1,7 @@
 vim.cmd[[packadd nvim-treesitter]]
-vim.cmd [[packadd nvim-ts-autotag]]
+vim.cmd[[packadd nvim-ts-autotag]]
 
-local ts_config = require("nvim-treesitter.configs")
-ts_config.setup {
+require("nvim-treesitter.configs").setup {
     ensure_installed = {
         "c", "rust", "go", "cpp",
         "python", "lua",

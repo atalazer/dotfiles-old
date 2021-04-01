@@ -81,8 +81,8 @@ nnoremap{"<leader>d", "<C-W>l"}
 
 -- ===================================== Function
 -- Vim Session
-map{"<F2>", ":mksession! ~/.config/nvim/.last_session<cr>"}
-map{"<F3>", ":source ~/.config/nvim/.last_session<cr>"}
-nnoremap{"<F4>", "<cmd>!xdg-open %<CR>", { silent = true }}
+map{"<F1>", ":mksession! ~/.config/nvim/.last_session<cr>"}
+map{"<F2>", ":source ~/.config/nvim/.last_session<cr>"}
+nnoremap{"<F10>", "<cmd>!xdg-open %<CR>", { silent = true }}
 map{"<F8>", ":set autochdir! autochdir?<CR>"}
 

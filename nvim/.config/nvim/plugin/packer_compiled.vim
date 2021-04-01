@@ -56,9 +56,8 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/editorconfig-vim"
   },
   ["emmet-vim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/emmet-vim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/emmet-vim"
   },
   firenvim = {
     loaded = false,
@@ -66,9 +65,8 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/firenvim"
   },
   ["format.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/format.nvim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/format.nvim"
   },
   ["galaxyline.nvim"] = {
     loaded = false,
@@ -90,9 +88,8 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/goyo.vim"
   },
   ["hop.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/hop.nvim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/hop.nvim"
   },
   ["indent-guides.nvim"] = {
     loaded = false,
@@ -100,9 +97,8 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/indent-guides.nvim"
   },
   kommentary = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/kommentary"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/kommentary"
   },
   ["lspkind-nvim"] = {
     loaded = false,
@@ -120,10 +116,19 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim"
   },
+  neogit = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/neogit"
+  },
   ["nvim-autopairs"] = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-autopairs"
+  },
+  ["nvim-bufferline.lua"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-bufferline.lua"
   },
   ["nvim-colorizer.lua"] = {
     loaded = false,
@@ -148,11 +153,15 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
+    after = { "nvim-ts-autotag" },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter"
   },
   ["nvim-ts-autotag"] = {
+    load_after = {
+      ["nvim-treesitter"] = true
+    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag"
@@ -185,13 +194,16 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/suda.vim"
   },
   ["surround.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/surround.nvim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/surround.nvim"
   },
   tabular = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/tabular"
+  },
+  ["telescope-arecibo.nvim"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/telescope-arecibo.nvim"
   },
   ["telescope-frecency.nvim"] = {
     loaded = true,
@@ -215,8 +227,9 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/toggle-bool"
   },
   ["vim-fugitive"] = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+    loaded = false,
+    needs_bufread = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-fugitive"
   },
   ["vim-markdown"] = {
     loaded = false,
@@ -287,8 +300,8 @@ vim.cmd [[command! -nargs=* -range -bang -complete=file MarkdownPreview lua requ
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'goyo.vim', 'vim-markdown', 'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType text ++once lua require("packer.load")({'goyo.vim'}, { ft = "text" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown', 'markdown-preview.nvim', 'goyo.vim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
 vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]

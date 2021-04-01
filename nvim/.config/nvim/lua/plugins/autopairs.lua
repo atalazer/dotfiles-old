@@ -1,7 +1,6 @@
 vim.cmd[[packadd nvim-autopairs]]
 
 local npairs = require('nvim-autopairs')
-local inoremap = require("astronauta.keymap").inoremap
 
 npairs.setup{
     break_line_filetype = nil, -- enable this rule for all filetypes
@@ -11,7 +10,7 @@ npairs.setup{
         ['('] = ')',
         ['['] = ']',
         ['{'] = '}',
-        ['<'] = '>',
+        -- ['<'] = '>',
         ['`'] = '`',
     },
     disable_filetype = { "TelescopePrompt" },

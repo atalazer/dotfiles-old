@@ -1,5 +1,6 @@
 vim.g.mapleader = "."
 vim.g.maplocalleader = ","
+vim.cmd([[cd %:p:h]])
 
 -- ==================================== neovim package manager
 require("pluginsList.bootstrapping")
@@ -17,7 +18,6 @@ require("base.appearances")
 
 require("plugins.devicons")
 require("plugins.bufferline")
--- require("plugins.barbar")
 
 -- require("plugins.galaxyline.aeroline")
 -- require("plugins.galaxyline.real-round")
@@ -34,6 +34,7 @@ require("plugins.suda")
 require("plugins.nvim-tree")
 require("plugins.telescope")
 require("plugins.gitsigns")
+require("plugins.neogit")
 
 -- ==================================== Funcionality
 require("plugins.autopairs")
@@ -49,7 +50,6 @@ require("plugins.treesitter") -- Syntax highlighting
 
 -- ==================================== Plugins Keys
 require("mappings.pkeys")
-require("mappings.togglebool")
 require("mappings.visual-multi")
 require("plugins.which-key")
 
@@ -59,9 +59,3 @@ require("plugins.emmet")
 require("plugins.vsnip")
 require("plugins.format")
 require("lsp")
-
--- ====================================
--- Garbage collection
--- Enable for lower memory consumption
-collectgarbage("setpause", 100)
-collectgarbage("setstepmul", 1000)

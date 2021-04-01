@@ -1,9 +1,8 @@
 -- Settings vim options
 local options = {
     -- Booleans
-    autochdir      = true,
     autoread       = true,
-    autowrite      = true,
+    autochdir      = true,
     autoindent     = true,
     backup         = false,
     compatible     = false,
@@ -11,92 +10,70 @@ local options = {
     cursorcolumn   = false,
     expandtab      = true,
     errorbells     = false,
-    foldenable     = false,
     hidden         = true,
     hlsearch       = false,
     ignorecase     = true,
-    infercase      = true,
     incsearch      = true,
     lazyredraw     = true,
     list           = true,
-    linebreak      = true,
-    magic          = true,
     number         = true,
     relativenumber = false,
     swapfile       = false,
     showmode       = false,
-    showcmd        = false,
     splitbelow     = true,
     splitright     = true,
     startofline    = false,
     smartcase      = true,
     smartindent    = true,
     smarttab       = true,
-    shiftround     = true,
     ttyfast        = true,
-    title          = true,
     termguicolors  = true,
-    timeout        = true,
-    ttimeout       = true,
     undofile       = false,
     visualbell     = false,
-    wildmenu       = true,
-    wildignorecase = true,
     wrap           = true,
-    wrapscan       = true,
     writebackup    = false,
 
     -- String
     background    = "dark",
     backspace     = "eol,start,indent",
+    backupcopy     = "yes",
     clipboard     = "unnamedplus",
     completeopt   = "menu,menuone,noselect,noinsert",
-    display       = "lastline",
     encoding      = "UTF-8",
-    foldmethod    = "expr",
-    foldexpr      = "nvim_treesitter#foldexpr()",
-    formatoptions = "jcroql",
-    fileformats   = "unix",
+    foldmethod     = "marker",
+    -- foldmethod    = "expr",
+    -- foldexpr      = "nvim_treesitter#foldexpr()",
     fillchars     = "vert:│,eob:\\ ",
-    inccommand    = "nosplit",
+    inccommand    = "split",
     listchars     = "eol:↴,tab:»\\ ,nbsp:_,trail:·,extends:❯,precedes:❮",
     matchpairs    = "(:),[:],{:},<:>",
     mouse         = "a",
     signcolumn    = "yes",
     shortmess     = "csa",
-    showbreak     = "↳⋅",
+    showbreak     = "↳ ",
     undodir       = "~/.local/share/nvim/undo",
-    virtualedit   = "block",
-    whichwrap     = "h,l,<,>,[,],~",
-    wildmode      = "full",
-    wildoptions   = "pum",
 
     -- Number
-    cmdheight      = 2,
-    cmdwinheight   = 5,
-    conceallevel   = 1,
-    foldlevel      = 0,
-    foldlevelstart = 99,
-    helpheight     = 12,
+    colorcolumn    = 100,
+    cmdheight      = 1,
     laststatus     = 2,
-    linespace      = 0,
-    pumblend       = 10,
     pumheight      = 10,
-    previewheight  = 12,
-    redrawtime     = 500,
     re             = 0,
+    scrolloff      = 2,
     sidescroll     = 2,
     sidescrolloff  = 15,
     shiftwidth     = 4,
-    softtabstop    = 4,
-    synmaxcol      = 300,
-    t_Co           = 256,
+    -- synmaxcol      = 300,
+    tabstop    = 4,
     timeoutlen     = 400,
-    ttimeoutlen    = 30,
-    updatetime     = 150,
-
+    updatetime     = 100,
 
 }
+-- Others options
+vim.g.python_host_prog = "/usr/bin/python"
+vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.node_host_prog = "/home/atalariq/.nvm/versions/node/v14.15.4/bin/neovim-node-host"
+
 -- Function to apply options table
 local apply_options = function(opts)
     for k, v in pairs(opts) do
@@ -113,8 +90,4 @@ end
 -- Call apply_options func
 apply_options(options)
 
--- Others options
-vim.g.python_host_prog = "/usr/bin/python"
-vim.g.python3_host_prog = "/usr/bin/python3"
-vim.g.node_host_prog = "/home/atalariq/.nvm/versions/node/v14.15.4/bin/neovim-node-host"
 

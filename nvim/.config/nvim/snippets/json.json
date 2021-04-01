@@ -1,0 +1,13 @@
+{
+    "snippet": {
+        "prefix": "sippet",
+        "body": [
+            "\"${1:snipName}\": {",
+                "\t\"prefix\": \"${2:pre}\",",
+                "\t\"body\": \"${3:body}\",",
+                "\t\"description\": \"${4:description}\",",
+            "},"
+        ],
+        "description": "Make snippet"
+    }
+}

@@ -22,6 +22,10 @@ lang({ "sh", "zsh", "bash", "dosini", "desktop" },{
     single_line_comment_string = "#",
 })
 
+lang({ "yaml" },{
+    single_line_comment_string = "#",
+})
+
 lang("xdefaults",{
     single_line_comment_string = "!",
     prefer_single_line_comments = true,
