@@ -19,7 +19,7 @@ lines_scrolled = "1"
 
 enable_window_title = "yes"
 external_editor = "nvim"
-execute_on_song_change = "~/.ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
+execute_on_song_change = "~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
 # ]]]
 
 #visualizer [[[

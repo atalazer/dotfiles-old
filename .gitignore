@@ -11,3 +11,4 @@ mpd/.config/mpd/mpdstate
 mpd/.config/mpd/playlist**
 
 nvim/.config/nvim/.last_session
+mpd/.config/mpd/mpd.state
