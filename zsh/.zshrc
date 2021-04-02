@@ -5,7 +5,7 @@ precmd () {
     print -Pn "\e]0;%~\a"
 }
 preexec () {
-    print -Pn "\e]0;%~:$1\a"
+    print -Pn "\e]0;%~\a"
 }
 
 : ${HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory}

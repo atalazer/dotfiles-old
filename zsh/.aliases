@@ -98,7 +98,7 @@ alias pacin="$PERMISSION pacman -S"
 alias pacsearch="$PERMISSION pacman -Ss"
 alias pacupd="$PERMISSION pacman -Syy"
 alias pacupg="$PERMISSION pacman -Syu"
-alias pacrem="$PERMISSION pacman -Rcns"
+alias pacrem="$PERMISSION pacman -Rns"
 alias pacrmorp="$PERMISSION pacman -Qtdq | pacman -Rns -"
 
 alias pain="paru -S"
