@@ -5,8 +5,8 @@ audio_device_state:0:ALSA sound card
 audio_device_state:0:Jack Audio
 audio_device_state:0:My HTTP Stream
 state: play
-current: 1
-time: 120.036000
+current: 5
+time: 120.138000
 random: 1
 repeat: 1
 single: 0
