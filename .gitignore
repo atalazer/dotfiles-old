@@ -8,3 +8,5 @@
 **/*playlist**
 **/api.json
 **/__pycache__/*
+
+home/.config/mpd/mpd.state
