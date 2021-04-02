@@ -6,3 +6,6 @@
 	path = home/.startpage/atalazer
 	url = https://github.com/atalazer/atalazer-startpage
 
+[submodule "home/.config/awesome/bling"]
+	path = home/.config/awesome/bling
+	url = https://github.com/Nooo37/bling
