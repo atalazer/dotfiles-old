@@ -3,7 +3,7 @@ vim.cmd[[packadd nvim-web-devicons]]
 
 -- Set some variables
 vim.g.nvim_tree_side = 'left'
-vim.g.nvim_tree_width = 25
+vim.g.nvim_tree_width = 30
 vim.g.nvim_tree_ignore = {
     '.git', 'node_modules', '__sapper__', '.routify', 'dist', '.cache'
 }

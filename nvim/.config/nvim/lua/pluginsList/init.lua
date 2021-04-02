@@ -58,6 +58,7 @@ if ok then
             "nvim-treesitter/nvim-treesitter",
             requires = {
                 { "windwp/nvim-ts-autotag" },
+                { "code-biscuits/nvim-biscuits" },
             },
             opt = true,
             run = ":TSUpdate"
@@ -115,6 +116,9 @@ if ok then
 
         -- Align
         use({ "godlygeek/tabular" })
+
+        -- gf like plugins
+        use { "notomo/curstr.nvim"}
 
         -- Browser Integration plugin
         use({

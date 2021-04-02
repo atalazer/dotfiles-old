@@ -43,10 +43,11 @@ require("plugins.firenvim")
 require("plugins.hop")
 require("plugins.kommentary")
 require("plugins.surround")
+require("plugins.curstr")
 
 -- ==================================== Language support
 require("plugins.markdown")
-require("plugins.treesitter") -- Syntax highlighting
+require("plugins.treesitter")
 
 -- ==================================== Plugins Keys
 require("mappings.pkeys")
