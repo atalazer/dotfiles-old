@@ -1,3 +1,12 @@
 [submodule "home/.config/awesome/bling"]
     path = home/.config/awesome/bling
     url = https://github.com/Nooo37/bling.git
+
+[submodule "home/.startpage/jaredk3nt"]
+    path = home/.startpage/jaredk3nt
+    url = https://github.com/Jaredk3nt/homepage
+
+[submodule "home/.startpage/atalazer"]
+    path = home/.startpage/atalazer
+    url = https://github.com/atalazer/atalazer-startpage
+
