@@ -4,9 +4,9 @@ audio_device_state:1:Pulseaudio
 audio_device_state:0:ALSA sound card
 audio_device_state:0:Jack Audio
 audio_device_state:0:My HTTP Stream
-state: play
+state: pause
 current: 5
-time: 120.092000
+time: 196.975000
 random: 1
 repeat: 1
 single: 0
