@@ -20,7 +20,7 @@ zstyle ':completion:*:warnings' format '%F{red}-- Sorry, no matches found --%f'
 #-/buggy
 
 bindkey -M menuselect '^o' accept-and-infer-next-history
-zstyle ':completion:*' menu select
+zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
@@ -70,7 +70,7 @@ zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
 zstyle ':completion:*:rm:*' file-patterns '*:all-files'
 
 # ignored-patterns
-zstyle ':completion:*:functions' ignored-patterns '(_*|*_*|*_|pre(cmd|exec)|prompt_*)'
+zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec)|prompt_*)'
 zstyle ':completion:*:*:*:users' ignored-patterns \
         adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
         clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
@@ -81,10 +81,6 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
         rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
         usbmux uucp vcsa wwwrun xfs '_*'
 zstyle '*' single-ignored show
-
-local zdumpfile
-zstyle -s ':zsh:completion' dumpfile 'zdumpfile' || zdumpfile="${ZDOTDIR:-${HOME}}/.zcompdump"
-autoload -Uz compinit && compinit -C -d ${zdumpfile}
 
 # automatically load bash completion functions
 autoload -U +X bashcompinit && bashcompinit

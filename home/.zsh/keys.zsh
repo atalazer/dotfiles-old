@@ -51,12 +51,20 @@ if [[ -n "${terminfo[khome]}" ]]; then
     bindkey -M emacs "${terminfo[khome]}" beginning-of-line
     bindkey -M viins "${terminfo[khome]}" beginning-of-line
     bindkey -M vicmd "${terminfo[khome]}" beginning-of-line
+
+    bindkey -M emacs "^[[1~" beginning-of-line
+    bindkey -M viins "^[[1~" beginning-of-line
+    bindkey -M vicmd "^[[1~" beginning-of-line
 fi
 # [End] - Go to end of line
 if [[ -n "${terminfo[kend]}" ]]; then
     bindkey -M emacs "${terminfo[kend]}"  end-of-line
     bindkey -M viins "${terminfo[kend]}"  end-of-line
     bindkey -M vicmd "${terminfo[kend]}"  end-of-line
+
+    bindkey -M emacs "^[[4~"  end-of-line
+    bindkey -M viins "^[[4~"  end-of-line
+    bindkey -M vicmd "^[[4~"  end-of-line
 fi
 
 # [Shift-Tab] - move through the completion menu backwards
@@ -99,9 +107,9 @@ bindkey -M emacs '^[[1;5D' backward-word
 bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 
-
 bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
 bindkey -s '\el' 'ls\n'                               # [Esc-l] - run command: ls
+bindkey -s '\ep' 'zi\n'                               # [Esc-p] - run command: zi (zoxide)
 bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search history
 
 #

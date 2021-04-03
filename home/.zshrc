@@ -24,6 +24,7 @@ setopt INTERACTIVE_COMMENTS; setopt EXTENDED_GLOB;
 setopt LONG_LIST_JOBS; setopt NO_BG_NICE;
 setopt NO_CHECK_JOBS; setopt NO_HUP;
 
+setopt CORRECT
 bindkey -e
 
 # Edit line in vim with ctrl-e:
@@ -122,4 +123,9 @@ eval "$(zoxide init zsh)"
 
 _source_path ${HOME}/.aliases
 _source_path ${HOME}/.config/nnn/nnn
+
+
+fpath=($HOME/.zsh/completion $fpath)
+autoload -Uz compinit && \
+compinit -C -d "${ZDOTDIR:-${HOME}}/.zcompdump"
 
