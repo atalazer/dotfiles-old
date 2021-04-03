@@ -78,16 +78,16 @@ local servers = {
     cssls = {
         root_dir = vim.loop.cwd,
     },
-    -- tsserver = {
-    --     filetypes = { "javascript", "typescript", "typescriptreact" },
-    --     root_dir = vim.loop.cwd,
-    --     on_init = custom_on_init,
-    -- },
-    rome = {
-        cmd = { "rome", "lsp" },
+    tsserver = {
         filetypes = { "javascript", "typescript", "typescriptreact" },
         root_dir = vim.loop.cwd,
+        on_init = custom_on_init,
     },
+    -- rome = {
+    --     cmd = { "rome", "lsp" },
+    --     filetypes = { "javascript", "typescript", "typescriptreact" },
+    --     root_dir = vim.loop.cwd,
+    -- },
     yamlls = {},
     jsonls = {},
     vimls = {},
