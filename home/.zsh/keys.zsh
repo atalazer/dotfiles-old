@@ -110,6 +110,7 @@ bindkey -M vicmd '^[[1;5D' backward-word
 bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
 bindkey -s '\el' 'ls\n'                               # [Esc-l] - run command: ls
 bindkey -s '\ep' 'zi\n'                               # [Esc-p] - run command: zi (zoxide)
+bindkey -s '\ed' 'de\n'                               # [Esc-d] - run command: de (dotbare edit)
 bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search history
 
 #

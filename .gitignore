@@ -2,11 +2,10 @@
 **/*.db
 **/.uuid
 **/*.log
-**/*.state
 **/*.pid
 **/.last*
 **/*playlist**
 **/api.json
+**/resurrect/*
 **/__pycache__/*
-
 home/.config/mpd/mpd.state
