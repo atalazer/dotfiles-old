@@ -22,15 +22,15 @@ RC.apps = {
         multimedia     = "mpv",
         graphics       = "GTK_THEME=Adwaita:light inkscape",
         game           = "opsu",
-        lock           = 'betterlockscreen -l',
+        lock           = os.getenv("LOCK_CMD") or 'betterlockscreen -l',
     },
     rofi = {
         drun      = 'j4-dmenu-desktop dmenu="rofi -show drun -modi drun"',
         calc      = 'rofi -show calc -modi calc -no-show-match -no-sort',
         clipboard = 'rofi -modi "clipboard:greenclip print" -show clipboard -run-command \'{cmd}\'',
-        rofi_global = 'rofi ' .. 
-            ' -show "Global Search" -modi "Global Search":' .. 
-            '~/.config/rofi/global/rofi-spotlight.sh' .. 
+        rofi_global = 'rofi ' ..
+            ' -show "Global Search" -modi "Global Search":' ..
+            '~/.config/rofi/global/rofi-spotlight.sh' ..
             ' -theme ' ..
             '~/.config/rofi/global/rofi.rasi',
         rofi_appmenu = 'rofi ' ..

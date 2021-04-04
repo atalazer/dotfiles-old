@@ -19,4 +19,4 @@ pulseaudio --start
 # /usr/bin/pipewire-media-session &
 
 # Start session
-exec dbus-launch --auto-syntax awesome
+exec dbus-launch --auto-syntax --exit-with-session awesome

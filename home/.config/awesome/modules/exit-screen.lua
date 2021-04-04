@@ -33,9 +33,9 @@ local button_bg   = x.black
 local button_size = dpi(120)
 
 -- Commands
-local poweroff_command = function() awful.spawn.with_shell("poweroff") end
-local reboot_command   = function() awful.spawn.with_shell("reboot") end
-local suspend_command  = function() awful.spawn.with_shell("suspend && ".. apps.default.lock) end
+local poweroff_command = function() awful.spawn.with_shell(os.getenv("SHUTDOWN_CMD") or "poweroff") end
+local reboot_command   = function() awful.spawn.with_shell(os.getenv("REBOOT_CMD") or "reboot") end
+local suspend_command  = function() awful.spawn.with_shell((os.getenv("SUSPEND_CMD") or "suspend") .. " && ".. apps.default.lock) end
 local lock_command     = function() awful.spawn(apps.default.lock, false) end
 local exit_command     = function() awesome.quit() end
 

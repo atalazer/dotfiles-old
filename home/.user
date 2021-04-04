@@ -1,0 +1,9 @@
+#!/sbin/bash
+
+export BROWSER="firefox"
+export TERMINAL="kitty"     # kitty, alacritty, st
+
+export SHUTDOWN_CMD="loginctl shutdown"
+export REBT_CMD="loginctl reboot"
+export SUSPEND_CMD="loginctl suspend"
+export LOCK_CMD="loginctl suspend"
