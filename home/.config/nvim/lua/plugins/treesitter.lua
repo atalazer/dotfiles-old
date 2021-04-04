@@ -16,7 +16,7 @@ local nvim_autotag_enabled = true
 if nvim_autotag_enabled == true then
     vim.cmd([[packadd nvim-ts-autotag]])
     require("nvim-ts-autotag").setup({
-        filetypes = { "html", "markdown", "xml" },
+        filetypes = { "html", "xml" },
     })
 end
 -- ========================================================
