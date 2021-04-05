@@ -3,8 +3,10 @@
 #include "/home/atalariq/.Xresources.d/xterm"
 
 !! Colorscheme
-#include "/home/atalariq/.Xresources.d/color/ayu_dark"
-! #include "/home/atalariq/.Xresources.d/color/owl4ce"
+! #include "/home/atalariq/.Xresources.d/color/ayu_dark"
+#include "/home/atalariq/.Xresources.d/color/adapta"
+! #include "/home/atalariq/.Xresources.d/color/dracula"
+
 ! #include "/home/atalariq/.Xresources.d/color/wal"
 
 !! Settings

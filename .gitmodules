@@ -21,3 +21,6 @@
 [submodule "home/.tmux/plugins/tmux-continuum"]
 	path = home/.tmux/plugins/tmux-continuum
 	url = https://github.com/tmux-plugins/tmux-continuum.git
+[submodule "home/.tmux/plugins/tmux-yank"]
+	path = home/.tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank.git

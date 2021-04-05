@@ -4,7 +4,7 @@
 
 # Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
-xsettingsd &
+# xsettingsd &
 wal -n -R
 light -S 30
 
@@ -19,4 +19,4 @@ pulseaudio --start
 # /usr/bin/pipewire-media-session &
 
 # Start session
-exec dbus-launch --auto-syntax --exit-with-session awesome
+exec dbus-launch --exit-with-session awesome

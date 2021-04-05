@@ -1,7 +1,8 @@
 #!/sbin/bash
 
-export BROWSER="firefox"
-export TERMINAL="kitty"     # kitty, alacritty, st
+export BROWSER="firefox-run"
+export TERMINAL="kitty"     # kitty, alacritty, st, st2
+export FILEMAN="nemo"
 
 export SHUTDOWN_CMD="loginctl shutdown"
 export REBT_CMD="loginctl reboot"
