@@ -138,8 +138,8 @@ ruled.client.connect_signal('request::rules',function()
             }
         },
         properties = {
-            floating          = true,
-            placement         = awful.placement.centered
+            floating  = true,
+            placement = awful.placement.centered
         }
     }
 

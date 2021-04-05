@@ -39,9 +39,9 @@ RC.settings = {
     switcher_enabled = true,
     switcher_mode = "normal",
     -- Nice - MacOS like Titlebars ( and Its Rounded ) will override users titlebars config
-    nice_enabled = true,
+    nice_enabled = false,
     -- Revelation, MacOS like expose
-    revelation_enabled = true,
+    revelation_enabled = false,
 
 }
 

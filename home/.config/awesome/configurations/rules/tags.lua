@@ -48,8 +48,7 @@ ruled.client.connect_signal("request::rules", function()
         id = "internet",
         rule_any = {
             class = {
-                "discord",
-                "TelegramDesktop",
+                "discord", "TelegramDesktop",
                 "Navigator",
             },
         },

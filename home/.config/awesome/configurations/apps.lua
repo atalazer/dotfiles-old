@@ -17,7 +17,7 @@ RC.apps = {
         t_file_manager = "kitty --class Files -e nnn",
         file_manager   = "nemo",
         t_music        = "kitty --class Music -e ncmpcpp-ueberzug",
-        web_browser    = "firefox",
+        web_browser    = os.getenv("BROWSER") or "firefox",
         office         = 'GTK_THEME=Adwaita:light libreoffice',
         multimedia     = "mpv",
         graphics       = "GTK_THEME=Adwaita:light inkscape",
