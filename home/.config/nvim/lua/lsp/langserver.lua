@@ -63,7 +63,7 @@ local black ={
 
 -- require("lsp.custom.emmetls")
 local sumneko_root = os.getenv("HOME") .. "/.local/bin/lsp/lua-language-server"
--- local sumneko_cmd = sumneko_root .. "/bin/Linux/lua-language-server"
+-- local sumneko_cmd = sumneko_root .. "/bin/Linux/lua-language-server" .. "-E" ..sumneko_root .. "/main.lua",
 local sumneko_cmd = "lua-language-server"
 
 local servers = {
@@ -94,8 +94,6 @@ local servers = {
     efm = {
         cmd = {
             "efm-langserver",
-            "-c",
-            " ~/.config/efm-langserver/config.yaml",
         },
         filetypes = {
             "javascript", "typescript",
@@ -176,8 +174,6 @@ local servers = {
     sumneko_lua = {
         cmd = {
             sumneko_cmd,
-            "-E",
-            sumneko_root .. "/main.lua",
         },
         settings = {
             Lua = {

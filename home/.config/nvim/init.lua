@@ -26,7 +26,7 @@ require("plugins.galaxyline.zero")
 
 require("plugins.colorizer")
 require("plugins.indent-guides")
---  require('plugins.startify')
+-- require('plugins.startify')
 require("plugins.vimade")
 
 -- ==================================== File Related

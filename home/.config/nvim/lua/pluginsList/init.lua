@@ -22,7 +22,6 @@ if ok then
 
         -- vim-devicons written in lua
         use({ "kyazdani42/nvim-web-devicons", opt = true })
-        use { "yamatsum/nvim-nonicons", opt = false }
 
         -- snazzy bufferline
         use({ "akinsho/nvim-bufferline.lua", opt = true })

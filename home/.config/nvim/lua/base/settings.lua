@@ -54,7 +54,7 @@ local options = {
     undodir       = "~/.local/share/nvim/undo",
 
     -- Number
-    colorcolumn    = 100,
+    colorcolumn    = 80,
     cmdheight      = 1,
     laststatus     = 2,
     pumheight      = 10,
@@ -89,5 +89,4 @@ end
 
 -- Call apply_options func
 apply_options(options)
-
 
