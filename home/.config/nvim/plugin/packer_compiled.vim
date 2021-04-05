@@ -32,11 +32,6 @@ local function try_loadstring(s, component, name)
 end
 
 _G.packer_plugins = {
-  ["aerial.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/aerial.nvim"
-  },
   ["astronauta.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
@@ -48,11 +43,6 @@ _G.packer_plugins = {
   ["curstr.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/curstr.nvim"
-  },
-  ["editorconfig-vim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/editorconfig-vim"
   },
   ["emmet-vim"] = {
     loaded = true,
@@ -238,11 +228,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-smoothie"
   },
-  ["vim-startify"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-startify"
-  },
   ["vim-startuptime"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-startuptime"
@@ -258,16 +243,6 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-vsnip"
-  },
-  ["vim-which-key"] = {
-    loaded = false,
-    needs_bufread = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-which-key"
-  },
-  vimade = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vimade"
   },
   ["xresources-nvim"] = {
     loaded = true,

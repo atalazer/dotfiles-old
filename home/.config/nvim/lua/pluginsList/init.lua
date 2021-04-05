@@ -8,8 +8,8 @@ if ok then
             clone_timeout = 120, -- Timeout, in seconds, for git clones
         },
         display = {
-            open_cmd = "leftabove 70vnew [packer]",
-            -- open_cmd = "80vnew [packer]",
+            open_cmd = "leftabove 50vnew [packer]",
+                -- open_cmd = "80vnew [packer]",
         },
     })
 
@@ -17,8 +17,9 @@ if ok then
         use({ "wbthomason/packer.nvim", opt = true })
 
         -- ------------------------------- UI Related
-        use({ "ayu-theme/ayu-vim" })                                    -- Ayu Colorscheme
-        use({ "nekonako/xresources-nvim" })                             -- xresources-based Colorscheme
+         -- Colorscheme
+        use("tjdevries/colorbuddy.nvim")
+        use("marko-cerovac/material.nvim")
 
         -- vim-devicons written in lua
         use({ "kyazdani42/nvim-web-devicons", opt = true })
@@ -27,10 +28,10 @@ if ok then
         use({ "akinsho/nvim-bufferline.lua", opt = true })
 
         -- Beautiful Statusline
-        use({ "glepnir/galaxyline.nvim", branch = "main", opt = true })
-
-        -- Startify
-        use({ "mhinz/vim-startify", opt = true })
+        use({ "glepnir/galaxyline.nvim",
+            branch = "main",
+            opt = true
+        })
 
         -- Indenting
         use({ "glepnir/indent-guides.nvim", opt = true })
@@ -42,10 +43,10 @@ if ok then
         use({ "neovim/nvim-lspconfig", opt = true })
         use({ "glepnir/lspsaga.nvim", opt = true })
         use({ "onsails/lspkind-nvim", opt = true })
-        use({ "stevearc/aerial.nvim", opt = true })
 
         -- ------------------------------- Completion and Snippet
-        use({ "hrsh7th/nvim-compe",
+        use({
+            "hrsh7th/nvim-compe",
             opt = true,
             requires = { "hrsh7th/vim-vsnip" },
         })
@@ -56,20 +57,21 @@ if ok then
         use({
             "nvim-treesitter/nvim-treesitter",
             requires = {
-                { "windwp/nvim-ts-autotag" },
-                { "code-biscuits/nvim-biscuits" },
+                { "windwp/nvim-ts-autotag", opt = true },
+                { "code-biscuits/nvim-biscuits", opt = true },
             },
             opt = true,
-            run = ":TSUpdate"
+            run = ":TSUpdate",
         })
 
         -- SQL Support
         use({ "tami5/sql.nvim", opt = false })
 
         -- Markdown Support
-        use({ "plasticboy/vim-markdown",
+        use({
+            "plasticboy/vim-markdown",
             opt = true,
-            ft = { "markdown" }
+            ft = { "markdown" },
         })
 
         -- Markdown Previewer
@@ -84,13 +86,10 @@ if ok then
         use({
             "junegunn/goyo.vim",
             opt = true,
-            ft = { "text", "markdown" }
+            ft = { "text", "markdown" },
         })
 
         -- ------------------------------ Experience
-
-        -- Editor Config
-        use({ "editorconfig/editorconfig-vim", opt = true })
 
         -- Emmet Support for vim
         use({ "mattn/emmet-vim", opt = false })
@@ -117,7 +116,7 @@ if ok then
         use({ "godlygeek/tabular" })
 
         -- gf like plugins
-        use { "notomo/curstr.nvim"}
+        use({ "notomo/curstr.nvim" })
 
         -- Browser Integration plugin
         use({
@@ -129,24 +128,24 @@ if ok then
         })
 
         -- ------------------------------- Files
-         -- Fuzzy Finder
+        -- Fuzzy Finder
         use({
             "nvim-telescope/telescope.nvim",
             opt = false,
             requires = {
-                {"nvim-lua/popup.nvim"},
-                {"nvim-lua/plenary.nvim"},
-                {"nvim-telescope/telescope-media-files.nvim"},
-                {"nvim-telescope/telescope-fzy-native.nvim"},
-                {"nvim-telescope/telescope-frecency.nvim"},
+                { "nvim-lua/popup.nvim" },
+                { "nvim-lua/plenary.nvim" },
+                { "nvim-telescope/telescope-media-files.nvim" },
+                { "nvim-telescope/telescope-fzy-native.nvim" },
+                { "nvim-telescope/telescope-frecency.nvim" },
                 {
-                "nvim-telescope/telescope-arecibo.nvim",
-                rocks = { "openssl", "lua-http-parser" },
+                    "nvim-telescope/telescope-arecibo.nvim",
+                    rocks = { "openssl", "lua-http-parser" },
                 },
             },
         })
 
-         -- Superfast Tree File
+        -- Superfast Tree File
         use({ "kyazdani42/nvim-tree.lua", opt = true })
 
         -- Open root previllage files
@@ -157,14 +156,11 @@ if ok then
         use({ "lewis6991/gitsigns.nvim", opt = true })
 
         -- Magit for Neovim
-        use { "TimUntersberger/neogit", opt = false }
+        use({ "TimUntersberger/neogit", opt = false })
 
         -- -------------------------------- Misc
         -- For keybindings
         use({ "tjdevries/astronauta.nvim", opt = false })
-
-        -- Fade for unfocused window/buffer
-        use({ "TaDaa/vimade", opt = true })
 
         -- Smooth Scrolling
         use({ "psliwka/vim-smoothie", opt = false })
@@ -172,12 +168,8 @@ if ok then
         -- better window and buffer management
         use({ "mhinz/vim-sayonara", cmd = "Sayonara" })
 
-        -- Which keys
-        use({ "liuchengxu/vim-which-key", opt = true })
-
         -- Check startup time
         use({ "dstein64/vim-startuptime", opt = false })
-
     end
 
     packer.startup(plugins)

@@ -2,14 +2,11 @@ vim.cmd([[packadd nvim-lspconfig]])
 
 local lspconfig = require("lspconfig")
 
-local aerial = require("lsp.aerial")
 local keys = require("lsp.keys")
 
 local custom_on_attach = function(client)
     print("LSP started!")
 
-    aerial.attach(client)
-    aerial.mappings()
     keys.mappings()
 end
 
@@ -193,9 +190,6 @@ local servers = {
                         "trailing-space",
                         "lowercase-global",
                         "undefined-global",
-                        "unused-local",
-                        "unused-function",
-                        "redefined-local",
                     },
                     globals = {
                         -- VIM

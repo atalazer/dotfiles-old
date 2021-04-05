@@ -1,11 +1,23 @@
 vim.cmd([[packadd galaxyline.nvim]])
-vim.cmd([[packadd nvim-web-devicons]])
 
 local gl = require('galaxyline')
 local gls = gl.section
 local condition = require('galaxyline.condition')
 
-local colors = require("base.colorscheme.xresources") or require("xresources")
+-- local colors = require("base.colorscheme.xresources")
+local colors = {
+  bg           = '#282c34',
+  yellow       = '#fabd2f',
+  cyan         = '#008080',
+  darkblue     = '#081633',
+  green        = '#afd700',
+  orange       = '#FF8800',
+  purple       = '#5d4d7a',
+  light_purple = '#d16d9e',
+  grey         = '#c0c0c0',
+  blue         = '#0087d7',
+  red          = '#ec5f67'
+}
 
 -- =================================== Component
 local separators = {
@@ -204,6 +216,8 @@ local GitBranch = {
         provider = 'GitBranch',
         condition = require('galaxyline.provider_vcs').check_git_workspace,
         highlight = {colors.light_purple,colors.bg,'bold'},
+        separator = sep,
+        separator_highlight = {'NONE',colors.bg},
     }
 }
 

@@ -14,20 +14,13 @@ require("mappings.keys")
 
 -- ==================================== UI Related
 require("base.appearances")
--- require("base.colorscheme.transparancy")
 
 require("plugins.devicons")
 require("plugins.bufferline")
-
--- require("plugins.galaxyline.aeroline")
--- require("plugins.galaxyline.real-round")
--- require("plugins.galaxyline.rounded")
-require("plugins.galaxyline.zero")
+require("plugins.galaxyline")
 
 require("plugins.colorizer")
 require("plugins.indent-guides")
--- require('plugins.startify')
-require("plugins.vimade")
 
 -- ==================================== File Related
 require("plugins.suda")
@@ -38,7 +31,6 @@ require("plugins.neogit")
 
 -- ==================================== Funcionality
 require("plugins.autopairs")
-require("plugins.editorconfig")
 require("plugins.firenvim")
 require("plugins.hop")
 require("plugins.kommentary")
@@ -52,7 +44,6 @@ require("plugins.treesitter")
 -- ==================================== Plugins Keys
 require("mappings.pkeys")
 require("mappings.visual-multi")
-require("plugins.which-key")
 
 -- -=================================== LSP, Code Completions, Code Formater
 require("plugins.compe")
