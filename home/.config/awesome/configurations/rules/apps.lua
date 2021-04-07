@@ -1,7 +1,5 @@
 local awful = require("awful")
-local gears = require("gears")
 local ruled = require("ruled")
-local beautiful = require("beautiful")
 
 ruled.client.connect_signal("request::rules", function()
     -- Image viewers

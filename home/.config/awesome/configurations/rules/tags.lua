@@ -1,12 +1,9 @@
 local awful = require("awful")
-local gears = require("gears")
 local ruled = require("ruled")
 local beautiful = require("beautiful")
 
-local tag = require(P.config.tag)
-
-local get_tag_name = function(id)
-    t = awful.screen.focused().tags[id].name
+local get_tag_name = function(index)
+    t = awful.screen.focused().tags[index].name
     return t
 end
 
