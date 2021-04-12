@@ -8,7 +8,7 @@ telescope.setup{
     defaults = {
         initial_mode = "insert",
         prompt_position = "bottom",
-        prompt_prefix = ">>",
+        prompt_prefix = "|> ",
 
         winblend       = 0,
         width          = 0.6,
@@ -172,11 +172,11 @@ nnoremap{"<C-p>a", M.arecibo }
 nnoremap{"<C-p>m", M.media_files}
 
 return setmetatable({}, {
-  __index = function(_, k)
-    if M[k] then
-      return M[k]
-    else
-      return require('telescope.builtin')[k]
+    __index = function(_, k)
+        if M[k] then
+            return M[k]
+        else
+            return require('telescope.builtin')[k]
+        end
     end
-  end
 })

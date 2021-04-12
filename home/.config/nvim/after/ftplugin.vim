@@ -1,6 +1,3 @@
-" Set formatoptions
-au FileType * setlocal formatoptions-=ro
-
 " Set filetypes
 au BufNewFile,BufRead *.ejs,*.hbs set filetype=html
 au BufNewFile,BufRead .prettierrc,.eslintrc,tsconfig.json set filetype=jsonc
@@ -19,27 +16,14 @@ au BufEnter */blog/**.md setlocal spell spelllang=id
 au BufEnter */blog/**.en.md setlocal spell spelllang=en
 
 " Set github text field to markdown (firenvim stuff)
-au BufEnter github.com_*.txt set filetype=markdown
+au BufEnter github.com_*.txt setlocal filetype=markdown conceallevel=0 spell spelllang=en
 au BufEnter **.sch.id_*.txt setlocal filetype=markdown conceallevel=0 spell spelllang=id
-
-" Remove trailing whitespace on save
-au BufWritePre * %s/\s\+$//e
-
-" automatically go to insert mode on terminal buffer
-autocmd TermOpen * startinsert
 
 " enable/disable wordwrap
 augroup Goyo
     au!
     au User GoyoEnter setlocal linebreak wrap
     au User GoyoLeave setlocal nolinebreak nowrap
-augroup END
-
-" disable nvim-compe inside telescope
-augroup Compe
-    au!
-    au BufEnter * let g:compe_enabled = v:true
-    au FileType TelescopePrompt let g:compe_enabled = v:false
 augroup END
 
 " hide the cursor if we're inside NvimTree
@@ -49,3 +33,4 @@ augroup HideCursor
     au WinEnter,FileType NvimTree set guicursor=n-c-v:block-Cursor/Cursor-blinkon0,
 augroup END
 au FileType NvimTree hi Cursor blend=100
+au FileType NvimTree setlocal nowrap

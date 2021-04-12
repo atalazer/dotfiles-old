@@ -4,20 +4,29 @@ local gl = require('galaxyline')
 local gls = gl.section
 local condition = require('galaxyline.condition')
 
--- local colors = require("base.colorscheme.xresources")
-local colors = {
-  bg           = '#282c34',
-  yellow       = '#fabd2f',
-  cyan         = '#008080',
-  darkblue     = '#081633',
-  green        = '#afd700',
-  orange       = '#FF8800',
-  purple       = '#5d4d7a',
-  light_purple = '#d16d9e',
-  grey         = '#c0c0c0',
-  blue         = '#0087d7',
-  red          = '#ec5f67'
-}
+
+local get_color = function()
+    if RC.use_xresources == true then
+        local colors = require("base.colorscheme.xresources")
+        return colors
+    else
+        return {
+            bg           = '#0F111A',
+            red          = '#F07178',
+            green        = '#C3E88D',
+            yellow       = '#FFCB6B',
+            orange       = '#F78C6C',
+            blue         = '#82AAFF',
+            cyan         = '#89DDFF',
+            darkblue     = '#0A0C12',
+            purple       = '#C792EA',
+            light_purple = '#A6ACCD',
+            grey         = '#717CB4',
+        }
+    end
+end
+
+local colors = get_color()
 
 -- =================================== Component
 local separators = {
@@ -30,7 +39,7 @@ local FirstElement = {
         provider = function() return '▊ ' end,
         separator = sep,
         separator_highlight = {'NONE',colors.bg},
-        highlight = {colors.blue,colors.bg}
+        highlight = {colors.cyan,colors.bg}
     },
 }
 local LastElement = {
@@ -38,7 +47,7 @@ local LastElement = {
         provider = function() return ' ▊' end,
         separator = sep,
         separator_highlight = {'NONE',colors.bg},
-        highlight = {colors.blue,colors.bg}
+        highlight = {colors.cyan,colors.bg}
     },
 }
 

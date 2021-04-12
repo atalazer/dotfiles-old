@@ -54,7 +54,7 @@ local options = {
     undodir       = "~/.local/share/nvim/undo",
 
     -- Number
-    colorcolumn    = 80,
+    colorcolumn    = 100,
     cmdheight      = 1,
     laststatus     = 2,
     pumheight      = 10,

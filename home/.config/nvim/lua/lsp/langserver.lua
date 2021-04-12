@@ -60,18 +60,19 @@ local black ={
 
 -- require("lsp.custom.emmetls")
 local sumneko_root = os.getenv("HOME") .. "/.local/bin/lsp/lua-language-server"
--- local sumneko_cmd = sumneko_root .. "/bin/Linux/lua-language-server" .. "-E" ..sumneko_root .. "/main.lua",
+-- local sumneko_cmd = {sumneko_root .. "/bin/Linux/lua-language-server", "-E", sumneko_root .. "/main.lua"}
 local sumneko_cmd = "lua-language-server"
 
 local servers = {
     bashls = {},
+    vimls = {},
     clangd = {
         root_dir = vim.loop.cwd,
     },
-    html = {
-        filetypes = { "html", "htmldjango" },
-        capabilities = capabilities(),
-    },
+    -- html = {
+    --     filetypes = { "html", "htmldjango" },
+    --     capabilities = capabilities(),
+    -- },
     cssls = {
         root_dir = vim.loop.cwd,
     },
@@ -87,7 +88,6 @@ local servers = {
     -- },
     yamlls = {},
     jsonls = {},
-    vimls = {},
     efm = {
         cmd = {
             "efm-langserver",

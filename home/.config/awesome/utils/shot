@@ -21,7 +21,7 @@ font='JetBrains-Mono-Bold-Nerd-Font-Complete'
 
 add_author=true
 author_position=("South" "+0+26")
-author="By: $USER"
+author="By: Atalariq Barra H."
 
 check(){
     if [ ! -d "$SCREENSHOT_DIR" ];then
@@ -136,17 +136,23 @@ notify() {
         app_name = 'Screenshot Tool',
         icon = '${_FILE}',
         timeout = 10,
-        title = '<b>Snap!</b>',
+        title = '<b>Shot</b>',
         message = '${_MSG}',
         actions = { open_image, open_folder, delete_image }
     })
     "
 }
 
-case $1 in
+case ${1:-noparse} in
+    noparse)
+        check && \
+        maim -u -s -m 1 -n 0 $SAVED_NAME && \
+        notify "Screenshot Saved" 
+        ;;
     clipboard)
         check && \
         maim -m 1 $TMP_IMG && \
+        notify-send "Shot" "Parsing Image ..." && \
         parse && \
         notify "Screenshot Saved to Clipboard" && \
         xclip -selection clipboard -i $TMP_IMG -t image/png
@@ -154,6 +160,7 @@ case $1 in
     save)
         check && \
         maim -m 1 $TMP_IMG && \
+        notify-send "Shot" "Parsing Image ..." && \
         parse && \
         mv $TMP_IMG $SAVED_NAME && \
         notify "Screenshot Saved" 
@@ -162,6 +169,7 @@ case $1 in
         check && \
         notify-send "Shot" "Shot After ${sleep} Sec" && \
         maim -m 1 -d $sleep $TMP_IMG && \
+        notify-send "Shot" "Parsing Image ..." && \
         parse && \
         mv $TMP_IMG $SAVED_NAME && \
         notify "Screenshot Saved" 
@@ -169,6 +177,7 @@ case $1 in
     select)
         check && \
         maim -u -m 1 -s $TMP_IMG && \
+        notify-send "Shot" "Parsing Image ..." && \
         parse && \
         mv $TMP_IMG $SAVED_NAME && \
         notify "Screenshot Selected Has been Saved" 
@@ -176,6 +185,7 @@ case $1 in
     active)
         check && \
         maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG && \
+        notify-send "Shot" "Parsing Image ..." && \
         parse && \
         mv $TMP_IMG $SAVED_NAME && \
         notify "Screenshot from Active Windows Saved"

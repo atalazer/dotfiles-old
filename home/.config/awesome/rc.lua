@@ -5,7 +5,7 @@ RC.appearance = {
     font = "SF Pro Text Regular 9",
     -- font      = "JetBrainsMono Nerd Font 9",
     sys_icons = "Papirus-Dark",
-    wallpaper = "/home/atalariq/.wallpaper/eyecandy/mountain-4_3K.jpg",
+    wallpaper = "/home/atalariq/.wallpaper/fate.png",
 }
 
 local themes = {
@@ -33,6 +33,8 @@ RC.appearance.notif_style = notif_style[1] or "default"
 RC.settings = {
     -- Wal, color pallete generator based on wallpaper
     wal_enabled = true,
+    -- wal_backend = os.getenv("WAL_BACKEND") or "wal",
+    wal_backend = "haishoku",
     -- Collision - Windows management ( Boolean )
     collision_enabled = false,
     -- Switcher - ALT-Tab Function
@@ -64,7 +66,7 @@ RC.autostart = {
 -- You can add more start-up applications here
 }
 if RC.settings.wal_enabled == true then
-    table.insert(RC.autostart, "wal --backend haishoku -n -i " .. RC.appearance.wallpaper)
+    table.insert(RC.autostart, "wal --backend ".. RC.settings.wal_backend .." -n -i " .. RC.appearance.wallpaper)
     table.insert(RC.autostart, "xrdb -merge -I$HOME ~/.Xresources.d/color/wal ")
 else
     table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")

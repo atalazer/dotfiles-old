@@ -5,21 +5,21 @@ if ok then
     local use = packer.use
     packer.init({
         git = {
-            clone_timeout = 120, -- Timeout, in seconds, for git clones
+            clone_timeout = 180, -- Timeout, in seconds, for git clones
         },
         display = {
-            open_cmd = "leftabove 50vnew [packer]",
-                -- open_cmd = "80vnew [packer]",
+            open_cmd = "leftabove 60vnew [packer]",
+            -- open_cmd = "80vnew [packer]",
         },
     })
 
     local plugins = function()
         use({ "wbthomason/packer.nvim", opt = true })
 
-        -- ------------------------------- UI Related
-         -- Colorscheme
-        use("tjdevries/colorbuddy.nvim")
-        use("marko-cerovac/material.nvim")
+        -- ================================== UI Related
+        -- Colorscheme
+        use({ "tjdevries/colorbuddy.nvim", opt = true })
+        use({ "marko-cerovac/material.nvim", opt = true })
 
         -- vim-devicons written in lua
         use({ "kyazdani42/nvim-web-devicons", opt = true })
@@ -28,9 +28,10 @@ if ok then
         use({ "akinsho/nvim-bufferline.lua", opt = true })
 
         -- Beautiful Statusline
-        use({ "glepnir/galaxyline.nvim",
+        use({
+            "glepnir/galaxyline.nvim",
             branch = "main",
-            opt = true
+            opt = true,
         })
 
         -- Indenting
@@ -39,19 +40,18 @@ if ok then
         -- Colorizer
         use({ "norcalli/nvim-colorizer.lua", opt = true })
 
-        -- -------------------------------- LSP
+        -- ================================== LSP, Completion and Snippet
         use({ "neovim/nvim-lspconfig", opt = true })
         use({ "glepnir/lspsaga.nvim", opt = true })
         use({ "onsails/lspkind-nvim", opt = true })
 
-        -- ------------------------------- Completion and Snippet
         use({
             "hrsh7th/nvim-compe",
             opt = true,
             requires = { "hrsh7th/vim-vsnip" },
         })
 
-        -- ------------------------------- Languange
+        -- ================================== Languange
 
         -- Nvim Treesitter configurations and abstraction layer
         use({
@@ -89,7 +89,14 @@ if ok then
             ft = { "text", "markdown" },
         })
 
-        -- ------------------------------ Experience
+        -- Syntax for tridactyl
+        use({
+            "tridactyl/vim-tridactyl",
+            opt = true,
+            ft = { "tridactyl" },
+        })
+
+        -- ================================== Experience
 
         -- Emmet Support for vim
         use({ "mattn/emmet-vim", opt = false })
@@ -127,7 +134,7 @@ if ok then
             end,
         })
 
-        -- ------------------------------- Files
+        -- ================================= Files
         -- Fuzzy Finder
         use({
             "nvim-telescope/telescope.nvim",
@@ -151,14 +158,14 @@ if ok then
         -- Open root previllage files
         use({ "lambdalisue/suda.vim", opt = true })
 
-        -- -------------------------------- Git
+        -- ====================================== Git
         -- show git stuff in signcolumn
         use({ "lewis6991/gitsigns.nvim", opt = true })
 
         -- Magit for Neovim
         use({ "TimUntersberger/neogit", opt = false })
 
-        -- -------------------------------- Misc
+        -- ====================================== Misc
         -- For keybindings
         use({ "tjdevries/astronauta.nvim", opt = false })
 

@@ -14,7 +14,7 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             class = {
                 "Alacritty" , "kitty" , "Tym" ,
-                "URxvt"     , "XTerm" , "st"
+                "URxvt"     , "XTerm" , "St"
             },
         },
         properties = {
@@ -46,7 +46,7 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             class = {
                 "discord", "TelegramDesktop",
-                "Navigator",
+                "Navigator", "firefox"
             },
         },
         properties = {

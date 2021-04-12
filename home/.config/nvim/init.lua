@@ -1,6 +1,12 @@
+-- ==================================== Global settings
 vim.g.mapleader = "."
 vim.g.maplocalleader = ","
 vim.cmd([[cd %:p:h]])
+
+RC = {
+    colorscheme = "material",
+    use_xresources = true,
+}
 
 -- ==================================== neovim package manager
 require("pluginsList.bootstrapping")
@@ -45,9 +51,13 @@ require("plugins.treesitter")
 require("mappings.pkeys")
 require("mappings.visual-multi")
 
--- -=================================== LSP, Code Completions, Code Formater
+-- ==================================== LSP, Code Completions, Code Formater
 require("plugins.compe")
 require("plugins.emmet")
 require("plugins.vsnip")
 require("plugins.format")
 require("lsp")
+
+-- ==================================== Garbage collection ( Just Try )
+collectgarbage("setpause", 200)
+collectgarbage("setstepmul", 1200)

@@ -64,5 +64,10 @@
         "description": "ifel",
         "prefix": "ifel",
         "scope": "source.lua"
+    },
+    "require": {
+        "prefix": "req",
+        "body": "require(\"$1\")",
+        "description": "require"
     }
 }
