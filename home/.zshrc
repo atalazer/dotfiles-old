@@ -1,13 +1,6 @@
 # =================================================
 # Zsh configuration
 # =================================================
-precmd () {
-    print -Pn "\e]0;%~\a"
-}
-preexec () {
-    print -Pn "\e]0;%~\a"
-}
-
 : ${HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory}
 HISTSIZE=10000
 SAVEHIST=10000
@@ -20,13 +13,13 @@ setopt AUTO_CD AUTO_PUSHD
 setopt PUSHD_SILENT PUSHD_IGNORE_DUPS PUSHD_TO_HOME
 
 setopt INTERACTIVE_COMMENTS
-setopt EXTENDED_GLOB
+# setopt EXTENDED_GLOB
 # setopt NO_CLOBBER;
 
 setopt LONG_LIST_JOBS NO_BG_NICE
 setopt NO_CHECK_JOBS NO_HUP
 
-setopt CORRECT
+# setopt CORRECT
 bindkey -e
 
 # Edit line in vim with ctrl-e:
@@ -68,7 +61,6 @@ zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
 # ----------------------------------- Completions
-eval "$(thefuck --alias)"
 eval "$(pip completion --zsh)"
 
 zinit wait lucid for \
@@ -113,16 +105,13 @@ _source_path ${Z_DIR}/compe.zsh
 _source_path ${Z_DIR}/function.zsh
 _source_path ${Z_DIR}/keys.zsh
 _source_path ${HOME}/.fzf.zsh
-_source_path /usr/share/doc/pkgfile/command-not-found.zsh
 
 # =================================================
 # User Section
 # =================================================
-export VISUAL="nvim"
-export EDITOR="nvim"
-
 eval "$(zoxide init zsh)"
 
+_source_path ${HOME}/.user
 _source_path ${HOME}/.aliases
 _source_path ${HOME}/.config/nnn/nnn
 

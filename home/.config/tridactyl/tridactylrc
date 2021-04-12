@@ -1,0 +1,59 @@
+" vim: set filetype=tridactyl
+" ================================================
+" Settings
+" ================================================
+
+set newtab about:blank
+
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+set hintdelay 200
+
+set findcase sensitive
+set smoothscroll true
+
+set hintchars 123qweasdzxc
+set searchengine g
+set searchurls.ddg https://duckduckgo.com/html?q=%s
+set searchurls.g https://www.google.com/search?q=%s
+
+" ================================================
+" Binds
+" ================================================
+" ### Search
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind m findnext 1
+bind M findnext -1
+bind <Esc><Esc> nohlsearch
+
+" ### Tab
+bind <M-w> tabclose
+bind <M-a> tabprev
+bind <M-d> tabnext
+bind <M-q> tabmove -1
+bind <M-e> tabmove +1
+
+" ### History
+bind z back
+bind Z forward
+
+" ### Scroll
+bind j scrollline 5
+bind k scrollline -5
+
+" Open right click menu on links
+bind ;C composite hint_focus; !s xdotool key Menu
+
+" ================================================
+" Autocommand
+" ================================================
+autocmd DocStart mail.google.com mode ignore
+
+" ================================================
+" Misc
+" ================================================
+" Native messenger stuff
+guiset_quiet hoverlink right
+guiset_quiet tabs count
+

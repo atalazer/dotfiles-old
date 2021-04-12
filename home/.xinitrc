@@ -6,7 +6,7 @@
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 # xsettingsd &
 wal -n -R
-light -S 30
+light -S 20
 
 xset -b
 xset r rate 300 25

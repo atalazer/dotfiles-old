@@ -35,8 +35,10 @@ window:
 font:
   size: 11.0
   normal:
-      family: JetBrainsMono Nerd Font
-      style: Medium
+    family: JetBrainsMono Nerd Font
+    # family: FiraCode Nerd Font Mono
+    # family: FuraCode Nerd Font Mono
+    style: Medium
 
   # bold:
   #     family: SauceCodePro Nerd Font

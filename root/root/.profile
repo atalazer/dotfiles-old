@@ -1,9 +1,9 @@
 #!/bin/sh
 
-[ -f $HOME/.user ] && source $HOME/.user
+[ -f ~/.user ] && source ~/.user
 
-export TERMINFO=$HOME/.terminfo
-export STARSHIP_CONFIG=$HOME/.config/starship.toml
+export TERMINFO=~/.terminfo
+export STARSHIP_CONFIG=~/.config/starship.toml
 
 export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
@@ -20,10 +20,10 @@ _export_path(){
         export PATH="$1:$PATH"
     fi
 }
-_export_path $HOME/.local/bin
-_export_path $HOME/.local/bin/appimage
-_export_path $HOME/.local/bin/link
-_export_path $HOME/.local/bin/script
+_export_path ${HOME}/.local/bin
+_export_path ${HOME}/.local/bin/appimage
+_export_path ${HOME}/.local/bin/link
+_export_path ${HOME}/.local/bin/script
 
 # Node.js
 export NVM_DIR="$HOME/.nvm"

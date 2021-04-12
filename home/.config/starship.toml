@@ -1,0 +1,50 @@
+
+format = "$all"
+add_newline = true
+scan_timeout = 10
+
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡️"
+discharging_symbol = "💀"
+[[battery.display]]
+threshold = 10
+style = "bold red"
+[[battery.display]]
+threshold = 30
+style = "bold yellow"
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[➜](bold red) "
+vicmd_symbol = "[V](bold green) "
+
+[cmd_duration]
+min_time = 1000
+show_milliseconds = false
+format = "took [$duration](bold yellow)"
+
+[directory]
+truncation_length = 8
+# truncation_symbol = "…/"
+
+[git_status]
+enabled = true
+format = '([\($all_status$ahead_behind\)]($style) )'
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count} ⇣${behind_count}"
+staged_count.enabled = true
+untracked_count.enabled = true
+modified_count.enabled = true
+
+[hostname]
+disabled = false
+ssh_only = true
+format =  "on [$hostname](bold red) "
+
+[shell]
+fish_indicator = ""
+zsh_indicator = "_"
+disabled = false
+

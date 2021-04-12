@@ -1,10 +1,22 @@
 #!/sbin/bash
 
+export DOTS="$HOME/.dotfiles"
+
+# Apps
+export TERMINAL="kitty"
 export BROWSER="firefox-run"
-export TERMINAL="kitty"     # kitty, alacritty, st, st2
 export FILEMAN="nemo"
 
-export SHUTDOWN_CMD="loginctl shutdown"
-export REBT_CMD="loginctl reboot"
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# CMD
+export PERMISSION="sudo"
+export SHUTDOWN_CMD="loginctl poweroff"
+export REBOOT_CMD="loginctl reboot"
 export SUSPEND_CMD="loginctl suspend"
-export LOCK_CMD="loginctl suspend"
+export LOCK_CMD="slimlock"
+
+# Misc
+export WAL_BACKEND=colorthief
+

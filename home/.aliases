@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # vim: ft=sh
-PERMISSION="sudo"       # sudo doas or any
+PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
 
 # -------------------------------------
 # Basic
@@ -99,7 +99,7 @@ alias pacsearch="$PERMISSION pacman -Ss"
 alias pacupd="$PERMISSION pacman -Syy"
 alias pacupg="$PERMISSION pacman -Syu"
 alias pacrem="$PERMISSION pacman -Rns"
-alias pacrmorp="$PERMISSION pacman -Qtdq | pacman -Rns -"
+alias pacrmorp="$PERMISSION pacman -Rns $(pacman -Qtdq)"
 
 alias pain="paru -S"
 alias pasearch="paru -Ss"
@@ -112,6 +112,21 @@ alias parmorp="paru -Qtdq | pacman -Rns -"
 # Kitty Terminal
 # -------------------------------------
 alias icat="kitty +kitten icat"
+
+# -------------------------------------
+# mpd ncmpcpp
+# -------------------------------------
+alias killmpd=" killall mpd ncmpcpp ncmpcpp_cover_art.sh"
+alias mpdcpp=" ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
+alias rempd="killmpd && mpd && mpdcpp"
+
+# -------------------------------------
+# youtube-dl, ytmdl
+# -------------------------------------
+alias yt480p="youtube-dl -f 'bestvideo[height<=480]'"
+alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
+alias ytv="youtube-dl --merge-output-format mp4 -f 'bestvideo+bestaudio[ext=m4a]/best' --embed-thumbnail --add-metadata"
+alias ym="ytmdl"
 
 # -------------------------------------
 # Games
@@ -131,6 +146,7 @@ alias cpuinfo="watch -n1 \"cat /proc/cpuinfo | grep 'MHz'\""
 alias da="dotbare fadd"
 alias de="dotbare fedit"
 alias dl="dotbare flog"
+alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
 
 # -------------------------------------
 # Zola SSG
