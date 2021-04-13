@@ -59,20 +59,19 @@ zinit ice from"gh-r" as"program" mv"starship* -> starship"
 zinit light starship/starship
 eval "$(starship init zsh)"
 
-# ajeetdsouza/zoxide
-zinit ice from"gh-r" as"program" mv"zoxide* -> zoxide" atload"eval '$(zoxide init zsh)'"
-zinit light ajeetdsouza/zoxide
-
 zinit wait lucid from"github-rel" as"program" light-mode for \
     sbin"fzf"       junegunn/fzf \
+    sbin"sk"        lotabout/skim \
     sbin"**/rg"     BurntSushi/ripgrep \
     sbin"**/delta"  dandavison/delta \
     sbin"**/bat"    @sharkdp/bat \
     sbin"**/fd"     @sharkdp/fd \
-    sbin"**/exa"    ogham/exa
+    sbin"**/exa"    ogham/exa \
+    sbin"zoxide"    atload"!eval '$(zoxide init zsh)'"    ajeetdsouza/zoxide
 
 zinit wait lucid from"github" as"program" light-mode for \
-    sbin"nnn"   make"O_NERD=1"  jarun/nnn
+    sbin"nnn"       make"O_NERD=1"  jarun/nnn \
+    sbin"googler"   make            jarun/googler
 
 
 # ----------------------------------- Misc

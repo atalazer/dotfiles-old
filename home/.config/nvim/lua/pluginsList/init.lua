@@ -75,12 +75,12 @@ if ok then
         })
 
         -- Markdown Previewer
-        use({
-            "npxbr/glow.nvim",
-            run = ":GlowInstall",
-            opt = true,
-            ft = { "markdown" },
-        })
+        -- use({
+        --     "npxbr/glow.nvim",
+        --     run = ":GlowInstall",
+        --     opt = true,
+        --     ft = { "markdown" },
+        -- })
 
         -- Free Distraction-mode
         use({

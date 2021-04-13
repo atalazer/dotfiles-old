@@ -1,8 +1,5 @@
-local awful         = require('awful')
-local gears         = require('gears')
-local hotkeys_popup = require("awful.hotkeys_popup")
-
-local apps = require(P.config.apps)
+local awful = require('awful')
+local apps  = require(P.config.apps)
 
 awful.keyboard.append_global_keybindings({
     -- =========================== Launcher
@@ -66,22 +63,22 @@ awful.keyboard.append_global_keybindings({
         {description = 'Open Quake Terminal', group = 'launcher'}),
 
     -- ========= Rofi
-    awful.key({ W }, "r", 
+    awful.key({ W }, "r",
         function () awful.spawn(apps.rofi.drun) end,
-        {description = "Search app ", group = "launcher"}),
+        {description = "Search app ", group = "rofi"}),
 
-    awful.key({ W }, "c", 
+    awful.key({ W }, "c",
         function () awful.spawn(apps.rofi.calc) end,
-        {description = "Open rofi calculator", group = "launcher"}),
+        {description = "Open rofi calculator", group = "rofi"}),
 
-    awful.key({ C, A }, "Insert", 
+    awful.key({ W }, "Insert",
         function () awful.spawn(apps.rofi.clipboard) end,
-        {description = "Open greenclip clipboard manager", group = "launcher"}),
+        {description = "Open greenclip clipboard manager", group = "rofi"}),
 
     -- ================== Lockscreen
     awful.key({ W, C }, "l", 
         function()
             awful.spawn(apps.default.lock, false)
         end,
-        {description = "lockscreen", group = "launcher"})
+        {description = "Lockscreen now", group = "launcher"})
 })

@@ -121,12 +121,10 @@ alias mpdcpp=" ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
 alias rempd="killmpd && mpd && mpdcpp"
 
 # -------------------------------------
-# youtube-dl, ytmdl
+# youtube-dl
 # -------------------------------------
-alias yt480p="youtube-dl -f 'bestvideo[height<=480]'"
+alias yt480p="youtube-dl -f 'best[height<=480]' --embed-thumbnail --add-metadata"
 alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
-alias ytv="youtube-dl --merge-output-format mp4 -f 'bestvideo+bestaudio[ext=m4a]/best' --embed-thumbnail --add-metadata"
-alias ym="ytmdl"
 
 # -------------------------------------
 # Games

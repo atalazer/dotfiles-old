@@ -53,14 +53,11 @@ RC.autostart = {
     "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
     "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
     "mpd && mpDris2",
-    -- 'keyboard-switch -s',
     "florence",
-    -- 'kdeconnect-indicator',
-    "xfce4-power-manager",
     "nm-applet",
-    "clipit",
     [[
-        xidlehook --not-when-fullscreen --not-when-audio --timer 300 "betterlockscreen -l" ""
+        xidlehook --not-when-fullscreen --not-when-audio --timer 300 "]] .. 
+        require("configurations.apps").default.lock .. [[" ""
     ]],
 
 -- You can add more start-up applications here
