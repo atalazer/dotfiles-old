@@ -4,7 +4,7 @@ export DOTS="$HOME/.dotfiles"
 
 # Apps
 export TERMINAL="kitty"
-export BROWSER="firefox-run"
+export BROWSER="firefox-dev-run"
 export FILEMAN="nemo"
 
 export EDITOR="nvim"

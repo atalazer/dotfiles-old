@@ -36,7 +36,7 @@ RC.settings = {
     -- wal_backend = os.getenv("WAL_BACKEND") or "wal",
     wal_backend = "haishoku",
     -- Collision - Windows management ( Boolean )
-    collision_enabled = false,
+    collision_enabled = true,
     -- Switcher - ALT-Tab Function
     switcher_enabled = true,
     switcher_mode = "normal",

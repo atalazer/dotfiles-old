@@ -14,7 +14,7 @@ ruled.client.connect_signal('request::rules',function()
             focus        = awful.client.focus.filter,
             raise        = true,
             screen       = awful.screen.preferred,
-            placement    = awful.placement.no_overlap + awful.placement.no_offscreen
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         }
     }
 
@@ -144,6 +144,20 @@ ruled.client.connect_signal('request::rules',function()
             raise = true,
             floating  = true,
             placement = awful.placement.centered
+        }
+    }
+
+    ruled.client.append_rule {
+        id = 'fullscreen',
+        rule_any = {
+            name = {
+                'Firefox Developer Edition',
+                "Home"
+            }
+        },
+        properties = {
+            floating  = true,
+            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         }
     }
 

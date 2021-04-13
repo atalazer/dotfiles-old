@@ -37,7 +37,6 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             focus = awful.client.focus.filter,
             raise = true,
-            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Browsers and chats
@@ -45,16 +44,15 @@ ruled.client.connect_signal("request::rules", function()
         id = "internet",
         rule_any = {
             class = {
-                "discord", "TelegramDesktop",
-                "Navigator", "firefox"
+                "TelegramDesktop",
+                "firefox",
+                "firefoxdevedition",
             },
         },
         properties = {
             tag = get_tag_name(2),
             switch_to_tags = true,
             titlebars_enabled = true,
-            skip_decoration = false,
-            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- File managers
@@ -73,7 +71,6 @@ ruled.client.connect_signal("request::rules", function()
             tag = get_tag_name(3),
             switch_to_tags = true,
             titlebars_enabled = true,
-            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Docs
@@ -90,7 +87,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             tag = get_tag_name(3),
             switch_to_tags = true,
-            placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Multimedia
@@ -105,7 +101,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             titlebars_enabled = true,
             floating = true,
-            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Graphics
@@ -121,7 +116,6 @@ ruled.client.connect_signal("request::rules", function()
             switch_to_tags = true,
             titlebars_enabled = true,
             floating = true,
-            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
     -- Games
@@ -141,7 +135,6 @@ ruled.client.connect_signal("request::rules", function()
             size_hints_honor = false,
             floating = true,
             skip_decoration = true,
-            placement = awful.placement.centered
         },
     })
 end)

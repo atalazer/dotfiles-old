@@ -5,7 +5,7 @@ vim.cmd([[cd %:p:h]])
 
 RC = {
     colorscheme = "material",
-    use_xresources = true,
+    use_xresources = false,
 }
 
 -- ==================================== neovim package manager
