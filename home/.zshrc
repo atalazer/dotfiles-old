@@ -10,7 +10,7 @@ export ZDIR=$HOME/.zsh
 ZSH_CACHE_DIR=$ZDIR/.cache
 
 # available: antigen, sheldon, zinit
-PLUG_MAN=zinit
+PLUG_MAN=antigen
 
 if [[ $PLUG_MAN != "sheldon" ]]; then
     # available: starship spaceship, pure
@@ -33,7 +33,11 @@ Source(){
     if [ command -v "zsh-defer" &>/dev/null ]; then
         [ -f $1 ] && source $1
     else
-        [ -f $1 ] && zsh-defer source $1
+        if [ $PLUG_MAN = zinit ]; then
+            [ -f $1 ] && source $1
+        else
+            [ -f $1 ] && zsh-defer source $1
+        fi
     fi
 }
 
@@ -76,7 +80,7 @@ elif [[ $PLUG_MAN = "sheldon" ]]; then
 fi
 
 Source $ZDIR/plug-conf/nnn.zsh
-Source $ZDIR/plug-conf/dotbare.zshd
+Source $ZDIR/plug-conf/dotbare.zsh
 
 # ===== User =====
 source ~/.aliases           # User alias definition

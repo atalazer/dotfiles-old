@@ -8,4 +8,5 @@
 **/api.json
 **/resurrect/*
 **/__pycache__/*
+**/.cache/*
 home/.config/mpd/mpd.state
