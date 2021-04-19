@@ -1,7 +1,6 @@
 -- ==================================== Global settings
 vim.g.mapleader = "."
 vim.g.maplocalleader = ","
-vim.cmd([[cd %:p:h]])
 
 RC = {
     colorscheme = "material",
@@ -58,6 +57,3 @@ require("plugins.vsnip")
 require("plugins.format")
 require("lsp")
 
--- ==================================== Garbage collection ( Just Try )
-collectgarbage("setpause", 200)
-collectgarbage("setstepmul", 1200)

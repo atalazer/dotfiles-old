@@ -26,7 +26,7 @@ M.icon = wibox.widget.imagebox(colorize(icon, beautiful.widget_icon))
 
 local cmd = [[ sh -c "cat /sys/class/power_supply/BAT0/capacity" ]]
 
-M.widget = awful.widget.watch(cmd, 5, function(widget, stdout)
+M.widget = awful.widget.watch(cmd, 10, function(widget, stdout)
         widget:set_markup(markup(math.floor(stdout) .. "%", {fg = beautiful.widget_text}))
     end)
 

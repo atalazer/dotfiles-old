@@ -52,7 +52,7 @@ local function set_volume(widget, stdout)
     end
 end
 
-M.widget = awful.widget.watch(get_vol_status, 120, function(widget, stdout)
+M.widget = awful.widget.watch(get_vol_status, 3, function(widget, stdout)
         set_volume(widget, stdout)
     end)
 

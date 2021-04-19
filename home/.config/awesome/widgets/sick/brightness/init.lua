@@ -26,7 +26,7 @@ M.icon = wibox.widget.imagebox(colorize(icon, beautiful.widget_icon))
 
 local cmd = [[ sh -c "light -G" ]]
 
-M.widget = awful.widget.watch(cmd, 5, function(widget, stdout)
+M.widget = awful.widget.watch(cmd, 3, function(widget, stdout)
         widget:set_markup(markup(math.floor(stdout) .. "%", {fg = beautiful.widget_text}))
     end)
 

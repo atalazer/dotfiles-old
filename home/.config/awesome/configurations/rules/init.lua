@@ -8,13 +8,12 @@ ruled.client.connect_signal('request::rules',function()
         id = 'global',
         rule = {},
         properties = {
-            -- border_width = beautiful.border_width,
             border_width = 0,
             border_color = beautiful.border_normal,
             focus        = awful.client.focus.filter,
             raise        = true,
             screen       = awful.screen.preferred,
-            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
+            placement    = awful.placement.no_overlap + awful.placement.no_offscreen,
         }
     }
 
@@ -30,7 +29,8 @@ ruled.client.connect_signal('request::rules',function()
             name = {'Discord Updater'}
         },
         properties = {
-            shape         = beautiful.client_shape_rounded
+            shape         = beautiful.client_shape_rounded,
+            placement    = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         }
     }
 
@@ -121,11 +121,11 @@ ruled.client.connect_signal('request::rules',function()
                 "plugin-container", "exe",
             },
             class = {
-                'Float', 'Editor', 'Files', 'Music',
                 'Mugshot', 'Gcolor3', 'Pulseeffects',
                 'scrcpy',
             },
             name = {
+                'Float', 'Editor', 'Files', 'Music',
                 "Event Tester",
                 "Open File",
                 "Media viewer",
@@ -138,9 +138,6 @@ ruled.client.connect_signal('request::rules',function()
         },
         properties = {
             titlebars_enabled = true,
-            skip_decoration = true,
-            ontop = true,
-            focus = awful.client.focus.filter,
             raise = true,
             floating  = true,
             placement = awful.placement.centered

@@ -1,155 +1,133 @@
-#!/usr/bin/env sh
-# vim: ft=sh
+#!/usr/bin/env bash
+
 PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
 
-# -------------------------------------
 # Basic
-# -------------------------------------
 alias c="clear"
 alias r="exec zsh"
 alias {:q,q}="exit"
 
-# -------------------------------------
-# Make dir and remove dir quickly
-# -------------------------------------
-alias md='mkdir -p'
-alias rd=rmdir
-
-# -------------------------------------
 # Use exa instead of ls
-# -------------------------------------
-if command -v exa > /dev/null 2>&1; then
+if command -v "exa" > /dev/null 2>&1; then
     alias ls="exa --icons --group-directories-first"
     alias lsa="exa --icons --group-directories-first -a"
     alias ll="exa --icons --group-directories-first -lgh"
     alias lla="exa --icons --group-directories-first -algh"
-    alias tree="exa --icons --group-directories-first --tree"
 fi
-# -------------------------------------
-# User Trash Instead of rm
-# -------------------------------------
-if command -v trash > /dev/null 2>&1; then
+
+# Use Trash Instead of rm
+if command -v "trash" > /dev/null 2>&1; then
     alias rm="trash"
     alias tr="trash"
     alias tl="trash-list"
     alias trs="trash-restore"
+elif command -v "gio" > /dev/null 2>&1; then
+    alias rm="gio trash"
+    alias tr="gio trash"
+    alias tl="gio trash --list"
+    alias trs="gio trash --restore"
+elif command -v "rip" > /dev/null 2>&1; then
+    alias rm="rip"
+    alias tr="rip"
+    alias tl="rip -s"
+    alias trs="rip -u"
 fi
 
-# -------------------------------------
-# Neovim Alias
-# -------------------------------------
+# Editor Alias
 alias {e,vim,vi}="$EDITOR"
 alias {envim,evim,ev}="$EDITOR ~/.config/nvim/init.lua"
 alias {zshrc,ez}="$EDITOR ~/.zshrc"
 alias {xrc,ex}="$EDITOR ~/.Xresources"
 alias {awc,ea}="$EDITOR ~/.config/awesome/rc.lua"
+alias se="sudoedit"
 
-# -------------------------------------
 # Xresources Alias
-# -------------------------------------
 alias xload="xrdb -load ~/.Xresources"
 alias xmerge="xrdb -merge ~/.Xresources"
 
-# -------------------------------------
-# NNN File Manager
-# -------------------------------------
-alias fm=nnn
-alias {fmcd,fmq}=qnnn
-alias fmp=pnnn
-alias gfm=nemo
-
-# -------------------------------------
-# FZF alias
-# -------------------------------------
+# FZF SKIM alias
 alias fzfp="fzf --reverse --preview 'bat --style=numbers --color=always {}'"
-fe() { $EDITOR $(fzf) }
-fep() { $EDITOR $(fzf --reverse --preview 'bat --style=numbers --color=always {}') }
-
-# -------------------------------------
-# SKIM alias
-# -------------------------------------
 alias skp="sk --reverse --preview 'bat --style=numbers --color=always {}'"
-se() { $EDITOR $(sk) }
-sep() { $EDITOR $(sk --reverse --preview 'bat --style=numbers --color=always {}') }
 
-# -------------------------------------
 # Git Alias
-# -------------------------------------
 alias ga="git add"
-alias gcl="git clone"
-alias gcm="git commit"
-alias gcmsg="git commit -m"
+alias gr="git remove"
+alias gs="git status"
 alias glg="git log"
+
+alias gb="git branch"
+alias gco="git checkout"
+alias gcl="git clone --recursive"
 alias gp="git push"
 alias gl="git pull"
-alias gs="git status"
+alias gf="git fetch"
+alias gcm="git commit"
+alias gcmsg="git commit -m"
 
-alias {lzg,lz}="lazygit"
+alias grh="git reset"
+alias grhh="git reset --hard"
+alias grev="git revert"
 
-# -------------------------------------
-# Programming Lang
-# -------------------------------------
-alias py="python"
+alias gstp="git stash push"
+alias gsta="git stash apply"
+alias gstc="git stash clear"
+alias gstd="git stash drop"
+alias gstl="git stash list"
 
-# -------------------------------------
-# Archlinux Stuff
-# -------------------------------------
-alias pacin="$PERMISSION pacman -S"
-alias pacsearch="$PERMISSION pacman -Ss"
-alias pacupd="$PERMISSION pacman -Syy"
-alias pacupg="$PERMISSION pacman -Syu"
-alias pacrem="$PERMISSION pacman -Rns"
-alias pacrmorp="$PERMISSION pacman -Rns $(pacman -Qtdq)"
+alias {lg,lz}="lazygit"
 
-alias pain="paru -S"
-alias pasearch="paru -Ss"
-alias paupd="paru -Syy"
-alias paupg="paru -Syu"
-alias parem="paru -Rcns"
-alias parmorp="paru -Qtdq | pacman -Rns -"
+# Archlinux
+if command -v "pacman" > /dev/null 2>&1; then
+    alias pacin="$PERMISSION pacman -S"
+    alias pacsearch="$PERMISSION pacman -Ss"
+    alias pacupd="$PERMISSION pacman -Syy"
+    alias pacupg="$PERMISSION pacman -Syu"
+    alias pacrem="$PERMISSION pacman -Rns"
+    alias pacrmorp="$PERMISSION pacman -Rns $(pacman -Qtdq)"
+fi
 
-# -------------------------------------
+if command -v "paru" > /dev/null 2>&1; then
+    alias pain="paru -S"
+    alias pasearch="paru -Ss"
+    alias paupd="paru -Syy"
+    alias paupg="paru -Syu"
+    alias parem="paru -Rcns"
+    alias parmorp="paru -Qtdq | pacman -Rns -"
+fi
+
+# tmux
+if command -v "tmux" > /dev/null 2>&1; then
+    alias tma='tmux attach -t'
+    alias tms='tmux new-session -s'
+    alias tml='tmux list-sessions'
+    alias tmk='tmux kill-session -t'
+fi
+
 # Kitty Terminal
-# -------------------------------------
-alias icat="kitty +kitten icat"
-
-# -------------------------------------
+if command -v "kitty" > /dev/null 2>&1; then
+    alias icat="kitty +kitten icat"
+fi
 # mpd ncmpcpp
-# -------------------------------------
-alias killmpd=" killall mpd ncmpcpp ncmpcpp_cover_art.sh"
-alias mpdcpp=" ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
-alias rempd="killmpd && mpd && mpdcpp"
+if command -v "ncmpcpp" > /dev/null 2>&1; then
+    alias killmpd=" killall mpd ncmpcpp ncmpcpp_cover_art.sh"
+    alias mpdcpp=" ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
+    alias rmpd="killmpd && mpd && mpdcpp"
+fi
 
-# -------------------------------------
 # youtube-dl
-# -------------------------------------
-alias yt480p="youtube-dl -f 'best[height<=480]' --embed-thumbnail --add-metadata"
-alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
-
-# -------------------------------------
+if command -v "youtube-dl" > /dev/null 2>&1; then
+    alias yt480p="youtube-dl -f 'best[height<=480][ext=mp4]' --embed-thumbnail"
+    alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
+fi
 # Games
-# -------------------------------------
-alias tetris="autoload -Uz tetriscurses; tetriscurses"
+if command -v "zsh" > /dev/null 2>&1; then
+    alias tetris="autoload -Uz tetriscurses; tetriscurses"
+fi
 
-# -------------------------------------
 # cpupower
-# -------------------------------------
-alias performance="$PERMISSION cpupower frequency-set -g performance"
-alias ondemand="$PERMISSION cpupower frequency-set -g ondemand"
+if command -v "cpupower" > /dev/null 2>&1; then
+    alias performance="$PERMISSION cpupower frequency-set -g performance"
+    alias ondemand="$PERMISSION cpupower frequency-set -g ondemand"
+fi
 alias cpuinfo="watch -n1 \"cat /proc/cpuinfo | grep 'MHz'\""
-
-# -------------------------------------
-# Alias for dotbare
-# -------------------------------------
-alias da="dotbare fadd"
-alias de="dotbare fedit"
-alias dl="dotbare flog"
-alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
-
-# -------------------------------------
-# Zola SSG
-# -------------------------------------
-alias zserve="zola serve"
-alias zcheck="zola check"
-alias zbuild="zola build"
 

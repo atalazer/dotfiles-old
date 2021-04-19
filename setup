@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# Setup Script by Atalazer
+# Supported distro:
+#   - Arch-based
+#
+
+DIR=${DOTS:-$HOME/.dotfiles}
+cd $DIR
+
+check_dependencies(){
+    if command -v "stow" &> /dev/null; then
+        echo "Stow Installed"
+    else
+        echo "Please Install stow package first :)"
+        exit 0
+    fi
+}
+
+home(){
+    check_dependencies
+    OPT=${1:-help}
+    case $OPT in
+    apply)
+        [ -d $DIR/home ] && stow -R home
+        echo "Stow home dir"
+        ;;
+    remove)
+        [ -d $DIR/home ] && stow -D home
+        echo "Unstow home dir"
+        ;;
+    help)
+        echo "Available Command:"
+        echo "apply         Stow dotfiles for home dir"
+        echo "remove        Unstow dotfiles for home dir"
+        echo "help          Show this message"
+    esac
+}
+
+
+OPT=${1:-help}
+case $OPT in
+install) 
+    [[ -f $DIR/pkginstall ]] && sh -c "$DIR/pkginstall"
+    ;;
+home) home ${2:-help}
+    ;;
+help)
+    echo "Available Command:"
+    echo "install       Install requirement package"
+    echo "home          Home dir related, help for details"
+    echo "help          Show this message"
+    ;;
+esac

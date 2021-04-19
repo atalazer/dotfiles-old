@@ -6,11 +6,11 @@ TMP_IMG=/tmp/image.png
 
 sleep=3
 
-border_size=2
+border_size=1
 rounded_corner=3
 shadow_size="50x10+0+10"
 
-background_size=10
+background_size=3
 background_color="#ffffff"
 color_fg="#ffffff"
 color_bg="#1F2233"
@@ -19,7 +19,7 @@ color_profile="/usr/share/color/icc/colord/sRGB.icc"
 font_size=11
 font='JetBrains-Mono-Bold-Nerd-Font-Complete'
 
-add_author=true
+add_author=false
 author_position=("South" "+0+26")
 author="By: Atalariq Barra H."
 
@@ -40,28 +40,28 @@ parse(){
     if [[ $border_size -ge 3 ]]; then
 
         # Generate image info
-        magick convert "$IMG" \
+        convert "$IMG" \
             -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] '"${rounded_corner}"','"${rounded_corner}"''\
         info: > $DIR/_rounded_.mvg
 
         # Generate rounding masked
-        magick convert "$IMG" -border ${border_size} -alpha transparent \
+        convert "$IMG" -border ${border_size} -alpha transparent \
             -background none -fill white -stroke none -strokewidth 0 \
             -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_mask_.png
 
         # Generate rounding overlay
-        magick convert "$IMG" -border ${border_size} -alpha transparent \
+        convert "$IMG" -border ${border_size} -alpha transparent \
             -background none -fill none -stroke $_FG_COLOR_ -strokewidth ${border_size} \
             -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_overlay_.png
 
         # Set rounded corner & border
-        magick convert "$IMG" -alpha set -bordercolor none -border ${border_size}  \
+        convert "$IMG" -alpha set -bordercolor none -border ${border_size}  \
             $DIR/_rounded_mask_.png -compose DstIn -composite \
             $DIR/_rounded_overlay_.png -compose Over -composite \
             "$IMG"
     else
         # Set rounded corner
-        magick convert "$IMG" \( +clone  -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
+        convert "$IMG" \( +clone  -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
         \( +clone -flip \) -compose Multiply -composite \
         \( +clone -flop \) -compose Multiply -composite \
         \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
@@ -146,7 +146,7 @@ notify() {
 case ${1:-noparse} in
     noparse)
         check && \
-        maim -u -s -m 1 -n 0 $SAVED_NAME && \
+        maim -u -s $SAVED_NAME && \
         notify "Screenshot Saved" 
         ;;
     clipboard)

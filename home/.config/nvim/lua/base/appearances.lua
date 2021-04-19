@@ -7,8 +7,8 @@ if colorscheme == "material" and RC.use_xresources == false then
 
     vim.g.material_style = "deep ocean" -- darker, lighter, default, oceanic, palenight, deep ocean
     vim.g.material_italic_comments = 1
-    vim.g.material_italic_keywords = 0
-    vim.g.material_italic_functions = 0
+    vim.g.material_italic_keywords = 1
+    vim.g.material_italic_functions = 1
     -- Set Mappings
     vim.api.nvim_set_keymap(
         "n",
@@ -30,5 +30,9 @@ vim.cmd("set termguicolors")
 if RC.use_xresources == true then
     require("base.colorscheme.xresources").colorscheme()
 else
-    vim.cmd("colorscheme " .. colorscheme)
+    if colorscheme == "material" then
+        require('colorbuddy').colorscheme('material')
+    else
+        vim.cmd("colorscheme " .. colorscheme)
+    end
 end

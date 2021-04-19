@@ -1,0 +1,53 @@
+#!/bin/sh
+
+if command -v "doas" &> /dev/null; then
+    PERMISSION="doas"
+else
+    PERMISSION="sudo"
+fi
+
+# Arch-based
+if command -v "pacman" &> /dev/null; then
+    echo "Update All Packages"
+    $PERMISSION pacman -Syu
+
+    echo ""
+    echo "Installing dependencies"
+    $PERMISSION pacman -S stow dash
+
+    echo ""
+    echo "Installing Package for $(lsb_release -d | cut -f 2)"
+    if command -v "paru" &> /dev/null; then
+        paru -S --needed \
+            xorg-server xorg-xprop xorg-xrdb xorg-xinit xorg-xinput xsettingsd \
+            xdg-user-dirs \
+            kitty zsh tmux \
+            nemo \
+            maim xdotool feh \
+            rofi \
+            htop neofetch \
+            mpd mpc ncmpcpp mpdris2 playerctl pamixer \
+            neovim-nightly-bin \
+            awesome-git picom-git \
+            ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
+    elif command -v "yay" &> /dev/null; then
+        yay -S --needed \
+            xorg-server xorg-xprop xorg-xrdb xorg-xinit xorg-xinput xsettingsd \
+            xdg-user-dirs \
+            kitty zsh tmux \
+            nemo \
+            maim xdotool feh \
+            rofi \
+            htop neofetch \
+            mpd mpc ncmpcpp mpdris2 playerctl pamixer \
+            neovim-nightly-bin \
+            awesome-git picom-git \
+            ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
+    else
+        echo "Please install AUR helper like paru or yay"
+    fi
+
+    echo ""
+    echo "Done; Package Installed"
+fi
+

@@ -7,14 +7,14 @@ local utils_dir = config_dir .. "utils/"
 RC.apps = {
     default = {
         terminal = os.getenv("TERMINAL") or "kitty",
-        terminal_float = "kitty --class Float",
+        terminal_float = "kitty --name Float",
         terminal_quake = "kitty --name QuakeTerminal",
         terminal_lyrics = "kitty " .. "--config ~/.config/kitty/kitty-lyrics.conf --class lyricsQuake " .. "-e ncmpcpp -c ~/.config/ncmpcpp/lyrics.conf -s lyrics",
         t_editor = "nvim",
         editor = "subl",
-        t_file_manager = "kitty --class Files -e nnn",
+        t_file_manager = "kitty --name Files -e nnn",
         file_manager = "nemo",
-        t_music = "kitty --class Music -e ncmpcpp-ueberzug",
+        t_music = "kitty --name Music -e ncmpcpp-ueberzug",
         web_browser = os.getenv("BROWSER") or "firefox",
         office = "GTK_THEME=Adwaita:light libreoffice",
         multimedia = "mpv",
@@ -25,7 +25,7 @@ RC.apps = {
     rofi = {
         drun            = "rofi -show drun -modi drun",
         calc            = "rofi -show calc -modi calc -no-show-match -no-sort",
-        clipboard       = "env CM_LAUNCHER=rofi clipmenu",
+        clipboard       = "env CM_HISTLENGTH=20 CM_LAUNCHER=rofi clipmenu",
         rofi_global     = "rofi " .. 
             " -show \"Global Search\" -modi \"Global Search\":" .. 
             "~/.config/rofi/global/rofi-spotlight.sh" .. 

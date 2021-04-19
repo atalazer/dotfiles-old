@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #export LC_COLLATE="C"
 #export NNN_OPTS="cEnrx"
 
@@ -72,4 +70,11 @@ pnnn () {
     nnn "$@"
     /bin/rm -f "$NNN_FIFO"
 }
+
+# -------------------------------------
+# NNN File Manager
+# -------------------------------------
+alias fm=nnn
+alias {fmcd,fmq}=qnnn
+alias fmp=pnnn
 

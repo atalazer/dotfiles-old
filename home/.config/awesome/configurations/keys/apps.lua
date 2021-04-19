@@ -75,6 +75,14 @@ awful.keyboard.append_global_keybindings({
         function () awful.spawn(apps.rofi.clipboard) end,
         {description = "Open greenclip clipboard manager", group = "rofi"}),
 
+    awful.key({ C, A }, "Insert",
+        function () awful.spawn(apps.rofi.clipboard) end,
+        {description = "Open greenclip clipboard manager", group = "rofi"}),
+
+    awful.key({ C, A }, "h",
+        function () awful.spawn(apps.rofi.clipboard) end,
+        {description = "Open greenclip clipboard manager", group = "rofi"}),
+
     -- ================== Lockscreen
     awful.key({ W, C }, "l", 
         function()

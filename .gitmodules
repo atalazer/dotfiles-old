@@ -1,8 +1,8 @@
-[submodule "home/.startpage/jaredk3nt"]
+[submodule "extra/startpage/jaredk3nt"]
     path = home/.startpage/jaredk3nt
     url = https://github.com/Jaredk3nt/homepage
 
-[submodule "home/.startpage/atalazer"]
+[submodule "extra/startpage/atalazer"]
     path = home/.startpage/atalazer
     url = https://github.com/atalazer/atalazer-startpage
 
@@ -10,17 +10,17 @@
     path = home/.config/awesome/bling
     url = https://github.com/Nooo37/bling
 [submodule "home/.tmux/plugins/tpm"]
-	path = home/.tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
+    path = home/.tmux/plugins/tpm
+    url = https://github.com/tmux-plugins/tpm
 [submodule "home/.tmux/plugins/tmux-prefix-highlight"]
-	path = home/.tmux/plugins/tmux-prefix-highlight
-	url = https://github.com/tmux-plugins/tmux-prefix-highlight.git
+    path = home/.tmux/plugins/tmux-prefix-highlight
+    url = https://github.com/tmux-plugins/tmux-prefix-highlight.git
 [submodule "home/.tmux/plugins/tmux-resurrect"]
-	path = home/.tmux/plugins/tmux-resurrect
-	url = https://github.com/tmux-plugins/tmux-resurrect.git
+    path = home/.tmux/plugins/tmux-resurrect
+    url = https://github.com/tmux-plugins/tmux-resurrect.git
 [submodule "home/.tmux/plugins/tmux-continuum"]
-	path = home/.tmux/plugins/tmux-continuum
-	url = https://github.com/tmux-plugins/tmux-continuum.git
+    path = home/.tmux/plugins/tmux-continuum
+    url = https://github.com/tmux-plugins/tmux-continuum.git
 [submodule "home/.tmux/plugins/tmux-yank"]
-	path = home/.tmux/plugins/tmux-yank
-	url = https://github.com/tmux-plugins/tmux-yank.git
+    path = home/.tmux/plugins/tmux-yank
+    url = https://github.com/tmux-plugins/tmux-yank.git

@@ -30,13 +30,14 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            skip_taskbar = true,
             focusable = false,
-            titlebars_enabled = false,
+            skip_taskbar = true,
             skip_decoration = true,
+            titlebars_enabled = false,
             floating = true,
             sticky = true,
             above = true,
+            placement = awful.placement.bottom + awful.placement.skip_fullscreen + awful.placement.no_overlap + awful.placement.no_offscreen ,
         },
     })
 end)

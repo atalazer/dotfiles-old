@@ -17,6 +17,11 @@ ruled.client.connect_signal("request::rules", function()
                 "URxvt"     , "XTerm" , "St"
             },
         },
+        exect_any = {
+            name = {
+                'Float', 'Editor', 'Files', 'Music',
+            },
+        },
         properties = {
             tag = get_tag_name(1),
             switch_to_tags = true,
@@ -35,7 +40,6 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             floating = true,
-            focus = awful.client.focus.filter,
             raise = true,
         },
     })
@@ -80,6 +84,7 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "wps",
                 "libreoffice",
+                "DesktopEditors",
                 "Zathura",
                 "Atril",
             },
@@ -129,12 +134,14 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            -- tag = get_tag_name(4),
-            -- switch_to_tags = true,
+            ontop = true,
+            focus = awful.client.focus.filter,
+            raise = true,
             titlebars_enabled = false,
             size_hints_honor = false,
             floating = true,
             skip_decoration = true,
+            placement = awful.placement.maximize,
         },
     })
 end)

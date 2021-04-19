@@ -75,12 +75,20 @@ if ok then
         })
 
         -- Markdown Previewer
-        -- use({
-        --     "npxbr/glow.nvim",
-        --     run = ":GlowInstall",
-        --     opt = true,
-        --     ft = { "markdown" },
-        -- })
+        use({
+            "iamcco/markdown-preview.nvim",
+            run = "cd app && yarn install",
+            opt = true,
+            ft = { "markdown" },
+        })
+
+        -- Terminal Markdown Previewer
+        use({
+            "npxbr/glow.nvim",
+            run = ":GlowInstall",
+            opt = true,
+            ft = { "markdown" },
+        })
 
         -- Free Distraction-mode
         use({

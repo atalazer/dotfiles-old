@@ -5,7 +5,7 @@ RC.appearance = {
     font = "SF Pro Text Regular 9",
     -- font      = "JetBrainsMono Nerd Font 9",
     sys_icons = "Papirus-Dark",
-    wallpaper = "/home/atalariq/.wallpaper/fate.png",
+    wallpaper = "/home/atalariq/.wallpaper/sao-aloview.jpg",
 }
 
 local themes = {
