@@ -31,6 +31,8 @@ local notif_style = {
 RC.appearance.notif_style = notif_style[1] or "default"
 
 RC.settings = {
+    -- Layoout move and resize deltas.
+    delta = 10,
     -- Wal, color pallete generator based on wallpaper
     wal_enabled = true,
     -- wal_backend = os.getenv("WAL_BACKEND") or "wal",
@@ -56,7 +58,7 @@ RC.autostart = {
     "florence",
     "nm-applet",
     [[
-        xidlehook --not-when-fullscreen --not-when-audio --timer 300 "]] .. 
+        xidlehook --not-when-fullscreen --not-when-audio --timer 600 "]] .. 
         require("configurations.apps").default.lock .. [[" ""
     ]],
 
@@ -73,7 +75,6 @@ end
 pcall(require, "luarocks.loader")
 -- Awesome Library
 -- Load AwesomeWM libraries
-local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
@@ -254,5 +255,5 @@ require(P.module.mpd.lyrics)
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
-collectgarbage("setpause", 150)
-collectgarbage("setstepmul", 1200)
+collectgarbage("setpause", 200)
+collectgarbage("setstepmul", 1000)

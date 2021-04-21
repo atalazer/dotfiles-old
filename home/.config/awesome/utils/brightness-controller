@@ -28,6 +28,5 @@ case $1 in
     ;;
     optimize)
         optimize
-        notify-send $(current_bn)
     ;;
 esac

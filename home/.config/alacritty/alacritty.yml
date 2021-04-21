@@ -14,10 +14,10 @@ window:
     x: 0
     y: 0
   padding:
-    x: 8
-    y: 8
+    x: 5
+    y: 5
 
-  dynamic_padding: true
+  dynamic_padding: false
   dynamic_title: false
 
   startup_mode: Windowed

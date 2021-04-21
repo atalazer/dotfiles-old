@@ -18,7 +18,7 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         exect_any = {
-            name = {
+            instance = {
                 'Float', 'Editor', 'Files', 'Music',
             },
         },

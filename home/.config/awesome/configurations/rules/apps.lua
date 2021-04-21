@@ -21,8 +21,9 @@ ruled.client.connect_signal("request::rules", function()
         },
     })
 
+    -- Virtual Keyboard
     ruled.client.append_rule({
-        id = "",
+        id = "virtual_keyboard",
         rule_any = {
             class = {
                 "Florence",
@@ -37,7 +38,7 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             sticky = true,
             above = true,
-            placement = awful.placement.bottom + awful.placement.skip_fullscreen + awful.placement.no_overlap + awful.placement.no_offscreen ,
+            placement = awful.placement.bottom + awful.placement.skip_fullscreen + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
 end)

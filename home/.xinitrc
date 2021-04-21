@@ -2,13 +2,13 @@
 # Load .xprofile
 [ -f ~/.profile ] && . ~/.profile
 
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 export _JAVA_AWT_WM_NONREPARENTING=1
 export MOZ_USE_XINPUT2=1
-export CM_LAUNCHER=fzf
+export CM_LAUNCHER=rofi
 
 wal -n -R
 light -S 40
@@ -29,4 +29,7 @@ pulseaudio --start
 # /usr/bin/pipewire-media-session &
 
 # Start session
-exec dbus-launch --exit-with-session awesome
+case ${1:-awesome} in
+    awesome) exec dbus-launch --exit-with-session awesome;;
+    fluxbox) exec dbus-launch --exit-with-session fluxbox;;
+esac
