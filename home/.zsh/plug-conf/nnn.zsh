@@ -1,14 +1,15 @@
 #export LC_COLLATE="C"
 #export NNN_OPTS="cEnrx"
 
-export NNN_TRASH=1
+export NNN_TRASH=2                  # 1:trash-cli    2: gio trash
 export NNN_OPENER="/usr/bin/xdg-open"
 export NNN_SEL='/tmp/.sel'
 export NNN_FIFO=/tmp/nnn.fifo
 
-export NNN_BMS="a:~/linux/apps;b:~/backup;c:~/.config;d:~/.dotfiles;g:~/github;p:~/programming;w:~/linux/wiki;"
+export NNN_BMS="a:~/linux/apps;b:~/backup;c:~/.config;d:${DOTS:-$HOME/.dotfiles};g:~/github;p:~/programming;w:~/linux/wiki;z:${ZDIR:-$HOME/.zsh}"
 
-export NNN_PLUG="1:treeview;b:bookmarks;B:bulknew;d:dragdrop;G:getplugs;i:imgview;k:kdeconnect;m:mediainf;M:mimelist;o:fzopen;O:organize;p:preview-tui;R:renamer;s:splitjoin;S:suedit;v:vidthumb;w:wall;z:autojump;"
+export NNN_PLUG="1:treeview;b:bookmarks;B:bulknew;d:dragdrop;G:getplugs;i:imgview;k:kdeconnect;l:launch;m:mediainf;M:mimelist;o:fzopen;O:organize;p:preview-tui;P:preview-tui-ext;r:rsynccp;s:splitjoin;S:suedit;v:vidthumb;w:wall;z:autojump;"
+
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 
 # nnn with Quit on cd
@@ -72,9 +73,10 @@ pnnn () {
 }
 
 # -------------------------------------
-# NNN File Manager
+# Alias NNN File Manager
 # -------------------------------------
-alias fm=nnn
-alias {fmcd,fmq}=qnnn
-alias fmp=pnnn
+alias fm="env VISUAL=nnn_e nnn -er"
+alias fmp="pnnng"
+alias {fmcd,fmq}="qnnn"
+alias {FM,sfm}='sudo -E nnn -dH'
 

@@ -9,7 +9,11 @@ if ok then
         },
         display = {
             open_cmd = "leftabove 60vnew [packer]",
-            -- open_cmd = "80vnew [packer]",
+                -- open_cmd = "80vnew [packer]",
+        },
+        profile = {
+            enable = false,
+            threshold = 1,
         },
     })
 
@@ -36,6 +40,7 @@ if ok then
 
         -- Indenting
         use({ "glepnir/indent-guides.nvim", opt = true })
+        use({ "lukas-reineke/indent-blankline.nvim", branch = "lua", opt = true })
 
         -- Colorizer
         use({ "norcalli/nvim-colorizer.lua", opt = true })
@@ -48,7 +53,15 @@ if ok then
         use({
             "hrsh7th/nvim-compe",
             opt = true,
-            requires = { "hrsh7th/vim-vsnip" },
+        })
+
+        use({
+            "hrsh7th/vim-vsnip",
+            opt = true,
+            requires = {
+                { "hrsh7th/vim-vsnip-integ" },
+                { "rafamadriz/friendly-snippets" },
+            },
         })
 
         -- ================================== Languange
@@ -74,14 +87,6 @@ if ok then
             ft = { "markdown" },
         })
 
-        -- Markdown Previewer
-        use({
-            "iamcco/markdown-preview.nvim",
-            run = "cd app && yarn install",
-            opt = true,
-            ft = { "markdown" },
-        })
-
         -- Terminal Markdown Previewer
         use({
             "npxbr/glow.nvim",
@@ -92,7 +97,7 @@ if ok then
 
         -- Free Distraction-mode
         use({
-            "junegunn/goyo.vim",
+            "kdav5758/TrueZen.nvim",
             opt = true,
             ft = { "text", "markdown" },
         })
@@ -128,7 +133,7 @@ if ok then
         use({ "blackcauldron7/surround.nvim", opt = false })
 
         -- Align
-        use({ "godlygeek/tabular" })
+        use({ "junegunn/vim-easy-align" })
 
         -- gf like plugins
         use({ "notomo/curstr.nvim" })
@@ -177,11 +182,22 @@ if ok then
         -- For keybindings
         use({ "tjdevries/astronauta.nvim", opt = false })
 
+        -- Dims inactive windows
+        use({"sunjon/shade.nvim", opt = true})
+
         -- Smooth Scrolling
-        use({ "psliwka/vim-smoothie", opt = false })
+        use({"psliwka/vim-smoothie", opt = false })
+        use({ "karb94/neoscroll.nvim", opt = true })
 
         -- better window and buffer management
         use({ "mhinz/vim-sayonara", cmd = "Sayonara" })
+
+        -- vim which key
+        use({
+            "AckslD/nvim-whichkey-setup.lua",
+            opt = true,
+            requires = { "liuchengxu/vim-which-key" },
+        })
 
         -- Check startup time
         use({ "dstein64/vim-startuptime", opt = false })

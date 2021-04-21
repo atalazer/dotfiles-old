@@ -1,34 +1,34 @@
-execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/./ncmpcpp_cover_art.sh"
+execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
 
 # Files
- mpd_music_dir = "~/music"  
+ mpd_music_dir = "~/music"
+ ncmpcpp_directory  = ~/.config/ncmpcpp
  lyrics_directory  = ~/.config/ncmpcpp/lyrics
- ncmpcpp_directory  = ~/.conky/ncmpcpp
  mpd_host = "localhost"
- mpd_port = "6600"  
- mpd_connection_timeout = "5"  
- mpd_crossfade_time = "5"  
+ mpd_port = "6600"
+ mpd_connection_timeout = "5"
+ mpd_crossfade_time = "5"
 
  # Playlist
- playlist_disable_highlight_delay = "0"  
- playlist_display_mode = "columns"  
+ playlist_disable_highlight_delay = "0"
+ playlist_display_mode = "columns"
  playlist_show_remaining_time = "yes"
 
- browser_display_mode = "columns"  
- autocenter_mode = "yes"  
- fancy_scrolling = "yes"  
- follow_now_playing_lyrics = "yes"  
- display_screens_numbers_on_start = "yes"  
- ignore_leading_the = "yes"  
- lyrics_database = "1"  
- song_columns_list_format = "(10)[blue]{l} (30)[green]{a} (30)[magenta]{b} (50)[yellow]{t}"  
- colors_enabled = "yes"  
- main_window_color = "white"  
+ browser_display_mode = "columns"
+ autocenter_mode = "yes"
+ fancy_scrolling = "yes"
+ follow_now_playing_lyrics = "yes"
+ display_screens_numbers_on_start = "yes"
+ ignore_leading_the = "yes"
+ lyrics_database = "1"
+ song_columns_list_format = "(10)[blue]{l} (30)[green]{a} (30)[magenta]{b} (50)[yellow]{t}"
+ colors_enabled = "yes"
+ main_window_color = "white"
  main_window_highlight_color =  "blue"
- header_window_color = "cyan"  
- volume_color = "red"  
- statusbar_color = "white"  
- active_column_color = "cyan"  
+ header_window_color = "cyan"
+ volume_color = "red"
+ statusbar_color = "white"
+ active_column_color = "cyan"
  active_window_border = "blue"
 progressbar_color = "black"
 progressbar_elapsed_color = "red"
@@ -41,9 +41,9 @@ default_place_to_search_in = "database"
 
 
 # visualizer
-#visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_fifo_path = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
-#visualizer_sync_interval = "12"
+visualizer_sync_interval = "12"
 #
 visualizer_type = "wave" (spectrum/wave)
 #visualizer_type = "spectrum" (spectrum/wave)
@@ -72,28 +72,25 @@ header_visibility = "no"
 statusbar_visibility = "yes"
 titles_visibility = "yes"
 
-
 progressbar_look =  "━━━"
 
-
-now_playing_prefix = "󰮯 "
+now_playing_prefix = "|>"
 song_status_format = " $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
 autocenter_mode = "yes"
 centered_cursor = "yes"
 
 # Misc
 display_bitrate = "no"
- enable_window_title = "no"
+enable_window_title = "yes"
 follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 empty_tag_marker = ""
 
+visualizer_look = "  "
+#visualizer_look = "▌▌"
 
-visualizer_look = "  "          
-#visualizer_look = "▌▌"          
-
-startup_screen = visualizer      
-startup_slave_screen = playlist  
-startup_slave_screen_focus = yes 
-locked_screen_width_part = 31   
+startup_screen = visualizer
+startup_slave_screen = playlist
+startup_slave_screen_focus = yes
+locked_screen_width_part = 31
 

@@ -28,6 +28,10 @@ require("curstr").setup({
             names = { "togglable/word" },
             opts = { words = { "on", "off" }, normalized = true },
         },
+        boolyn = {
+            names = { "togglable/word" },
+            opts = { words = { "yes", "no" }, normalized = true },
+        },
         boolnum = {
             names = { "togglable/word" },
             opts = { words = { "1", "0" }, normalized = true },
@@ -47,6 +51,7 @@ require("curstr").setup({
         togglable = {
             names = {
                 "booltf",
+                "boolyn",
                 "boolnf",
                 "boolnum",
                 "booled",

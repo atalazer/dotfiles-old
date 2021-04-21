@@ -3,8 +3,12 @@ vim.g.mapleader = "."
 vim.g.maplocalleader = ","
 
 RC = {
-    colorscheme = "material",
+    colorscheme    = "material",
     use_xresources = false,
+    plug_enabled = {
+        autotag  = true,
+        biscuits = true,
+    },
 }
 
 -- ==================================== neovim package manager
@@ -15,8 +19,10 @@ require("pluginsList.init")
 require("base.settings")
 require("base.events")
 require("base.commands")
-require("mappings.keys")
 
+require("mappings.keys")
+require("mappings.visual-multi")
+require("plugins.which-key")
 -- ==================================== UI Related
 require("base.appearances")
 
@@ -25,7 +31,8 @@ require("plugins.bufferline")
 require("plugins.galaxyline")
 
 require("plugins.colorizer")
-require("plugins.indent-guides")
+require("plugins.indent-blankline")
+-- require("plugins.indent-guides")
 
 -- ==================================== File Related
 require("plugins.suda")
@@ -42,13 +49,14 @@ require("plugins.kommentary")
 require("plugins.surround")
 require("plugins.curstr")
 
--- ==================================== Language support
-require("plugins.markdown")
-require("plugins.treesitter")
+-- ==================================== Misc
+-- require("plugins.neoscroll")
+require("plugins.shade")
+require("plugins.truezen")
 
--- ==================================== Plugins Keys
-require("mappings.pkeys")
-require("mappings.visual-multi")
+-- ==================================== Language support
+require("plugins.treesitter")
+require("plugins.markdown")
 
 -- ==================================== LSP, Code Completions, Code Formater
 require("plugins.compe")

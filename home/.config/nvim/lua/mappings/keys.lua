@@ -9,8 +9,8 @@ tmap = _Key.tmap ; tnoremap = _Key.tnoremap
 cmap = _Key.tmap ; cnoremap = _Key.cnoremap
 
 -- remove annoying exmode
-nnoremap{"Q", "<nop>"}
-nnoremap{":q", "<nop>"}
+nnoremap{"Q", "<Nop>"}
+nnoremap{":q", "<Nop>"}
 
 -- Files
 nnoremap{"<C-s>", ":update<CR>"}
@@ -26,12 +26,6 @@ nnoremap{"<leader>ec", ":tabe ~/.config/nvim/init.lua<CR>"}
 nnoremap{"<leader>er", ":luafile ~/.config/nvim/init.lua<CR>"}
 nnoremap{"<Leader>l", "<CMD>luafile %<CR>", { silent = false}}
 
--- Exit Insert and Visual
-inoremap{"<M-q>", "<ESC>"}
-vnoremap{"<M-q>", "<ESC>"}
-inoremap{"<C-e>", "<ESC>"}
-vnoremap{"<C-e>", "<ESC>"}
-
 -- Better Ctrl + Arrow
 nmap{"C-Left"  , "b" , {silent = true}}
 nmap{"C-Right" , "e" , {silent = true}}
@@ -43,16 +37,11 @@ inoremap{"<M-BS>", "<C-w>"}
 nnoremap{"<M-BS>", "i<C-w>"}
 cnoremap{"<M-BS>", "<C-w>"}
 
--- Cut, Paste, Copy
-vmap{"<C-x>", "d"}
-vmap{"<C-v>", "p"}
-vmap{"<C-c>", "y"}
-
 -- Undo, Redo (broken)
 nnoremap{"<C-z>", ":undo<CR>"}
 inoremap{"<C-z>", "<Esc>:undo<CR>"}
-nnoremap{"<C-y>", ":redo<CR>"}
-inoremap{"<C-y>", "<Esc>:redo<CR>"}
+nnoremap{"<C-x>", ":redo<CR>"}
+inoremap{"<C-x>", "<Esc>:redo<CR>"}
 
 -- Find
 nnoremap{"<ESC><ESC>", ":nohlsearch<CR>"}
@@ -68,21 +57,42 @@ nnoremap{"<Leader>sd", ":vsplit<CR>"}
 nnoremap{"<Leader>ss", ":split<CR>"}
 
 -- Resize Pane
-map{"<localleader>w", ":resize +5<CR>", {silent = true}}
-map{"<localleader>a", ":vertical resize -5<CR>", {silent = true}}
-map{"<localleader>s", ":resize -5<CR>", {silent = true}}
-map{"<localleader>d", ":vertical resize +5<CR>", {silent = true}}
+nnoremap{"W", "<CMD>resize +2<CR>"}
+nnoremap{"A", "<CMD>vertical resize -2<CR>"}
+nnoremap{"S", "<CMD>resize -2<CR>"}
+nnoremap{"D", "<CMD>vertical resize +2<CR>"}
 
 -- Smart way to move between windows
-nnoremap{"<leader>w", "<C-W>k"}
-nnoremap{"<leader>a", "<C-W>h"}
-nnoremap{"<leader>s", "<C-W>j"}
-nnoremap{"<leader>d", "<C-W>l"}
+nnoremap{"<localleader>w", "<C-W>k"}
+nnoremap{"<localleader>a", "<C-W>h"}
+nnoremap{"<localleader>s", "<C-W>j"}
+nnoremap{"<localleader>d", "<C-W>l"}
 
 -- ===================================== Function
--- Vim Session
-map{"<F1>", ":mksession! ~/.config/nvim/.last_session<cr>"}
-map{"<F2>", ":source ~/.config/nvim/.last_session<cr>"}
+map{"<F1>", ":mksession! ~/.config/nvim/.last_session<cr>", { silent = true }}
+map{"<F2>", ":source ~/.config/nvim/.last_session<cr>", { silent = true }}
 nnoremap{"<F10>", "<cmd>!xdg-open %<CR>", { silent = true }}
-map{"<F8>", ":set autochdir! autochdir?<CR>"}
+
+-- ===================================== Plugins
+-- Sayonara
+nnoremap({ "<C-q>", ":Sayonara<CR>" })
+nnoremap({ "<leader>sa", ":Sayonara<CR>" })
+nnoremap({ "<leader>q", ":Sayonara<CR>" })
+
+-- Vim Smoothie
+vim.g.smoothie_no_default_mappings= 1
+-- vim.g.smoothie_experimental_mappings = 1
+map{"<S-k>", "<Plug>(SmoothieUpwards)"}
+map{"<S-Up>", "<Plug>(SmoothieUpwards)"}
+map{"<PageUp>", "<Plug>(SmoothieUpwards)"}
+map{"<S-j>", "<Plug>(SmoothieDownwards)"}
+map{"<S-Down>", "<Plug>(SmoothieDownwards)"}
+map{"<PageDown>", "<Plug>(SmoothieDownwards)"}
+
+-- Vim Easy Align
+xmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
+nmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
+
+-- Glow
+nnoremap({ "<leader>gg", "<CMD>Glow<CR>" })
 

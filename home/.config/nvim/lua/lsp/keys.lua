@@ -9,7 +9,7 @@ local rename     = require("lspsaga.rename")
 local diagnostic = require("lspsaga.diagnostic")
 local provider   = require("lspsaga.provider")
 
-M.mappings = function(type)
+M.mappings = function()
     inoremap({ "<C-l>s", signature.signature_help, { silent = true } })
     nnoremap({ "lk", hover.render_hover_doc, { silent = true } })
     nnoremap({ "ld", provider.preview_definition, { silent = true } })

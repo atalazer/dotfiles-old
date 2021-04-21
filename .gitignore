@@ -9,7 +9,9 @@
 **/resurrect/*
 **/__pycache__/*
 **/.cache/*
-home/.config/mpd/mpd.state
-
-home/.config/awesome/utils/florence-status
-home/.config/nnn/.selection
+**/**.state
+**/.selection
+**/*-status
+**/*.tar.*
+**/*.zip
+**/*.rar

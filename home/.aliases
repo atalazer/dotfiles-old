@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
 PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
+editor="${EDITOR:-nvim}"
 
 # Basic
 alias c="clear"
 alias r="exec zsh"
 alias {:q,q}="exit"
+alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
+
+# Use advcpmv instead mv cp
+if command -v "mvg" > /dev/null 2>&1; then
+    alias mv="mvg -g"
+fi
+if command -v "cpg" > /dev/null 2>&1; then
+    alias cpg="cpg -g"
+fi
 
 # Use exa instead of ls
 if command -v "exa" > /dev/null 2>&1; then
@@ -34,11 +44,11 @@ elif command -v "rip" > /dev/null 2>&1; then
 fi
 
 # Editor Alias
-alias {e,vim,vi}="$EDITOR"
-alias {envim,evim,ev}="$EDITOR ~/.config/nvim/init.lua"
-alias {zshrc,ez}="$EDITOR ~/.zshrc"
-alias {xrc,ex}="$EDITOR ~/.Xresources"
-alias {awc,ea}="$EDITOR ~/.config/awesome/rc.lua"
+alias {e,vim,vi}="$editor"
+alias {envim,evim,ev}="$editor ~/.config/nvim/init.lua"
+alias {zshrc,ez}="$editor ~/.zshrc"
+alias {xrc,ex}="$editor ~/.Xresources"
+alias {awc,ea}="$editor ~/.config/awesome/rc.lua"
 alias se="sudoedit"
 
 # Xresources Alias

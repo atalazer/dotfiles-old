@@ -12,7 +12,7 @@ require("nvim-treesitter.configs").setup({
 })
 
 -- ========================================================
-local nvim_autotag_enabled = true
+local nvim_autotag_enabled =  RC.plug_enabled.autotag or false
 if nvim_autotag_enabled == true then
     vim.cmd([[packadd nvim-ts-autotag]])
     require("nvim-ts-autotag").setup({
@@ -20,24 +20,21 @@ if nvim_autotag_enabled == true then
     })
 end
 -- ========================================================
-local nvim_biscuits_enabled = false
+local nvim_biscuits_enabled = RC.plug_enabled.biscuits or false
 if nvim_biscuits_enabled == true then
     vim.cmd([[packadd nvim-biscuits]])
     require("nvim-biscuits").setup({
         default_config = {
-            max_length = 20,
+            max_length = 40,
             min_destance = 5,
-        },
-        language_config = {
-            javascript = {
-                max_length = 30,
-            },
+            prefix_string = " // ",
+            on_events = { "BufWritePost" }
         },
     })
 
     vim.cmd([[
-    hi! link BiscuitColor Comment
-    hi! BiscuitColorRust ctermfg=red
-    hi! BiscuitColorlua ctermfg=blue
+        hi! link BiscuitColor Comment
+        hi! BiscuitColorRust ctermfg=red
+        hi! BiscuitColorlua ctermfg=blue
     ]])
 end
