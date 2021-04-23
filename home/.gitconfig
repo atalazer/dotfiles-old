@@ -1,0 +1,70 @@
+[user]
+    email = baraboyolali@gmail.com
+    name = Atalazer
+
+[credential]
+    helper = cache --timeout 86400
+
+[core]
+    editor = nvim
+
+[pull]
+    rebase = true
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+[delta]
+    line-numbers = true
+    syntax-theme = base16
+    file-modified-label = modified:
+
+[interactive]
+    diffFilter = delta --color-only
+
+[init]
+    defaultBranch = master
+
+[color "decorate"]
+    HEAD = brightcyan normal italic
+    remotebranch = brightmagenta normal
+    grafted = red normal italic
+    tag = yellow normal bold
+    stash = brightblack normal
+    branch = brightcyan normal
+[color "grep"]
+    filename = white normal
+    function = brightgreen normal
+    column = brightblack normal
+    linenumber = brightblack normal
+[color "status"]
+    changed = yellow normal
+    unmerged = red normal
+    nobranch = red normal italic
+    updated = green normal
+    localbranch = brightcyan normal
+    added = green normal
+    remotebranch = brightmagenta normal
+    branch = brightcyan normal
+[color "interactive"]
+    help = brightblack normal
+    error = red normal italic
+[color "branch"]
+    remote = brightmagenta normal
+    upstream = brightmagenta normal
+    plain = brightcyan normal
+    current = brightcyan blue
+    local = brightcyan normal
+[color "remote"]
+    success = brightgreen normal
+    error = brightred normal
+    hint = brightblack normal
+    warning = brightyellow normal
+[color "diff"]
+    commit = yellow normal
+    func = brightgreen normal
+[http]
+	postBuffer = 524288000
+	version = HTTP/2
+[status]
+	submoduleSummary = true

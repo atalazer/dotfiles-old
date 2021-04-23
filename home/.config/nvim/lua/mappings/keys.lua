@@ -82,10 +82,10 @@ nnoremap({ "<localleader>sd", ":vsplit<CR>" })
 nnoremap({ "<localleader>ss", ":split<CR>" })
 
 -- Resize Pane
-nnoremap({ "W", "<CMD>resize +2<CR>" })
-nnoremap({ "A", "<CMD>vertical resize -2<CR>" })
-nnoremap({ "S", "<CMD>resize -2<CR>" })
-nnoremap({ "D", "<CMD>vertical resize +2<CR>" })
+nnoremap({ "I", "<CMD>resize +2<CR>" })
+nnoremap({ "K", "<CMD>resize -2<CR>" })
+nnoremap({ "L", "<CMD>vertical resize +2<CR>" })
+nnoremap({ "H", "<CMD>vertical resize -2<CR>" })
 
 -- Smart way to move between windows
 nnoremap({ "<localleader>w", "<C-W>k" })
@@ -100,13 +100,13 @@ tnoremap({ "<Esc>qq", "<C-\\><C-n>" })
 -- ===================================== Spelling
 nnoremap({ "sd", "]s" })
 nnoremap({ "sa", "[s" })
-nnoremap({ "ss", "zg" })
+nnoremap({ "S", "zg" })
 nnoremap({ "sw", "zw" })
 nnoremap({ "sq", "z=" })
 
 -- ===================================== Function
-map({ "<F1>", ":mksession! ~/.config/nvim/.last_session<cr>", { silent = true } })
-map({ "<F2>", ":source ~/.config/nvim/.last_session<cr>", { silent = true } })
+map({ "<F1>", ":mksession! ~/.config/nvim/.last_session", { silent = true } })
+map({ "<F2>", ":source ~/.config/nvim/.last_session", { silent = true } })
 nnoremap({ "<F4>", "<cmd>!xdg-open %<CR>", { silent = true } })
 
 -- ===================================== Plugins
@@ -130,8 +130,8 @@ xmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 nmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 
 -- Glow
-nnoremap({ "<leader>gg", "<CMD>Glow<CR>" })
+nnoremap({ "<leader>gg", "<CMD>Glow<CR>", { silent = true } })
 
 -- TrueZen
-nnoremap({ "<F9>", "<Cmd>TZAtaraxis<CR>" })
-nnoremap({ "<F10>", "<Cmd>TZMinimalist<CR>" })
+nnoremap({ "<F9>", "<Cmd>TZAtaraxis<CR>", { silent = true } })
+nnoremap({ "<F10>", "<Cmd>TZMinimalist<CR>", { silent = true } })
