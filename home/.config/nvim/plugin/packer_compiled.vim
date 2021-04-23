@@ -89,6 +89,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/curstr.nvim"
   },
+  ["dial.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/dial.nvim"
+  },
   ["emmet-vim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/emmet-vim"
@@ -134,14 +139,14 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim"
   },
-  ["indent-guides.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/indent-guides.nvim"
-  },
   kommentary = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/kommentary"
+  },
+  ["lsp-trouble.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lsp-trouble.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = false,
@@ -161,11 +166,6 @@ _G.packer_plugins = {
   neogit = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/neogit"
-  },
-  ["neoscroll.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/neoscroll.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = false,
@@ -207,10 +207,18 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    after = { "nvim-ts-autotag", "nvim-biscuits" },
+    after = { "nvim-treesitter-pairs", "nvim-biscuits", "nvim-ts-context-commentstring", "nvim-ts-autotag" },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter"
+  },
+  ["nvim-treesitter-pairs"] = {
+    load_after = {
+      ["nvim-treesitter"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-pairs"
   },
   ["nvim-ts-autotag"] = {
     load_after = {
@@ -219,6 +227,14 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-ts-autotag"
+  },
+  ["nvim-ts-context-commentstring"] = {
+    load_after = {
+      ["nvim-treesitter"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring"
   },
   ["nvim-web-devicons"] = {
     loaded = false,
@@ -249,6 +265,11 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/shade.nvim"
   },
+  ["specs.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/specs.nvim"
+  },
   ["sql.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/sql.nvim"
@@ -261,6 +282,12 @@ _G.packer_plugins = {
   ["surround.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/surround.nvim"
+  },
+  tabular = {
+    after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/tabular/after/plugin/TabularMaps.vim" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/tabular"
   },
   ["telescope-arecibo.nvim"] = {
     loaded = true,
@@ -305,6 +332,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-startuptime"
   },
+  ["vim-table-mode"] = {
+    loaded = false,
+    needs_bufread = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-table-mode"
+  },
   ["vim-tridactyl"] = {
     loaded = false,
     needs_bufread = true,
@@ -336,6 +368,11 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-which-key"
+  },
+  ["xresources-nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/xresources-nvim"
   }
 }
 
@@ -350,9 +387,9 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time("Defining lazy-load filetype autocommands", true)
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'TrueZen.nvim', 'vim-table-mode', 'tabular', 'glow.nvim', 'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tridactyl ++once lua require("packer.load")({'vim-tridactyl'}, { ft = "tridactyl" }, _G.packer_plugins)]]
-vim.cmd [[au FileType text ++once lua require("packer.load")({'TrueZen.nvim'}, { ft = "text" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'TrueZen.nvim', 'vim-markdown', 'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType text ++once lua require("packer.load")({'TrueZen.nvim', 'vim-table-mode', 'tabular'}, { ft = "text" }, _G.packer_plugins)]]
 time("Defining lazy-load filetype autocommands", false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

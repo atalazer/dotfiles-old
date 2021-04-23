@@ -41,7 +41,6 @@ pcall(require, "plugins.galaxyline")
 
 pcall(require, "plugins.colorizer")
 pcall(require, "plugins.indent-blankline")
--- pcall(require, "plugins.indent-guides")
 
 -- ==================================== File Related
 pcall(require, "plugins.suda")
@@ -59,7 +58,6 @@ pcall(require, "plugins.dial")
 pcall(require, "plugins.curstr")
 
 -- ==================================== Misc
--- pcall(require, "plugins.neoscroll")
 pcall(require, "plugins.shade")
 pcall(require, "plugins.specs")
 

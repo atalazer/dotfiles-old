@@ -24,17 +24,17 @@ fi
 
 Source(){
     if [ command -v "zsh-defer" &>/dev/null ]; then
-        [ -f $1 ] && zsh-defer source $1
+        [ -f $1 ] && zsh-defer source $@
     else
-        [ -f $1 ] && source $1
+        [ -f $1 ] && source $@
     fi
 }
 
 Eval(){
     if [ command -v "zsh-defer" &>/dev/null ]; then
-        [ -f $1 ] && zsh-defer eval $1
+        zsh-defer eval $1
     else
-        [ -f $1 ] && eval $1
+        eval $1
     fi
 }
 

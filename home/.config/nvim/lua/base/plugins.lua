@@ -48,7 +48,6 @@ if ok then
         })
 
         -- Indenting
-        use({ "glepnir/indent-guides.nvim", opt = true })
         use({ "lukas-reineke/indent-blankline.nvim", branch = "lua", opt = true })
 
         -- Colorizer
@@ -215,7 +214,6 @@ if ok then
 
         -- Smooth Scrolling
         use({ "psliwka/vim-smoothie", opt = false })
-        use({ "karb94/neoscroll.nvim", opt = true })
 
         -- better window and buffer management
         use({ "mhinz/vim-sayonara", cmd = "Sayonara" })
