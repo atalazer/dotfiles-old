@@ -1,6 +1,6 @@
 ---
 import:
-  - ~/.config/alacritty/themes/palenight.yml
+  - ~/.config/alacritty/themes/ayu_dark.yaml
 
 env:
   TERM: xterm-256color
@@ -14,11 +14,11 @@ window:
     x: 0
     y: 0
   padding:
-    x: 5
-    y: 5
+    x: 10
+    y: 10
 
-  dynamic_padding: false
-  dynamic_title: false
+  dynamic_padding: true
+  dynamic_title: true
 
   startup_mode: Windowed
   title: Alacritty
@@ -33,7 +33,7 @@ window:
     multiplier: 5
 
 font:
-  size: 11.0
+  size: 10.0
   normal:
     family: JetBrainsMono Nerd Font
     # family: FiraCode Nerd Font Mono
@@ -83,7 +83,7 @@ colors:
   color: '#ffffff'
 
 
-background_opacity: 0.85
+background_opacity: 0.9
 
 selection:
     semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
@@ -105,13 +105,13 @@ mouse:
   triple_click: { threshold: 200 }
 
   url:
-      launcher:
-          program: xdg-open
-      modifiers: None
+    launcher:
+        program: xdg-open
+    modifiers: None
 
-  # mouse_bindings:
-  #   - { mouse: Middle, action: PasteSelection }
-  #   - { mouse: Right, action: CopySelection }
+  mouse_bindings:
+    - { mouse: Middle, action: PasteSelection }
+    - { mouse: Right, action: CopySelection }
 
 key_bindings:
   - { key: Paste,                                       action: Paste          }
