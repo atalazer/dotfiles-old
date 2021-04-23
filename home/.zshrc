@@ -30,6 +30,14 @@ Source(){
     fi
 }
 
+Eval(){
+    if [ command -v "zsh-defer" &>/dev/null ]; then
+        [ -f $1 ] && zsh-defer eval $1
+    else
+        [ -f $1 ] && eval $1
+    fi
+}
+
 # ===== Plugins =====
 export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
@@ -50,7 +58,7 @@ Source $ZDIR/plug-conf/dotbare.zsh
 
 if [[ $PROMPT = "starship" ]]; then
     export STARSHIP_CONFIG=$HOME/.config/starship.toml
-    eval "$(starship init zsh)"
+    Eval "$(starship init zsh)"
 elif [[ $PROMPT = "spaceship" ]]; then
     Source $ZDIR/plug-conf/spaceship-prompt.zsh
 fi
@@ -100,7 +108,11 @@ Source $ZDIR/modules/keys.zsh
 # ===== User =====
 Source ~/.aliases           # User alias definition
 Source ~/.function          # User function definition
-todo --show
 
-eval "$(zoxide init zsh)"
+export TODO=$HOME/notes/TODO.md
+export SCHEDULE=$HOME/notes/SCHEDULE.md
+todo --show
+# schedule --show
+
+Eval "$(zoxide init zsh)"
 

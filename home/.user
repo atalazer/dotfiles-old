@@ -18,5 +18,5 @@ export SUSPEND_CMD="loginctl suspend"
 export LOCK_CMD="slimlock"
 
 # Misc
-export WAL_BACKEND=haishoku       # wal colorthief haishoku
+export WAL_BACKEND=colorthief       # wal colorthief haishoku
 
