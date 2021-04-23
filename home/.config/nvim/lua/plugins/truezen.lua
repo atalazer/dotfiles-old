@@ -2,7 +2,7 @@ vim.cmd("packadd TrueZen.nvim")
 
 require("true-zen").setup({
     true_false_commands = false,
-    cursor_by_mode = true,
+    cursor_by_mode = false,
     bottom = {
         hidden_laststatus = 0,
         hidden_ruler = false,
@@ -34,4 +34,3 @@ require("true-zen").setup({
     },
 })
 
-vim.api.nvim_set_keymap("n", "<F12>", [[<Cmd>TZAtaraxis<CR>]], {})

@@ -1,0 +1,51 @@
+{
+    "link": {
+        "prefix": ["li", "a"],
+        "body": "[${1:Title}](${2:/path/to/link})",
+        "description": "Markdown Link"
+    },
+    "image": {
+        "prefix": ["img", "pic"],
+        "body": "![${1:image-alt}](${2:/path/to/image})",
+        "description": "Markdown Image"
+    },
+    "h1": {
+        "prefix": [ "h1" ],
+        "body": "# ${1:Title}",
+        "description": "Markdown header 1 (h1)"
+    },
+    "h2": {
+        "prefix": [ "h2" ],
+        "body": "## ${1:Title}",
+        "description": "Markdown header 2 (h2)"
+    },
+    "h3": {
+        "prefix": [ "h3" ],
+        "body": "### ${1:Title}",
+        "description": "Markdown header 3 (h3)"
+    },
+    "h4": {
+        "prefix": [ "h4" ],
+        "body": "#### ${1:Title}",
+        "description": "Markdown header 4 (h4)"
+    },
+    "h5": {
+        "prefix": [ "h5" ],
+        "body": "##### ${1:Title}",
+        "description": "Markdown header 5 (h5)"
+    },
+    "h6": {
+        "prefix": [ "h6" ],
+        "body": "###### ${1:Title}",
+        "description": "Markdown header 6 (h6)"
+    },
+    "code": {
+        "prefix": [ "code", "cd"],
+        "body": [
+            "```$1",
+            "${2:Your Code}",
+            "```"
+        ],
+        "description": "Markdown Inline Code"
+    }
+}

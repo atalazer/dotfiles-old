@@ -1,4 +1,12 @@
 vim.cmd("packadd packer.nvim")
+
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    vim.cmd("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+    vim.cmd("packadd packer.nvim")
+end
+
 local ok, packer = pcall(require, "packer")
 
 if ok then
@@ -9,7 +17,7 @@ if ok then
         },
         display = {
             open_cmd = "leftabove 60vnew [packer]",
-                -- open_cmd = "80vnew [packer]",
+            -- open_cmd = "80vnew [packer]",
         },
         profile = {
             enable = false,
@@ -24,6 +32,7 @@ if ok then
         -- Colorscheme
         use({ "tjdevries/colorbuddy.nvim", opt = true })
         use({ "marko-cerovac/material.nvim", opt = true })
+        use({ "nekonako/xresources-nvim", opt = true })
 
         -- vim-devicons written in lua
         use({ "kyazdani42/nvim-web-devicons", opt = true })
@@ -45,10 +54,13 @@ if ok then
         -- Colorizer
         use({ "norcalli/nvim-colorizer.lua", opt = true })
 
+        use({ "edluffy/specs.nvim", opt = true })
+
         -- ================================== LSP, Completion and Snippet
         use({ "neovim/nvim-lspconfig", opt = true })
         use({ "glepnir/lspsaga.nvim", opt = true })
         use({ "onsails/lspkind-nvim", opt = true })
+        use({ "folke/lsp-trouble.nvim", opt = true })
 
         use({
             "hrsh7th/nvim-compe",
@@ -72,9 +84,10 @@ if ok then
             requires = {
                 { "windwp/nvim-ts-autotag", opt = true },
                 { "code-biscuits/nvim-biscuits", opt = true },
+                { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
+                { "theHamsta/nvim-treesitter-pairs" },
             },
             opt = true,
-            run = ":TSUpdate",
         })
 
         -- SQL Support
@@ -85,6 +98,20 @@ if ok then
             "plasticboy/vim-markdown",
             opt = true,
             ft = { "markdown" },
+        })
+
+        -- VIM Table Mode for instant table creation.
+        use({
+            "dhruvasagar/vim-table-mode",
+            ft = { "text", "markdown" },
+            opt = true,
+        })
+
+        -- VIM Table Align
+        use({
+            "godlygeek/tabular",
+            ft = { "text", "markdown" },
+            opt = true,
         })
 
         -- Terminal Markdown Previewer
@@ -138,6 +165,7 @@ if ok then
         -- gf like plugins
         use({ "notomo/curstr.nvim" })
 
+        use({ "monaqa/dial.nvim", opt = true })
         -- Browser Integration plugin
         use({
             "glacambre/firenvim",
@@ -183,10 +211,10 @@ if ok then
         use({ "tjdevries/astronauta.nvim", opt = false })
 
         -- Dims inactive windows
-        use({"sunjon/shade.nvim", opt = true})
+        use({ "sunjon/shade.nvim", opt = true })
 
         -- Smooth Scrolling
-        use({"psliwka/vim-smoothie", opt = false })
+        use({ "psliwka/vim-smoothie", opt = false })
         use({ "karb94/neoscroll.nvim", opt = true })
 
         -- better window and buffer management

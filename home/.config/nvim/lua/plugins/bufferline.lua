@@ -14,13 +14,6 @@ require("bufferline").setup({
     diagnostics = "nvim_lsp",
 })
 
-nnoremap({ "<M-d>", ":BufferLineCycleNext<CR>", { silent = true } })
-nnoremap({ "<M-e>", ":BufferLineMoveNext<CR>", { silent = true } })
-nnoremap({ "<M-a>", ":BufferLineCyclePrev<CR>", { silent = true } })
-nnoremap({ "<M-q>", ":BufferLineMovePrev<CR>", { silent = true } })
-nnoremap({ "<M-w>", ":bdelete<CR>", { silent = true } })
-nnoremap({ "<M-w><M-w>", ":bdelete!<CR>", { silent = true } })
-
 nnoremap({ "<M-1>", ":lua require'bufferline'.go_to_buffer(1)<CR>", { silent = true } })
 nnoremap({ "<M-2>", ":lua require'bufferline'.go_to_buffer(2)<CR>", { silent = true } })
 nnoremap({ "<M-3>", ":lua require'bufferline'.go_to_buffer(3)<CR>", { silent = true } })

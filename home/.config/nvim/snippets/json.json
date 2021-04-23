@@ -1,6 +1,6 @@
 {
     "snippet": {
-        "prefix": "sippet",
+        "prefix": ["spt", "snippet"],
         "body": [
             "\"${1:snipName}\": {",
                 "\t\"prefix\": \"${2:pre}\",",

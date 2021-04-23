@@ -1,5 +1,4 @@
 vim.cmd[[packadd lspsaga.nvim]]
-vim.cmd[[packadd telescope.nvim]]
 
 local M = {}
 
@@ -22,6 +21,7 @@ M.mappings = function()
     nnoremap({ "lf", provider.lsp_finder, { silent = true } })
     nnoremap({ "l[", diagnostic.lsp_jump_diagnostic_prev, { silent = true } })
     nnoremap({ "l]", diagnostic.lsp_jump_diagnostic_next, { silent = true } })
+    nnoremap({ "lT", "<Cmd>LspTroubleToggle<CR>", { silent = true } })
 end
 
 return M

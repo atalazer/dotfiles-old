@@ -1,67 +1,79 @@
 -- ==================================== Global settings
 vim.g.mapleader = "."
 vim.g.maplocalleader = ","
+-- prevent typo when pressing `wq` or `q`
+vim.cmd([[
+  cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+  cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
+  cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
+  cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
+]])
+
+-- change cwd to current directory
+vim.cmd("cd %:p:h")
 
 RC = {
-    colorscheme    = "material",
+    colorscheme = "material",
     use_xresources = false,
     plug_enabled = {
-        autotag  = true,
+        autotag = true,
         biscuits = true,
     },
 }
 
 -- ==================================== neovim package manager
-require("pluginsList.bootstrapping")
-require("pluginsList.init")
+pcall(require, "base.plugins")
 
 -- ==================================== neovim basic configuration
-require("base.settings")
-require("base.events")
-require("base.commands")
+pcall(require, "base.settings")
+pcall(require, "base.events")
+pcall(require, "base.commands")
 
-require("mappings.keys")
-require("mappings.visual-multi")
-require("plugins.which-key")
+pcall(require, "mappings.keys")
+pcall(require, "mappings.visual-multi")
+pcall(require, "mappings.which-key")
 -- ==================================== UI Related
-require("base.appearances")
+pcall(require, "base.appearances")
 
-require("plugins.devicons")
-require("plugins.bufferline")
-require("plugins.galaxyline")
+pcall(require, "plugins.devicons")
+pcall(require, "plugins.bufferline")
+pcall(require, "plugins.galaxyline")
 
-require("plugins.colorizer")
-require("plugins.indent-blankline")
--- require("plugins.indent-guides")
+pcall(require, "plugins.colorizer")
+pcall(require, "plugins.indent-blankline")
+-- pcall(require, "plugins.indent-guides")
 
 -- ==================================== File Related
-require("plugins.suda")
-require("plugins.nvim-tree")
-require("plugins.telescope")
-require("plugins.gitsigns")
-require("plugins.neogit")
+pcall(require, "plugins.suda")
+pcall(require, "plugins.nvim-tree")
+pcall(require, "plugins.telescope")
+pcall(require, "plugins.gitsigns")
+pcall(require, "plugins.neogit")
 
 -- ==================================== Funcionality
-require("plugins.autopairs")
-require("plugins.firenvim")
-require("plugins.hop")
-require("plugins.kommentary")
-require("plugins.surround")
-require("plugins.curstr")
+pcall(require, "plugins.autopairs")
+pcall(require, "plugins.hop")
+pcall(require, "plugins.kommentary")
+pcall(require, "plugins.surround")
+pcall(require, "plugins.dial")
+pcall(require, "plugins.curstr")
 
 -- ==================================== Misc
--- require("plugins.neoscroll")
-require("plugins.shade")
-require("plugins.truezen")
+-- pcall(require, "plugins.neoscroll")
+pcall(require, "plugins.shade")
+pcall(require, "plugins.specs")
+
+pcall(require, "plugins.firenvim")
+pcall(require, "plugins.truezen")
 
 -- ==================================== Language support
-require("plugins.treesitter")
-require("plugins.markdown")
+pcall(require, "plugins.treesitter")
+pcall(require, "plugins.markdown")
 
 -- ==================================== LSP, Code Completions, Code Formater
-require("plugins.compe")
-require("plugins.emmet")
-require("plugins.vsnip")
-require("plugins.format")
-require("lsp")
+pcall(require, "plugins.compe")
+pcall(require, "plugins.emmet")
+pcall(require, "plugins.vsnip")
+pcall(require, "plugins.format")
+pcall(require, "lsp")
 
