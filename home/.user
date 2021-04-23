@@ -1,8 +1,6 @@
 #!/sbin/bash
 
-export DOTS="$HOME/.dotfiles"
-
-# Apps
+## Apps
 export TERMINAL="kitty"
 export BROWSER="firefox-dev-run"
 export FILEMAN="nemo"
@@ -16,6 +14,19 @@ export SHUTDOWN_CMD="loginctl poweroff"
 export REBOOT_CMD="loginctl reboot"
 export SUSPEND_CMD="loginctl suspend"
 export LOCK_CMD="slimlock"
+
+# Dirs
+export APP_DIR="$HOME/Applications"
+export BIN_DIR="$HOME/.local/bin"
+export BACKUP_DIR="$HOME/Backups"
+export NOTE_DIR="$HOME/Documents/Notes"
+export SCHOOL_DIR="$HOME/School"
+export WORK_DIR="$HOME/Work"
+export PROGRAMMING_DIR="${WORK_DIR:-$HOME/Work}/Programming"
+export REPO_DIR="${WORK_DIR:-$HOME/Work}/Repos"
+
+export BLOG="${WORK_DIR:-$HOME/Work}/Blog"
+export DOTS="$HOME/.dotfiles"
 
 # Misc
 export WAL_BACKEND=colorthief       # wal colorthief haishoku

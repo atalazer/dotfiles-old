@@ -8,8 +8,6 @@ ruled.client.connect_signal("request::rules", function()
         id = "global",
         rule = {},
         properties = {
-            border_width = beautiful.border_width,
-            border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
             raise = true,
             floating = false,
@@ -52,12 +50,12 @@ ruled.client.connect_signal("request::rules", function()
                 "modal",
                 "utility",
             },
-            role = {
-                " _NET_WM_WINDOW_TYPE_NORMAL"
-            }
         },
         properties = {
             titlebars_enabled = true,
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
 
@@ -128,7 +126,6 @@ ruled.client.connect_signal("request::rules", function()
         id = "floating",
         rule_any = {
             role = {
-                "_NET_WM_STATE_FULLSCREEN",
                 "AlarmWindow",
                 "ConfigManager",
                 "pop-up",
@@ -175,6 +172,7 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
+            round_corners = false,
             placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })

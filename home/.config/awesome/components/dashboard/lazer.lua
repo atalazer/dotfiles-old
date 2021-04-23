@@ -359,7 +359,7 @@ end
 local mpd_song = wibox.widget({
     {
         text = mpc(),
-        font = font .. " bold 15",
+        font = font .. " bold 12",
         widget = wibox.widget.textbox,
     },
     fg = color.color4,

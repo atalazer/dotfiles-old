@@ -6,9 +6,43 @@ export NNN_OPENER="/usr/bin/xdg-open"
 export NNN_SEL='/tmp/.sel'
 export NNN_FIFO=/tmp/nnn.fifo
 
-export NNN_BMS="a:~/linux/apps;b:~/backup;c:~/.config;d:${DOTS:-$HOME/.dotfiles};g:~/github;p:~/programming;w:~/linux/wiki;z:${ZDIR:-$HOME/.zsh}"
+NNN_BMS="\
+a:${APP_DIR:-$HOME/Applications};\
+b:${BACKUP_DIR:-$HOME/Backups};\
+c:${XDG_CONFIG_HOME:-$HOME/.config};\
+d:${DOTS:-$HOME/.dotfiles};\
+m:${XDG_MUSIC_DIR:-$HOME/Music};\
+p:${XDG_PICTURES_DIR:-$HOME/Pictures};\
+P:${PROGRAMMING_DIR:-$HOME/Work/Programming};\
+r:${REPO_DIR:-$HOME/Work/Repos};\
+v:${XDG_VIDEOS_DIR:-$HOME/Videos};\
+z:${ZDIR:-$HOME/.zsh};\
+"
+export NNN_BMS=$NNN_BMS
 
-export NNN_PLUG="1:treeview;b:bookmarks;B:bulknew;d:dragdrop;G:getplugs;i:imgview;k:kdeconnect;l:launch;m:mediainf;M:mimelist;o:fzopen;O:organize;p:preview-tui;P:preview-tui-ext;r:rsynccp;s:splitjoin;S:suedit;v:vidthumb;w:wall;z:autojump;"
+NNN_PLUG="\
+1:treeview;\
+b:bookmarks;\
+B:bulknew;\
+d:dragdrop;\
+G:getplugs;\
+i:imgview;\
+k:kdeconnect;\
+l:launch;\
+m:mediainf;\
+M:mimelist;\
+o:fzopen;\
+O:organize;\
+p:preview-tui;\
+P:preview-tui-ext;\
+r:rsynccp;\
+s:splitjoin;S:suedit;\
+v:vidthumb;\
+w:wall;\
+z:autojump;\
+"
+export NNN_PLUG=$NNN_PLUG
+
 
 export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
 

@@ -81,8 +81,9 @@ telescope.setup({
             show_unindexed = true,
             ignore_patterns = { "*.git/*", "*/tmp/*", "**.cache**" },
             workspaces = {
-                ["dotfiles"] = "/home/atalariq/.dotfiles",
-                ["blog"] = "/home/atalariq/blog",
+                ["dotfiles"] = os.getenv("DOTS") or "/home/atalariq/.dotfiles",
+                ["blog"] = os.getenv("BLOG") or "/home/atalariq/Work/Blog",
+                ["repos"] = os.getenv("REPO_DIR") or "/home/atalariq/Work/Repos",
                 ["nvim"] = "/home/atalariq/.config/nvim",
                 ["awesome"] = "/home/atalariq/.config/awesome",
                 ["alacritty"] = "/home/atalariq/.config/alacritty",

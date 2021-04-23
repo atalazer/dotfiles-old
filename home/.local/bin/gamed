@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+PERMISSION="sudo"
+SYSTRAY="clipit nm-applet"
+
+_on(){
+    echo "=====>        Turn on Game Mode           <======"
+    echo ""
+
+    echo "=====>    Disabling Daemon and Systray    <======"
+    for tray in $SYSTRAY;
+        do pkill $tray;
+    done
+    echo ""
+
+    echo "=====>        Disabling Compositor        <======"
+    pkill picom
+    echo ""
+
+    echo "=====>  Set CPU Governor to Performance   <======"
+    $PERMISSION cpupower frequency-set -g performance
+    echo ""
+    echo "=====>            Game Mode On           <======"
+}
+
+_off(){
+    echo "=====>        Turn off Game Mode          <======"
+    echo ""
+
+    echo "=====>    Enabling Daemon and Systray     <======"
+    for tray in $SYSTRAY;
+        do $tray &
+    done
+    echo ""
+
+    echo "=====>        Enabling Compositor         <======"
+    picom -b &>/dev/null &
+    echo ""
+
+    echo "=====>  Set CPU Governor to Performance   <======"
+    $PERMISSION cpupower frequency-set -g ondemand
+    echo ""
+
+    echo "=====>            Game Mode Off           <======"
+
+}
+
+case ${1:help} in
+    -h|--help|help)
+        echo " ==================================== "
+        echo "          Game Mode Script            "
+        echo " ==================================== "
+        echo " Available command:"
+        echo " on     -1  --on     Turn on game mode"
+        echo " off    -0  --off    Turn ff game mode"
+        echo " help   -h  --help   Show this massage"
+        echo ""
+    ;;
+    -1|--on|on)
+        _on
+    ;;
+    -0|--off|off)
+        _off
+    ;;
+esac

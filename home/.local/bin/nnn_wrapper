@@ -1,0 +1,4 @@
+#!/bin/bash
+source ~/.zsh/plug-conf/nnn.zsh
+env VISUAL=nnn_e nnn -er
+

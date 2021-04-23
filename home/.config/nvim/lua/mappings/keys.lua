@@ -22,6 +22,8 @@ nnoremap({ "A", "<Nop>" })
 
 -- Files
 nnoremap({ "<C-s>", ":update<CR>" })
+inoremap({ "<C-s>", "<Esc>:update<CR>" })
+vnoremap({ "<C-s>", "<Esc>:update<CR>" })
 
 nnoremap({ "<C-q><C-q>", ":q!<CR>" })
 nnoremap({ "<leader>qq", ":q!<CR>" })
@@ -56,6 +58,7 @@ inoremap({ "<C-y>", "<Esc>:redo<CR>" })
 
 -- Find
 nnoremap({ "<ESC><ESC>", ":nohlsearch<CR>" })
+nmap{"0", "^"}
 
 -- Indent
 vnoremap({ "<", "<gv" })
@@ -95,10 +98,11 @@ nnoremap({ "<leader>tt", "<CMD>terminal<CR>" })
 tnoremap({ "<Esc>qq", "<C-\\><C-n>" })
 
 -- ===================================== Spelling
-nnoremap({ "ss", "zg" })
-nnoremap({ "sw", "zw" })
 nnoremap({ "sd", "]s" })
 nnoremap({ "sa", "[s" })
+nnoremap({ "ss", "zg" })
+nnoremap({ "sw", "zw" })
+nnoremap({ "sq", "z=" })
 
 -- ===================================== Function
 map({ "<F1>", ":mksession! ~/.config/nvim/.last_session<cr>", { silent = true } })

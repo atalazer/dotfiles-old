@@ -1,6 +1,7 @@
 -- ==================================== Global settings
 vim.g.mapleader = "."
 vim.g.maplocalleader = ","
+
 -- prevent typo when pressing `wq` or `q`
 vim.cmd([[
   cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))

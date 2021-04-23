@@ -24,9 +24,9 @@ fi
 
 Source(){
     if [ command -v "zsh-defer" &>/dev/null ]; then
-        [ -f $1 ] && zsh-defer source $@
+        [ -f $1 ] && zsh-defer source $1
     else
-        [ -f $1 ] && source $@
+        [ -f $1 ] && source $1
     fi
 }
 
@@ -65,7 +65,7 @@ fi
 
 # ===== Zsh =====
 
-function set_win_title(){
+set_win_title(){
     print -Pn "\e]0;%~\a"
 }
 precmd_functions+=(set_win_title)
@@ -83,10 +83,12 @@ function zle-keymap-select {
   fi
 }
 zle -N zle-keymap-select
-zle-line-init() {
+
+function zle-line-init() {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
+
 echo -ne '\e[5 q' # use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # use beam shape cursor for each new prompt.
 
@@ -109,8 +111,8 @@ Source $ZDIR/modules/keys.zsh
 Source ~/.aliases           # User alias definition
 Source ~/.function          # User function definition
 
-export TODO=$HOME/notes/TODO.md
-export SCHEDULE=$HOME/notes/SCHEDULE.md
+export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
+export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
 todo --show
 # schedule --show
 

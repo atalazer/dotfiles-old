@@ -13,7 +13,7 @@ function double_click_event_handler(double_click_event)
         return true
     end
 
-    double_click_timer = gears.timer.start_new(0.20, function()
+    double_click_timer = gears.timer.start_new(0.30, function()
         double_click_timer = nil
         return false
     end)
