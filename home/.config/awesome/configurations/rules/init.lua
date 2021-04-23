@@ -8,10 +8,18 @@ ruled.client.connect_signal("request::rules", function()
         id = "global",
         rule = {},
         properties = {
-            border_width = 0,
+            border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
             raise = true,
+            floating = false,
+            maximized = false,
+            above = false,
+            below = false,
+            ontop = false,
+            sticky = false,
+            maximized_horizontal = false,
+            maximized_vertical = false,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
         },
@@ -29,8 +37,8 @@ ruled.client.connect_signal("request::rules", function()
             name = { "Discord Updater" },
         },
         properties = {
+            round_corners = true,
             shape = beautiful.client_shape_rounded,
-            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
 
@@ -44,6 +52,9 @@ ruled.client.connect_signal("request::rules", function()
                 "modal",
                 "utility",
             },
+            role = {
+                " _NET_WM_WINDOW_TYPE_NORMAL"
+            }
         },
         properties = {
             titlebars_enabled = true,
@@ -154,9 +165,9 @@ ruled.client.connect_signal("request::rules", function()
         },
     })
 
-    -- Fullscreen
+    -- Maximize
     ruled.client.append_rule({
-        id = "fullscreen",
+        id = "maximize",
         rule_any = {
             name = {
                 "Firefox Developer Edition",
@@ -164,7 +175,6 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            floating = true,
             placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })

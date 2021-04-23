@@ -15,7 +15,6 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             titlebars_enabled = true,
-            skip_decoration = true,
             floating = true,
             placement = awful.placement.centered,
         },
@@ -38,7 +37,7 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             sticky = true,
             above = true,
-            placement = awful.placement.bottom + awful.placement.skip_fullscreen + awful.placement.no_overlap + awful.placement.no_offscreen,
+            placement = awful.placement.restore,
         },
     })
 end)

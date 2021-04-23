@@ -2,6 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 
 local apps = require(P.config.apps)
 
@@ -20,13 +21,35 @@ local markup = function(content, opts)
     )
 end
 
+local xrdb = beautiful.xresources.get_current_theme()
+local x = {
+    --  xrdb variable
+    background = xrdb.background,
+    foreground = xrdb.foreground,
+    black   = xrdb.color0,
+    red     = xrdb.color1,
+    green   = xrdb.color2,
+    yellow  = xrdb.color3,
+    blue    = xrdb.color4,
+    magenta = xrdb.color5,
+    cyan    = xrdb.color6,
+    white   = xrdb.color7,
+    grey    = xrdb.color8,
+    color9  = xrdb.color9,
+    color10 = xrdb.color10,
+    color11 = xrdb.color11,
+    color12 = xrdb.color12,
+    color13 = xrdb.color13,
+    color14 = xrdb.color14,
+    color15 = xrdb.color15,
+}
 -- Appearance
 local icon_font          = "JetBrainsMono Nerd Font 30"
-local poweroff_text_icon = "  "
-local reboot_text_icon   = "  "
-local suspend_text_icon  = "  "
-local lock_text_icon     = "  "
-local exit_text_icon     = "  "
+local poweroff_text_icon = "  "
+local reboot_text_icon   = "  "
+local suspend_text_icon  = "  "
+local lock_text_icon     = "  "
+local exit_text_icon     = "  "
 local exitscreen_bg      = x.background .."44"
 
 local button_bg   = x.black

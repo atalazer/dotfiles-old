@@ -25,8 +25,8 @@ theme.fg_urgent   = theme.bg_normal
 theme.fg_minimize = theme.bg_normal
 
 -- border
-theme.useless_gap   = dpi(2)
-theme.border_width  = dpi(2)
+theme.border_radius = dpi(8)
+theme.border_width  = dpi(1)
 theme.border_normal = xrdb.color8
 theme.border_focus  = theme.bg_focus
 theme.border_marked = xrdb.color10
@@ -64,6 +64,12 @@ theme.notification_border_color = theme.bg_focus
 theme.notification_warning_bg   = xrdb.color1
 theme.notification_warning_fg   = theme.bg_normal
 
+theme.useless_gap   = dpi(3)
+theme.client_shape_rectangle = gears.shape.rectangle
+theme.client_shape_rounded = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height, theme.border_radius or dpi(6))
+end
+
 -- Recolor Layout icons:
 theme = theme_assets.recolor_layout(theme, theme.fg_normal)
 
@@ -84,4 +90,3 @@ end
 
 return theme
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

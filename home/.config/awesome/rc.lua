@@ -3,9 +3,10 @@ RC = {}
 RC.appearance = {
     profiles = os.getenv("HOME") .. "/.face",
     font = "SF Pro Text Regular 9",
+    font_monospace = "JetBrainsMono Nerd Font",
     -- font      = "JetBrainsMono Nerd Font 9",
     sys_icons = "Papirus-Dark",
-    wallpaper = "/home/atalariq/.wallpaper/sao-aloview.jpg",
+    wallpaper = "/home/atalariq/.wallpaper/Atalazer/Mini-Shark.png",
 }
 
 local themes = {
@@ -21,9 +22,9 @@ local bars = {
 RC.appearance.bar = bars[1] or "default"
 
 local decorations = {
-    "minimal",
+    "minimal", "lazer"
 }
-RC.appearance.deco = decorations[1] or "default"
+RC.appearance.deco = decorations[2] or "default"
 
 local notif_style = {
     "simple",
@@ -51,16 +52,10 @@ RC.settings = {
 
 -- List of apps to start once on start-up
 RC.autostart = {
-    "/lib/mate-polkit/polkit-mate-authentication-agent-1",
     "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
     "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
-    "mpd && mpDris2",
-    "florence",
     "nm-applet",
-    [[
-        xidlehook --not-when-fullscreen --not-when-audio --timer 600 "]] .. 
-        require("configurations.apps").default.lock .. [[" ""
-    ]],
+    [[ xidlehook --not-when-fullscreen --not-when-audio --timer 600 "slimlock" "" ]],
 
 -- You can add more start-up applications here
 }
@@ -80,29 +75,7 @@ require("awful.autofocus")
 
 -- Theme handling library
 local beautiful = require("beautiful")
-local xrdb = beautiful.xresources.get_current_theme()
-dpi = beautiful.xresources.apply_dpi
-x = {
-    --  xrdb variable
-    background = xrdb.background,
-    foreground = xrdb.foreground,
-    black   = xrdb.color0,
-    red     = xrdb.color1,
-    green   = xrdb.color2,
-    yellow  = xrdb.color3,
-    blue    = xrdb.color4,
-    magenta = xrdb.color5,
-    cyan    = xrdb.color6,
-    white   = xrdb.color7,
-    grey    = xrdb.color8,
-    color9  = xrdb.color9,
-    color10 = xrdb.color10,
-    color11 = xrdb.color11,
-    color12 = xrdb.color12,
-    color13 = xrdb.color13,
-    color14 = xrdb.color14,
-    color15 = xrdb.color15,
-}
+
 -- Path List
 P = {
     appearance = {

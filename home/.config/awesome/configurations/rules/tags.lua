@@ -12,14 +12,13 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         id = "terminals",
         rule_any = {
-            class = {
-                "Alacritty" , "kitty" , "Tym" ,
-                "URxvt"     , "XTerm" , "St"
-            },
-        },
-        exect_any = {
             instance = {
-                'Float', 'Editor', 'Files', 'Music',
+                "Alacritty",
+                "kitty",
+                "st",
+                "URxvt",
+                "XTerm",
+                "Tym",
             },
         },
         properties = {
