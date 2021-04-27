@@ -23,7 +23,7 @@ xsettingsd &
 clipmenud &>/dev/null &
 /lib/mate-polkit/polkit-mate-authentication-agent-1 &
 mpd && mpDris2 &
-florence &
+# florence &
 
 # Start pulse/pipewire
 pulseaudio --start

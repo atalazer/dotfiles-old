@@ -1,96 +1,92 @@
+#### Files
+mpd_music_dir = "~/Music"
+ncmpcpp_directory  = ~/.config/ncmpcpp
+lyrics_directory  = ~/.config/ncmpcpp/lyrics
+mpd_host = "localhost"
+mpd_port = "6600"
+mpd_connection_timeout = "5"
+mpd_crossfade_time = "5"
+
+## - 0 - default window color (discards all other colors)
+## - 1 - black
+## - 2 - red
+## - 3 - green
+## - 4 - yellow
+## - 5 - blue
+## - 6 - magenta
+## - 7 - cyan
+## - 8 - white
+## - 9 - end of current color
+## If you want to use 256 colors and/or background colors in formats
+## with the syntax $(COLOR), e.g. to set the artist tag to one of the
+## non-standard colors and make it have yellow background, you need to write
+## $(197_yellow)%a$(end).
+
+#### covert-art
 execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
 
-# Files
- mpd_music_dir = "~/Music"
- ncmpcpp_directory  = ~/.config/ncmpcpp
- lyrics_directory  = ~/.config/ncmpcpp/lyrics
- mpd_host = "localhost"
- mpd_port = "6600"
- mpd_connection_timeout = "5"
- mpd_crossfade_time = "5"
+#### Playlist
+playlist_display_mode = "columns"
+playlist_show_remaining_time = "yes"
 
- # Playlist
- playlist_disable_highlight_delay = "0"
- playlist_display_mode = "columns"
- playlist_show_remaining_time = "yes"
+alternative_header_first_line_format = "$7$b» {%f} «$/b"
+alternative_header_second_line_format = "$5{%b}|{/%D/}"
+# user_interface = "alternative"
+user_interface = "classic"
 
- browser_display_mode = "columns"
- autocenter_mode = "yes"
- fancy_scrolling = "yes"
- follow_now_playing_lyrics = "yes"
- display_screens_numbers_on_start = "yes"
- ignore_leading_the = "yes"
- lyrics_database = "1"
- song_columns_list_format = "(10)[blue]{l} (30)[green]{a} (30)[magenta]{b} (50)[yellow]{t}"
- colors_enabled = "yes"
- main_window_color = "white"
- main_window_highlight_color =  "blue"
- header_window_color = "cyan"
- volume_color = "red"
- statusbar_color = "white"
- active_column_color = "cyan"
- active_window_border = "blue"
-progressbar_color = "black"
-progressbar_elapsed_color = "red"
+song_list_format = "{$7%n $9}{$5%a - $9}{$5%t$9}|{$8%f$9}$R{$5  %b$9}{$3 │ %l$9}"
+song_columns_list_format = "(50)[5]{t|f:Title} (50)[5]{ar:Artist} $b(5f)[7]{lr:Time}$/b"
+song_status_format = " $5%a $7- $5%t $5( $7%b $5) "
 
-alternative_header_first_line_format = "$0$aqqu$/a {$7%a - $9}{$5%t$9}|{$8%f$9} $0$atqq$/a$9"
-alternative_header_second_line_format = "{{$6%b$9}{ [$6%y$9]}}|{%D}"
-song_list_format = "{$3%n $9}{$7%a - $9}{$5%t$9}|{$8%f$9}$R{$6  %b$9}{$3 │ %l$9}"
-user_interface = "alternative"
-default_place_to_search_in = "database"
+current_item_prefix = "$(16)$r"
+current_item_suffix = "$/r$(end)"
+now_playing_prefix = "$b$7» "
+now_playing_suffix = "$/b"
 
+#### Colors
+header_window_color = "cyan"
+main_window_color =  "blue"
+alternative_ui_separator_color = "cyan"
 
-# visualizer
-visualizer_fifo_path = "/tmp/mpd.fifo"
-visualizer_output_name = "my_fifo"
-visualizer_sync_interval = "12"
-#
-visualizer_type = "wave" (spectrum/wave)
-#visualizer_type = "spectrum" (spectrum/wave)
-visualizer_in_stereo = "yes"
-
-## Navigation ##
-cyclic_scrolling = "yes"
-header_text_scrolling = "yes"
-jump_to_now_playing_song_at_start = "yes"
-lines_scrolled = "2"
-
-## Other ##
-system_encoding = "utf-8"
-regular_expressions = "extended"
-
-## Selected tracks ##
-selected_item_prefix = "* "
-discard_colors_if_item_is_selected = "no"
-
-## Seeking ##
-incremental_seeking = "yes"
-seek_time = "1"
-
-## Visivility ##
+#### Visivility ##
 header_visibility = "no"
 statusbar_visibility = "yes"
 titles_visibility = "yes"
 
-progressbar_look =  "━━━"
+#### Progressbar
+#### can consider ─━⠤⠤
+progressbar_look = "━━━"
+progressbar_elapsed_color = "blue"
+progressbar_color = "blue"
+connected_message_on_startup = no
 
-now_playing_prefix = "|>"
-song_status_format = " $2%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
+#### Visualizer stuff
+visualizer_output_name = "Visualizer"
+visualizer_data_source = "/tmp/mpd.fifo"
+
+## Left aligned cover-art
+# visualizer_look = ■■
+visualizer_look = "  "              # First we make the visualizer invisible
+startup_screen = "visualizer"       # Next we make the left pane open on the empty visualizer
+startup_slave_screen = "playlist"   # The right pane is the usual playlist view
+startup_slave_screen_focus = "yes"  # We focus the right pane on ncmpcpp startup
+locked_screen_width_part = "31"     # We make the empty pane occupy 30% width, just like the cover art
+
+visualizer_sync_interval = "12"
+visualizer_autoscale = "yes"
+visualizer_spectrum_smooth_look = "yes"
+visualizer_type = "wave"
+visualizer_color = "default"
+
+#### Misc
 autocenter_mode = "yes"
 centered_cursor = "yes"
-
-# Misc
+colors_enabled = "yes"
 display_bitrate = "no"
+empty_tag_marker = ""
 enable_window_title = "yes"
 follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
-empty_tag_marker = ""
-
-visualizer_look = "  "
-#visualizer_look = "▌▌"
-
-startup_screen = visualizer
-startup_slave_screen = playlist
-startup_slave_screen_focus = yes
-locked_screen_width_part = 31
+mouse_support = "yes"
+volume_change_step = "2"
 

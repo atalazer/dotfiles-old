@@ -8,6 +8,10 @@ alias c="clear"
 alias r="exec zsh"
 alias {:q,q}="exit"
 alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
+alias cdb="cd ${BLOG:-$HOME/Work/Blog}"
+alias cdn="cd ${NOTE_DIR:-$HOME/Documents/Notes}"
+alias cdp="cd ${PROGRAMMING_DIR:-$HOME/Work/Programming}"
+alias cds="cd ${SCHOOL_DIR:-$HOME/School}"
 
 # Use advcpmv instead mv cp
 if command -v "mvg" > /dev/null 2>&1; then
@@ -44,12 +48,12 @@ elif command -v "rip" > /dev/null 2>&1; then
 fi
 
 # Editor Alias
-alias {e,vim,vi}="$editor"
-alias {envim,evim,ev}="$editor ~/.config/nvim/init.lua"
+alias {e,vi}="$editor"
+alias se="sudoedit"
+alias {envim,ev}="$editor ~/.config/nvim/init.lua"
 alias {zshrc,ez}="$editor ~/.zshrc"
 alias {xrc,ex}="$editor ~/.Xresources"
 alias {awc,ea}="$editor ~/.config/awesome/rc.lua"
-alias se="sudoedit"
 
 # Xresources Alias
 alias xload="xrdb -load ~/.Xresources"

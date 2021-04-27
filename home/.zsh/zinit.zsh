@@ -29,13 +29,7 @@ zinit light-mode for \
 # Users Plugins
 # =================================================
 
-if [[ $PROMPT = starship ]]; then
-    zinit lucid for \
-        from"gh-r" as"command" \
-        atinit'export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"' \
-        atload'eval "$(starship init zsh)"' bpick'*unknown-linux-gnu*' \
-            starship/starship
-elif [[ $PROMPT = pure ]]; then
+if [[ $PROMPT = pure ]]; then
     zinit ice pick"async.zsh" src"pure.zsh"
     zinit light sindresorhus/pure
 elif [[ $PROMPT = spaceship ]]; then
@@ -53,21 +47,16 @@ zinit wait lucid light-mode for \
     atload"!_zsh_autosuggest_start" nocompile \
         zsh-users/zsh-autosuggestions \
     atinit"zicompinit; zicdreplay" nocompile nocompletions \
-        zdharma/fast-syntax-highlighting \
+        zdharma/fast-syntax-highlighting
 
 # ===== Script =====
 zinit wait lucid light-mode for \
     nocompile \
         kazhala/dotbare \
-    nocompile nocompletions \
-        MichaelAquilina/zsh-you-should-use \
-    nocompile nocompletions \
-        romkatv/zsh-prompt-benchmark \
     atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' nocompile \
         hlissner/zsh-autopair
 
 # ===== env =====
 zinit wait lucid light-mode for \
-        lukechilds/zsh-nvm \
         lukechilds/zsh-better-npm-completion
 

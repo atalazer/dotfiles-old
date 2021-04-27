@@ -39,10 +39,6 @@ Eval(){
 }
 
 # ===== Plugins =====
-export NVM_DIR="$HOME/.nvm"
-export NVM_LAZY_LOAD=true
-export NVM_LAZY_LOAD_EXTRA_COMMANDS=("nvim")
-
 if [[ $PLUG_MAN = "zinit" ]]; then
     [[ -f $ZDIR/zinit.zsh ]] && source $ZDIR/zinit.zsh
 elif [[ $PLUG_MAN = "antigen" ]]; then
@@ -117,4 +113,4 @@ todo --show
 # schedule --show
 
 Eval "$(zoxide init zsh)"
-
+Eval "$(fnm env)"

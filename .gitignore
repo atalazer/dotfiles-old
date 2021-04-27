@@ -7,6 +7,7 @@
 **/*playlist**
 **/api.json
 **/resurrect/*
+**/sessions/*
 **/__pycache__/*
 **/.cache/*
 **/**.state
