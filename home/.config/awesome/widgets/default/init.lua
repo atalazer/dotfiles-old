@@ -1,7 +1,0 @@
-require('widgets.default.keyboardlayout')
-require('widgets.default.launcher')
-require('widgets.default.layoutbox')
-require('widgets.default.promptbox')
-require('widgets.default.taglist')
-require('widgets.default.tasklist')
-require('widgets.default.textclock')

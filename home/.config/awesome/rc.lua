@@ -1,247 +1,431 @@
--- ===== User Configuration =====
-RC = {}
-RC.appearance = {
-    profiles       = os.getenv("HOME") .. "/.face",
-    font           = "JetBrainsMono Nerd Font 9",
-    font_monospace = "JetBrainsMono Nerd Font",
-    sys_icons      = "Papirus-Dark",
-    wallpaper      = "/home/atalariq/.wallpaper/Atalazer/Mini-Shark.png",
-}
+--[[
+   ___       ___       ___       ___       ___       ___       ___
+  /\  \     /\__\     /\  \     /\  \     /\  \     /\__\     /\  \
+ /::\  \   /:/\__\   /::\  \   /::\  \   /::\  \   /::L_L_   /::\  \
+/::\:\__\ /:/:/\__\ /::\:\__\ /\:\:\__\ /:/\:\__\ /:/L:\__\ /::\:\__\
+\/\::/  / \::/:/  / \:\:\/  / \:\:\/__/ \:\/:/  / \/_/:/  / \:\:\/  /
+  /:/  /   \::/  /   \:\/  /   \::/  /   \::/  /    /:/  /   \:\/  /
+  \/__/     \/__/     \/__/     \/__/     \/__/     \/__/     \/__/
+
+-- >> The file that binds everything together.
+--]]
+
 
 local themes = {
-    "xresources",
-    "gtk",
+    "manta",        -- 1 --
+    "lovelace",     -- 2 --
+    "skyfall",      -- 3 --
+    "ephemeral",    -- 4 --
+    "amarena",      -- 5 --
 }
-RC.appearance.theme = themes[1] or "default"
-
-local bars = {
-    "tab",
-    "online",
+-- Change this number to use a different theme
+local theme = themes[5]
+-- ===================================================================
+-- Affects the window appearance: titlebar, titlebar buttons...
+local decoration_themes = {
+    "lovelace",       -- 1 -- Standard titlebar with 3 buttons (close, max, min)
+    "skyfall",        -- 2 -- No buttons, only title
+    "ephemeral",      -- 3 -- Text-generated titlebar buttons
 }
-RC.appearance.bar = bars[1] or "default"
-
-local decorations = {
-    "minimal",
-    "lazer",
+local decoration_theme = decoration_themes[3]
+-- ===================================================================
+-- Statusbar themes. Multiple bars can be declared in each theme.
+local bar_themes = {
+    "manta",        -- 1 -- Taglist, client counter, date, time, layout
+    "lovelace",     -- 2 -- Start button, taglist, layout
+    "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
+    "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
+    "amarena",      -- 5 -- Minimal taglist and dock with autohide
 }
-RC.appearance.deco = decorations[2] or "default"
+local bar_theme = bar_themes[5]
 
-local dashboard = {
-    "lazer",
+-- ===================================================================
+-- Affects which icon theme will be used by widgets that display image icons.
+local icon_themes = {
+    "linebit",        -- 1 -- Neon + outline
+    "drops",          -- 2 -- Pastel + filled
 }
-RC.appearance.dashboard = dashboard[1] or "default"
-
-local sidebar = {
-    "lazer",
+local icon_theme = icon_themes[2]
+-- ===================================================================
+local notification_themes = {
+    "lovelace",       -- 1 -- Plain with standard image icons
+    "ephemeral",      -- 2 -- Outlined text icons and a rainbow stripe
+    "amarena",        -- 3 -- Filled text icons on the right, text on the left
 }
-RC.appearance.sidebar = sidebar[1] or "default"
-
-local notif_style = {
-    "simple",
+local notification_theme = notification_themes[3]
+-- ===================================================================
+local sidebar_themes = {
+    "lovelace",       -- 1 -- Uses image icons
+    "amarena",        -- 2 -- Text-only (consumes less RAM)
 }
-RC.appearance.notif_style = notif_style[1] or "default"
-
-RC.settings = {
-    -- Layoout move and resize deltas.
-    delta = 10,
-    -- Wal, color pallete generator based on wallpaper
-    wal_enabled = true,
-    wal_backend = os.getenv("WAL_BACKEND") or "wal",
-    -- Collision - Windows management ( Boolean )
-    collision_enabled = false,
-    -- Switcher - ALT-Tab Function
-    switcher_enabled = true,
-    switcher_mode = "normal",
-    -- Nice - MacOS like Titlebars ( and Its Rounded ) will override users titlebars config
-    nice_enabled = false,
-    -- Revelation, MacOS like expose
-    revelation_enabled = false,
+local sidebar_theme = sidebar_themes[2]
+-- ===================================================================
+local dashboard_themes = {
+    "skyfall",        -- 1 --
+    "amarena",        -- 2 -- Displays coronavirus stats
 }
-
--- List of apps to start once on start-up
-RC.autostart = {
-    "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
-    "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
-    "nm-applet",
-    [[ xidlehook --not-when-fullscreen --not-when-audio --timer 600 "slimlock" "" ]],
-
-    -- You can add more start-up applications here
+local dashboard_theme = dashboard_themes[2]
+-- ===================================================================
+local exit_screen_themes = {
+    "lovelace",      -- 1 -- Uses image icons
+    "ephemeral",     -- 2 -- Uses text-generated icons (consumes less RAM)
 }
-if RC.settings.wal_enabled == true then
-    table.insert(
-        RC.autostart,
-        "wal --backend " .. RC.settings.wal_backend .. " -n -i " .. RC.appearance.wallpaper
-    )
-    table.insert(RC.autostart, "xrdb -merge -I$HOME ~/.Xresources.d/color/wal ")
-else
-    table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
-end
+local exit_screen_theme = exit_screen_themes[2]
+-- ===================================================================
+-- User variables and preferences
 
--- ===== Initialize =====
-pcall(require, "luarocks.loader")
--- Awesome Library
--- Load AwesomeWM libraries
-local awful = require("awful")
-require("awful.autofocus")
+local wallpaper = "/home/atalariq/.wallpaper/eyecandy/mountain-1_HD.jpg"
 
+user = {
+    font = "JetBrainsMono Nerd Font",
+    fsize = "11",
+    icon = "/home/atalariq/.icons/Papirus-Dark",
+
+    -- >> Default applications <<
+    -- Check apps.lua for more
+    terminal = os.getenv("TERMINAL") or "kitty",
+    floating_terminal = "kitty",
+    browser = "firefox",
+    file_manager = "kitty --name files -e nnn",
+    editor = "kitty --name editor -e nvim",
+    email_client = "kitty --name email -e neomutt",
+    music_client = "kitty -o font_size=12 --name music -e ncmpcpp",
+
+    -- >> Web Search <<
+    web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
+    -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
+    
+    -- Autostart apps
+    autostart_debug = false,
+    autostart = {
+        "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
+        "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
+        "wal --backend colorthief -n -i " .. wallpaper ,
+        "xrdb -load ~/.Xresources",
+    },
+    
+    -- Enable rounded
+    round_enabled = true,
+
+    -- >> User profile <<
+    profile_picture = os.getenv("HOME").."/.face",
+
+    -- Directories with fallback values
+    dirs = {
+        downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/Downloads",
+        documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/Documents",
+        music = os.getenv("XDG_MUSIC_DIR") or "~/Music",
+        pictures = os.getenv("XDG_PICTURES_DIR") or "~/Pictures",
+        videos = os.getenv("XDG_VIDEOS_DIR") or "~/Videos",
+        -- Make sure the directory exists so that your screenshots
+        -- are not lost
+        screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
+    },
+
+    -- >> Sidebar <<
+    sidebar = {
+        hide_on_mouse_leave = true,
+        show_on_mouse_screen_edge = true,
+    },
+
+    -- >> Lock screen <<
+    -- This password will ONLY be used if you have not installed
+    -- https://github.com/RMTT/lua-pam
+    -- as described in the README instructions
+    -- Leave it empty in order to unlock with just the Enter key.
+    -- lock_screen_custom_password = "",
+    lock_screen_custom_password = "awesome",
+
+    -- >> Battery <<
+    -- You will receive notifications when your battery reaches these
+    -- levels.
+    battery_threshold_low = 20,
+    battery_threshold_critical = 10,
+
+    -- >> Weather <<
+    -- Get your key and find your city id at
+    -- https://openweathermap.org/
+    -- (You will need to make an account!)
+    openweathermap_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    openweathermap_city_id = "xxxxxxx",
+    -- > Use "metric" for Celcius, "imperial" for Fahrenheit
+    weather_units = "metric",
+
+    -- >> Coronavirus <<
+    -- Country to check for corona statistics
+    -- Uses the https://corona-stats.online API
+    coronavirus_country = "indonesia",
+
+}
+-- ===================================================================
+
+
+-- Jit
+--pcall(function() jit.on() end)
+
+-- Initialization
+-- ===================================================================
 -- Theme handling library
 local beautiful = require("beautiful")
-
--- Path List
-P = {
-    appearance = {
-        themes = "themes",
-        bars = "components.bars",
-        decorations = "components.decorations",
-        notification = "components.notification",
-        dashboard = "components.dashboard",
-        sidebar = "components.sidebar",
-    },
-    config = {
-        apps = "configurations.apps",
-        config = "configurations.config",
-        menu = "configurations.menu",
-        keys = "configurations.keys",
-        mouse = "configurations.mouse",
-        tag = "configurations.tag",
-        rules = "configurations.rules",
-        signals = "configurations.signals",
-    },
-    module = {
-        autostart = "modules.autostart",
-        error_handling = "modules.error-handling",
-        set_wallpaper = "modules.set-wallpaper",
-        sloppy_focus = "modules.sloppy-focus",
-        quake_terminal = "modules.quake-terminal",
-        mpd = {
-            lyrics = "modules.mpd.lyrics",
-        },
-        collision = "modules.collision",
-        nice = "modules.nice",
-        revelation = "modules.revelation",
-        switcher = "modules.switcher",
-    },
-    widget = {
-        default = "widgets.default",
-        online = "widgets.online",
-        sick = "widgets.sick",
-    },
+local xrdb = beautiful.xresources.get_current_theme()
+-- Make dpi function global
+dpi = beautiful.xresources.apply_dpi
+-- Make xresources colors global
+x = {
+    --           xrdb variable
+    background = xrdb.background,
+    foreground = xrdb.foreground,
+    -- Black
+    color0     = xrdb.color0,
+    color8     = xrdb.color8,
+    -- Red
+    color1     = xrdb.color1,
+    color9     = xrdb.color9,
+    -- Green
+    color2     = xrdb.color2,
+    color10    = xrdb.color10,
+    -- Yellow
+    color3     = xrdb.color3,
+    color11    = xrdb.color11,
+    -- Blue
+    color4     = xrdb.color4,
+    color12    = xrdb.color12,
+    -- Magenta
+    color5     = xrdb.color5,
+    color13    = xrdb.color13,
+    -- Cyan
+    color6     = xrdb.color6,
+    color14    = xrdb.color14,
+    -- White
+    color7     = xrdb.color7,
+    color15    = xrdb.color15,
 }
--- Error handling
-require(P.module.error_handling)
 
--- initialize theme and set wallpaper
-beautiful.init(require(P.appearance.themes .. "." .. RC.appearance.theme .. ".theme"))
-require(P.module.set_wallpaper)
+-- Load AwesomeWM libraries
+local gears = require("gears")
+local awful = require("awful")
+require("awful.autofocus")
+-- Default notification library
+local naughty = require("naughty")
 
--- Bars and Notification Appearance
-require(string.format("%s.%s", P.appearance.bars, RC.appearance.bar))
-require(string.format("%s.%s", P.appearance.notification, RC.appearance.notif_style))
+-- Load theme
+local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
+beautiful.init(theme_dir .. "theme.lua")
 
--- Titlebars
-if RC.settings.nice_enabled == true then
-    nice = require(P.module.nice)
-    nice({
-        titlebar_height = 24,
-        titlebar_radius = 12,
-        titlebar_padding_right = 3,
-        titlebar_padding_left = 3,
-        titlebar_font = RC.appearance.font,
-        titlebar_color = beautiful.border_normal,
-        titlebar_items = {
-            left = { "close", "minimize", "maximize" },
-            middle = "title",
-            right = {} or { "sticky", "ontop", "floating" },
-        },
-        no_titlebar_maximized = false,
+-- Error handling and Autostart
+-- ===================================================================
+naughty.connect_signal("request::display_error", function(message, startup)
+    naughty.notification {
+        urgency = "critical",
+        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
+        message = message
+    }
+end)
+require("autostart")
 
-        close_color = "#ee4266",
-        minimize_color = "#ffb400",
-        maximize_color = "#4CBB17",
-        floating_color = "#f6a2ed",
-        ontop_color = "#f6a2ed",
-        sticky_color = "#f6a2ed",
+-- Features
+-- ===================================================================
+-- Initialize icons array and load icon theme
+local icons = require("icons")
+icons.init(icon_theme)
 
-        button_size = 12,
-        button_margin_horizontal = 2,
-        button_margin_vertical = 0,
-        button_margin_top = 2,
-        button_margin_bottom = 0,
-        button_margin_left = 1,
-        button_margin_right = 1,
+-- Keybinds and mousebinds
+-- local keys = require("keys")
 
-        mb_move = nice.MB_LEFT,
-        mb_resize = nice.MB_RIGHT,
-        mb_contextmenu = nice.MB_MIDDLE,
-        mb_win_shade_rollup = nice.MB_SCROLL_DOWN,
-        mb_win_shade_rolldown = nice.MB_SCROLL_UP,
+-- Load notification daemons and notification theme
+local notifications = require("notifications")
+notifications.init(notification_theme)
+-- Load window decoration theme and custom decorations
+local decorations = require("decorations")
+decorations.init(decoration_theme)
 
-        tooltips_enabled = true,
-        tooltip_messages = {
-            close = "Close",
-            minimize = "Minimize",
-            maximize_active = "Unmaximize",
-            maximize_inactive = "Maximize",
-            floating_active = "Enable tiling mode",
-            floating_inactive = "Enable floating mode",
-            ontop_active = "Don't keep above other windows",
-            ontop_inactive = "Keep above other windows",
-            sticky_active = "Disable sticky mode",
-            sticky_inactive = "Enable sticky mode",
-        },
-        context_menu_theme = {
-            bg_focus = beautiful.bg_focus,
-            bg_normal = beautiful.bg_normal,
-            border_color = beautiful.border_normal,
-            border_width = 0,
-            fg_focus = beautiful.fg_focus,
-            fg_normal = beautiful.fg_normal,
-            font = RC.appearance.font,
-            height = 25,
-            width = 200,
-        },
-    })
-else
-    require(string.format("%s.%s", P.appearance.decorations, RC.appearance.deco))
-end
+-- Load helper functions
+-- local helpers = require("helpers")
 
--- Initialize Tag, Menu, and Rules
-require(P.config.tag)
-require(P.config.menu)
-require(P.config.rules)
-require(P.config.signals)
+-- >> Elements - Desktop components
+-- Statusbar(s)
+require("elemental.bar."..bar_theme)
 
--- handling mousebinds and keybinds
-require(P.config.keys)
-require(P.config.mouse)
+-- Exit screen
+require("elemental.exit_screen."..exit_screen_theme)
 
--- handling revelation modules
-if RC.settings.revelation_enabled == true then
-    revelation = require(P.module.revelation)
-    revelation.init({
-        tag_name = "--",
-        exact = awful.rules.match,
-        -- charorder = "kluipyhmfdsatgvcewqzx123456780",
-        charorder = "kl;'m,./ip[]",
-    })
-    awful.keyboard.append_global_keybindings({
-        awful.key({ W, A }, "/", function()
-            revelation(
-                { rule = { class = "Florence" }, is_excluded = true },
-                { rule = { class = "lyricsQuake" }, is_excluded = true },
-                { rule = { class = "quakeTerminal" }, is_excluded = true }
-            )
-        end, { description = "Expose", group = "tag" }),
+-- Sidebar
+require("elemental.sidebar."..sidebar_theme)
+
+-- Dashboard (previously called: Start screen)
+require("elemental.dashboard."..dashboard_theme)
+
+-- Lock screen
+-- Make sure to install lua-pam as described in the README or configure your
+-- custom password in the 'user' section above
+local lock_screen = require("elemental.lock_screen")
+lock_screen.init()
+
+-- App drawer
+require("elemental.app_drawer")
+
+-- Window switcher
+require("elemental.window_switcher")
+
+-- Toggle-able microphone overlay
+-- require("elemental.microphone_overlay")
+
+-- >> Daemons
+-- Most widgets that display system/external info depend on evil.
+-- Make sure to initialize it last in order to allow all widgets to connect to
+-- their needed evil signals.
+require("evil")
+
+-- ===================================================================
+-- ===================================================================
+
+-- Get screen geometry
+-- I am using a single screen setup and I assume that screen geometry will not
+-- change during the session.
+screen_width = awful.screen.focused().geometry.width
+screen_height = awful.screen.focused().geometry.height
+
+floating_client_placement = function(c)
+    if
+        awful.layout.get(mouse.screen) ~= awful.layout.suit.floating
+        or #mouse.screen.clients == 1
+    then
+        return awful.placement.centered(c, { honor_padding = true, honor_workarea = true })
+    end
+    local p = awful.placement.no_overlap + awful.placement.no_offscreen
+    return p(c, {
+        honor_padding = true,
+        honor_workarea = true,
+        margins = beautiful.useless_gap * 2,
     })
 end
--- initialize modules
-require(P.module.autostart)
-require(P.module.quake_terminal)
-require(P.module.mpd.lyrics)
--- require(P.module.sloppy_focus)
+
+centered_client_placement = function(c)
+    return gears.timer.delayed_call(function()
+        awful.placement.centered(c, { honor_padding = true, honor_workarea = true })
+    end)
+end
+
+-- Layouts
+-- ===================================================================
+-- Table of layouts to cover with awful.layout.inc, order matters.
+awful.layout.layouts = {
+    awful.layout.suit.tile,
+    awful.layout.suit.floating,
+    awful.layout.suit.max,
+    --awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.tile.top,
+    --awful.layout.suit.fair,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.tile.left,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.corner.nw,
+    --awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.ne,
+    --awful.layout.suit.corner.sw,
+    --awful.layout.suit.corner.se,
+}
+
+-- Wallpaper
+-- ===================================================================
+local function set_wallpaper(s)
+    -- Wallpaper
+    if beautiful.wallpaper then
+        -- local wallpaper = beautiful.wallpaper
+        -- -- If wallpaper is a function, call it with the screen
+        -- if type(wallpaper) == "function" then
+        --     wallpaper = wallpaper(s)
+        -- end
+
+        -- >> Method 1: Built in wallpaper function
+        -- gears.wallpaper.fit(wallpaper, s, true)
+        -- gears.wallpaper.maximized(wallpaper, s, true)
+
+        -- >> Method 2: Set theme's wallpaper with feh
+        awful.spawn.with_shell("feh --bg-fill " .. wallpaper or os.getenv("HOME") .. "/.fehbg" )
+
+        -- >> Method 3: Set last wallpaper with feh
+        -- awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
+
+    end
+end
+
+-- Set wallpaper
+awful.screen.connect_for_each_screen(function(s)
+    -- Wallpaper
+    set_wallpaper(s)
+end)
+
+-- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+screen.connect_signal("property::geometry", set_wallpaper)
+
+-- Tags
+-- ===================================================================
+awful.screen.connect_for_each_screen(function(s)
+    -- Each screen has its own tag table.
+    local l = awful.layout.suit -- Alias to save time :)
+    -- Tag layouts
+    local layouts = {
+        l.tile,
+        l.floating,
+        l.floating,
+        l.floating,
+        l.floating,
+        l.floating,
+        l.floating,
+        l.floating,
+        l.floating,
+        l.floating
+    }
+
+    -- Tag names
+    local tagnames = beautiful.tagnames or { 
+        "1", "2", "3", "4", "5", 
+        "6", "7", "8", "9", "10"
+    }
+    -- Create all tags at once (without seperate configuration for each tag)
+    awful.tag(tagnames, s, layouts)
+
+    -- Create tags with seperate configuration for each tag
+    -- awful.tag.add(tagnames[1], {
+    --     layout = layouts[1],
+    --     screen = s,
+    --     master_width_factor = 0.6,
+    --     selected = true,
+    -- })
+    -- ...
+end)
+
+-- Rules
+-- ===================================================================
+-- Rules to apply to new clients (through the "manage" signal).
+require("rules")
+
+-- Signals
+-- ===================================================================
+require("signals")
+
+-- Show the dashboard on login
+-- Add `touch /tmp/awesomewm-show-dashboard` to your ~/.xprofile in order to make the dashboard appear on login
+local dashboard_flag_path = "/tmp/awesomewm-show-dashboard"
+-- Check if file exists
+awful.spawn.easy_async_with_shell("stat "..dashboard_flag_path.." >/dev/null 2>&1", function (_, __, ___, exitcode)
+    if exitcode == 0 then
+      -- Show dashboard
+      if dashboard_show then dashboard_show() end
+      -- Delete the file
+      awful.spawn.with_shell("rm "..dashboard_flag_path)
+    end
+end)
 
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
-collectgarbage("setpause", 200)
-collectgarbage("setstepmul", 1000)
+
+-- collectgarbage("setpause", 160)
+-- collectgarbage("setstepmul", 400)
+
+collectgarbage("setpause", 150)
+collectgarbage("setstepmul", 600)
