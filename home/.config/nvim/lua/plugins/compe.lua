@@ -5,10 +5,16 @@ require("compe").setup({
     enabled              = true,
     autocomplete         = true,
     allow_prefix_unmatch = false,
-    preselect            = "disable",
-    min_length           = 1,
-    source_timeout       = 200,
-    incomplete_delay     = 400,
+    documentation        = true;
+    preselect            = "enable",
+    min_length       = 1,
+    throttle_time    = 80,
+    source_timeout   = 250,
+    incomplete_delay = 300,
+    max_abbr_width   = 100,
+    max_kind_width   = 100,
+    max_menu_width   = 100,
+
     source = {
         buffer   = true,
         calc     = true,
@@ -19,10 +25,6 @@ require("compe").setup({
         vsnip    = true,
     },
 })
-
-vim.api.nvim_set_keymap("i", "<C-space>", "compe#complete()", { expr = true, silent = true })
-vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm('<CR>')", { expr = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-e>", "compe#close('C-e')", { expr = true, silent = true })
 
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -58,6 +60,13 @@ _G.s_tab_complete = function()
 end
 
 local keymap = vim.api.nvim_set_keymap
+
+keymap("i", "<C-space>",    "compe#complete()",              { expr = true, noremap = true, silent = true })
+keymap("i", "<CR>",         "compe#confirm('<CR>')",         { expr = true, noremap = true, silent = true })
+keymap("i", "<C-c>",        "compe#close('C-c')",            { expr = true, noremap = true, silent = true })
+keymap("i", "<C-f>",        "compe#scroll({ 'delta': +4 })", { expr = true, noremap = true, silent = true })
+keymap("i", "<C-d>",        "compe#scroll({ 'delta': -4 })", { expr = true, noremap = true, silent = true })
+
 keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
 keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
 keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })

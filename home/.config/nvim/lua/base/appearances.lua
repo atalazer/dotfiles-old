@@ -1,37 +1,44 @@
 -- xresources, material
 local colorscheme = RC.colorscheme or "industry"
+local g = vim.g
 
-if colorscheme == "material" and RC.use_xresources == false then
-    vim.cmd[[packadd colorbuddy.nvim]]
-    vim.cmd[[packadd material.nvim]]
-
-    vim.g.material_style = "deep ocean" -- darker, lighter, default, oceanic, palenight, deep ocean
-    vim.g.material_italic_comments = 1
-    vim.g.material_italic_keywords = 1
-    vim.g.material_italic_functions = 1
-    -- Set Mappings
-    vim.api.nvim_set_keymap(
-        "n",
-        "<C-m>k",
-        [[<Cmd>lua require('material').change_style('deep ocean')<CR>]],
-        { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap(
-        "n",
-        "<C-m>l",
-        [[<Cmd>lua require('material').change_style('palenight')<CR>]],
-        { noremap = true, silent = true }
-    )
+if RC.use_xresources == false then
+    if colorscheme == "material" then
+        g.material_style = "deep ocean" -- darker, lighter, default, oceanic, palenight, deep ocean
+        g.material_italic_comments  = true
+        g.material_italic_keywords  = true
+        g.material_italic_functions = true
+        g.material_contrast         = true
+        g.material_borders          = true
+    end
+    elseif colorscheme == "tokyonight" then
+        vim.cmd"packadd tokyonight.nvim"
+        g.tokyonight_style = "night"       -- night day storm
+        g.tokyonight_transparent     = true
+        g.tokyonight_terminal_colors = true
+        g.tokyonight_italic_comments  = true
+        g.tokyonight_italic_keywords  = true
+        g.tokyonight_italic_functions = true
+        g.tokyonight_italic_variables = true
+        g.tokyonight_dark_sidebar = true
+        g.tokyonight_dark_float   = true
+        g.tokyonight_hide_inactive_statusline = true
+        g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+        g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 end
 
 -- ===== Initialize =====
-vim.cmd("syntax enable")
-vim.cmd("set termguicolors")
+vim.cmd([[
+syntax enable
+set termguicolors
+]])
+
 if RC.use_xresources == true then
+    -- require("xresources")
     require("base.colorscheme.xresources").colorscheme()
 else
     if colorscheme == "material" then
-        require('colorbuddy').colorscheme('material')
+        require("material").set()
     else
         vim.cmd("colorscheme " .. colorscheme)
     end

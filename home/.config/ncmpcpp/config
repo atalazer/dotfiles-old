@@ -22,13 +22,15 @@ mpd_crossfade_time = "5"
 ## non-standard colors and make it have yellow background, you need to write
 ## $(197_yellow)%a$(end).
 
-#### covert-art
-execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
-
 #### Playlist
+startup_screen = "playlist"
+playlist_shorten_total_times = "yes"
 playlist_display_mode = "columns"
-playlist_show_remaining_time = "yes"
+browser_display_mode = "columns"
+search_engine_display_mode = "columns"
+playlist_editor_display_mode = "columns"
 
+playlist_show_remaining_time = "yes"
 alternative_header_first_line_format = "$7$b» {%f} «$/b"
 alternative_header_second_line_format = "$5{%b}|{/%D/}"
 # user_interface = "alternative"
@@ -38,26 +40,24 @@ song_list_format = "{$7%n $9}{$5%a - $9}{$5%t$9}|{$8%f$9}$R{$5  %b$9}{$3 │ %l$
 song_columns_list_format = "(50)[5]{t|f:Title} (50)[5]{ar:Artist} $b(5f)[7]{lr:Time}$/b"
 song_status_format = " $5%a $7- $5%t $5( $7%b $5) "
 
-current_item_prefix = "$(16)$r"
+current_item_prefix = "$7$r"
 current_item_suffix = "$/r$(end)"
-now_playing_prefix = "$b$7» "
-now_playing_suffix = "$/b"
+now_playing_prefix = "$b$2$7 "
+now_playing_suffix = "  $/b$7"
 
 #### Colors
+main_window_color =  "default"
 header_window_color = "cyan"
-main_window_color =  "blue"
 alternative_ui_separator_color = "cyan"
-
-#### Visivility ##
-header_visibility = "no"
-statusbar_visibility = "yes"
-titles_visibility = "yes"
+statusbar_color = "white"
+color1 = "white"
+color2 = "blue"
 
 #### Progressbar
 #### can consider ─━⠤⠤
 progressbar_look = "━━━"
 progressbar_elapsed_color = "blue"
-progressbar_color = "blue"
+progressbar_color = "cyan"
 connected_message_on_startup = no
 
 #### Visualizer stuff
@@ -65,28 +65,34 @@ visualizer_output_name = "Visualizer"
 visualizer_data_source = "/tmp/mpd.fifo"
 
 ## Left aligned cover-art
-# visualizer_look = ■■
-visualizer_look = "  "              # First we make the visualizer invisible
-startup_screen = "visualizer"       # Next we make the left pane open on the empty visualizer
-startup_slave_screen = "playlist"   # The right pane is the usual playlist view
-startup_slave_screen_focus = "yes"  # We focus the right pane on ncmpcpp startup
-locked_screen_width_part = "31"     # We make the empty pane occupy 30% width, just like the cover art
-
+visualizer_look = "▐"
 visualizer_sync_interval = "12"
 visualizer_autoscale = "yes"
 visualizer_spectrum_smooth_look = "yes"
 visualizer_type = "wave"
 visualizer_color = "default"
 
+#### Visivility ##
+header_visibility = "no"
+statusbar_visibility = "yes"
+titles_visibility = "yes"
+
 #### Misc
 autocenter_mode = "yes"
 centered_cursor = "yes"
 colors_enabled = "yes"
+cyclic_scrolling = "yes"
 display_bitrate = "no"
 empty_tag_marker = ""
 enable_window_title = "yes"
 follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 mouse_support = "yes"
+mouse_list_scroll_whole_page = "yes"
+lines_scrolled = "1"
+message_delay_time = "1"
 volume_change_step = "2"
+
+ask_for_locked_screen_width_part = "yes"
+locked_screen_width_part = "50"
 

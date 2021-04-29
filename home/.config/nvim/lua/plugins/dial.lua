@@ -29,10 +29,10 @@ dial.config.searchlist.visual = {
     "markup#markdown#header",
 }
 
-nmap{"<C-i>", "<Plug>(dial-increment)"}
-nmap{"<C-k>", "<Plug>(dial-decrement)"}
-vmap{"<C-i>", "<Plug>(dial-increment)"}
-vmap{"<C-k>", "<Plug>(dial-decrement)"}
-vmap {"g<C-i>", "<Plug>(dial-increment-additional)"}
-vmap {"g<C-k>", "<Plug>(dial-decrement-additional)"}
+nmap{"<M-.>", "<Plug>(dial-increment)"}
+vmap{"<M-.>", "<Plug>(dial-increment)"}
+vmap {"g<M-.>", "<Plug>(dial-increment-additional)"}
+nmap{"<M-,>", "<Plug>(dial-decrement)"}
+vmap{"<M-,>", "<Plug>(dial-decrement)"}
+vmap {"g<M-,>", "<Plug>(dial-decrement-additional)"}
 

@@ -8,46 +8,99 @@ fi
 
 # Arch-based
 if command -v "pacman" &> /dev/null; then
-    echo "Update All Packages"
-    $PERMISSION pacman -Syu
-
-    echo ""
-    echo "Installing dependencies"
-    $PERMISSION pacman -S stow dash
-
-    echo ""
-    echo "Installing Package for $(lsb_release -d | cut -f 2)"
     if command -v "paru" &> /dev/null; then
-        paru -S --needed \
-            xorg-server xorg-xprop xorg-xrdb xorg-xinit xorg-xinput xsettingsd \
-            xdg-user-dirs \
-            kitty zsh tmux \
-            nemo \
-            maim xdotool feh \
-            rofi \
-            htop neofetch \
-            mpd mpc ncmpcpp mpdris2 playerctl pamixer \
-            neovim-nightly-bin \
-            awesome-git picom-git \
-            ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
+        AUR_HELPER="paru"
     elif command -v "yay" &> /dev/null; then
-        yay -S --needed \
-            xorg-server xorg-xprop xorg-xrdb xorg-xinit xorg-xinput xsettingsd \
-            xdg-user-dirs \
-            kitty zsh tmux \
-            nemo \
-            maim xdotool feh \
-            rofi \
-            htop neofetch \
-            mpd mpc ncmpcpp mpdris2 playerctl pamixer \
-            neovim-nightly-bin \
-            awesome-git picom-git \
-            ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
+        AUR_HELPER="yay"
+    elif command -v "trizen" &> /dev/null; then
+        AUR_HELPER="trizen"
     else
         echo "Please install AUR helper like paru or yay"
+        exit 0
     fi
 
-    echo ""
+    echo "===================================================="
+    echo "Update All Packages"
+    echo "===================================================="
+
+    $PERMISSION pacman -Syu --noconfirm
+
+    echo "===================================================="
+    echo "Installing dependencies"
+    echo "===================================================="
+    $PERMISSION pacman -S --noconfirm stow
+
+    echo "1) xf86-video-intel 	2) xf86-video-amdgpu 3) Skip"
+    read -r -p "Choose you video card driver(default 1)(will not re-install): " vid
+
+    case $vid in 
+        [1]) DRI='xf86-video-intel';;
+        [2]) DRI='xf86-video-amdgpu';;
+        [3]) DRI="";;
+        [*]) DRI='xf86-video-intel';;
+    esac
+
+    echo "===================================================="
+    echo "Installing Package for $(lsb_release -d | cut -f 2)"
+    echo "===================================================="
+
+    $AUR_HELPER -S --needed --noconfirm \
+        xorg-server xorg-xprop xorg-xrdb xorg-xinit xorg-xinput xorg-xsetroot xsettingsd \
+        xcb-utils-error \
+        xf86-input-libinput $DRI \
+        xdg-user-dirs \
+        kitty alacritty zsh tmux \
+        nemo \
+        maim xdotool feh \
+        rofi clipmenu \
+        python-pywal python-colorthief \
+        htop neofetch ueberzug w3m \
+        mpd mpc ncmpcpp mpdris2 playerctl pamixer \
+        awesome-git picom-git light-git \
+        ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
+
+    read -r -p "Do you want to install neovim stuff(lsp and formatter) [yes/no]: " NVIM
+
+    case $NVIM in
+        [yY][eE][sS]|[yY])
+            echo "===================================================="
+            echo "Install nvim stuff packages"
+            echo "===================================================="
+
+            echo "Install Package with $AUR_HELPER"
+            $AUR_HELPER -S --noconfirm \
+                neovim-nightly-bin \
+                python python-pip tree-sitter\
+                lua-language-server efm-langserver \
+                jedi-language-server clang \
+                stylua-bin python-black shfmt
+
+            echo "Install Package with npm"
+            if command -v "npm" &> /dev/null; then
+                npm install -g neovim \
+                    vscode-css-languageserver-bin \
+                    vscode-html-languageserver-bin \
+                    vscode-json-languageserver \
+                    rome bash-language-server \
+                    vim-language-server \
+                    yaml-language-server \
+                    prettier
+            else
+                echo "Please Install npm first"
+            fi
+            
+            echo "Install other stuff"
+            if command -v "pip" &> /dev/null; then
+                pip install --upgrade pynvim
+            fi
+
+            ;;
+        [nN][oO]|[nN]) exit 0 ;;
+        [*]) exit 0 ;;
+    esac
+
+    echo "===================================================="
     echo "Done; Package Installed"
+    echo "===================================================="
 fi
 

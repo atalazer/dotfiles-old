@@ -1,8 +1,12 @@
 #!/sbin/bash
 
+## Globals
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 ## Apps
 export TERMINAL="kitty"
-export BROWSER="firefox-dev-run"
+export BROWSER="firefox-run"
 export FILEMAN="nemo"
 
 export EDITOR="nvim"
@@ -10,10 +14,10 @@ export VISUAL="nvim"
 
 # CMD
 export PERMISSION="sudo"
-export SHUTDOWN_CMD="loginctl poweroff"
-export REBOOT_CMD="loginctl reboot"
-export SUSPEND_CMD="loginctl suspend"
-export LOCK_CMD="slimlock"
+export SHUTDOWN_CMD="poweroff"
+export REBOOT_CMD="reboot"
+export SUSPEND_CMD="suspend"
+export LOCK_CMD=""
 
 # Dirs
 export APP_DIR="$HOME/Applications"

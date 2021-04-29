@@ -14,7 +14,7 @@ try
 lua << END
   local time
   local profile_info
-  local should_profile = false
+  local should_profile = true
   if should_profile then
     local hrtime = vim.loop.hrtime
     profile_info = {}
@@ -71,19 +71,21 @@ end
 time("try_loadstring definition", false)
 time("Defining packer_plugins", true)
 _G.packer_plugins = {
+  ["FTerm.nvim"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/FTerm.nvim"
+  },
   ["TrueZen.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/TrueZen.nvim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/TrueZen.nvim"
   },
   ["astronauta.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
   },
-  ["colorbuddy.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/colorbuddy.nvim"
+  ["auto-session"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/auto-session"
   },
   ["curstr.nvim"] = {
     loaded = true,
@@ -95,8 +97,9 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/dial.nvim"
   },
   ["emmet-vim"] = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/emmet-vim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/emmet-vim"
   },
   firenvim = {
     loaded = false,
@@ -126,9 +129,8 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/gitsigns.nvim"
   },
   ["glow.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/glow.nvim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/glow.nvim"
   },
   ["hop.nvim"] = {
     loaded = true,
@@ -139,9 +141,10 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim"
   },
-  kommentary = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/kommentary"
+  ["lsp-colors.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lsp-colors.nvim"
   },
   ["lsp-trouble.nvim"] = {
     loaded = false,
@@ -163,10 +166,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/material.nvim"
   },
-  neogit = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/neogit"
-  },
   ["nvim-autopairs"] = {
     loaded = false,
     needs_bufread = false,
@@ -186,9 +185,8 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-bufferline.lua"
   },
   ["nvim-colorizer.lua"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
     after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_buffer.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_calc.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_emoji.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_luasnip.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lsp.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lua.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_omni.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_path.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_snippets_nvim.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_spell.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_tags.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_treesitter.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_ultisnips.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsc.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsp.vim", "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vsnip.vim" },
@@ -202,23 +200,14 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig"
   },
   ["nvim-tree.lua"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    after = { "nvim-treesitter-pairs", "nvim-ts-context-commentstring", "nvim-biscuits", "nvim-ts-autotag" },
+    after = { "nvim-biscuits", "nvim-ts-context-commentstring", "nvim-ts-autotag" },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter"
-  },
-  ["nvim-treesitter-pairs"] = {
-    load_after = {
-      ["nvim-treesitter"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-pairs"
   },
   ["nvim-ts-autotag"] = {
     load_after = {
@@ -260,38 +249,35 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
+  ["session-lens"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/session-lens"
+  },
   ["shade.nvim"] = {
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/shade.nvim"
   },
-  ["specs.nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/specs.nvim"
-  },
   ["sql.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/sql.nvim"
   },
+  ["startuptime.vim"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/startuptime.vim"
+  },
   ["suda.vim"] = {
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/suda.vim"
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/suda.vim"
   },
   ["surround.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/surround.nvim"
   },
-  tabular = {
-    after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/tabular/after/plugin/TabularMaps.vim" },
+  ["symbols-outline.nvim"] = {
     loaded = false,
     needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/tabular"
-  },
-  ["telescope-arecibo.nvim"] = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/telescope-arecibo.nvim"
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/symbols-outline.nvim"
   },
   ["telescope-frecency.nvim"] = {
     loaded = true,
@@ -308,6 +294,15 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  ["tokyonight.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/tokyonight.nvim"
+  },
+  ["vim-commentary"] = {
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-commentary"
   },
   ["vim-easy-align"] = {
     loaded = true,
@@ -328,14 +323,15 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-smoothie"
   },
-  ["vim-startuptime"] = {
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-startuptime"
-  },
   ["vim-table-mode"] = {
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-table-mode"
+  },
+  ["vim-translator"] = {
+    config = { "\27LJ\2\n¥\3\0\0\2\0\15\1!6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\1\0*\1\0\0=\1\v\0006\0\0\0009\0\1\0*\1\0\0=\1\f\0006\0\0\0009\0\1\0005\1\14\0=\1\r\0K\0\1\0\1\t\0\0\bâ”€\bâ”‚\bâ”€\bâ”‚\bâ”Œ\bâ”\bâ”˜\bâ””\"translator_window_borderchars!translator_window_max_height translator_window_max_width\npopup\27translator_window_type\30translator_history_enable\vgoogle\31translator_default_engines\tauto\27translator_source_lang\aid\27translator_target_lang\6g\bvimçÌ™³\6³æŒÿ\3\0" },
+    loaded = true,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-translator"
   },
   ["vim-tridactyl"] = {
     loaded = false,
@@ -347,7 +343,7 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/vim-visual-multi"
   },
   ["vim-vsnip"] = {
-    after = { "vim-vsnip-integ", "friendly-snippets" },
+    after = { "friendly-snippets", "vim-vsnip-integ" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-vsnip"
@@ -377,6 +373,10 @@ _G.packer_plugins = {
 }
 
 time("Defining packer_plugins", false)
+-- Config for: vim-translator
+time("Config for vim-translator", true)
+try_loadstring("\27LJ\2\n¥\3\0\0\2\0\15\1!6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\1\0*\1\0\0=\1\v\0006\0\0\0009\0\1\0*\1\0\0=\1\f\0006\0\0\0009\0\1\0005\1\14\0=\1\r\0K\0\1\0\1\t\0\0\bâ”€\bâ”‚\bâ”€\bâ”‚\bâ”Œ\bâ”\bâ”˜\bâ””\"translator_window_borderchars!translator_window_max_height translator_window_max_width\npopup\27translator_window_type\30translator_history_enable\vgoogle\31translator_default_engines\tauto\27translator_source_lang\aid\27translator_target_lang\6g\bvimçÌ™³\6³æŒÿ\3\0", "config", "vim-translator")
+time("Config for vim-translator", false)
 
 -- Command lazy-loads
 time("Defining lazy-load commands", true)
@@ -387,18 +387,19 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time("Defining lazy-load filetype autocommands", true)
-vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode', 'TrueZen.nvim', 'tabular'}, { ft = "text" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tridactyl ++once lua require("packer.load")({'vim-tridactyl'}, { ft = "tridactyl" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-table-mode', 'vim-markdown', 'TrueZen.nvim', 'glow.nvim', 'tabular'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType html ++once lua require("packer.load")({'emmet-vim'}, { ft = "html" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-table-mode', 'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode'}, { ft = "text" }, _G.packer_plugins)]]
 time("Defining lazy-load filetype autocommands", false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", true)
-vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
-time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", false)
 time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-tridactyl/ftdetect/tridactyl.vim", true)
 vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-tridactyl/ftdetect/tridactyl.vim]]
 time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-tridactyl/ftdetect/tridactyl.vim", false)
+time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", true)
+vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
+time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", false)
 vim.cmd("augroup END")
 if should_profile then save_profiles(1) end
 

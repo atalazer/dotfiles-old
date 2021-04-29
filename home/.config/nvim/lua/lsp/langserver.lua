@@ -4,14 +4,18 @@ local lspconfig = require("lspconfig")
 
 local keys = require("lsp.keys")
 
-local custom_on_attach = function(client)
+local custom_on_attach = function()
     print("LSP started!")
 
     keys.mappings()
 end
 
-local custom_on_init = function()
+local custom_on_init = function(client)
     print("Language Server Protocol Initialized")
+
+    if client.config.flags then
+        client.config.flags.allow_incremental_sync = true
+    end
 end
 
 local capabilities = function()
@@ -28,64 +32,55 @@ local eslint = {
     lintFormats = { "%f:%l:%c: %m" },
 }
 local vint = {
-    lintCommand = 'vint -',
+    lintCommand = "vint -",
     lintStdin = true,
-    lintFormats = {'%f:%l:%c: %m'}
+    lintFormats = { "%f:%l:%c: %m" },
 }
 local markdownlint = {
-    lintCommand = 'markdownlint -s',
+    lintCommand = "markdownlint -s",
     lintStdin = true,
     lintFormats = {
-        '%f:%l %m',
-        '%f:%l:%c %m',
-        '%f: %l: %m'
-    }
+        "%f:%l %m",
+        "%f:%l:%c %m",
+        "%f: %l: %m",
+    },
 }
 local yamllint = {
-    lintCommand = 'yamllint -f parsable -',
+    lintCommand = "yamllint -f parsable -",
     lintStdin = true,
 }
 local shfmt = {
     formatCommand = "shfmt -ci -s -bn",
-    formatStdin = true
+    formatStdin = true,
 }
 local stylua = {
     formatCommand = "stylua --config-path ~/.config/nvim/.stylua.toml",
-    formatStdin = true
+    formatStdin = true,
 }
-local black ={
+local black = {
     formatCommand = "black --quiet -",
-    formatStdin = true
+    formatStdin = true,
 }
 
 -- require("lsp.custom.emmetls")
-local sumneko_root = os.getenv("HOME") .. "/.local/bin/lsp/lua-language-server"
 -- local sumneko_cmd = {sumneko_root .. "/bin/Linux/lua-language-server", "-E", sumneko_root .. "/main.lua"}
 local sumneko_cmd = "lua-language-server"
 
 local servers = {
     bashls = {},
     vimls = {},
-    clangd = {
-        root_dir = vim.loop.cwd,
+    clangd = {},
+    html = {
+        capabilities = capabilities(),
     },
-    -- html = {
-    --     filetypes = { "html", "htmldjango" },
-    --     capabilities = capabilities(),
-    -- },
     cssls = {
-        root_dir = vim.loop.cwd,
+        capabilities = capabilities(),
     },
-    tsserver = {
+    rome = {
+        cmd = { "rome", "lsp" },
         filetypes = { "javascript", "typescript", "typescriptreact" },
         root_dir = vim.loop.cwd,
-        on_init = custom_on_init,
     },
-    -- rome = {
-    --     cmd = { "rome", "lsp" },
-    --     filetypes = { "javascript", "typescript", "typescriptreact" },
-    --     root_dir = vim.loop.cwd,
-    -- },
     yamlls = {},
     jsonls = {},
     efm = {
@@ -93,9 +88,14 @@ local servers = {
             "efm-langserver",
         },
         filetypes = {
-            "javascript", "typescript",
-            "python", "lua", "sh", "vim",
-            "markdown", "yaml"
+            "javascript",
+            "typescript",
+            "python",
+            "lua",
+            "sh",
+            "vim",
+            "markdown",
+            "yaml",
         },
         on_attach = function(client)
             client.resolved_capabilities.rename = false
@@ -104,7 +104,7 @@ local servers = {
             client.resolved_capabilities.completion = false
         end,
         settings = {
-            rootMarkers = {".git"},
+            rootMarkers = { ".git" },
             languages = {
                 javascript = { eslint },
                 typescript = { eslint },
@@ -115,8 +115,8 @@ local servers = {
                 sh = { shfmt },
                 markdown = { markdownlint },
                 yaml = { yamllint },
-            }
-        }
+            },
+        },
     },
     jedi_language_server = {
         root_dir = vim.loop.cwd,
@@ -124,47 +124,13 @@ local servers = {
             jedi = {
                 enable = true,
                 startupMessage = true,
-                markupKindPreferred = 'markdown',
+                markupKindPreferred = "markdown",
                 jediSettings = {
                     autoImportModules = {},
-                    completion = {disableSnippets = false},
-                    diagnostics = {enable = true, didOpen = true, didSave = true, didChange = true}
+                    completion = { disableSnippets = false },
+                    diagnostics = { enable = true, didOpen = true, didSave = true, didChange = true },
                 },
-                workspace = {extraPaths = {}}
-            }
-        }
-    },
-    gopls = {
-        root_dir = vim.loop.cwd,
-    },
-    rust_analyzer = {
-        root_dir = vim.loop.cwd,
-        capabilities = (function()
-            -- for autoimports
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.completion.completionItem.snippetSupport = true
-            capabilities.textDocument.completion.completionItem.resolveSupport = {
-                properties = {
-                    'documentation',
-                    'detail',
-                    'additionalTextEdits',
-                }
-            }
-            return capabilities
-        end)(),
-        settings = {
-            ["rust-analyzer"] = {
-                cargo = {
-                    loadOutDirsFromCheck = true,
-                },
-                procMacro = {
-                    enable = true,
-                },
-                diagnostics = {
-                    enable = true,
-                    enableExperimental = false,
-                    disabled = {},
-                },
+                workspace = { extraPaths = {} },
             },
         },
     },
@@ -182,6 +148,10 @@ local servers = {
                 },
                 completion = {
                     keywordSnippet = "Disable",
+                    callSnippet = "Disable",
+                },
+                telemetry = {
+                    enable = false,
                 },
                 diagnostics = {
                     enable = true,
@@ -195,11 +165,12 @@ local servers = {
                         -- VIM
                         "vim",
                         -- AwesomeWM
-                        "awesome", "root", "client"
+                        "awesome",
+                        "root",
+                        "client",
                     },
                 },
                 workspace = {
-                    preloadFileSize = 400,
                     library = {
                         [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                         [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,

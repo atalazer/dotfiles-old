@@ -12,6 +12,7 @@ Export(){
         export PATH="$1:$PATH"
     fi
 }
-Export ${BIN_DIR:-$HOME/.local/bin}
 Export ${APP_DIR:-$HOME/Applications}
+Export ${BIN_DIR:-$HOME/.local/bin}
+Export ${BIN_DIR:-$HOME/.local/bin/awesomewm}
 

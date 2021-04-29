@@ -1,26 +1,29 @@
 format = "$all"
 add_newline = false
-scan_timeout = 30
+scan_timeout = 50
+command_timeout = 500
 
 [character]
 success_symbol = "[➜](bold green) "
 error_symbol = "[➜](bold red) "
 vicmd_symbol = "[V](bold green) "
 
-[cmd_duration]
-min_time = 1000
-format = "time [$duration](bold yellow)"
-
 [directory]
 truncation_length = 8
 
 [git_status]
-enabled = true
-format = '([\($all_status$ahead_behind\)]($style) )'
-ahead = "⇡${count}"
-behind = "⇣${count}"
+disabled  = false
+format   = '([\($all_status$ahead_behind\)]($style) )'
+ahead    = "⇡${count}"
+behind   = "⇣${count}"
 diverged = "⇕⇡${ahead_count} ⇣${behind_count}"
-staged_count.enabled = true
-untracked_count.enabled = true
-modified_count.enabled = true
+staged.enabled    = true
+untracked.enabled = true
+modified.enabled  = true
+
+[lua]
+format = "via [🌕 $version](bold blue) "
+
+[package]
+disabled = true
 

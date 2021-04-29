@@ -26,13 +26,17 @@ mpd && mpDris2 &
 # florence &
 
 # Start pulse/pipewire
-pulseaudio --start
+# pulseaudio --start
 # /usr/bin/pipewire &
 # /usr/bin/pipewire-pulse &
 # /usr/bin/pipewire-media-session &
 
 # Start session
-case ${1:-awesome} in
-    awesome) exec dbus-launch --exit-with-session awesome;;
-    fluxbox) exec dbus-launch --exit-with-session fluxbox;;
+SESSION=${1:-awesome}
+case $SESSION in
+    awesome) 
+        export PATH=$PATH:~/.local/bin/awesomewm
+        exec awesome
+        ;;
+    *) exec $1;;
 esac

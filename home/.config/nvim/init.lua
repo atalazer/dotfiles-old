@@ -15,7 +15,7 @@ vim.cmd("cd %:p:h")
 
 RC = {
     colorscheme = "material",
-    use_xresources = false,
+    use_xresources = true,
     plug_enabled = {
         autotag = true,
         biscuits = true,
@@ -29,11 +29,12 @@ pcall(require, "base.plugins")
 pcall(require, "base.settings")
 pcall(require, "base.events")
 pcall(require, "base.commands")
+pcall(require, "base.functions")
 
 pcall(require, "mappings.keys")
 pcall(require, "mappings.visual-multi")
 pcall(require, "mappings.which-key")
--- ==================================== UI Related
+-- ==================================== UI
 pcall(require, "base.appearances")
 
 pcall(require, "plugins.devicons")
@@ -43,27 +44,28 @@ pcall(require, "plugins.galaxyline")
 pcall(require, "plugins.colorizer")
 pcall(require, "plugins.indent-blankline")
 
--- ==================================== File Related
-pcall(require, "plugins.suda")
+-- ==================================== Files
 pcall(require, "plugins.nvim-tree")
 pcall(require, "plugins.telescope")
-pcall(require, "plugins.gitsigns")
-pcall(require, "plugins.neogit")
+pcall(require, "plugins.suda")
+pcall(require, "plugins.session")
 
 -- ==================================== Funcionality
 pcall(require, "plugins.autopairs")
 pcall(require, "plugins.hop")
-pcall(require, "plugins.kommentary")
 pcall(require, "plugins.surround")
 pcall(require, "plugins.dial")
 pcall(require, "plugins.curstr")
 
--- ==================================== Misc
-pcall(require, "plugins.shade")
-pcall(require, "plugins.specs")
+-- ==================================== Git
+pcall(require, "plugins.gitsigns")
 
-pcall(require, "plugins.firenvim")
+-- ==================================== Misc
+-- pcall(require, "plugins.shade")
+
+pcall(require, "plugins.fterm")
 pcall(require, "plugins.truezen")
+pcall(require, "plugins.firenvim")
 
 -- ==================================== Language support
 pcall(require, "plugins.treesitter")
@@ -75,4 +77,3 @@ pcall(require, "plugins.emmet")
 pcall(require, "plugins.vsnip")
 pcall(require, "plugins.format")
 pcall(require, "lsp")
-

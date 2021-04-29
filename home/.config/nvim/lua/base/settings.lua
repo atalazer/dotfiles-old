@@ -20,8 +20,9 @@ local options = {
     hidden = true,
     hlsearch = false,
     ignorecase = true,
-    lazyredraw = true,
+    lazyredraw = false,
     list = true,
+    magic = true,
     number = true,
     relativenumber = true,
     showmode = false,
@@ -33,6 +34,7 @@ local options = {
     startofline = false,
     swapfile = false,
     termguicolors = true,
+    ttyfast = true,
     undofile = false,
     wrap = true,
     writebackup = false,
@@ -44,12 +46,20 @@ local options = {
     clipboard = "unnamedplus",
     completeopt = { "menu", "menuone", "noselect", "noinsert" },
     encoding = "UTF-8",
-    -- foldmethod  = "expr",
-    -- foldexpr    = "nvim_treesitter#foldexpr()",
+    foldmethod = "marker",
     fillchars = { vert = "│", eob = " " },
+    guicursor = {
+        ["n-v-c"] = "block",
+        ["i-ci"] = "ver25",
+        ["r-cr"] = "hor25",
+        o = "hor50",
+        a = "blinkwait800-blinkoff500-blinkon300-Cursor/lCursor",
+        sm = "block-blinkwait175-blinkoff150-blinkon175"
+    },
     inccommand = "split",
     listchars = {
-        tab = "  ",
+        -- tab = "  ",
+        tab = "→ ",
         eol = "↴",
         nbsp = "_",
         trail = "·",
@@ -58,15 +68,16 @@ local options = {
     },
     matchpairs = { ["("] = ")", ["["] = "]", ["{"] = "}", ["<"] = ">" },
     mouse = "a",
+    shell = "$SHELL",
     signcolumn = "yes",
     shortmess = "csa",
-    showbreak = "↳ ",
+    showbreak = "↪",
     t_Co = "256",
     undodir = "~/.local/share/nvim/undo",
 
     -- Number
-    colorcolumn = 100,
-    cmdheight = 1,
+    -- colorcolumn = 100,
+    cmdheight = 2,
     laststatus = 2,
     pumheight = 10,
     re = 0,
@@ -76,12 +87,12 @@ local options = {
     shiftwidth = 4,
     tabstop = 4,
     timeoutlen = 400,
-    updatetime = 100,
+    updatetime = 150,
 }
 -- Others options
 vim.g.python_host_prog = "/usr/bin/python"
 vim.g.python3_host_prog = "/usr/bin/python3"
-vim.g.node_host_prog = "/home/atalariq/.nvm/versions/node/v14.15.4/bin/neovim-node-host"
+vim.g.node_host_prog = "/home/atalariq/.fnm/node-versions/v14.16.1/installation/bin/neovim-node-host"
 
 -- Call apply_options func
 apply_options(options)

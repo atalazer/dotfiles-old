@@ -7,7 +7,7 @@ local condition = require('galaxyline.condition')
 
 local get_color = function()
     if RC.use_xresources == true then
-        local colors = require("base.colorscheme.xresources")
+        local colors = require("xresources")
         return colors
     else
         return {
@@ -54,13 +54,13 @@ local LastElement = {
 -- --------------------------------- Vim Mode Component
 local vim_mode = function()
     local mode = {
-        n     = " Normal"  , no = "  Normal-P" ,
-        i     = " Insert"  , ic = " Insert"     ,
-        v     = " Visual"  , V  = " Visual-L"   , [''] = " Visual-B" ,
-        s     = " Select"  , S  = " Select-L"   , ["^S"] = " Select-B" ,
+        n     = " Normal"  , no = " Normal-P" ,
+        i     = " Insert"  , ic = " Insert"     ,
+        v     = " Visual"  , V  = " Visual-L"   , [''] = " Visual-B" ,
+        s     = " Select"  , S  = " Select-L"   , ["^S"] = " Select-B" ,
         c     = " Command" , cv = " Vim-Ex"     , ce     = " Ex"       ,
-        r     = " Prompt"  , rm = " More"         , ["r?"] = " Confirm"  ,
-        ["!"] = " Shell"   , t  = " Terminal"
+        r     = " Prompt"  , rm = " More"         , ["r?"] = " Confirm"  ,
+        ["!"] = " Shell"   , t  = " Terminal"
     }
     -- return (mode[vim.fn.mode()] or ' '..vim.fn.mode()) .. sep
     return (mode[vim.fn.mode()] or ' '..vim.fn.mode()) .. sep

@@ -20,7 +20,7 @@ if ok then
             -- open_cmd = "80vnew [packer]",
         },
         profile = {
-            enable = false,
+            enable = true,
             threshold = 1,
         },
     })
@@ -30,9 +30,9 @@ if ok then
 
         -- ================================== UI Related
         -- Colorscheme
-        use({ "tjdevries/colorbuddy.nvim", opt = true })
-        use({ "marko-cerovac/material.nvim", opt = true })
-        use({ "nekonako/xresources-nvim", opt = true })
+        use({ "marko-cerovac/material.nvim", branch = "pure-lua", opt = false })
+        use({ "folke/tokyonight.nvim", opt = false })
+        use({ "nekonako/xresources-nvim", opt = false })
 
         -- vim-devicons written in lua
         use({ "kyazdani42/nvim-web-devicons", opt = true })
@@ -50,16 +50,13 @@ if ok then
         -- Indenting
         use({ "lukas-reineke/indent-blankline.nvim", branch = "lua", opt = true })
 
-        -- Colorizer
-        use({ "norcalli/nvim-colorizer.lua", opt = true })
-
-        use({ "edluffy/specs.nvim", opt = true })
-
         -- ================================== LSP, Completion and Snippet
         use({ "neovim/nvim-lspconfig", opt = true })
         use({ "glepnir/lspsaga.nvim", opt = true })
         use({ "onsails/lspkind-nvim", opt = true })
         use({ "folke/lsp-trouble.nvim", opt = true })
+        use({ "folke/lsp-colors.nvim", opt = true })
+        use({ "simrat39/symbols-outline.nvim", opt = true })
 
         use({
             "hrsh7th/nvim-compe",
@@ -84,7 +81,6 @@ if ok then
                 { "windwp/nvim-ts-autotag", opt = true },
                 { "code-biscuits/nvim-biscuits", opt = true },
                 { "JoosepAlviste/nvim-ts-context-commentstring", opt = true },
-                { "theHamsta/nvim-treesitter-pairs" },
             },
             opt = true,
         })
@@ -106,28 +102,11 @@ if ok then
             opt = true,
         })
 
-        -- VIM Table Align
-        use({
-            "godlygeek/tabular",
-            ft = { "text", "markdown" },
-            opt = true,
-        })
-
         -- Terminal Markdown Previewer
         use({
             "npxbr/glow.nvim",
             run = ":GlowInstall",
-            opt = true,
-            ft = { "markdown" },
         })
-
-        -- Free Distraction-mode
-        use({
-            "kdav5758/TrueZen.nvim",
-            opt = true,
-            ft = { "text", "markdown" },
-        })
-
         -- Syntax for tridactyl
         use({
             "tridactyl/vim-tridactyl",
@@ -138,7 +117,11 @@ if ok then
         -- ================================== Experience
 
         -- Emmet Support for vim
-        use({ "mattn/emmet-vim", opt = false })
+        use({
+            "mattn/emmet-vim",
+            opt = true,
+            ft = { "html" }
+        })
 
         -- Code formatter
         use({ "lukas-reineke/format.nvim", opt = false })
@@ -153,7 +136,7 @@ if ok then
         use({ "phaazon/hop.nvim", opt = false })
 
         -- Easy Commenting
-        use({ "b3nj5m1n/kommentary", opt = false })
+        use({ "tpope/vim-commentary", opt = false })
 
         -- Vim surround
         use({ "blackcauldron7/surround.nvim", opt = false })
@@ -164,7 +147,18 @@ if ok then
         -- gf like plugins
         use({ "notomo/curstr.nvim" })
 
+        -- Increment and decrement
         use({ "monaqa/dial.nvim", opt = true })
+
+        -- Free Distraction-mode
+        use({
+            "kdav5758/TrueZen.nvim",
+            opt = false,
+        })
+
+        -- Better Terminal for Neovim
+        use({ "numtostr/FTerm.nvim", opt = false })
+
         -- Browser Integration plugin
         use({
             "glacambre/firenvim",
@@ -182,32 +176,27 @@ if ok then
             requires = {
                 { "nvim-lua/popup.nvim" },
                 { "nvim-lua/plenary.nvim" },
-                { "nvim-telescope/telescope-media-files.nvim" },
                 { "nvim-telescope/telescope-fzy-native.nvim" },
+                { "nvim-telescope/telescope-media-files.nvim" },
                 { "nvim-telescope/telescope-frecency.nvim" },
-                {
-                    "nvim-telescope/telescope-arecibo.nvim",
-                    rocks = { "openssl", "lua-http-parser" },
-                },
             },
         })
 
         -- Superfast Tree File
-        use({ "kyazdani42/nvim-tree.lua", opt = true })
+        use({ "kyazdani42/nvim-tree.lua", opt = false })
 
         -- Open root previllage files
-        use({ "lambdalisue/suda.vim", opt = true })
+        use({ "lambdalisue/suda.vim", opt = false })
 
         -- ====================================== Git
         -- show git stuff in signcolumn
         use({ "lewis6991/gitsigns.nvim", opt = true })
-
-        -- Magit for Neovim
-        use({ "TimUntersberger/neogit", opt = false })
-
         -- ====================================== Misc
         -- For keybindings
         use({ "tjdevries/astronauta.nvim", opt = false })
+
+        -- Colorizer
+        use({ "norcalli/nvim-colorizer.lua", opt = false })
 
         -- Dims inactive windows
         use({ "sunjon/shade.nvim", opt = true })
@@ -225,9 +214,35 @@ if ok then
             requires = { "liuchengxu/vim-which-key" },
         })
 
-        -- Check startup time
-        use({ "dstein64/vim-startuptime", opt = false })
-    end
+        -- Translator
+        use({
+            "voldikss/vim-translator",
+            opt = false,
+            config = function()
+                vim.g.translator_target_lang = "id"
+                vim.g.translator_source_lang = "auto"
+                vim.g.translator_default_engines = "google"
+                vim.g.translator_history_enable = true
+                vim.g.translator_window_type = "popup"
+                vim.g.translator_window_max_width = 0.6
+                vim.g.translator_window_max_height = 0.6
+                vim.g.translator_window_borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
+            end
+        })
 
+        -- Session manager
+        use({
+            "rmagatti/session-lens",
+            requires = {
+                { "nvim-lua/popup.nvim" },
+                { "nvim-lua/plenary.nvim" },
+                { "rmagatti/auto-session" },
+            },
+        })
+
+        -- Check startup time
+        use { "tweekmonster/startuptime.vim" }
+
+    end
     packer.startup(plugins)
 end

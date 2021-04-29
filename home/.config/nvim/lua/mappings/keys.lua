@@ -18,7 +18,11 @@ cnoremap = _Key.cnoremap
 -- remove annoying exmode
 nnoremap({ "Q", "<Nop>" })
 nnoremap({ ":q", "<Nop>" })
-nnoremap({ "A", "<Nop>" })
+
+-- move vertically by visual line on wrapped lines
+nnoremap({ "j", "gj" })
+nnoremap({ "k", "gk" })
+nmap({ "0", "^" })
 
 -- Files
 nnoremap({ "<C-s>", ":update<CR>" })
@@ -36,14 +40,20 @@ nnoremap({ "<leader>er", ":luafile ~/.config/nvim/init.lua<CR>" })
 
 -- Better Ctrl + Arrow
 nmap({ "C-Left", "b", { silent = true } })
-nmap({ "C-Right", "e", { silent = true } })
 vmap({ "C-Left", "b", { silent = true } })
-vmap({ "C-Right", "e", { silent = true } })
+nmap({ "C-Right", "w", { silent = true } })
+vmap({ "C-Right", "w", { silent = true } })
 
 -- Alt+Delete
 inoremap({ "<M-BS>", "<C-w>" })
 nnoremap({ "<M-BS>", "i<C-w>" })
 cnoremap({ "<M-BS>", "<C-w>" })
+
+-- copy/yank, cut, paste
+nnoremap({ "Y", "y$" })
+vnoremap({ "C-x", "\"+d" })
+vnoremap({ "C-c", "\"+y" })
+nnoremap({ "C-v", "\"+p" })
 
 -- Delete
 nnoremap({ "x", "\"_x" })
@@ -58,7 +68,6 @@ inoremap({ "<C-y>", "<Esc>:redo<CR>" })
 
 -- Find
 nnoremap({ "<ESC><ESC>", ":nohlsearch<CR>" })
-nmap{"0", "^"}
 
 -- Indent
 vnoremap({ "<", "<gv" })
@@ -77,36 +86,27 @@ nnoremap({ "<M-e>", ":BufferLineMoveNext<CR>", { silent = true } })
 nnoremap({ "<M-q>", ":BufferLineMovePrev<CR>", { silent = true } })
 nnoremap({ "<M-z>", ":BufferLineSortByDirectory<CR>", { silent = true } })
 
--- Split
-nnoremap({ "<localleader>sd", ":vsplit<CR>" })
-nnoremap({ "<localleader>ss", ":split<CR>" })
+-- Movement between windows
+nnoremap({ "<M-h>", "<C-w><C-h>" })
+nnoremap({ "<M-j>", "<C-w><C-j>" })
+nnoremap({ "<M-k>", "<C-w><C-k>" })
+nnoremap({ "<M-l>", "<C-w><C-l>" })
 
--- Resize Pane
-nnoremap({ "I", "<CMD>resize +2<CR>" })
-nnoremap({ "K", "<CMD>resize -2<CR>" })
-nnoremap({ "L", "<CMD>vertical resize +2<CR>" })
-nnoremap({ "H", "<CMD>vertical resize -2<CR>" })
-
--- Smart way to move between windows
-nnoremap({ "<localleader>w", "<C-W>k" })
-nnoremap({ "<localleader>a", "<C-W>h" })
-nnoremap({ "<localleader>s", "<C-W>j" })
-nnoremap({ "<localleader>d", "<C-W>l" })
-
--- Terminal
-nnoremap({ "<leader>tt", "<CMD>terminal<CR>" })
-tnoremap({ "<Esc>qq", "<C-\\><C-n>" })
+-- Resize windows
+nnoremap({ "<C-h>", "<CMD>vertical resize -2<CR>" })
+nnoremap({ "<C-j>", "<CMD>resize +2<CR>" })
+nnoremap({ "<C-k>", "<CMD>resize -2<CR>" })
+nnoremap({ "<C-l>", "<CMD>vertical resize +2<CR>" })
 
 -- ===================================== Spelling
 nnoremap({ "sd", "]s" })
 nnoremap({ "sa", "[s" })
 nnoremap({ "S", "zg" })
-nnoremap({ "sw", "zw" })
 nnoremap({ "sq", "z=" })
 
 -- ===================================== Function
-map({ "<F1>", ":mksession! ~/.config/nvim/.last_session", { silent = true } })
-map({ "<F2>", ":source ~/.config/nvim/.last_session", { silent = true } })
+nnoremap({ "<F1>", ":mksession! ~/.config/nvim/sessions/last_session.vim<CR>", { silent = true } })
+nnoremap({ "<F2>", ":source ~/.config/nvim/sessions/last_session.vim<CR>", { silent = true } })
 nnoremap({ "<F4>", "<cmd>!xdg-open %<CR>", { silent = true } })
 
 -- ===================================== Plugins
@@ -115,22 +115,44 @@ nnoremap({ "<C-q>", ":Sayonara<CR>" })
 nnoremap({ "<leader>sa", ":Sayonara<CR>" })
 nnoremap({ "<leader>q", ":Sayonara<CR>" })
 
+-- vim-commentary
+nmap({ "//", "gcc" })
+vmap({ "//", "gcc<Esc>" })
+
 -- Vim Smoothie
+vim.g.smoothie_enabled = 1
+vim.g.smoothie_update_interval = 25
+vim.g.smoothie_speed_constant_factor = 5
+vim.g.smoothie_speed_linear_factor = 5
 vim.g.smoothie_no_default_mappings = 1
--- vim.g.smoothie_experimental_mappings = 1
-map({ "<S-k>", "<Plug>(SmoothieUpwards)" })
-map({ "<S-Up>", "<Plug>(SmoothieUpwards)" })
-map({ "<PageUp>", "<Plug>(SmoothieUpwards)" })
-map({ "<S-j>", "<Plug>(SmoothieDownwards)" })
+map({ "C-D", "<Plug>(SmoothieDownwards)" })
+map({ "C-U", "<Plug>(SmoothieUpwards)" })
+map({ "J", "<Plug>(SmoothieDownwards)" })
+map({ "K", "<Plug>(SmoothieUpwards)" })
 map({ "<S-Down>", "<Plug>(SmoothieDownwards)" })
-map({ "<PageDown>", "<Plug>(SmoothieDownwards)" })
+map({ "<S-Up>", "<Plug>(SmoothieUpwards)" })
+map({ "<PageDown>", "<Plug>(SmoothieForwards)" })
+map({ "<PageUp>", "<Plug>(SmoothieBackwards)" })
 
 -- Vim Easy Align
 xmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 nmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 
--- Glow
-nnoremap({ "<leader>gg", "<CMD>Glow<CR>", { silent = true } })
+-- VIM Translate
+-- " Echo translation in the cmdline
+nmap({"tt", "<Plug>Translate"})
+vmap({"tt", "<Plug>TranslateV"})
+-- " Display translation in a window
+nmap({"tw", "<Plug>TranslateW"})
+vmap({"tw", "<Plug>TranslateWV"})
+-- " Replace the text with translation
+nmap({"tr", "<Plug>TranslateR"})
+vmap({"tr", "<Plug>TranslateRV"})
+-- " Translate the text in clipboard
+nmap({"tx", "<Plug>TranslateX"})
+
+-- Glow.nvim
+nmap({"<leader>gg", ":Glow<CR>"})
 
 -- TrueZen
 nnoremap({ "<F9>", "<Cmd>TZAtaraxis<CR>", { silent = true } })

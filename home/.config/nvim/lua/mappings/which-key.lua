@@ -2,7 +2,7 @@ vim.cmd("packadd vim-which-key")
 vim.cmd("packadd nvim-whichkey-setup.lua")
 
 -- ==================================
-local which_key_prefix = ""
+local which_key_prefix = "w"
 vim.g.which_key_fallback_to_native_key = 1
 vim.g.which_key_sep = "->"
 vim.g.which_key_timeout = 100

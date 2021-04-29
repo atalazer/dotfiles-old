@@ -91,19 +91,12 @@ telescope.setup({
                 ["zsh"] = "/home/atalariq/.zsh",
             },
         },
-        arecibo = {
-            ["selected_engine"] = "duckduckgo",
-            ["url_open_command"] = "xdg-open",
-            ["show_http_headers"] = false,
-            ["show_domain_icons"] = false,
-        },
     },
 })
 
 pcall(require("telescope").load_extension, "fzy_native") -- superfast sorter
 pcall(require("telescope").load_extension, "media_files") -- media preview
 pcall(require("telescope").load_extension, "frecency") -- frecency
-pcall(require("telescope").load_extension, "arecibo") -- websearch
 
 local no_preview = function()
     return require("telescope.themes").get_dropdown({
@@ -155,9 +148,6 @@ M.code_action = function()
     require("telescope.builtin").lsp_code_actions(no_preview())
 end
 
-M.arecibo = function()
-    require("telescope").extensions.arecibo.websearch(no_preview())
-end
 M.frecency = function()
     require("telescope").extensions.frecency.frecency(no_preview())
 end
@@ -166,7 +156,7 @@ M.media_files = function()
 end
 
 -- Telescope Mappings
-nnoremap({ "<C-p>", M.files })
+nnoremap({ "<C-p>",  M.files })
 nnoremap({ "<C-p>g", M.grep_prompt })
 nnoremap({ "<C-p>b", M.buffer_fuzzy })
 nnoremap({ "<C-p>l", M.live_grep })
@@ -177,7 +167,6 @@ nnoremap({ "<C-p>k", M.keymaps })
 nnoremap({ "<C-p>c", M.colorscheme })
 
 nnoremap({ "<C-p>p", M.frecency })
-nnoremap({ "<C-p>a", M.arecibo })
 nnoremap({ "<C-p>m", M.media_files })
 
 return setmetatable({}, {

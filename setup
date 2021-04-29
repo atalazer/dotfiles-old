@@ -8,6 +8,14 @@
 DIR=${DOTS:-$HOME/.dotfiles}
 cd $DIR
 
+if command -v "doas" &> /dev/null; then
+    PERMISSION="doas"
+else
+    PERMISSION="sudo"
+fi
+
+
+### check_dependencies {{{
 check_dependencies(){
     if command -v "stow" &> /dev/null; then
         echo "Stow Installed"
@@ -16,39 +24,73 @@ check_dependencies(){
         exit 0
     fi
 }
+#}}}
 
+
+### home function {{{
 home(){
     check_dependencies
     OPT=${1:-help}
     case $OPT in
-    apply)
-        [ -d $DIR/home ] && stow -R home
-        echo "Stow home dir"
-        ;;
-    remove)
-        [ -d $DIR/home ] && stow -D home
-        echo "Unstow home dir"
-        ;;
-    help)
-        echo "Available Command:"
-        echo "apply         Stow dotfiles for home dir"
-        echo "remove        Unstow dotfiles for home dir"
-        echo "help          Show this message"
+        apply|-a)
+            [ -d home ] && stow -R home --target=$HOME && \
+            echo "Stow home dir"
+            ;;
+        remove|-r)
+            [ -d home ] && stow -D home --target=$HOME && \
+            echo "Unstow home dir"
+            ;;
+        help|-h)
+            echo "Available Command:"
+            echo "apply         Stow dotfiles for home dir"
+            echo "remove        Unstow dotfiles for home dir"
+            echo "help          Show this message"
     esac
 }
+# }}}
 
 
+### root function {{{
+root(){
+    check_dependencies
+    OPT=${1:-help}
+    case $OPT in
+        apply|-a)
+            [ -d root ] && $PERMISSION stow -R root --target=/ --adopt && \
+                echo "Stow root dir (Force with --adopt)"
+            ;;
+        remove|-r)
+            [ -d root ] && $PERMISSION stow -D root --target=/ && \
+            echo "Unstow root dir"
+            ;;
+        help|-h)
+            echo "Available Command:"
+            echo "apply         Force link dotiles for ROOT (Read setup script first!)"
+            echo "remove        Unlink dotiles for ROOT"
+            echo "help          Show this message"
+    esac
+}
+# }}}
+
+
+### Main{{{
 OPT=${1:-help}
 case $OPT in
-install) 
-    [[ -f $DIR/pkginstall ]] && sh -c "$DIR/pkginstall"
-    ;;
-home) home ${2:-help}
-    ;;
-help)
-    echo "Available Command:"
-    echo "install       Install requirement package"
-    echo "home          Home dir related, help for details"
-    echo "help          Show this message"
-    ;;
+    install|-i) 
+        [[ -f $DIR/pkginstall ]] && sh -c "$DIR/pkginstall"
+        ;;
+    home|-H) home ${2:-help}
+        ;;
+    root|-R) root ${2:-help}
+        ;;
+    help|-h)
+        echo "Available Command:"
+        echo "install       Install requirement package from pkginstall script"
+        echo "home          Home dir related, help for details"
+        echo "root          ROOT dir related, help for details"
+        echo "help          Show this message"
+        ;;
 esac
+#}}}
+
+

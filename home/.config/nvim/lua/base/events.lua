@@ -8,3 +8,8 @@ cmd([[au FocusGained * checktime]])
 -- highlight yanked text for 200ms
 cmd([[au TextYankPost * silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout = 200 })]])
 
+-- When term starts, auto go into insert mode and Turn off line numbers etc
+cmd([[
+autocmd TermOpen * startinsert
+autocmd TermOpen * setlocal listchars= nonumber norelativenumber
+]])
