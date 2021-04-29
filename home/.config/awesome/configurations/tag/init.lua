@@ -1,7 +1,5 @@
 local awful = require("awful")
-local gears = require("gears")
 local beautiful = require("beautiful")
-local ruled = require("ruled")
 
 local icons = require(P.config.tag .. ".icons.init")
 local apps = require(P.config.apps)
@@ -25,11 +23,11 @@ RC.tags = {
         icon = icons.terminal,
         default_app = apps.default.terminal,
         gap = beautiful.useless_gap,
-        layout = awful.layout.suit.tile,
+        layout = awful.layout.suit.spiral.dwindle,
         layouts = {
+            awful.layout.suit.spiral.dwindle,
             awful.layout.suit.tile,
             awful.layout.suit.fair,
-            awful.layout.suit.spiral.dwindle,
             awful.layout.suit.floating,
         },
     },
@@ -76,10 +74,10 @@ tag.connect_signal("request::default_layouts", function()
         -- awful.layout.suit.tile.left,
         -- awful.layout.suit.tile.bottom,
         -- awful.layout.suit.tile.top,
-        awful.layout.suit.fair,
+        -- awful.layout.suit.fair,
         -- awful.layout.suit.fair.horizontal,
         -- awful.layout.suit.spiral,
-        -- awful.layout.suit.spiral.dwindle,
+        awful.layout.suit.spiral.dwindle,
         awful.layout.suit.max,
         -- awful.layout.suit.max.fullscreen,
         -- awful.layout.suit.magnifier,

@@ -7,7 +7,7 @@ A = 'Mod1'
 C = "Control"
 S = "Shift"
 
-local dashboard = require("components.dashboard.lazer")
+local dashboard = require(P.appearance.dashboard ..".".. RC.appearance.dashboard)
 local exit_screen_show = require("modules.exit-screen")
 
 -- ========================================= awesome

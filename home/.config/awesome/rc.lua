@@ -1,12 +1,11 @@
 -- ===== User Configuration =====
 RC = {}
 RC.appearance = {
-    profiles = os.getenv("HOME") .. "/.face",
-    font = "SF Pro Text Regular 9",
+    profiles       = os.getenv("HOME") .. "/.face",
+    font           = "JetBrainsMono Nerd Font 9",
     font_monospace = "JetBrainsMono Nerd Font",
-    -- font      = "JetBrainsMono Nerd Font 9",
-    sys_icons = "Papirus-Dark",
-    wallpaper = "/home/atalariq/.wallpaper/Atalazer/Mini-Shark.png",
+    sys_icons      = "Papirus-Dark",
+    wallpaper      = "/home/atalariq/.wallpaper/Atalazer/Mini-Shark.png",
 }
 
 local themes = {
@@ -22,9 +21,20 @@ local bars = {
 RC.appearance.bar = bars[1] or "default"
 
 local decorations = {
-    "minimal", "lazer"
+    "minimal",
+    "lazer",
 }
 RC.appearance.deco = decorations[2] or "default"
+
+local dashboard = {
+    "lazer",
+}
+RC.appearance.dashboard = dashboard[1] or "default"
+
+local sidebar = {
+    "lazer",
+}
+RC.appearance.sidebar = sidebar[1] or "default"
 
 local notif_style = {
     "simple",
@@ -36,10 +46,9 @@ RC.settings = {
     delta = 10,
     -- Wal, color pallete generator based on wallpaper
     wal_enabled = true,
-    -- wal_backend = os.getenv("WAL_BACKEND") or "wal",
-    wal_backend = "haishoku",
+    wal_backend = os.getenv("WAL_BACKEND") or "wal",
     -- Collision - Windows management ( Boolean )
-    collision_enabled = true,
+    collision_enabled = false,
     -- Switcher - ALT-Tab Function
     switcher_enabled = true,
     switcher_mode = "normal",
@@ -47,7 +56,6 @@ RC.settings = {
     nice_enabled = false,
     -- Revelation, MacOS like expose
     revelation_enabled = false,
-
 }
 
 -- List of apps to start once on start-up
@@ -57,10 +65,13 @@ RC.autostart = {
     "nm-applet",
     [[ xidlehook --not-when-fullscreen --not-when-audio --timer 600 "slimlock" "" ]],
 
--- You can add more start-up applications here
+    -- You can add more start-up applications here
 }
 if RC.settings.wal_enabled == true then
-    table.insert(RC.autostart, "wal --backend ".. RC.settings.wal_backend .." -n -i " .. RC.appearance.wallpaper)
+    table.insert(
+        RC.autostart,
+        "wal --backend " .. RC.settings.wal_backend .. " -n -i " .. RC.appearance.wallpaper
+    )
     table.insert(RC.autostart, "xrdb -merge -I$HOME ~/.Xresources.d/color/wal ")
 else
     table.insert(RC.autostart, "[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources")
@@ -83,6 +94,8 @@ P = {
         bars = "components.bars",
         decorations = "components.decorations",
         notification = "components.notification",
+        dashboard = "components.dashboard",
+        sidebar = "components.sidebar",
     },
     config = {
         apps = "configurations.apps",
@@ -92,6 +105,7 @@ P = {
         mouse = "configurations.mouse",
         tag = "configurations.tag",
         rules = "configurations.rules",
+        signals = "configurations.signals",
     },
     module = {
         autostart = "modules.autostart",
@@ -100,7 +114,7 @@ P = {
         sloppy_focus = "modules.sloppy-focus",
         quake_terminal = "modules.quake-terminal",
         mpd = {
-            lyrics = "modules.mpd.lyrics"
+            lyrics = "modules.mpd.lyrics",
         },
         collision = "modules.collision",
         nice = "modules.nice",
@@ -141,12 +155,12 @@ if RC.settings.nice_enabled == true then
         },
         no_titlebar_maximized = false,
 
-        close_color    = "#ee4266",
+        close_color = "#ee4266",
         minimize_color = "#ffb400",
         maximize_color = "#4CBB17",
         floating_color = "#f6a2ed",
-        ontop_color    = "#f6a2ed",
-        sticky_color   = "#f6a2ed",
+        ontop_color = "#f6a2ed",
+        sticky_color = "#f6a2ed",
 
         button_size = 12,
         button_margin_horizontal = 2,
@@ -195,6 +209,7 @@ end
 require(P.config.tag)
 require(P.config.menu)
 require(P.config.rules)
+require(P.config.signals)
 
 -- handling mousebinds and keybinds
 require(P.config.keys)
@@ -212,9 +227,9 @@ if RC.settings.revelation_enabled == true then
     awful.keyboard.append_global_keybindings({
         awful.key({ W, A }, "/", function()
             revelation(
-                {rule = { class = "Florence"},is_excluded = true,},
-                {rule = { class = "lyricsQuake"},is_excluded = true,},
-                {rule = { class = "quakeTerminal"},is_excluded = true,}
+                { rule = { class = "Florence" }, is_excluded = true },
+                { rule = { class = "lyricsQuake" }, is_excluded = true },
+                { rule = { class = "quakeTerminal" }, is_excluded = true }
             )
         end, { description = "Expose", group = "tag" }),
     })

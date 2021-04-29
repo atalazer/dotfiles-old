@@ -105,7 +105,7 @@ client.connect_signal("request::default_keybindings", function()
             { description = "Toggle floating", group = "client" }
         ),
 
-        awful.key({ W, C }, "Return", function(c)
+        awful.key({ A, C }, "Return", function(c)
             c:swap(awful.client.getmaster())
         end, { description = "move to master", group = "client" }),
 

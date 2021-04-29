@@ -7,15 +7,7 @@ awful.keyboard.append_global_keybindings({
         awful.spawn.with_shell(apps.controller.vol_up)
     end, { description = "Increase Volume", group = "controller" }),
 
-    awful.key({ W, S }, "p", function()
-        awful.spawn.with_shell(apps.controller.vol_up)
-    end, { description = "Increase Volume", group = "controller" }),
-
     awful.key({}, "XF86AudioLowerVolume", function()
-        awful.spawn.with_shell(apps.controller.vol_down)
-    end, { description = "Decrease Volume", group = "controller" }),
-
-    awful.key({ W, S }, "i", function()
         awful.spawn.with_shell(apps.controller.vol_down)
     end, { description = "Decrease Volume", group = "controller" }),
 
@@ -23,20 +15,8 @@ awful.keyboard.append_global_keybindings({
         awful.spawn.with_shell(apps.controller.vol_mute)
     end, { description = "(un)Mute Volume", group = "controller" }),
 
-    awful.key({ W, S }, "0", function()
-        awful.spawn.with_shell(apps.controller.vol_mute)
-    end, { description = "(un)Mute Volume", group = "controller" }),
-
     -- ========================================================== Brightness Control
-    awful.key({ W }, "F4", function()
-        awful.spawn.with_shell(apps.controller.bn_opt)
-    end, { description = "Optimizing Brightness", group = "controller" }),
-
     awful.key({}, "XF86MonBrightnessUp", function()
-        awful.spawn.with_shell(apps.controller.bn_up)
-    end, { description = "Increase Brightness", group = "controller" }),
-
-    awful.key({ W }, "F6", function()
         awful.spawn.with_shell(apps.controller.bn_up)
     end, { description = "Increase Brightness", group = "controller" }),
 
@@ -44,15 +24,7 @@ awful.keyboard.append_global_keybindings({
         awful.spawn.with_shell(apps.controller.bn_down)
     end, { description = "Decrease Brightness", group = "controller" }),
 
-    awful.key({ W }, "F5", function()
-        awful.spawn.with_shell(apps.controller.bn_down)
-    end, { description = "Decrease Brightness", group = "controller" }),
-
     -- =========================================================== MPC Control
-    awful.key({ W }, "m", function()
-        awful.spawn.with_shell(apps.controller.mus_c)
-    end, { description = "Curent Music", group = "controller" }),
-
     awful.key({}, "XF86AudioStop", function()
         awful.spawn.with_shell(apps.controller.mus_s)
     end, { description = "Stop mpc", group = "controller" }),
@@ -91,11 +63,11 @@ awful.keyboard.append_global_keybindings({
     end, { description = "Shot Active Client", group = "controller" }),
 
     -- ============================================================= Virtual keyboard
-    awful.key({ W }, "`", function()
-        awful.spawn.with_shell(apps.controller.vk_show)
-    end, { description = "Show Virtual keyboard", group = "controller" }),
+    -- awful.key({ W }, "`", function()
+    --     awful.spawn.with_shell(apps.controller.vk_show)
+    -- end, { description = "Show Virtual keyboard", group = "controller" }),
 
-    awful.key({ W, S }, "`", function()
-        awful.spawn.with_shell(apps.controller.vk_hide)
-    end, { description = "Hide Virtual keyboard", group = "controller" }),
+    -- awful.key({ W, S }, "`", function()
+    --     awful.spawn.with_shell(apps.controller.vk_hide)
+    -- end, { description = "Hide Virtual keyboard", group = "controller" }),
 })

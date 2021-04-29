@@ -37,7 +37,7 @@ _M.settings = {
     preview_box_title_font_size_factor = 0.8,
     preview_box_title_color            = {0,0,0,1},
 
-    client_opacity                     = false,
+    client_opacity                     = true,
     client_opacity_value_selected      = 1,
     client_opacity_value_in_focus      = 0.5,
     client_opacity_value               = 0.5,

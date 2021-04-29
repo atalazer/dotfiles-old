@@ -411,7 +411,7 @@ local disk_box = create_box(disk, 200, 200, beautiful.bg_normal)
 local a_text = wibox.widget({
     {
         {
-            text = "ꦗꦤ꧀ꦕꦺꦴꦏ꧀",
+            text = "F*cker All",
             font = font .. " bold 50",
             widget = wibox.widget.textbox,
         },

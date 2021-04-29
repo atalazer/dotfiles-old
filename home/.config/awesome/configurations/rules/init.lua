@@ -10,14 +10,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             focus = awful.client.focus.filter,
             raise = true,
-            floating = false,
-            maximized = false,
-            above = false,
-            below = false,
-            ontop = false,
-            sticky = false,
-            maximized_horizontal = false,
-            maximized_vertical = false,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
         },
@@ -168,11 +160,11 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             name = {
                 "Firefox Developer Edition",
+                "Mozilla Firefox",
                 "Home",
             },
         },
         properties = {
-            round_corners = false,
             placement = awful.placement.maximize + awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
