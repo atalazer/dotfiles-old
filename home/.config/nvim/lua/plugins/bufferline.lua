@@ -2,6 +2,7 @@
 -- with some modifications and refactoring that I did
 
 vim.cmd([[packadd nvim-bufferline.lua]])
+vim.cmd [[packadd nvim-web-devicons]]
 
 require("bufferline").setup({
     tab_size = 15,
@@ -13,6 +14,10 @@ require("bufferline").setup({
     separator_style = { "|", "|" },
     diagnostics = "nvim_lsp",
 })
+
+-- Keymap
+local _Key = require("astronauta.keymap")
+local nnoremap = _Key.nnoremap
 
 nnoremap({ "<M-1>", ":lua require'bufferline'.go_to_buffer(1)<CR>", { silent = true } })
 nnoremap({ "<M-2>", ":lua require'bufferline'.go_to_buffer(2)<CR>", { silent = true } })

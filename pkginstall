@@ -45,17 +45,21 @@ if command -v "pacman" &> /dev/null; then
     echo "===================================================="
 
     $AUR_HELPER -S --needed --noconfirm \
-        xorg-server xorg-xprop xorg-xrdb xorg-xinit xorg-xinput xorg-xsetroot xsettingsd \
+        xorg xorg-server \
+        xorg-xinit xorg-xprop xorg-xrdb \
+        xsettingsd \
         xcb-utils-error \
         xf86-input-libinput $DRI \
         xdg-user-dirs \
-        kitty alacritty zsh tmux \
-        nemo \
-        maim xdotool feh \
+        thunar thunar-archive-plugin thunar-volman \
+        maim xdotool feh inotify-tools \
         rofi clipmenu \
+        kitty alacritty zsh tmux \
         python-pywal python-colorthief \
         htop neofetch ueberzug w3m \
-        mpd mpc ncmpcpp mpdris2 playerctl pamixer \
+        pulseaudio playerctl pamixer \
+        mpd mpc ncmpcpp mpdris2 \
+        lm_sensors acpid jq fortune-mod redshift \
         awesome-git picom-git light-git \
         ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
 
@@ -69,7 +73,7 @@ if command -v "pacman" &> /dev/null; then
 
             echo "Install Package with $AUR_HELPER"
             $AUR_HELPER -S --noconfirm \
-                neovim-nightly-bin \
+                neovim-git \
                 python python-pip tree-sitter\
                 lua-language-server efm-langserver \
                 jedi-language-server clang \

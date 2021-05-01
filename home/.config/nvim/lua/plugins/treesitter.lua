@@ -1,6 +1,7 @@
 -- ========================================================
 vim.cmd("packadd nvim-treesitter")
 vim.cmd("packadd nvim-ts-context-commentstring")
+vim.cmd("packadd nvim-ts-autotag")
 
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
@@ -16,6 +17,10 @@ require("nvim-treesitter.configs").setup({
     },
     indent = {
         enable = true,
+        filetypes = { "html", "xml" },
+    },
+    autotag = {
+        enable = true,
     },
     context_commentstring = {
         enable = true,
@@ -29,30 +34,3 @@ require("nvim-treesitter.configs").setup({
     },
 })
 
--- ========================================================
-local nvim_autotag_enabled = RC.plug_enabled.autotag or false
-if nvim_autotag_enabled == true then
-    vim.cmd("packadd nvim-ts-autotag")
-    require("nvim-ts-autotag").setup({
-        filetypes = { "html", "xml" },
-    })
-end
--- ========================================================
-local nvim_biscuits_enabled = RC.plug_enabled.biscuits or false
-if nvim_biscuits_enabled == true then
-    vim.cmd("packadd nvim-biscuits")
-    require("nvim-biscuits").setup({
-        default_config = {
-            max_length = 40,
-            min_destance = 5,
-            prefix_string = " // ",
-            on_events = { "BufWritePost" },
-        },
-    })
-
-    vim.cmd([[
-    hi! link BiscuitColor Comment
-    hi! BiscuitColorRust ctermfg=red
-    hi! BiscuitColorlua ctermfg=blue
-    ]])
-end

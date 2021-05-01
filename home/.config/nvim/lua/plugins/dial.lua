@@ -29,6 +29,11 @@ dial.config.searchlist.visual = {
     "markup#markdown#header",
 }
 
+-- Keymap
+local _Key = require("astronauta.keymap")
+local nmap     = _Key.nmap
+local vmap     = _Key.vmap
+
 nmap{"<M-.>", "<Plug>(dial-increment)"}
 vmap{"<M-.>", "<Plug>(dial-increment)"}
 vmap {"g<M-.>", "<Plug>(dial-increment-additional)"}

@@ -84,7 +84,7 @@ user = {
     -- >> Default applications <<
     -- Check apps.lua for more
     terminal = os.getenv("TERMINAL") or "kitty",
-    floating_terminal = "kitty",
+    floating_terminal = "kitty --name floating_terminal",
     browser = "firefox",
     file_manager = "kitty --name files -e nnn",
     editor = "kitty --name editor -e nvim",
@@ -125,7 +125,7 @@ user = {
     -- >> Sidebar <<
     sidebar = {
         hide_on_mouse_leave = true,
-        show_on_mouse_screen_edge = true,
+        show_on_mouse_screen_edge = false,
     },
 
     -- >> Lock screen <<
@@ -146,15 +146,15 @@ user = {
     -- Get your key and find your city id at
     -- https://openweathermap.org/
     -- (You will need to make an account!)
-    openweathermap_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    openweathermap_city_id = "xxxxxxx",
+    openweathermap_key = os.getenv("OPEN_WEATHER_MAP_API_KEY") or "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    openweathermap_city_id = os.getenv("OPEN_WEATHER_MAP_CITY_ID") or "yyyyyyy",
     -- > Use "metric" for Celcius, "imperial" for Fahrenheit
     weather_units = "metric",
 
     -- >> Coronavirus <<
     -- Country to check for corona statistics
     -- Uses the https://corona-stats.online API
-    coronavirus_country = "indonesia",
+    coronavirus_country = os.getenv("COUNTRY") or "indonesia",
 
 }
 -- ===================================================================
@@ -235,6 +235,7 @@ icons.init(icon_theme)
 -- Load notification daemons and notification theme
 local notifications = require("notifications")
 notifications.init(notification_theme)
+
 -- Load window decoration theme and custom decorations
 local decorations = require("decorations")
 decorations.init(decoration_theme)
@@ -314,7 +315,7 @@ awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.max,
     --awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.spiral.dwindle,
     --awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
@@ -369,9 +370,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- Tag layouts
     local layouts = {
         l.tile,
-        l.floating,
-        l.floating,
-        l.floating,
+        l.max,
+        l.max,
+        l.max,
         l.floating,
         l.floating,
         l.floating,

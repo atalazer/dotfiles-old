@@ -149,6 +149,10 @@ require("curstr").setup({
     },
 })
 
+-- Keymap
+local _Key = require("astronauta.keymap")
+local nnoremap = _Key.nnoremap
+
 -- # Mappings
 nnoremap({
     "gf",

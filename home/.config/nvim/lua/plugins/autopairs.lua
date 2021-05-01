@@ -1,4 +1,7 @@
-vim.cmd([[packadd nvim-autopairs]])
+vim.cmd([[
+packadd nvim-autopairs
+packadd nvim-treesitter
+]])
 
 local npairs = require("nvim-autopairs")
 local Rule = require('nvim-autopairs.rule')

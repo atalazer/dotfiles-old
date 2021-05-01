@@ -1,8 +1,6 @@
-#!/sbin/bash
+#!/bin/sh
 
-## Globals
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+[ -f ~/.user.keys ] && source ~/.user.keys
 
 ## Apps
 export TERMINAL="kitty"

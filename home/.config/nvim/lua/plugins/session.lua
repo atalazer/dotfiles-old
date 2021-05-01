@@ -18,6 +18,9 @@ require("telescope._extensions.session-lens").setup({
     shorten_path = false,
 })
 
+local _Key = require("astronauta.keymap")
+local nnoremap = _Key.nnoremap
+
 nnoremap({ "<leader>sf", "<Cmd>SearchSession<CR>" })
 nnoremap({ "<leader>ss", "<Cmd>SaveSession<CR>" })
 nnoremap({ "<leader>sr", "<Cmd>RestoreSession<CR>" })

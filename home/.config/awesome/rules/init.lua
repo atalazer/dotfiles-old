@@ -12,21 +12,19 @@ ruled.client.connect_signal("request::rules", function()
         id = "global",
         rule = {},
         properties = {
-            border_width = beautiful.border_width,
-            border_color = beautiful.border_normal,
-            focus = awful.client.focus.filter,
-            raise = true,
-            keys = keys.clientkeys,
-            buttons = keys.clientbuttons,
-            screen = awful.screen.preferred,
             size_hints_honor = false,
             honor_workarea = true,
             honor_padding = true,
             maximized = false,
-            titlebars_enabled = beautiful.titlebars_enabled,
-            maximized_horizontal = false,
-            maximized_vertical = false,
-            placement = floating_client_placement,
+            raise = true,
+            focus = awful.client.focus.filter,
+            keys = keys.clientkeys,
+            buttons = keys.clientbuttons,
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            -- titlebars_enabled = beautiful.titlebars_enabled,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen ,
         },
     })
     -- }}}
@@ -109,26 +107,14 @@ ruled.client.connect_signal("request::rules", function()
                 "nm-connection-editor",
                 "plugin-container",
                 "exe",
-                "editor",
-                "files",
-                "music",
-                "markdown_input",
-                "scratchpad",
                 "floating_terminal",
-                "riotclientux.exe",
-                "leagueclientux.exe",
                 "Devtools",
             },
             class = {
-                "Mugshot",
-                "Gcolor3",
-                "Pulseeffects",
                 "scrcpy",
-                "Gpick",
                 "Lxappearance",
                 "Nm-connection-editor",
                 "File-roller",
-                "fst",
             },
             name = {
                 "Event Tester",
@@ -164,14 +150,44 @@ ruled.client.connect_signal("request::rules", function()
         properties = { maximize  = true },
     })
     -- }}}
-
-    -- Fullscreen clients {{{
+    
+    -- Centered {{{
     ruled.client.append_rule({
+        id = "centered",
         rule_any = {
+            type = {
+                "dialog",
+            },
             class = {
-                "dota2",
+                "Steam",
+                "discord",
+                "music",
+                "markdown_input",
+                "scratchpad",
             },
             instance = {
+                "music",
+                "markdown_input",
+                "scratchpad",
+            },
+            role = {
+                "GtkFileChooserDialog",
+                "conversation",
+            }
+        },
+        properties = { placement = centered_client_placement },
+    })
+    -- }}}
+
+    -- Fullscreen {{{
+    ruled.client.append_rule({
+        id = "fullscreen",
+        rule_any = {
+            class = {
+                "csgo_linux64",
+                "portal2_linux",
+                "dota2",
+                "dontstarve_steam",
             },
         },
         properties = { fullscreen = true },

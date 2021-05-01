@@ -1,4 +1,5 @@
 vim.cmd([[packadd galaxyline.nvim]])
+vim.cmd [[packadd nvim-web-devicons]]
 
 local gl = require('galaxyline')
 local gls = gl.section

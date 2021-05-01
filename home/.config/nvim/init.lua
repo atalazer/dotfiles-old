@@ -15,65 +15,32 @@ vim.cmd("cd %:p:h")
 
 RC = {
     colorscheme = "material",
-    use_xresources = true,
-    plug_enabled = {
-        autotag = true,
+    use_xresources = false,
+    plug_disabled = {
         biscuits = true,
     },
 }
 
--- ==================================== neovim package manager
-pcall(require, "base.plugins")
+local modules = {
+    "base.plugins",
+    "base.settings",
+    "base.events",
+    "base.commands",
+    "base.keys",
+    "base.appearances",
+    "lsp",
+}
 
--- ==================================== neovim basic configuration
-pcall(require, "base.settings")
-pcall(require, "base.events")
-pcall(require, "base.commands")
-pcall(require, "base.functions")
+local errors = {}
+for _, v in pairs(modules) do
+    local ok, err = pcall(require, v)
+    if not ok then
+        table.insert(errors, err)
+    end
+end
 
-pcall(require, "mappings.keys")
-pcall(require, "mappings.visual-multi")
-pcall(require, "mappings.which-key")
--- ==================================== UI
-pcall(require, "base.appearances")
-
-pcall(require, "plugins.devicons")
-pcall(require, "plugins.bufferline")
-pcall(require, "plugins.galaxyline")
-
-pcall(require, "plugins.colorizer")
-pcall(require, "plugins.indent-blankline")
-
--- ==================================== Files
-pcall(require, "plugins.nvim-tree")
-pcall(require, "plugins.telescope")
-pcall(require, "plugins.suda")
-pcall(require, "plugins.session")
-
--- ==================================== Funcionality
-pcall(require, "plugins.autopairs")
-pcall(require, "plugins.hop")
-pcall(require, "plugins.surround")
-pcall(require, "plugins.dial")
-pcall(require, "plugins.curstr")
-
--- ==================================== Git
-pcall(require, "plugins.gitsigns")
-
--- ==================================== Misc
--- pcall(require, "plugins.shade")
-
-pcall(require, "plugins.fterm")
-pcall(require, "plugins.truezen")
-pcall(require, "plugins.firenvim")
-
--- ==================================== Language support
-pcall(require, "plugins.treesitter")
-pcall(require, "plugins.markdown")
-
--- ==================================== LSP, Code Completions, Code Formater
-pcall(require, "plugins.compe")
-pcall(require, "plugins.emmet")
-pcall(require, "plugins.vsnip")
-pcall(require, "plugins.format")
-pcall(require, "lsp")
+if not vim.tbl_isempty(errors) then
+    for _, v in pairs(errors) do
+        print(v)
+    end
+end

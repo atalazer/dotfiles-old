@@ -8,43 +8,38 @@ require("FTerm").setup({
     border = "single",
 })
 
-_G.ToggleLazygit = function()
-    require("FTerm.terminal")
-        :new()
-        :setup({
-            cmd = "lazygit",
-            dimensions = {
-                height = 0.9,
-                width = 0.9,
-            },
-        })
-        :toggle()
+local makeTerminal = function(keybind, name, command, wd, hg)
+    _G[name] = function()
+        require("FTerm.terminal")
+            :new()
+            :setup({
+                cmd = command,
+                dimensions = {
+                    width   = tonumber(wd) or 0.8,
+                    height  = tonumber(hg) or 0.8
+                }
+            })
+            :toggle()
+    end
+    vim.api.nvim_set_keymap( "n", tostring(keybind), ":lua "..name.."()<CR>", { silent = true, noremap = true })
 end
 
-_G.ToggleNNN = function()
-    require("FTerm.terminal")
-        :new()
-        :setup({
-            cmd = "nnn",
-            dimensions = {
-                height = 0.9,
-                width = 0.9,
-            },
-        })
-        :toggle()
-end
+makeTerminal("<leader>tg", "Toggle_lazygit", "lazygit", 0.95, 0.9 )
+makeTerminal("<leader>tf", "Toggle_nnn", "nnn")
+makeTerminal("<leader>tl", "Toggle_xplr", "xplr")
+makeTerminal("<leader>th", "Toggle_htop", "htop")
 
 -- Keybinding
-nnoremap({ 
-    "<leader>t",
+vim.api.nvim_set_keymap(
+    "n",
+    "<C-\\>",
     "<CMD>lua require(\"FTerm\").toggle()<CR>",
-    { silent = true }
-})
-tnoremap({
-    "<leader>t",
+    { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap(
+    "t",
+    "<C-\\>",
     "<C-\\><C-n><CMD>lua require(\"FTerm\").toggle()<CR>",
-    { silent = true },
-})
+    { noremap = true, silent = true }
+)
 
-nnoremap({ "<leader>tg", ":lua ToggleLazygit()<CR>", { silent = true } })
-nnoremap({ "<leader>tf", ":lua ToggleNNN()<CR>", { silent = true } })

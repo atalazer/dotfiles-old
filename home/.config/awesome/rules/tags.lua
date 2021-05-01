@@ -6,7 +6,7 @@ ruled.client.connect_signal("request::rules", function()
     -- Terminal {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
+            instance = {
                 "Alacritty",
                 "Termite",
                 "kitty",
@@ -43,29 +43,6 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
-    -- Chatting {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Chromium",
-                "Chromium-browser",
-                "discord",
-                "TelegramDesktop",
-                "Signal",
-                "Slack",
-                "TeamSpeak 3",
-                "zoom",
-                "weechat",
-                "6cord",
-            },
-        },
-        properties = { 
-            tag = awful.screen.focused().tags[2].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
     -- File Manager {{{
     ruled.client.append_rule({
         rule_any = {
@@ -78,18 +55,21 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
-    -- Image editing {{{
+    -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "Gimp",
-                "Inkscape",
+                "discord",
+                "TelegramDesktop",
+                "Signal",
+                "Slack",
+                "TeamSpeak 3",
+                "zoom",
+                "weechat",
+                "6cord",
             },
         },
-        properties = { 
-            tag = awful.screen.focused().tags[4].name,
-            switch_to_tags = true,
-        },
+        properties = { tag = awful.screen.focused().tags[3] }
     })
     -- }}}
 
@@ -97,18 +77,11 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "underlords",
-                "lt-love",
                 "portal2_linux",
-                "deadcells",
                 "csgo_linux64",
-                "EtG.x86_64",
-                "factorio",
                 "dota2",
-                "Terraria.bin.x86",
                 "dontstarve_steam",
                 "Wine",
-                "trove.exe",
             },
             instance = {
                 "love.exe",
@@ -119,7 +92,7 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = { 
-            tag = awful.screen.focused().tags[8].name,
+            tag = awful.screen.focused().tags[4].name,
             switch_to_tags = false,
         },
     })
@@ -138,8 +111,23 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = { 
-            tag = awful.screen.focused().tags[8].name,
+            tag = awful.screen.focused().tags[5].name,
             switch_to_tags = false,
+        },
+    })
+    -- }}}
+
+    -- Image editing {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = {
+                "Gimp",
+                "Inkscape",
+            },
+        },
+        properties = { 
+            tag = awful.screen.focused().tags[7].name,
+            switch_to_tags = true,
         },
     })
     -- }}}

@@ -1,23 +1,12 @@
 -- Keymap
-_Key = require("astronauta.keymap")
-map = _Key.map
-noremap = _Key.noremap
-nmap = _Key.nmap
-nnoremap = _Key.nnoremap
-imap = _Key.imap
-inoremap = _Key.inoremap
-vmap = _Key.vmap
-vnoremap = _Key.vnoremap
-xmap = _Key.xmap
-xnoremap = _Key.xnoremap
-tmap = _Key.tmap
-tnoremap = _Key.tnoremap
-cmap = _Key.tmap
-cnoremap = _Key.cnoremap
-
--- remove annoying exmode
-nnoremap({ "Q", "<Nop>" })
-nnoremap({ ":q", "<Nop>" })
+local _Key = require("astronauta.keymap")
+local nmap     = _Key.nmap
+local nnoremap = _Key.nnoremap
+local inoremap = _Key.inoremap
+local vmap     = _Key.vmap
+local vnoremap = _Key.vnoremap
+local xmap     = _Key.xmap
+local cnoremap = _Key.cnoremap
 
 -- move vertically by visual line on wrapped lines
 nnoremap({ "j", "gj" })
@@ -37,6 +26,7 @@ nnoremap({ "<leader>qa", ":qa<CR>" })
 -- Open Neovim Config
 nnoremap({ "<leader>ec", ":tabe ~/.config/nvim/init.lua<CR>" })
 nnoremap({ "<leader>er", ":luafile ~/.config/nvim/init.lua<CR>" })
+nnoremap({ "<leader>l", ":luafile %<CR>" })
 
 -- Better Ctrl + Arrow
 nmap({ "C-Left", "b", { silent = true } })
@@ -119,21 +109,6 @@ nnoremap({ "<leader>q", ":Sayonara<CR>" })
 nmap({ "//", "gcc" })
 vmap({ "//", "gcc<Esc>" })
 
--- Vim Smoothie
-vim.g.smoothie_enabled = 1
-vim.g.smoothie_update_interval = 25
-vim.g.smoothie_speed_constant_factor = 5
-vim.g.smoothie_speed_linear_factor = 5
-vim.g.smoothie_no_default_mappings = 1
-map({ "C-D", "<Plug>(SmoothieDownwards)" })
-map({ "C-U", "<Plug>(SmoothieUpwards)" })
-map({ "J", "<Plug>(SmoothieDownwards)" })
-map({ "K", "<Plug>(SmoothieUpwards)" })
-map({ "<S-Down>", "<Plug>(SmoothieDownwards)" })
-map({ "<S-Up>", "<Plug>(SmoothieUpwards)" })
-map({ "<PageDown>", "<Plug>(SmoothieForwards)" })
-map({ "<PageUp>", "<Plug>(SmoothieBackwards)" })
-
 -- Vim Easy Align
 xmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 nmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
@@ -157,3 +132,6 @@ nmap({"<leader>gg", ":Glow<CR>"})
 -- TrueZen
 nnoremap({ "<F9>", "<Cmd>TZAtaraxis<CR>", { silent = true } })
 nnoremap({ "<F10>", "<Cmd>TZMinimalist<CR>", { silent = true } })
+
+-- NvimTree
+nnoremap({ "`", ":NvimTreeToggle<CR>" })

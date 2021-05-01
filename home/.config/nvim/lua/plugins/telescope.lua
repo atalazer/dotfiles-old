@@ -4,6 +4,10 @@ local previewers = require("telescope.previewers")
 local M = {}
 local _, telescope = pcall(require, "telescope")
 
+-- Keymap
+local _Key = require("astronauta.keymap")
+local nnoremap = _Key.nnoremap
+
 telescope.setup({
     defaults = {
         file_previewer   = previewers.vim_buffer_cat.new,
