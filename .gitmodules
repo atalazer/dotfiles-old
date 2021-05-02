@@ -1,11 +1,3 @@
-[submodule "extra/startpage/jaredk3nt"]
-    path = home/.startpage/jaredk3nt
-    url = https://github.com/Jaredk3nt/homepage
-
-[submodule "extra/startpage/atalazer"]
-    path = home/.startpage/atalazer
-    url = https://github.com/atalazer/atalazer-startpage
-
 [submodule "home/.tmux/plugins/tpm"]
     path = home/.tmux/plugins/tpm
     url = https://github.com/tmux-plugins/tpm
