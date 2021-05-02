@@ -1,7 +1,7 @@
 format = "$all"
 add_newline = false
-scan_timeout = 50
-command_timeout = 500
+scan_timeout = 100
+command_timeout = 1000
 
 [character]
 success_symbol = "[➜](bold green) "

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+up="pamixer -i 5"
+down="pamixer -d 5"
+mute="pamixer -t"
+get="pamixer --get-volume-human"
+
+case $1 in
+    up)
+        bash -c "$up"
+        notify-send $(bash -c "$get")
+    ;;
+    down)
+        bash -c "$down"
+        notify-send $(bash -c "$get")
+    ;;
+    mute)
+        bash -c "$mute"
+        notify-send $(bash -c "$get")
+    ;;
+    get)
+        bash -c "$get"
+    ;;
+esac
+

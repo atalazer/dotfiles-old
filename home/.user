@@ -4,7 +4,7 @@
 
 ## Apps
 export TERMINAL="kitty"
-export BROWSER="firefox-run"
+export BROWSER="firefox"
 export FILEMAN="nemo"
 
 export EDITOR="nvim"

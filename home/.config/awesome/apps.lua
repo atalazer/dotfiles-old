@@ -221,7 +221,7 @@ function apps.screenshot(action, delay)
 
 end
 
-local controller_dirs = os.getenv("HOME") .. "/.local/bin/awesomewm/"
+local controller_dirs = os.getenv("HOME") .. "/.local/script/"
 apps.controller = {
     -- Volume Control
     vol_up   = controller_dirs .. "volume-controller up",

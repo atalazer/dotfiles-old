@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Rofi menu for quickly editing a file in some directory
+# Requires ripgrep
+# I use it for editing dotfiles in my ~/.config directory
+
+# Directory to search in
+dir="${DOTS:-$HOME/.dotfiles}"
+# Ignore files or directories relative to the directory you want to search
+ignore="
+.git*
+.cache
+*.zwc
+*.rock*
+*.gif
+*.png
+*.jpg
+*.svg
+README*
+LICENSE*
+CHANGELOG*
+docs
+root
+spell
+nnn
+.startpage
+.wallpaper
+.tmux
+*.zsh-*
+"
+
+ignore_file="/tmp/rofi_edit_ignore_file"
+# Write ignore file in tmpfs
+echo "$ignore" > "$ignore_file"
+
+# Rofi prompt
+rofi_prompt="Edit Dotfiles"
+
+# Change directory so that the paths are shorter in rofi
+cd "$dir" || exit
+choice="$(rg --files --hidden --color=never --ignore-file "$ignore_file" --ignore-file-case-insensitive \
+    | rofi -no-disable-history -sort -i -p "$rofi_prompt" -dmenu -fuzzy)"
+
+# If the search is cancelled by the user (e.g. Escape button)
+if [[ -z "${choice// }" ]]; then
+    exit 1
+fi
+
+# Edit the selected file
+kitty -1 --class editor -e nvim "$choice"

@@ -14,7 +14,7 @@ export CM_LAUNCHER="rofi"
 # Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 wal -n -R
-light -S 40
+light -S 30
 xset -b
 xset r rate 300 25
 xsetroot -cursor_name left_ptr
@@ -34,9 +34,6 @@ mpd && mpDris2 &
 # Start session
 SESSION=${1:-awesome}
 case $SESSION in
-    awesome) 
-        export PATH=$PATH:~/.local/bin/awesomewm
-        exec awesome
-        ;;
-    *) exec $1;;
+    awesome)    exec awesome ;;
+    *)          exec $1;;
 esac
