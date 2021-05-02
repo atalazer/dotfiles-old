@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+        <title>Homepage</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div id="header" class="greet">
+                Hello, Atalazer
+            </div>
+            <div class="weather-container">
+                <div class="row">
+                    <div id="weather-description" class="inline"></div>
+                    <div class="inline">-</div>
+                    <div id="temp" class="inline"></div>
+                </div>
+            </div>
+            <div id="search">
+                <input
+                    id="search-field"
+                    type="text"
+                    name="search-field"
+                    onkeypress="return search(event)"
+                    placeholder="search something"
+                />
+            </div>
+            <div id="bookmark-container"></div>
+        </div>
+
+        <script src="bookmarks.js"></script>
+        <script src="main.js" defer></script>
+    </body>
+</html>
