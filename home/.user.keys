@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Required by AwesomeWM
-export OPEN_WEATHER_MAP_API_KEY="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-export OPEN_WEATHER_MAP_CITY_ID="yyyyyyy"
-export COUNTRY = "indonesia"
-
+export OPEN_WEATHER_MAP_API_KEY="8f867e7b117a4eb09af8a54b0be530c2"
+export OPEN_WEATHER_MAP_CITY_ID="1648084"
+export COUNTRY="indonesia"

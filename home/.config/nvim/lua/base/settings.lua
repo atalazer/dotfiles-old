@@ -89,10 +89,6 @@ local options = {
     timeoutlen = 400,
     updatetime = 150,
 }
--- Others options
-vim.g.python_host_prog = "/usr/bin/python"
-vim.g.python3_host_prog = "/usr/bin/python3"
-vim.g.node_host_prog = "/home/atalariq/.fnm/node-versions/v14.16.1/installation/bin/neovim-node-host"
 
 -- Call apply_options func
 apply_options(options)

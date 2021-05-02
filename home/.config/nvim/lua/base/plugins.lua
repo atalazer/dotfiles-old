@@ -147,7 +147,30 @@ if ok then
             opt = true,
             ft = { "markdown" },
             config = function()
-                require("plugins.markdown")
+                vim.g.vim_markdown_auto_insert_bullets = 0
+                vim.g.vim_markdown_conceal = 0
+                vim.g.vim_markdown_edit_url_in = "tab"
+                vim.g.vim_markdown_folding_disabled = 1
+                vim.g.vim_markdown_folding_level = 6
+                vim.g.vim_markdown_follow_anchor = 1
+                vim.g.vim_markdown_frontmatter = 1
+                vim.g.vim_markdown_frontmatter = 1
+                vim.g.vim_markdown_json_frontmatter = 1
+                vim.g.vim_markdown_json_frontmatter = 1
+                vim.g.vim_markdown_math = 1
+                vim.g.vim_markdown_new_list_item_indent = 2
+                vim.g.vim_markdown_no_extensions_in_markdown = 1
+                vim.g.vim_markdown_strikethrough = 1
+                vim.g.vim_markdown_toc_autofit = 1
+                vim.g.vim_markdown_toml_frontmatter = 1
+
+                vim.g.vim_markdown_fenced_languages = {
+                    "csharp=cs",
+                    "c++=cpp",
+                    "viml=vim",
+                    "bash=sh",
+                    "ini=dosini",
+                }
             end,
         })
 
@@ -217,10 +240,6 @@ if ok then
                     keys = "qwertyuipasdfghklzxcvbm",
                     term_seq_bias = 0.5,
                 })
-                vim.api.nvim_set_keymap("", "<space>z", ":HopChar1<CR>", {})
-                vim.api.nvim_set_keymap("", "<space>x", ":HopChar2<CR>", {})
-                vim.api.nvim_set_keymap("", "<space>n", ":HopPattern<CR>", {})
-                vim.api.nvim_set_keymap("", "<space>l", ":HopLine<CR>", {})
             end,
         })
 
@@ -237,7 +256,27 @@ if ok then
             "blackcauldron7/surround.nvim",
             opt = false,
             config = function()
-                require("plugins.surround")
+                vim.g.surround_prefix = "s"
+                vim.g.surround_mappings_style = "sandwich" -- "surround" or "sandwich"
+                vim.g.surround_load_autogroups = true
+                vim.g.surround_load_keymaps = true
+                vim.g.surround_context_offset = 100
+                vim.g.surround_quotes = { "'", "\"", "`" }
+                vim.g.surround_brackets = { "(", "{", "[" }
+                vim.g.surround_pairs = {
+                    nestable = {
+                        { "(", ")" },
+                        { "[", "]" },
+                        { "{", "}" },
+                        { "<", ">" },
+                    },
+                    linear = {
+                        { "'", "'" },
+                        { "\"", "\"" },
+                        { "`", "`" },
+                    },
+                }
+                require("surround").setup({})
             end,
         })
 
@@ -305,7 +344,19 @@ if ok then
                 vim.fn["firenvim#install"](0)
             end,
             config = function()
-                require("plugins.firenvim")
+                if vim.fn.exists("g:started_by_firenvim") == 1 then
+                    vim.cmd([[set laststatus=0]])
+                    vim.cmd([[set showtabline=0]])
+                    vim.cmd([[set guifont=JetBrainsMono:h9]])
+                end
+                vim.g.firenvim_config = {
+                    localSettings = {
+                        [".*"] = {
+                            takeover = "never",
+                            priority = 1,
+                        },
+                    },
+                }
             end,
         })
 
@@ -368,25 +419,6 @@ if ok then
                         mode = "background",
                     },
                 })
-                vim.api.nvim_set_keymap("n", "<leader>cc", ":ColorizerToggle<CR>", { noremap = true })
-                vim.api.nvim_set_keymap(
-                    "n",
-                    "<leader>cd",
-                    ":ColorizerDetachFromBuffer<CR>",
-                    { noremap = true }
-                )
-                vim.api.nvim_set_keymap(
-                    "n",
-                    "<leader>ca",
-                    ":ColorizerAttachToBuffer<CR>",
-                    { noremap = true }
-                )
-                vim.api.nvim_set_keymap(
-                    "n",
-                    "<leader>cr",
-                    ":ColorizerReloadAllBuffers<CR>",
-                    { noremap = true }
-                )
             end,
         })
 
@@ -414,18 +446,9 @@ if ok then
             config = function()
                 -- Vim Smoothie
                 vim.g.smoothie_enabled = 1
-                vim.g.smoothie_update_interval = 25
-                vim.g.smoothie_speed_constant_factor = 5
-                vim.g.smoothie_speed_linear_factor = 5
-                vim.g.smoothie_no_default_mappings = 1
-                vim.api.nvim_set_keymap("", "C-D", "<Plug>(SmoothieDownwards)", {})
-                vim.api.nvim_set_keymap("", "C-U", "<Plug>(SmoothieUpwards)", {})
-                vim.api.nvim_set_keymap("", "J", "<Plug>(SmoothieDownwards)", {})
-                vim.api.nvim_set_keymap("", "K", "<Plug>(SmoothieUpwards)", {})
-                vim.api.nvim_set_keymap("", "<S-Down>", "<Plug>(SmoothieDownwards)", {})
-                vim.api.nvim_set_keymap("", "<S-Up>", "<Plug>(SmoothieUpwards)", {})
-                vim.api.nvim_set_keymap("", "<PageDown>", "<Plug>(SmoothieForwards)", {})
-                vim.api.nvim_set_keymap("", "<PageUp>", "<Plug>(SmoothieBackwards)", {})
+                vim.g.smoothie_update_interval = 30
+                vim.g.smoothie_speed_constant_factor = 10
+                vim.g.smoothie_speed_linear_factor = 10
             end,
         })
 
@@ -440,21 +463,7 @@ if ok then
             "folke/which-key.nvim",
             opt = false,
             config = function()
-                require("which-key").setup({
-                    plugins = {
-                        marks = true, -- shows a list of your marks on ' and `
-                        registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-                    },
-                    presets = {
-                        operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-                        motions = true, -- adds help for motions
-                        text_objects = true, -- help for text objects triggered after entering an operator
-                        windows = true, -- default bindings on <c-w>
-                        nav = true, -- misc bindings to work with windows
-                        z = true, -- bindings for folds, spelling and others prefixed with z
-                        g = true, -- bindings for prefixed with g
-                    },
-                })
+                require("plugins.which-key")
             end,
         })
 
@@ -470,8 +479,16 @@ if ok then
                 vim.g.translator_window_type = "popup"
                 vim.g.translator_window_max_width = 0.6
                 vim.g.translator_window_max_height = 0.6
-                vim.g.translator_window_borderchars =
-                    { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
+                vim.g.translator_window_borderchars = {
+                    "─",
+                    "│",
+                    "─",
+                    "│",
+                    "┌",
+                    "┐",
+                    "┘",
+                    "└",
+                }
             end,
         })
 
@@ -485,13 +502,25 @@ if ok then
             },
             opt = false,
             config = function()
-                require("plugins.session")
+                require("auto-session").setup({
+                    auto_session_root_dir = os.getenv("HOME") .. ".config/nvim/sessions/",
+                    auto_session_enable_last_session = false,
+                    logLevel = "info",
+                    pre_save_cmds = {},
+                    post_save_cmds = {},
+                    pre_restore_cmds = {},
+                    post_restore_cmds = {},
+                })
+                require("telescope").load_extension("session-lens")
+                require("telescope._extensions.session-lens").setup({
+                    prompt_title = "Sessions List",
+                    shorten_path = false,
+                })
             end,
         })
 
         -- Check startup time
         use({ "tweekmonster/startuptime.vim" })
-
     end
     packer.startup(plugins)
 end

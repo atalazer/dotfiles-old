@@ -4,10 +4,6 @@ local previewers = require("telescope.previewers")
 local M = {}
 local _, telescope = pcall(require, "telescope")
 
--- Keymap
-local _Key = require("astronauta.keymap")
-local nnoremap = _Key.nnoremap
-
 telescope.setup({
     defaults = {
         file_previewer   = previewers.vim_buffer_cat.new,
@@ -158,20 +154,6 @@ end
 M.media_files = function()
     require("telescope").extensions.media_files.media_files()
 end
-
--- Telescope Mappings
-nnoremap({ "<C-p>",  M.files })
-nnoremap({ "<C-p>g", M.grep_prompt })
-nnoremap({ "<C-p>b", M.buffer_fuzzy })
-nnoremap({ "<C-p>l", M.live_grep })
-nnoremap({ "<C-p>f", M.file_browser })
-nnoremap({ "<C-p>t", M.buffers })
-nnoremap({ "<C-p>h", M.oldfiles })
-nnoremap({ "<C-p>k", M.keymaps })
-nnoremap({ "<C-p>c", M.colorscheme })
-
-nnoremap({ "<C-p>p", M.frecency })
-nnoremap({ "<C-p>m", M.media_files })
 
 return setmetatable({}, {
     __index = function(_, k)

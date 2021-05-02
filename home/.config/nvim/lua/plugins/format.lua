@@ -49,5 +49,4 @@ require("format").setup({
     json = prettier,
     python = black,
 })
-vim.api.nvim_set_keymap("n", "<leader>fw", "<cmd>FormatWrite<CR>", { silent = false, noremap = false })
-vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>Format<CR>", { silent = false, noremap = false })
+

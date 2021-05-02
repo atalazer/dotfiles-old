@@ -4,7 +4,7 @@ packadd nvim-treesitter
 ]])
 
 local npairs = require("nvim-autopairs")
-local Rule = require('nvim-autopairs.rule')
+local Rule = require("nvim-autopairs.rule")
 
 npairs.setup({
     pairs_map = {
@@ -14,33 +14,28 @@ npairs.setup({
         ["("] = ")",
         ["["] = "]",
         ["{"] = "}",
-        -- ['<'] = '>',
     },
-    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]],"%s+", ""),
+    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
     enable_moveright = true,
 
     check_ts = true,
     ts_config = {
-        lua = {'string'},-- it will not add pair on that treesitter node
-        javascript = {'template_string'},
-        java = false,-- don't check treesitter on java
+        lua = { "string" },
     },
 })
 
 -- ===== Rules =====
 -- Treesitter Rules
-local ts_conds = require('nvim-autopairs.ts-conds')
+local ts_conds = require("nvim-autopairs.ts-conds")
 npairs.add_rules({
-  Rule("%", "%", "lua")
-    :with_pair(ts_conds.is_ts_node({'string','comment'})),
-  Rule("$", "$", "lua")
-    :with_pair(ts_conds.is_not_ts_node({'function'}))
+    Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+    Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
 })
 
 -- Endwise Rules
-local endwise = require('nvim-autopairs.ts-rule').endwise
+local endwise = require("nvim-autopairs.ts-rule").endwise
 npairs.add_rules({
-    endwise('then$', 'end', 'lua', 'if_statement')
+    endwise("then$", "end", "lua", "if_statement"),
 })
 
 -- ===== Mappings =====
@@ -64,9 +59,4 @@ MUtils.completion_confirm = function()
     end
 end
 
-remap(
-    "i",
-    "<CR>",
-    "v:lua.MUtils.completion_confirm()",
-    { expr = true, noremap = true }
-)
+remap("i", "<CR>", "v:lua.MUtils.completion_confirm()", { expr = true, noremap = true })

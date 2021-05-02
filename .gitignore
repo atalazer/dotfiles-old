@@ -18,4 +18,4 @@
 **/*.zip
 **/*.rar
 **/*.so
-.user.keys
+home/.user.keys

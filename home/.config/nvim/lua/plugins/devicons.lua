@@ -1,78 +1,77 @@
-vim.cmd [[packadd nvim-web-devicons]]
+vim.cmd([[packadd nvim-web-devicons]])
 
-require "nvim-web-devicons".setup{
+require("nvim-web-devicons").setup({
     default = true,
     override = {
         html = {
             icon = "",
             color = "#DE8C92",
-            name = "html"
+            name = "html",
         },
         markdown = {
             icon = "",
             color = "#61afef",
-            name = "markdown"
+            name = "markdown",
         },
         css = {
             icon = "",
             color = "#61afef",
-            name = "css"
+            name = "css",
         },
         js = {
             icon = "",
             color = "#EBCB8B",
-            name = "js"
+            name = "js",
         },
         png = {
             icon = " ",
             color = "#BD77DC",
-            name = "png"
+            name = "png",
         },
         jpg = {
             icon = " ",
             color = "#BD77DC",
-            name = "jpg"
+            name = "jpg",
         },
         jpeg = {
             icon = " ",
             color = "#BD77DC",
-            name = "jpeg"
+            name = "jpeg",
         },
         mp3 = {
             icon = "",
             color = "#C8CCD4",
-            name = "mp3"
+            name = "mp3",
         },
         mp4 = {
             icon = "",
             color = "#C8CCD4",
-            name = "mp4"
+            name = "mp4",
         },
         out = {
             icon = "",
             color = "#C8CCD4",
-            name = "out"
+            name = "out",
         },
         toml = {
             icon = "",
             color = "#61afef",
-            name = "toml"
+            name = "toml",
         },
         lock = {
             icon = "",
             color = "#DE6B74",
-            name = "lock"
+            name = "lock",
         },
         zip = {
             icon = "",
             color = "#EBCB8B",
-            name = "zip"
+            name = "zip",
         },
         xz = {
             icon = "",
             color = "#EBCB8B",
-            name = "xz"
-        }
-    }
-}
-
+            name = "xz",
+        },
+    },
+})

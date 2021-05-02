@@ -4,8 +4,9 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushdminus
 
-alias -g ...='zb ...'
-alias -g ....='zb ....'
+alias -g ...='cd ../..'
+alias -g ....='cd ../../..'
+alias -g .....='cd ../../../..'
 
 alias -- -='cd -'
 alias 1='cd -'
