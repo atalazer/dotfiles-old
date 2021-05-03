@@ -96,8 +96,8 @@ nnoremap({ "S", "zg" })
 nnoremap({ "sq", "z=" })
 
 -- ===================================== Function
-nnoremap({ "<F1>", ":mksession! ~/.config/nvim/sessions/last_session.vim<CR>", { silent = true } })
-nnoremap({ "<F2>", ":source ~/.config/nvim/sessions/last_session.vim<CR>", { silent = true } })
+nnoremap({ "<F1>", ":mksession! ~/.cache/nvim/sessions/last.vim<CR>", { silent = true } })
+nnoremap({ "<F2>", ":source ~/.cache/nvim/sessions/last.vim<CR>", { silent = true } })
 nnoremap({ "<F4>", "<cmd>!xdg-open %<CR>", { silent = true } })
 
 -- ===================================== Plugins
@@ -132,6 +132,7 @@ nnoremap({ "<C-p>c", require("plugins.telescope").colorscheme })
 -- Telescope Extensions
 nnoremap({ "<C-p>p", require("plugins.telescope").frecency })
 nnoremap({ "<C-p>m", require("plugins.telescope").media_files })
+nnoremap({ "<C-p>d", require("plugins.telescope").cheat })
 
 -- Dial
 nmap({ "<M-.>", "<Plug>(dial-increment)" })

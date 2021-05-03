@@ -97,6 +97,7 @@ telescope.setup({
 pcall(require("telescope").load_extension, "fzy_native") -- superfast sorter
 pcall(require("telescope").load_extension, "media_files") -- media preview
 pcall(require("telescope").load_extension, "frecency") -- frecency
+pcall(require("telescope").load_extension, "cheat") -- cheat.sh
 
 local no_preview = function()
     return require("telescope.themes").get_dropdown({
@@ -153,6 +154,9 @@ M.frecency = function()
 end
 M.media_files = function()
     require("telescope").extensions.media_files.media_files()
+end
+M.cheat = function()
+    require("telescope").extensions.cheat.fd()
 end
 
 return setmetatable({}, {

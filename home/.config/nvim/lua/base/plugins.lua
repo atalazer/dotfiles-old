@@ -370,6 +370,7 @@ if ok then
                 { "nvim-telescope/telescope-fzy-native.nvim" },
                 { "nvim-telescope/telescope-media-files.nvim" },
                 { "nvim-telescope/telescope-frecency.nvim" },
+                { 'nvim-telescope/telescope-cheat.nvim' },
             },
             opt = false,
             config = function()
@@ -496,6 +497,7 @@ if ok then
         use({
             "rmagatti/session-lens",
             requires = {
+                { "nvim-telescope/telescope.nvim" },
                 { "nvim-lua/popup.nvim" },
                 { "nvim-lua/plenary.nvim" },
                 { "rmagatti/auto-session" },
@@ -503,7 +505,7 @@ if ok then
             opt = false,
             config = function()
                 require("auto-session").setup({
-                    auto_session_root_dir = os.getenv("HOME") .. ".config/nvim/sessions/",
+                    auto_session_root_dir = os.getenv("HOME") .. "/.cache/nvim/sessions/",
                     auto_session_enable_last_session = false,
                     logLevel = "info",
                     pre_save_cmds = {},
