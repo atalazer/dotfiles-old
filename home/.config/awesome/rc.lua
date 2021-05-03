@@ -100,7 +100,7 @@ user = {
     autostart = {
         "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
         "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
-        "wal --backend colorthief -n -i " .. wallpaper ,
+        "wal --backend colorthief -n -s -t -i " .. wallpaper ,
         "xrdb -load ~/.Xresources",
     },
     
