@@ -1,5 +1,4 @@
 vim.cmd("packadd lsp-trouble.nvim")
-
 require("trouble").setup({
     height = 10,
     icons = true,
@@ -17,7 +16,7 @@ require("trouble").setup({
         cancel = "<esc>",
         open_folds = "zR",
         previous = "k",
-        next = "j"
+        next = "j",
     },
     indent_lines = true,
     auto_open = false,
@@ -27,7 +26,7 @@ require("trouble").setup({
         error = "",
         warning = "",
         hint = "",
-        information = ""
+        information = "",
     },
-    use_lsp_diagnostic_signs = false
+    use_lsp_diagnostic_signs = true,
 })

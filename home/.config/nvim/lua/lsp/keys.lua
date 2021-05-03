@@ -5,6 +5,8 @@ local _Key = require("astronauta.keymap")
 local nnoremap = _Key.nnoremap
 local inoremap = _Key.inoremap
 
+local lsp_prefix = "l"
+
 local M = {}
 
 local hover      = require("lspsaga.hover")
@@ -14,19 +16,20 @@ local diagnostic = require("lspsaga.diagnostic")
 local provider   = require("lspsaga.provider")
 
 M.mappings = function()
-    inoremap({ "<C-l>s", signature.signature_help, { silent = true } })
-    nnoremap({ "lk", hover.render_hover_doc, { silent = true } })
-    nnoremap({ "ld", provider.preview_definition, { silent = true } })
-    nnoremap({ "lD", vim.lsp.buf.definition, { silent = true } })
-    nnoremap({ "<leader>=", vim.lsp.buf.formatting, { silent = true } })
-    nnoremap({ "ll", diagnostic.show_line_diagnostics, { silent = true } })
-    nnoremap({ "lr", rename.rename, { silent = true } })
-    nnoremap({ "la", require("plugins.telescope").code_action, { silent = true } })
-    nnoremap({ "lF", require("telescope.builtin").lsp_references, { silent = true } })
-    nnoremap({ "lf", provider.lsp_finder, { silent = true } })
-    nnoremap({ "l[", diagnostic.lsp_jump_diagnostic_prev, { silent = true } })
-    nnoremap({ "l]", diagnostic.lsp_jump_diagnostic_next, { silent = true } })
-    nnoremap({ "lT", "<Cmd>LspTroubleToggle<CR>", { silent = true } })
+    inoremap({ "<C-"..lsp_prefix..">s", signature.signature_help, { silent = true } })
+    nnoremap({ lsp_prefix.."k", hover.render_hover_doc, { silent = true } })
+    nnoremap({ lsp_prefix.."d", provider.preview_definition, { silent = true } })
+    nnoremap({ lsp_prefix.."D", vim.lsp.buf.definition, { silent = true } })
+    nnoremap({ lsp_prefix.."ff", vim.lsp.buf.formatting, { silent = true } })
+    nnoremap({ lsp_prefix.."l", diagnostic.show_line_diagnostics, { silent = true } })
+    nnoremap({ lsp_prefix.."r", rename.rename, { silent = true } })
+    nnoremap({ lsp_prefix.."a", require("plugins.telescope").code_action, { silent = true } })
+    nnoremap({ lsp_prefix.."F", require("telescope.builtin").lsp_references, { silent = true } })
+    nnoremap({ lsp_prefix.."f", provider.lsp_finder, { silent = true } })
+    nnoremap({ lsp_prefix.."[", diagnostic.lsp_jump_diagnostic_prev, { silent = true } })
+    nnoremap({ lsp_prefix.."]", diagnostic.lsp_jump_diagnostic_next, { silent = true } })
+    nnoremap({ lsp_prefix.."T", "<Cmd>LspTroubleToggle<CR>", { silent = true } })
+    nnoremap({ lsp_prefix.."S", "<Cmd>SymbolsOutline<CR>", { silent = true } })
 end
 
 return M
