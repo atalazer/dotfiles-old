@@ -19,11 +19,32 @@ autoload -Uz _zinit
 zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node \
     zinit-zsh/z-a-man \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-patch-dl \
+    # zinit-zsh/z-a-as-monitor \
+    # zinit-zsh/z-a-rust \
+    # zinit-zsh/z-a-patch-dl \
 
 ### End of Zinit's installer chunk
+
+
+# =================================================
+# Users Script
+# =================================================
+
+_zpcompinit_custom() {
+    setopt extendedglob local_options
+    autoload -Uz compinit
+    local zcd=${ZDOTDIR:-$HOME}/.zcompdump
+    local zcdc="$zcd.zwc"
+    # Compile the completion dump to increase startup speed, if dump is newer or doesn't exist,
+    # in the background as this is doesn't affect the current session
+    if [[ -f "$zcd"(#qN.m+1) ]]; then
+        compinit -i -d "$zcd"
+        { rm -f "$zcdc" && zcompile "$zcd" } &!
+    else
+        compinit -C -d "$zcd"
+        { [[ ! -f "$zcdc" || "$zcd" -nt "$zcdc" ]] && rm -f "$zcdc" && zcompile "$zcd" } &!
+    fi
+}
 
 # =================================================
 # Users Plugins
@@ -36,27 +57,18 @@ elif [[ $PROMPT = spaceship ]]; then
     zinit light denysdovhan/spaceship-prompt
 fi
 
-zinit wait lucid for \
-    OMZL::termsupport.zsh \
-    OMZP::command-not-found
-
 # ===== Basic =====
 zinit wait lucid light-mode for \
-    atpull"zinit cclear" blockf \
-        zsh-users/zsh-completions \
-    atload"!_zsh_autosuggest_start" nocompile \
+    atinit"_zpcompinit_custom; zicdreplay" \
+        zdharma/fast-syntax-highlighting \
+    atload"!_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
-    atinit"zicompinit; zicdreplay" nocompile nocompletions \
-        zdharma/fast-syntax-highlighting
+    blockf atpull"zinit creinstall -q ." \
+        zsh-users/zsh-completions
 
 # ===== Script =====
 zinit wait lucid light-mode for \
-    nocompile \
         kazhala/dotbare \
-    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' nocompile \
+    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
         hlissner/zsh-autopair
-
-# ===== env =====
-zinit wait lucid light-mode for \
-        lukechilds/zsh-better-npm-completion
 

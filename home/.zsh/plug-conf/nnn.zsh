@@ -110,7 +110,7 @@ pnnn () {
 # Alias NNN File Manager
 # -------------------------------------
 alias fm="env VISUAL=nnn_e nnn -er"
-alias fmp="pnnng"
+alias fmp="pnnn"
 alias {fmcd,fmq}="qnnn"
 alias {FM,sfm}='sudo -E nnn -dH'
 

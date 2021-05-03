@@ -1,25 +1,16 @@
-# fixme - the load process here seems a bit bizarre
-zmodload -i zsh/complist
-
-WORDCHARS=''
-
-unsetopt menu_complete   # do not autoselect the first completion entry
-unsetopt flowcontrol
-setopt auto_menu         # show completion menu on successive tab press
-setopt complete_in_word
-setopt always_to_end
+setopt ALWAYS_TO_END    # Move cursor to end of word if a full completion is inserted.
+setopt PATH_DIRS        # Perform path search even on command names with slashes in them.
+setopt NO_CASE_GLOB     # Make globbing case insensitive.
+setopt NO_LIST_BEEP     # Don't beep on ambiguous completions.
 
 # =================================================
 # User Section
 # =================================================
-#- buggy
 zstyle ':completion:*:corrections' format '%F{green}-- %d (errors: %e) --%f'
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:messages' format '%F{purple}-- %d --%f'
 zstyle ':completion:*:warnings' format '%F{red}-- Sorry, no matches found --%f'
-#-/buggy
 
-bindkey -M menuselect '^o' accept-and-infer-next-history
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' group-name ''

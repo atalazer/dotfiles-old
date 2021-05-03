@@ -1,8 +1,6 @@
 # Changing/making/removing directory
-setopt auto_cd # Change directory without typing cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushdminus
+setopt AUTO_CD
+setopt AUTO_PUSHD
 
 alias -g ...='cd ../..'
 alias -g ....='cd ../../..'

@@ -1,6 +1,5 @@
 # ===== Variable =====
 export ZDIR=$HOME/.zsh
-ZSH_CACHE_DIR=$ZDIR/.cache
 
 # available: antigen, sheldon, zinit
 PLUG_MAN=zinit
@@ -61,43 +60,12 @@ fi
 
 # ===== Zsh =====
 
-set_win_title(){
-    print -Pn "\e]0;%~\a"
-}
-precmd_functions+=(set_win_title)
-
-# Change cursor shape for different vi modes.
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
-
-function zle-line-init() {
-    echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-
-echo -ne '\e[5 q' # use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # use beam shape cursor for each new prompt.
-
-# Autocorrect
-#setopt correct
-
 # History
-HISTFILE=${ZDOTDIR:-${HOME}}/.zhistory
-HISTSIZE=10000
-SAVEHIST=10000
-setopt HIST_FIND_NO_DUPS HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE HIST_VERIFY
-setopt SHARE_HISTORY
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=${ZDOTDIR:-${HOME}}/.zsh-history
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_DUPS
 
 Source $ZDIR/modules/compe.zsh
 Source $ZDIR/modules/dir.zsh
@@ -109,8 +77,6 @@ Source ~/.function          # User function definition
 
 export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
-todo --show
-# schedule --show
 
 Eval "$(zoxide init zsh)"
 Eval "$(fnm env)"
