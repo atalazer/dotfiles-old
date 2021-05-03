@@ -9,25 +9,22 @@ telescope.setup({
         file_previewer   = previewers.vim_buffer_cat.new,
         grep_previewer   = previewers.vim_buffer_vimgrep.new,
         qflist_previewer = previewers.vim_buffer_qflist.new,
-
         scroll_strategy    = "cycle",
         selection_strategy = "reset",
         layout_strategy    = "flex",
-
         borderchars        = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
         layout_defaults = {
             horizontal = {
-                width_padding  = 0.1,
-                height_padding = 0.1,
-                preview_width  = 0.6,
+                width_padding  = 0.10,
+                height_padding = 0.10,
+                preview_width  = 0.65,
             },
             vertical = {
-                width_padding  = 0.05,
-                height_padding = 1,
-                preview_height = 0.5,
+                width_padding  = 0.10,
+                height_padding = 1.00,
+                preview_height = 0.60,
             },
         },
-
         mappings = {
             i = {
                 ["<C-j>"] = actions.move_selection_next,
@@ -42,12 +39,7 @@ telescope.setup({
 
                 ["<C-u>"] = actions.preview_scrolling_up,
                 ["<C-d>"] = actions.preview_scrolling_down,
-                -- ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                -- ["<A-q>"] = actions.smart_add_to_qflist + actions.open_qflist,
                 ["<Tab>"] = actions.toggle_selection,
-                -- ['<C-s>'] = actions.open_selected_files,
-                -- ['<C-a>'] = actions.cycle_previewers_prev,
-                -- ['<C-w>l'] = actions.preview_switch_window_right,
             },
             n = {
                 ["<CR>"] = actions.select_default + actions.center,
@@ -63,17 +55,17 @@ telescope.setup({
                 ["<C-d>"] = actions.preview_scrolling_down,
                 ["<C-q>"] = actions.send_to_qflist,
                 ["<Tab>"] = actions.toggle_selection,
-                -- ["<C-w>l"] = actions.preview_switch_window_right,
             },
         },
     },
     extensions = {
-        fzy_native = {
+        fzf = {
             override_generic_sorter = true,
             override_file_sorter = true,
+            case_mode = "smart_case",
         },
         media_files = {
-            filetypes = { "png", "webp", "jpg", "jpeg", "pdf", "mkv" },
+            filetypes = { "png", "webp", "jpg", "jpeg", "svg" },
             find_cmd = "rg",
         },
         frecency = {
@@ -94,7 +86,7 @@ telescope.setup({
     },
 })
 
-pcall(require("telescope").load_extension, "fzy_native") -- superfast sorter
+pcall(require("telescope").load_extension, "fzf") -- superfast sorter
 pcall(require("telescope").load_extension, "media_files") -- media preview
 pcall(require("telescope").load_extension, "frecency") -- frecency
 pcall(require("telescope").load_extension, "cheat") -- cheat.sh
@@ -112,37 +104,10 @@ local no_preview = function()
     })
 end
 
-M.grep_prompt = function()
-    require("telescope.builtin").grep_string({
-        shorten_path = true,
-        search = vim.fn.input("Grep String > "),
-    })
-end
 M.files = function()
     require("telescope.builtin").find_files({
         file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
     })
-end
-M.buffers = function()
-    require("telescope.builtin").buffers()
-end
-M.buffer_fuzzy = function()
-    require("telescope.builtin").current_buffer_fuzzy_find(no_preview())
-end
-M.colorscheme = function()
-    require("telescope.builtin").colorscheme()
-end
-M.live_grep = function()
-    require("telescope.builtin").live_grep()
-end
-M.file_browser = function()
-    require("telescope.builtin").file_browser()
-end
-M.oldfiles = function()
-    require("telescope.builtin").oldfiles()
-end
-M.keymaps = function()
-    require("telescope.builtin").keymaps()
 end
 
 M.code_action = function()

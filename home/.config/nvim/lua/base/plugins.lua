@@ -30,10 +30,7 @@ if ok then
         use({ "wbthomason/packer.nvim", opt = true })
 
         -- For keybindings
-        use({
-            "tjdevries/astronauta.nvim",
-            opt = false,
-        })
+        use({ "tjdevries/astronauta.nvim" })
 
         -- ======= User Interface =======
         -- Colorscheme
@@ -53,7 +50,6 @@ if ok then
         use({
             "akinsho/nvim-bufferline.lua",
             requires = { "kyazdani42/nvim-web-devicons" },
-            opt = false,
             config = function()
                 require("plugins.bufferline")
             end,
@@ -64,7 +60,6 @@ if ok then
             "glepnir/galaxyline.nvim",
             branch = "main",
             requires = { "kyazdani42/nvim-web-devicons" },
-            opt = false,
             config = function()
                 require("plugins.galaxyline")
             end,
@@ -85,7 +80,6 @@ if ok then
 
         use({
             "hrsh7th/nvim-compe",
-            opt = false,
             config = function()
                 require("plugins.compe")
             end,
@@ -93,7 +87,6 @@ if ok then
 
         use({
             "hrsh7th/vim-vsnip",
-            opt = false,
             requires = {
                 { "hrsh7th/vim-vsnip-integ" },
                 { "rafamadriz/friendly-snippets" },
@@ -111,14 +104,12 @@ if ok then
                 { "windwp/nvim-ts-autotag" },
                 { "JoosepAlviste/nvim-ts-context-commentstring" },
             },
-            opt = false,
             config = function()
                 require("plugins.treesitter")
             end,
         })
         use({
             "code-biscuits/nvim-biscuits",
-            opt = false,
             config = function()
                 require("nvim-biscuits").setup({
                     default_config = {
@@ -136,10 +127,7 @@ if ok then
         })
 
         -- SQL Support
-        use({
-            "tami5/sql.nvim",
-            opt = false,
-        })
+        use({ "tami5/sql.nvim" })
 
         -- Markdown Support
         use({
@@ -207,7 +195,6 @@ if ok then
         -- Code formatter
         use({
             "lukas-reineke/format.nvim",
-            opt = false,
             config = function()
                 require("plugins.format")
             end,
@@ -216,7 +203,6 @@ if ok then
         -- Autopairs
         use({
             "windwp/nvim-autopairs",
-            opt = false,
             config = function()
                 require("plugins.autopairs")
             end,
@@ -225,7 +211,6 @@ if ok then
         -- Multi Cursor
         use({
             "mg979/vim-visual-multi",
-            opt = false,
             config = function()
                 require("plugins.visual-multi")
             end,
@@ -246,15 +231,12 @@ if ok then
         -- Easy Commenting
         use({
             "tpope/vim-commentary",
-            opt = false,
-            config = function()
-            end,
+            requires = { "JoosepAlviste/nvim-ts-context-commentstring" },
         })
 
         -- Vim surround
         use({
             "blackcauldron7/surround.nvim",
-            opt = false,
             config = function()
                 vim.g.surround_prefix = "s"
                 vim.g.surround_mappings_style = "sandwich" -- "surround" or "sandwich"
@@ -296,7 +278,6 @@ if ok then
         -- Increment and decrement
         use({
             "monaqa/dial.nvim",
-            opt = false,
             config = function()
                 require("plugins.dial")
             end,
@@ -306,7 +287,6 @@ if ok then
         use({
             "lukas-reineke/indent-blankline.nvim",
             branch = "lua",
-            opt = false,
             config = function()
                 require("plugins.indent-blankline")
             end,
@@ -315,7 +295,6 @@ if ok then
         -- Free Distraction-mode
         use({
             "kdav5758/TrueZen.nvim",
-            opt = false,
             config = function()
                 require("plugins.truezen")
             end,
@@ -330,16 +309,9 @@ if ok then
             end,
         })
 
-        -- Find the enemy and replace them with dark power.
-        use({
-            "windwp/nvim-spectre",
-            opt = false,
-        })
-
         -- Browser Integration plugin
         use({
             "glacambre/firenvim",
-            opt = false,
             run = function()
                 vim.fn["firenvim#install"](0)
             end,
@@ -367,12 +339,11 @@ if ok then
             requires = {
                 { "nvim-lua/popup.nvim" },
                 { "nvim-lua/plenary.nvim" },
-                { "nvim-telescope/telescope-fzy-native.nvim" },
+                { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
                 { "nvim-telescope/telescope-media-files.nvim" },
                 { "nvim-telescope/telescope-frecency.nvim" },
-                { 'nvim-telescope/telescope-cheat.nvim' },
+                { "nvim-telescope/telescope-cheat.nvim" },
             },
-            opt = false,
             config = function()
                 require("plugins.telescope")
             end,
@@ -381,7 +352,6 @@ if ok then
         -- Superfast Tree File
         use({
             "kyazdani42/nvim-tree.lua",
-            opt = false,
             config = function()
                 require("plugins.nvim-tree")
             end,
@@ -390,7 +360,6 @@ if ok then
         -- Open root previllage files
         use({
             "lambdalisue/suda.vim",
-            opt = false,
             config = function()
                 vim.g.suda_smart_edit = 1
                 vim.g["suda#prompt"] = "Password : "
@@ -401,7 +370,6 @@ if ok then
         -- show git stuff in signcolumn
         use({
             "lewis6991/gitsigns.nvim",
-            opt = false,
             config = function()
                 require("plugins.gitsigns")
             end,
@@ -411,7 +379,12 @@ if ok then
         -- Colorizer
         use({
             "norcalli/nvim-colorizer.lua",
-            opt = false,
+            opt = true,
+            ft = {
+                "lua",
+                "css", "scss", "html",
+                "javascript", "typescript",
+            },
             config = function()
                 require("colorizer").setup({
                     ["*"] = {
@@ -426,7 +399,6 @@ if ok then
         -- Dims inactive windows
         use({
             "sunjon/shade.nvim",
-            opt = false,
             config = function()
                 require("shade").setup({
                     overlay_opacity = 60,
@@ -440,10 +412,20 @@ if ok then
             end,
         })
 
+        use({
+            "kdav5758/NoCLC.nvim",
+            config = function()
+                require("no-clc").setup({
+                    load_at_startup = true,
+                    cursorline = true,
+                    cursorcolumn = false,
+                })
+            end,
+        })
+
         -- Smooth Scrolling
         use({
             "psliwka/vim-smoothie",
-            opt = false,
             config = function()
                 -- Vim Smoothie
                 vim.g.smoothie_enabled = 1
@@ -462,7 +444,6 @@ if ok then
         -- vim which key
         use({
             "folke/which-key.nvim",
-            opt = false,
             config = function()
                 require("plugins.which-key")
             end,

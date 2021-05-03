@@ -120,14 +120,11 @@ nnoremap({ "<M-0>", ":lua require'bufferline'.go_to_buffer(10)<CR>", { silent = 
 
 -- Telescope
 nnoremap({ "<C-p>", require("plugins.telescope").files })
-nnoremap({ "<C-p>g", require("plugins.telescope").grep_prompt })
-nnoremap({ "<C-p>b", require("plugins.telescope").buffer_fuzzy })
-nnoremap({ "<C-p>l", require("plugins.telescope").live_grep })
-nnoremap({ "<C-p>f", require("plugins.telescope").file_browser })
-nnoremap({ "<C-p>t", require("plugins.telescope").buffers })
-nnoremap({ "<C-p>h", require("plugins.telescope").oldfiles })
-nnoremap({ "<C-p>k", require("plugins.telescope").keymaps })
-nnoremap({ "<C-p>c", require("plugins.telescope").colorscheme })
+nnoremap({ "<C-p>l", require("telescope.builtin").live_grep }) 
+nnoremap({ "<C-p>f", require("telescope.builtin").file_browser }) 
+nnoremap({ "<C-p>h", require("telescope.builtin").oldfiles }) 
+nnoremap({ "<C-p>k", require("telescope.builtin").keymaps }) 
+nnoremap({ "<C-p>c", require("telescope.builtin").colorscheme }) 
 
 -- Telescope Extensions
 nnoremap({ "<C-p>p", require("plugins.telescope").frecency })
