@@ -48,7 +48,7 @@ if command -v "pacman" &> /dev/null; then
         xorg xorg-server \
         xorg-xinit xorg-xprop xorg-xrdb \
         xsettingsd \
-        xcb-utils-error \
+        xcb-util-errors \
         xf86-input-libinput $DRI \
         xdg-user-dirs \
         thunar thunar-archive-plugin thunar-volman \
