@@ -1,0 +1,25 @@
+configuration {
+  font:                   "JetBrainsMono Nerd Font 11";
+  show-icons:             true;
+  cycle:                  true;
+  hide-scrollbar:         true;
+  sidebar-mode:           false;
+  disable-history:        false;
+  modi:                   "drun,run,window,file-browser";
+  display-drun:           "";
+  display-run:            "";
+  display-window:         "";
+  display-file-browser:   "";
+  display-calc:           "";
+  terminal:               "kitty";
+  columns:                1;
+  lines:                  15;
+  width:                  60;
+  bw:                     1;
+  padding:                3;
+  line-margin:            2;
+  line-padding:           1;
+}
+@import "~/.cache/wal/colors-rofi-dark"
+
+/* vim:ft=css */

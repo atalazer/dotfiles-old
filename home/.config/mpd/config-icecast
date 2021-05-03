@@ -1,9 +1,0 @@
-log_file            "/tmp/mpd-icecast.log"
-pid_file            "/tmp/mpd-icecast.pid"
-state_file          "~/.mpd/mpd-icecast.state"
-
-database {
-    plugin "proxy"
-    host "localhost"
-    port "6600"
-}

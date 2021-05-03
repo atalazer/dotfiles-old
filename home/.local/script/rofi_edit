@@ -26,6 +26,7 @@ nnn
 .wallpaper
 .tmux
 *.zsh-*
+bin
 "
 
 ignore_file="/tmp/rofi_edit_ignore_file"
@@ -46,4 +47,4 @@ if [[ -z "${choice// }" ]]; then
 fi
 
 # Edit the selected file
-kitty -1 --class editor -e nvim "$choice"
+kitty --name editor -e nvim "$choice"
