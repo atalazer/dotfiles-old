@@ -87,7 +87,7 @@ local keys = gears.table.join(
     -- ===================================== Scratchpad {{{
 
     -- scratchpad
-    awful.key({ superkey, shiftkey }, "q", function()
+    awful.key({ superkey }, "\\", function()
         apps.scratchpad()
     end, { description = "scratchpad", group = "launcher" }),
 
@@ -97,6 +97,7 @@ local keys = gears.table.join(
         { description = "markdown scratchpad", group = "launcher" })
 
 -- }}}
+
 )
 
 return keys
