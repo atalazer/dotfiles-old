@@ -73,8 +73,8 @@ bind p hint -b
 bind ;/ fillcmdline tabopen s
 bind / fillcmdline find
 bind ? fillcmdline find -?
-bind m findnext 1
-bind M findnext -1
+bind n findnext 1
+bind N findnext -1
 bind <Esc><Esc> nohlsearch
 
 " ### Tab
@@ -117,7 +117,8 @@ bind ;C composite hint_focus; !s xdotool key Menu
 " ================================================
 " Autocommand
 " ================================================
-autocmd DocStart mail.google.com mode ignore
+blacklistadd mail.google.com
+blacklistadd facebook.com
 
 " ================================================
 " Misc
