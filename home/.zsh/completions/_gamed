@@ -1,7 +1,0 @@
-#compdef gamed
-
-_argument \
-    '--help[show help]' \
-    '--on[turn on]' \
-    '--off[turn off]'
-
