@@ -9,6 +9,10 @@ local vnoremap = _Key.vnoremap
 local xmap = _Key.xmap
 local cnoremap = _Key.cnoremap
 
+-- Unmap
+map({"Q", "<Nop>"})
+map({"q:", "<Nop>"})
+
 -- move vertically by visual line on wrapped lines
 nnoremap({ "j", "gj" })
 nnoremap({ "k", "gk" })
