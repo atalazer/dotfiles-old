@@ -18,6 +18,6 @@
 **/*.zip
 **/*.rar
 **/*.so
+**/*__
 home/.user.keys
-
 home/.config/rofi/rofi-spotlight/history.txt

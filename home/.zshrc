@@ -6,9 +6,11 @@ fpath=($HOME/.zsh/completions $fpath)
 # available: antigen, zinit
 PLUG_MAN=zinit
 
+# available: starship, spaceship
+PROMPT="starship"
+
 # }}}
 
-# ===== Helper ===== {{{
 # ===== Plugins ===== {{{
 
 if [[ $PLUG_MAN = "zinit" ]]; then
