@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+rofi -modi "Global Search":"~/.config/rofi/rofi-spotlight/rofi-spotlight.sh" -show "Global Search"  -config ~/.config/rofi/rofi-spotlight/rofi.rasi
+
