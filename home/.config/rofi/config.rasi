@@ -1,6 +1,7 @@
 configuration {
   font:                   "JetBrainsMono Nerd Font 11";
   show-icons:             true;
+  icon-theme:             "Papirus";
   cycle:                  true;
   hide-scrollbar:         true;
   sidebar-mode:           false;
@@ -21,5 +22,3 @@ configuration {
   line-padding:           1;
 }
 @import "~/.cache/wal/colors-rofi-dark"
-
-/* vim:ft=css */
