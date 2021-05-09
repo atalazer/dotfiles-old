@@ -31,6 +31,7 @@ require("nvim-treesitter.configs").setup({
             sh   = "# %s",
             bash = "# %s",
             zsh  = "# %s",
+            toml  = "# %s",
         }
     },
 })
