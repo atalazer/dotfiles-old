@@ -98,6 +98,11 @@ user = {
     -- Autostart apps
     autostart_debug = false,
     autostart = {
+        [[
+        xautolock -time 5 -locker "$(awesome-client 'lock_screen_show()' && systemctl suspend)" \
+            -detectsleep -resetsaver \
+            -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
+        ]],
         "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
         "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
         "wal --backend colorthief -n -s -t -i " .. wallpaper ,
@@ -125,7 +130,7 @@ user = {
     -- >> Sidebar <<
     sidebar = {
         hide_on_mouse_leave = true,
-        show_on_mouse_screen_edge = false,
+        show_on_mouse_screen_edge = true,
     },
 
     -- >> Lock screen <<
@@ -429,4 +434,4 @@ end)
 -- collectgarbage("setstepmul", 400)
 
 collectgarbage("setpause", 150)
-collectgarbage("setstepmul", 600)
+collectgarbage("setstepmul", 1000)
