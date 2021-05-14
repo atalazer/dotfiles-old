@@ -1,3 +1,5 @@
+execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
+
 #### Files
 ncmpcpp_directory  = ~/.config/ncmpcpp
 lyrics_directory  = ~/.config/ncmpcpp/lyrics
@@ -60,8 +62,6 @@ connected_message_on_startup = no
 visualizer_output_name = "Visualizer"
 visualizer_data_source = "/tmp/mpd.fifo"
 
-## Left aligned cover-art
-visualizer_look = "▐"
 visualizer_autoscale = "yes"
 visualizer_spectrum_smooth_look = "yes"
 visualizer_type = "wave"
@@ -87,4 +87,11 @@ mouse_list_scroll_whole_page = "yes"
 lines_scrolled = "1"
 message_delay_time = "1"
 volume_change_step = "2"
+
+## Left aligned cover-art
+visualizer_look = "  "
+startup_screen = visualizer
+startup_slave_screen_focus = yes
+startup_slave_screen = playlist
+locked_screen_width_part = 30
 

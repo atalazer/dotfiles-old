@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Cover art script for ncmpcpp-ueberzug
 
 # SETTINGS
-music_library="${XDG_MUSIC_DIR:-$HOME/Music}"
+music_library=$HOME/Music
 fallback_image="$HOME/.config/ncmpcpp/ncmpcpp-ueberzug/img/fallback.png"
 padding_top=1
 padding_bottom=0
@@ -20,8 +20,8 @@ padding_left=0
 # Only set this if the geometries are wrong or ncmpcpp shouts at you to do it.
 # Visually select/highlight a character on your terminal, zoom in an image 
 # editor and count how many pixels a character's width and height are.
-font_height=
-font_width=
+font_height=16
+font_width=8
 
 main() {
     kill_previous_instances >/dev/null 2>&1
