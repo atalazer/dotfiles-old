@@ -15,8 +15,8 @@ au FileType html,css setlocal sw=2 ts=2 sts=2
 
 " spelling in markdown and text
 au FileType markdown,text setlocal conceallevel=0 
-au BufEnter */blog/**.md,TODO setlocal spell spelllang=id
-au BufEnter */blog/**.en.md setlocal spell spelllang=en
+au BufEnter */posts/**.md,*/docs/**.md,TODO setlocal spell spelllang=id
+au BufEnter */posts/**.en.md setlocal spell spelllang=en
 
 " Users
 au BufEnter TODO,SCHEDULE setlocal filetype=markdown spell spelllang=id

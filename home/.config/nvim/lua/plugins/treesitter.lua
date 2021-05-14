@@ -28,9 +28,7 @@ require("nvim-treesitter.configs").setup({
         config = {
             css  = "// %s",
             lua  = "-- %s",
-            sh   = "# %s",
-            bash = "# %s",
-            zsh  = "# %s",
+            sh, bash, zsh   = "# %s",
             toml  = "# %s",
         }
     },

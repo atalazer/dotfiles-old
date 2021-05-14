@@ -155,21 +155,28 @@ local servers = {
         cmd = {
             sumneko_cmd,
         },
+        -- delete root from workspace to make sure we don't trigger duplicate warnings
+        on_new_config = function(config, root)
+            local libs = vim.tbl_deep_extend("force", {}, library)
+            libs[root] = nil
+            config.settings.Lua.workspace.library = libs
+            return config
+        end,
         settings = {
             Lua = {
                 runtime = {
                     version = "LuaJIT",
                     path = {
                         vim.split(package.path, ";"),
+                        "lua/?.lua",
+                        "lua/?/init.lua"
                     },
                 },
                 completion = {
                     keywordSnippet = "Disable",
                     callSnippet = "Disable",
                 },
-                telemetry = {
-                    enable = false,
-                },
+                telemetry = { enable = false },
                 diagnostics = {
                     enable = true,
                     disable = {
@@ -189,10 +196,14 @@ local servers = {
                 },
                 workspace = {
                     library = {
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                        [vim.fn.expand("$VIMRUNTIME")] = true,
+                        [vim.fn.expand("~/.config/nvim")] = true,
+                        [vim.fn.expand("~/.local/share/nvim/site/pack/packer/opt/*")] = true,
+                        [vim.fn.expand("~/.local/share/nvim/site/pack/packer/start/*")] = true,
                         [vim.fn.expand("/usr/share/awesome/lib")] = true,
                     },
+                    maxPreload = 2000,
+                    preloadFileSize = 50000,
                 },
             },
         },
