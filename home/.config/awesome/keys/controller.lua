@@ -43,43 +43,13 @@ local keys = gears.table.join(
     end, { description = "Play Previous Song mpc", group = "controller" }),
 
     -- ============================================================= Screenshot
-    awful.key({}, "Print", function()
-        awful.spawn.with_shell(apps.controller.shot_clip)
-    end, { description = "Shot to Clipboard", group = "controller" }),
-
-    awful.key({ W }, "Print", function()
-        awful.spawn.with_shell(apps.controller.shot)
-    end, { description = "Shot Screen", group = "controller" }),
-
-    awful.key({ C }, "Print", function()
-        awful.spawn.with_shell(apps.controller.shot_sleep)
-    end, { description = "Shot after 3 sec", group = "controller" }),
-
     awful.key({ S }, "Print", function()
         awful.spawn.with_shell(apps.controller.shot_select)
     end, { description = "Shot selected", group = "controller" }),
 
     awful.key({ A }, "Print", function()
         awful.spawn.with_shell(apps.controller.shot_active)
-    end, { description = "Shot Active Client", group = "controller" }),
-
-    -- Screenkey toggle
-    awful.key( { superkey }, "F12", apps.screenkey,
-        {description = "raise volume", group = "controller"}),
-
-    -- Microphone (V for voice)
-    awful.key( { superkey }, "v",
-        function()
-            awful.spawn.with_shell("pactl set-source-mute @DEFAULT_SOURCE@ toggle")
-        end,
-        {description = "(un)mute microphone", group = "controller"}),
-
-    -- Microphone overlay
-    awful.key( { superkey, shiftkey }, "v",
-        function()
-            microphone_overlay_toggle()
-        end,
-        {description = "toggle microphone overlay", group = "controller"})
+    end, { description = "Shot Active Client", group = "controller" })
 
 )
 

@@ -1,0 +1,245 @@
+#!/usr/bin/env bash
+
+DMENU="rofi -dmenu -p Screenshot -lines 10 -width 20"
+SCREENSHOT_DIR=$(xdg-user-dir PICTURES)/Screenshots
+SAVED_NAME=$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S)-maim.png
+TMP_IMG=/tmp/image.png
+
+sleep=3
+
+border_size=1
+rounded_corner=3
+shadow_size="50x10+0+10"
+
+background_size=3
+background_color="#ffffff"
+color_fg="#ffffff"
+color_bg="#1F2233"
+color_profile="/usr/share/color/icc/colord/sRGB.icc"
+
+font_size=11
+font='JetBrains-Mono-Bold-Nerd-Font-Complete'
+
+add_author=false
+author_position=("South" "+0+26")
+author="By: Atalariq Barra H."
+
+check(){
+    if [ ! -d "$SCREENSHOT_DIR" ];then
+        /bin/mkdir -p "$SCREENSHOT_DIR"
+    fi
+
+    if [ -f "$TMP_IMG" ];then
+        /bin/rm "$TMP_IMG"
+    fi
+}
+
+parse(){
+    IMG=$TMP_IMG
+    DIR=/tmp
+
+    if [[ $border_size -ge 3 ]]; then
+
+        # Generate image info
+        convert "$IMG" \
+            -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] '"${rounded_corner}"','"${rounded_corner}"''\
+        info: > $DIR/_rounded_.mvg
+
+        # Generate rounding masked
+        convert "$IMG" -border ${border_size} -alpha transparent \
+            -background none -fill white -stroke none -strokewidth 0 \
+            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_mask_.png
+
+        # Generate rounding overlay
+        convert "$IMG" -border ${border_size} -alpha transparent \
+            -background none -fill none -stroke $_FG_COLOR_ -strokewidth ${border_size} \
+            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_overlay_.png
+
+        # Set rounded corner & border
+        convert "$IMG" -alpha set -bordercolor none -border ${border_size}  \
+            $DIR/_rounded_mask_.png -compose DstIn -composite \
+            $DIR/_rounded_overlay_.png -compose Over -composite \
+            "$IMG"
+    else
+        # Set rounded corner
+        convert "$IMG" \( +clone  -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
+        \( +clone -flip \) -compose Multiply -composite \
+        \( +clone -flop \) -compose Multiply -composite \
+        \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
+    fi
+
+    # Set image shadow + border
+    convert $IMG \( +clone -background black \
+    -shadow ${shadow_size} \) +swap -background none \
+    -layers merge +repage $IMG && \
+    convert "$IMG" -bordercolor $background_color -border $background_size "$IMG"
+
+    # Set image author if enabled
+    if [[ $add_author == true ]]; then
+        echo -n " ${author} " | convert $IMG \
+        -gravity ${author_position[0]} -pointsize ${font_size} -fill ${color_fg} \
+        -undercolor ${color_bg} -font ${font} \
+        -annotate ${author_position[1]} @- $IMG && \
+        convert $IMG -gravity South -chop 0x$(( $background_size / 2)) $IMG
+    fi
+
+    # Add top bg
+    convert $IMG -gravity North -background ${background_color} \
+    -splice 0x$(( $background_size / 2)) $IMG
+
+    # Set image profile
+    convert $IMG -profile ${color_profile} $IMG
+
+}
+
+notify() {
+    _MSG=$1
+    _FILE=$SAVED_NAME
+
+    awesome-client "
+    -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
+    naughty = require('naughty')
+    awful = require('awful')
+    beautiful = require('beautiful')
+    dpi = beautiful.xresources.apply_dpi
+
+    local open_image = naughty.action {
+        name = 'Open',
+        icon_only = false,
+    }
+
+    local open_folder = naughty.action {
+        name = 'Open Folder',
+        icon_only = false,
+    }
+
+    local delete_image = naughty.action {
+        name = 'Delete',
+        icon_only = false,
+    }
+
+    -- Execute the callback when 'Open' is pressed
+    open_image:connect_signal('invoked', function()
+        awful.spawn('xdg-open ' .. '${_FILE}', false)
+    end)
+
+    open_folder:connect_signal('invoked', function()
+        awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
+    end)
+
+    -- Execute the callback when 'Delete' is pressed
+    delete_image:connect_signal('invoked', function()
+        awful.spawn('gio trash ' .. '${_FILE}', false)
+    end)
+
+    -- Show notification
+    naughty.notification ({
+        app_name = 'Screenshot Tool',
+        icon = '${_FILE}',
+        timeout = 10,
+        title = '<b>Shot</b>',
+        message = '${_MSG}',
+        actions = { open_image, open_folder, delete_image }
+    })
+    "
+}
+
+noparse(){
+    case $1 in
+        clipboard)
+            check && \
+            maim -m 1 $TMP_IMG && \
+            notify "Screenshot Saved to Clipboard" && \
+            xclip -selection clipboard -i $TMP_IMG -t image/png
+        ;;
+        full)
+            check && \
+            maim -m 1 $TMP_IMG && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved" 
+        ;;
+        active)
+            check && \
+            maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot from Active Windows Saved"
+        ;;
+        select)
+            check && \
+            maim -u -m 1 -s $TMP_IMG && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Selected Has been Saved" 
+        ;;
+        delay)
+            check && \
+            notify-send "Shot" "Shot After ${sleep} Sec" && \
+            maim -m 1 -d $sleep $TMP_IMG && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved" 
+        ;;
+    esac
+}
+
+parse(){
+    case $1 in
+        clipboard)
+            check && \
+            maim -m 1 $TMP_IMG && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            notify "Screenshot Saved to Clipboard" && \
+            xclip -selection clipboard -i $TMP_IMG -t image/png
+        ;;
+        full)
+            check && \
+            maim -m 1 $TMP_IMG && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved" 
+        ;;
+        active)
+            check && \
+            maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot from Active Windows Saved"
+        ;;
+        select)
+            check && \
+            maim -u -m 1 -s $TMP_IMG && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Selected Has been Saved" 
+        ;;
+        delay)
+            check && \
+            notify-send "Shot" "Shot After ${sleep} Sec" && \
+            maim -m 1 -d $sleep $TMP_IMG && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            mv $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved" 
+        ;;
+    esac
+}
+
+OPTIONS='''
+[
+    ["Clipboard",               "parse clipboard"],
+    ["Clipboard (Noparse)",     "noparse clipboard"],
+    ["Fullscreen",              "parse full"],
+    ["Fullscreen (Noparse)",    "noparse full"],
+    ["Active",                  "parse active"],
+    ["Active (Noparse)",        "noparse active"],
+    ["Select",                  "parse select"],
+    ["Select (Noparse)",        "noparse select"],
+    ["Delay",                   "parse delay"],
+    ["Delay (Noparse)",         "noparse delay"]
+]
+'''
+
+menu=$(echo $OPTIONS | jq -r ".[][0]" | $DMENU)
+$(echo $OPTIONS | jq -r ".[] | select(.[0] == \"$menu\") | .[1]")

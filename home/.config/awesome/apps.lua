@@ -7,7 +7,44 @@ local helpers = require("helpers")
 local icons = require("icons")
 local notifications = require("notifications")
 
+local script_dir = os.getenv("HOME") .. "/.local/script/"
+
 local apps = {}
+
+apps.clipboard = "env CM_HISTLENGTH=20 CM_LAUNCHER=rofi clipmenu"
+
+apps.rofi = {
+    center      = script_dir .. "rofi_center",
+    app_menu    = script_dir .. "rofi_app_menu",
+    global_menu = script_dir .. "rofi_global_menu",
+    edit        = script_dir .. "rofi_edit",
+    shot        = script_dir .. "rofi_shot",
+    todo        = script_dir .. "rofi_todo",
+    translate   = script_dir .. "rofi_translate -i",
+}
+
+apps.controller = {
+    -- Volume Control
+    vol_up   = script_dir .. "volume-controller up",
+    vol_down = script_dir .. "volume-controller down",
+    vol_mute = script_dir .. "volume-controller mute",
+    -- Brightness Control
+    bn_up   = script_dir .. "brightness-controller up",
+    bn_down = script_dir .. "brightness-controller down",
+    bn_opt  = script_dir .. "brightness-controller optimize",
+    -- Music Control
+    mus_n = script_dir .. "music-controller next",
+    mus_p = script_dir .. "music-controller prev",
+    mus_t = script_dir .. "music-controller toggle",
+    mus_s = script_dir .. "music-controller stop",
+    mus_c = script_dir .. "music-controller current",
+    -- Shot
+    shot        = script_dir .. "shot save",
+    shot_clip   = script_dir .. "shot clipboard",
+    shot_active = script_dir .. "shot active",
+    shot_sleep  = script_dir .. "shot sleep",
+    shot_select = script_dir .. "shot select"
+}
 
 apps.browser = function ()
     awful.spawn(user.browser, { switchtotag = true })
@@ -18,19 +55,7 @@ end
 apps.telegram = function ()
     helpers.run_or_raise({class = 'TelegramDesktop'}, false, "telegram", { switchtotag = true })
 end
-apps.discord = function ()
-    -- Run or raise Discord running in the browser, spawned with Chromium browser's app mode
-    -- >> Ubuntu / Debian
-    -- helpers.run_or_raise({instance = 'discordapp.com__channels_@me'}, false, "chromium-browser --app=\"https://discordapp.com/channels/@me\"")
-    -- >> Arch
-    helpers.run_or_raise({instance = 'discordapp.com__channels_@me'}, false, "chromium --app=\"https://discordapp.com/channels/@me\"")
 
-    -- Run or raise Discord app
-    -- helpers.run_or_raise({class = 'discord'}, false, "discord")
-end
-apps.weechat = function ()
-    helpers.run_or_raise({instance = 'weechat'}, true, user.terminal.." --class weechat -e weechat")
-end
 apps.mail = function ()
     helpers.run_or_raise({instance = 'email'}, false, user.email_client, {switchtotag = true})
 end
@@ -43,28 +68,20 @@ apps.steam = function ()
     helpers.run_or_raise({class = 'Steam'}, false, "steam")
 end
 
-apps.lutris = function ()
-    helpers.run_or_raise({class = 'Lutris'}, false, "lutris")
-end
-
 apps.youtube = function ()
-    awful.spawn.with_shell("rofi_mpvtube")
+    awful.spawn.with_shell("ytfzf -fDH")
 end
 
-apps.networks = function ()
-    awful.spawn.with_shell("networkmanager_dmenu")
+apps.network = function ()
+    awful.spawn.with_shell(script_dir .. "rofi_network_manager")
 end
 
-apps.passwords = function ()
-    helpers.run_or_raise({class = 'KeePassXC'}, true, "keepassxc")
+apps.password = function ()
+    awful.spawn.with_shell(script_dir .. "rofi_pass")
 end
 
 apps.volume = function ()
     helpers.run_or_raise({class = 'Pavucontrol'}, true, "pavucontrol")
-end
-
-apps.torrent = function ()
-    helpers.run_or_raise({instance = 'torrent'}, true, user.terminal.." --class torrent -e transmission-remote-cli")
 end
 
 apps.editor = function ()
@@ -96,11 +113,6 @@ end
 
 apps.record = function ()
     awful.spawn.with_shell("screenrec.sh")
-end
-
--- I only use emacs for org mode :)
-apps.org = function ()
-    helpers.run_or_raise({class = 'Emacs'}, false, "emacs")
 end
 
 apps.music = function ()
@@ -220,29 +232,5 @@ function apps.screenshot(action, delay)
     end
 
 end
-
-local controller_dirs = os.getenv("HOME") .. "/.local/script/"
-apps.controller = {
-    -- Volume Control
-    vol_up   = controller_dirs .. "volume-controller up",
-    vol_down = controller_dirs .. "volume-controller down",
-    vol_mute = controller_dirs .. "volume-controller mute",
-    -- Brightness Control
-    bn_up   = controller_dirs .. "brightness-controller up",
-    bn_down = controller_dirs .. "brightness-controller down",
-    bn_opt  = controller_dirs .. "brightness-controller optimize",
-    -- Music Control
-    mus_n = controller_dirs .. "music-controller next",
-    mus_p = controller_dirs .. "music-controller prev",
-    mus_t = controller_dirs .. "music-controller toggle",
-    mus_s = controller_dirs .. "music-controller stop",
-    mus_c = controller_dirs .. "music-controller current",
-    -- Shot
-    shot        = controller_dirs .. "shot save",
-    shot_clip   = controller_dirs .. "shot clipboard",
-    shot_active = controller_dirs .. "shot active",
-    shot_sleep  = controller_dirs .. "shot sleep",
-    shot_select = controller_dirs .. "shot select"
-}
 
 return apps
