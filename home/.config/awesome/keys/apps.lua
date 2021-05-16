@@ -22,7 +22,7 @@ local keys = gears.table.join(
     end, { description = "App Center", group =  "launcher" } ),
     
     -- Rofo Global Menu
-    awful.key({ superkey, shiftkey }, "r", function()
+    awful.key({ superkey }, "p", function()
         awful.spawn.with_shell(apps.rofi.global_menu)
     end, { description = "Global Menu", group =  "launcher" } ),
     
@@ -32,14 +32,14 @@ local keys = gears.table.join(
     end, { description = "Clipboard manager", group = "launcher" }),
 
     -- Rofi Screenshots
-    awful.key({ W }, "Print", function()
-        awful.spawn.with_shell(apps.rofi.shot)
+    awful.key({ superkey }, "Print", function()
+        awful.spawn(apps.rofi.shot)
     end, { description = "Shot", group = "launcher" }),
 
-    -- Rofi Todo
-    awful.key({ superkey }, "/", function()
-        awful.spawn.with_shell(apps.rofi.tofo)
-    end, { description = "Todo", group = "launcher" }),
+    -- Rofi Record
+    awful.key({ superkey }, "F8", function()
+        awful.spawn(apps.rofi.record)
+    end, { description = "Record", group = "launcher" }),
 
     -- Network dialog
     awful.key({ superkey }, "F11",
@@ -55,6 +55,11 @@ local keys = gears.table.join(
     awful.key({ superkey }, "e", function()
         awful.spawn.with_shell(apps.rofi.edit)
     end, { description = "Quick edit file", group = "launcher" }),
+
+    -- Rofi Todo
+    awful.key({ superkey }, "/", function()
+        awful.spawn.with_shell(apps.rofi.todo)
+    end, { description = "Todo", group = "launcher" }),
 
     -- Quick Translate
     awful.key({ superkey }, "t", function()

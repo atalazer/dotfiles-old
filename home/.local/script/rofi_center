@@ -13,6 +13,7 @@ OPTIONS='''
   [ "MPD",              "rofi_mpdmenu" ],
   [ "Network Manager",  "rofi_network_manager" ],
   [ "Password Manager", "rofi-pass"],
+  [ "Record",           "rofi_record"],
   [ "Screenshot",       "rofi_shot"],
   [ "Switcher",         "rofi_switcher"],
   [ "Todo",             "rofi_todo"],

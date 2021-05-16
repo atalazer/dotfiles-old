@@ -103,8 +103,8 @@ user = {
             -detectsleep -resetsaver \
             -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
         ]],
-        "picom -b --experimental-backends --config ~/.config/picom/picom-blur.conf",
-        "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
+        "picom --experimental-backends --config ~/.config/picom/picom-blur.conf",
+        "fusuma -c ~/.config/fusuma/config-awesome.yml",
         "wal --backend colorthief -n -s -t -i " .. wallpaper ,
         "xrdb -load ~/.Xresources",
     },

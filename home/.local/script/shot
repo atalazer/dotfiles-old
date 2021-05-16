@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-SCREENSHOT_DIR=$(xdg-user-dir PICTURES)/Screenshots
+_XDG_=$(xdg-user-dir PICTURES)/Screenshots
+SCREENSHOT_DIR=${_XDG_:-$HOME/Pictures/Screenshots}
 SAVED_NAME=$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S)-maim.png
 TMP_IMG=/tmp/image.png
 
