@@ -2,7 +2,6 @@ local awful = require("awful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
-
     -- Terminal {{{
     ruled.client.append_rule({
         rule_any = {
@@ -15,7 +14,7 @@ ruled.client.connect_signal("request::rules", function()
                 "URxvt",
             },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[1].name,
             switch_to_tags = true,
         },
@@ -28,7 +27,6 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "firefox",
                 "Nightly",
-                -- "qutebrowser",
             },
         },
         except_any = {
@@ -36,10 +34,29 @@ ruled.client.connect_signal("request::rules", function()
             instance = { "Toolkit" },
             type = { "dialog" },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[2].name,
             switch_to_tags = true,
         },
+    })
+    -- }}}
+
+    -- Mail {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "mail" },
+            instance = { "mail" },
+        },
+        properties = { tag = awful.screen.focused().tags[3] },
+    })
+    -- }}}
+
+    -- Chatting {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "TelegramDesktop" },
+        },
+        properties = { tag = awful.screen.focused().tags[3] },
     })
     -- }}}
 
@@ -48,7 +65,7 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             class = { "Nemo", "Thunar" },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[3].name,
             switch_to_tags = true,
         },
@@ -61,28 +78,25 @@ ruled.client.connect_signal("request::rules", function()
             class = { "libreoffice", "DesktopEditors" },
             instance = { "libreoffice", "DesktopEditors" },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[3].name,
             switch_to_tags = true,
         },
     })
     -- }}}
 
-    -- Chatting {{{
+    -- Image editing {{{
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "discord",
-                "TelegramDesktop",
-                "Signal",
-                "Slack",
-                "TeamSpeak 3",
-                "zoom",
-                "weechat",
-                "6cord",
+                "Gimp",
+                "Inkscape",
             },
         },
-        properties = { tag = awful.screen.focused().tags[3] }
+        properties = {
+            tag = awful.screen.focused().tags[3].name,
+            switch_to_tags = true,
+        },
     })
     -- }}}
 
@@ -104,7 +118,7 @@ ruled.client.connect_signal("request::rules", function()
                 "glyphclientapp.exe",
             },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[4].name,
             switch_to_tags = false,
         },
@@ -123,24 +137,9 @@ ruled.client.connect_signal("request::rules", function()
                 "Steam",
             },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[5].name,
             switch_to_tags = false,
-        },
-    })
-    -- }}}
-
-    -- Image editing {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Gimp",
-                "Inkscape",
-            },
-        },
-        properties = { 
-            tag = awful.screen.focused().tags[7].name,
-            switch_to_tags = true,
         },
     })
     -- }}}
@@ -149,25 +148,21 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "torrent",
-                "Transmission",
-                "Deluge",
-                "VirtualBox Manager",
-                "KeePassXC",
+                "htop",
+                "monitoring",
             },
             instance = {
-                "torrent",
-                "qemu",
+                "htop",
+                "monitoring",
             },
         },
         except_any = {
             type = { "dialog" },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[10].name,
             switch_to_tags = false,
         },
     })
     -- }}}
-
 end)

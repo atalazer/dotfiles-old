@@ -1,8 +1,8 @@
 local awful = require("awful")
-local beautiful = require("beautiful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
+
     -- Fixed terminal geometry for floating terminals {{{
     ruled.client.append_rule({
         rule_any = {
@@ -81,6 +81,21 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- File Archive {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "Engrampa" },
+        },
+        properties = {
+            titlebars_enabled = true,
+            floating = true,
+            width = screen_width * 0.65,
+            height = screen_height * 0.55,
+            placement = centered_client_placement,
+        },
+    })
+    -- }}}
+
     -- File chooser dialog {{{
     ruled.client.append_rule({
         rule_any = { role = { "GtkFileChooserDialog" } },
@@ -102,13 +117,6 @@ ruled.client.connect_signal("request::rules", function()
             sticky = true,
             width = screen_width * 0.3,
         },
-        callback = function(c)
-            awful.placement.bottom_right(c, {
-                honor_padding = true,
-                honor_workarea = true,
-                margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2 },
-            })
-        end,
     })
     -- }}}
 
@@ -197,18 +205,18 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Visualizer {{{
     ruled.client.append_rule({
-        rule_any = { class = { "Visualizer" } },
+        rule_any = { class = { "Visualizer" }, instance = { "Visualizer" } },
         properties = {
-            floating = true,
-            maximized_horizontal = true,
-            sticky = true,
             ontop = false,
-            skip_taskbar = true,
-            below = true,
             focusable = false,
-            height = screen_height * 0.40,
-            opacity = 0.6,
+            floating = true,
+            sticky = true,
+            below = true,
+            skip_taskbar = true,
             titlebars_enabled = false,
+            width = screen_width * 0.7,
+            height = screen_height * 0.2,
+            opacity = 0.6,
         },
         callback = function(c)
             awful.placement.bottom(c)
@@ -222,4 +230,5 @@ ruled.client.connect_signal("request::rules", function()
         properties = { floating = true },
     })
     -- }}}
+
 end)
