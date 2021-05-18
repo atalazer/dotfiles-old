@@ -13,11 +13,17 @@ if ok then
     local use = packer.use
     packer.init({
         git = {
-            clone_timeout = 180, -- Timeout, in seconds, for git clones
+            clone_timeout = 300,
         },
         display = {
-            open_cmd = "leftabove 60vnew [packer]",
-            -- open_cmd = "80vnew [packer]",
+            -- open_cmd = "leftabove 60vnew [packer]",
+            open_fn = function()
+                return require("packer.util").float({
+                    width  = 0.80,
+                    height = 0.80,
+                    border = Util.border,
+                })
+            end,
         },
         profile = {
             enable = true,
@@ -277,9 +283,19 @@ if ok then
 
         -- Free Distraction-mode
         use({
-            "kdav5758/TrueZen.nvim",
+            "folke/zen-mode.nvim",
             config = function()
-                require("plugins.truezen")
+                require("zen-mode").setup({
+                    window = {
+                        backdrop = 1.0,
+                        width = 0.80,
+                        height = 1.0,
+                        options = {
+                            signcolumn = "no",
+                            foldcolumn = "0",
+                        },
+                    },
+                })
             end,
         })
 
@@ -365,8 +381,11 @@ if ok then
             opt = true,
             ft = {
                 "lua",
-                "css", "scss", "html",
-                "javascript", "typescript",
+                "css",
+                "scss",
+                "html",
+                "javascript",
+                "typescript",
             },
             config = function()
                 require("colorizer").setup({
@@ -402,6 +421,25 @@ if ok then
                     load_at_startup = true,
                     cursorline = true,
                     cursorcolumn = false,
+                })
+            end,
+        })
+
+        -- Highlight, list and search todo comments in your projects
+        use({
+            "folke/todo-comments.nvim",
+            requires = "nvim-lua/plenary.nvim",
+            config = function()
+                require("todo-comments").setup({
+                    signs = true,
+                    keywords = {
+                        FIX = { icon = " ", alt = { "FIXME", "BUG", "FIXIT", "FIX", "ISSUE" } },
+                        TODO = { icon = " ", alt = { "TODOS", "TD" } },
+                        WARN = { icon = " ", alt = { "WARNING", "XXX" } },
+                        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+                        NOTE = { icon = " ", alt = { "INFO" } },
+                        HACK = { icon = " " },
+                    },
                 })
             end,
         })

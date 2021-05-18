@@ -1,4 +1,4 @@
-require("utils.opts")
+require("base._opts")
 
 -- Function to apply options table
 local apply_options = function(opts)
@@ -86,8 +86,8 @@ local options = {
     sidescrolloff = 15,
     shiftwidth = 4,
     tabstop = 4,
-    timeoutlen = 400,
-    updatetime = 150,
+    timeoutlen = 300,
+    updatetime = 100,
     redrawtime = 5000,
 }
 

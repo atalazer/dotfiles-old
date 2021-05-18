@@ -5,7 +5,7 @@ local _Key = require("astronauta.keymap")
 local nnoremap = _Key.nnoremap
 local inoremap = _Key.inoremap
 
-local lsp_prefix = "l"
+local lsp_prefix = "<leader>l"
 
 local M = {}
 
@@ -16,7 +16,7 @@ local diagnostic = require("lspsaga.diagnostic")
 local provider   = require("lspsaga.provider")
 
 M.mappings = function()
-    inoremap({ "<C-"..lsp_prefix..">s", signature.signature_help, { silent = true } })
+    inoremap({ "<C-l>s", signature.signature_help, { silent = true } })
     nnoremap({ lsp_prefix.."k", hover.render_hover_doc, { silent = true } })
     nnoremap({ lsp_prefix.."d", provider.preview_definition, { silent = true } })
     nnoremap({ lsp_prefix.."D", vim.lsp.buf.definition, { silent = true } })

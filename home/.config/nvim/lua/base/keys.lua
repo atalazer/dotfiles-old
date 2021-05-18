@@ -31,7 +31,6 @@ nnoremap({ "<leader>qa", ":qa<CR>" })
 -- Open Neovim Config
 nnoremap({ "<leader>ec", ":tabe ~/.config/nvim/init.lua<CR>" })
 nnoremap({ "<leader>er", ":luafile ~/.config/nvim/init.lua<CR>" })
-nnoremap({ "<leader>l", ":luafile %<CR>" })
 
 -- Better Ctrl + Arrow
 nmap({ "C-Left", "b", { silent = true } })
@@ -71,15 +70,15 @@ vnoremap({ ">", ">gv" })
 -- ===================================== Workspace
 
 -- Tabs Buffer
-nnoremap({ "<M-a>", ":BufferLineCyclePrev<CR>", { silent = true } })
-nnoremap({ "<M-S-a>", ":bf<CR>", { silent = true } })
-nnoremap({ "<M-d>", ":BufferLineCycleNext<CR>", { silent = true } })
-nnoremap({ "<M-S-d>", ":bl<CR>", { silent = true } })
-nnoremap({ "<M-w>", ":bp<CR>:bd #<CR>", { silent = true } })
+nnoremap({ "<M-a>",      ":BufferLineCyclePrev<CR>", { silent = true } })
+nnoremap({ "<M-S-a>",    ":bf<CR>", { silent = true } })
+nnoremap({ "<M-d>",      ":BufferLineCycleNext<CR>", { silent = true } })
+nnoremap({ "<M-S-d>",    ":bl<CR>", { silent = true } })
+nnoremap({ "<M-w>",      ":bp<CR>:bd #<CR>", { silent = true } })
 nnoremap({ "<M-w><M-w>", ":bp<CR>:bd! #<CR>", { silent = true } })
-nnoremap({ "<M-e>", ":BufferLineMoveNext<CR>", { silent = true } })
-nnoremap({ "<M-q>", ":BufferLineMovePrev<CR>", { silent = true } })
-nnoremap({ "<M-z>", ":BufferLineSortByDirectory<CR>", { silent = true } })
+nnoremap({ "<M-e>",      ":BufferLineMoveNext<CR>", { silent = true } })
+nnoremap({ "<M-q>",      ":BufferLineMovePrev<CR>", { silent = true } })
+nnoremap({ "<M-z>",      ":BufferLineSortByDirectory<CR>", { silent = true } })
 
 -- Movement between windows
 nnoremap({ "<M-h>", "<C-w><C-h>" })
@@ -165,15 +164,14 @@ nnoremap({ "<leader>cd", ":ColorizerDetachFromBuffer<CR>" })
 nnoremap({ "<leader>ca", ":ColorizerAttachToBuffer<CR>" })
 nnoremap({ "<leader>cr", ":ColorizerReloadAllBuffers<CR>" })
 
--- TrueZen
-nnoremap({ "<F9>", "<Cmd>TZAtaraxis<CR>", { silent = true } })
-nnoremap({ "<F10>", "<Cmd>TZMinimalist<CR>", { silent = true } })
+-- Zen-Mode
+nnoremap({ "<F9>", "<Cmd>ZenMode<CR>", { silent = true } })
 
 -- NvimTree
 nnoremap({ "`", ":NvimTreeToggle<CR>" })
 
 -- Glow.nvim
-nmap({ "<leader>gg", ":Glow<CR>" })
+nmap({ "<leader>g", ":Glow<CR>" })
 
 -- vim-commentary
 nmap({ "//", "gcc" })
