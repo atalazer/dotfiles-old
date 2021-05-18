@@ -19,7 +19,7 @@ title_color="#2d7ed8"
 date_color="#FF00FF"
 
 # load custom settings
-source $HOME/.config/dofi/config
+[ -f $HOME/.config/script/todo.conf ] && source $HOME/.config/script/todo.conf
 
 agenda=0
 
