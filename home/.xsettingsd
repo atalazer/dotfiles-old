@@ -1,7 +1,7 @@
-Net/IconThemeName "Papirus-Dark"
-Net/ThemeName "Sweet-Dark"
+Net/IconThemeName   "Papirus-Dark"
+Net/ThemeName       "Sweet-Dark"
 
-Xft/Hinting 1
-Xft/HintStyle "hintslight"
-Xft/Antialias 1
-Xft/RGBA "rgb"
+Xft/Hinting     1
+Xft/HintStyle   "hintfull"
+Xft/Antialias   1
+Xft/RGBA        "rgb"
