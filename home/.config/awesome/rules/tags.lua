@@ -104,23 +104,15 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "portal2_linux",
-                "csgo_linux64",
-                "dota2",
-                "dontstarve_steam",
-                "Wine",
+                "osu!", "opsu", "opsu!"
             },
             instance = {
-                "love.exe",
-                "synthetik.exe",
-                "pathofexile_x64steam.exe",
-                "leagueclient.exe",
-                "glyphclientapp.exe",
+                "osu!", "opsu", "opsu!"
             },
         },
         properties = {
             tag = awful.screen.focused().tags[4].name,
-            switch_to_tags = false,
+            switch_to_tags = true,
         },
     })
     -- }}}
