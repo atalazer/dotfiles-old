@@ -88,6 +88,7 @@ local options = {
     tabstop = 4,
     timeoutlen = 400,
     updatetime = 150,
+    redrawtime = 5000,
 }
 
 -- Call apply_options func
