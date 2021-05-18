@@ -11,17 +11,17 @@ local keys = gears.table.join(
         awful.spawn.with_shell("rofi -matching fuzzy -show combi")
     end, { description = "Rofi launcher", group = "launcher" }),
 
-    -- Rofo Action Center
-    awful.key({ superkey }, "F12", function()
+    -- Rofi Action Center
+    awful.key({ superkey }, "c", function()
         awful.spawn.with_shell(apps.rofi.center)
     end, { description = "Rofi Action Center", group =  "launcher" } ),
     
-    -- Rofo App Center
+    -- Rofi App Center
     awful.key({ superkey }, "r", function()
         awful.spawn.with_shell(apps.rofi.app_menu)
     end, { description = "App Center", group =  "launcher" } ),
     
-    -- Rofo Global Menu
+    -- Rofi Global Menu
     awful.key({ superkey }, "p", function()
         awful.spawn.with_shell(apps.rofi.global_menu)
     end, { description = "Global Menu", group =  "launcher" } ),
@@ -37,17 +37,17 @@ local keys = gears.table.join(
     end, { description = "Shot", group = "launcher" }),
 
     -- Rofi Record
-    awful.key({ superkey }, "F8", function()
+    awful.key({ superkey }, "F12", function()
         awful.spawn(apps.rofi.record)
     end, { description = "Record", group = "launcher" }),
 
     -- Network dialog
-    awful.key({ superkey }, "F11",
+    awful.key({ superkey }, "n",
         apps.network,
     { description = "Network dialog", group = "launcher" }),
 
     -- Password
-    awful.key({ superkey }, "F10",
+    awful.key({ superkey, shiftkey }, "p",
         apps.password,
     { description = "Password dialog", group = "launcher" }),
 
@@ -65,6 +65,11 @@ local keys = gears.table.join(
     awful.key({ superkey }, "t", function()
         awful.spawn.with_shell(apps.rofi.translate)
     end, { description = "Quick Translate", group = "launcher" }),
+
+    -- Youtube Prompt ( ytfzf)
+    awful.key({ superkey }, "y",
+        apps.youtube,
+        { description = "Youtube", group = "launcher" }),
 
     -- }}}
 
@@ -109,11 +114,6 @@ local keys = gears.table.join(
         apps.music,
         { description = "Terminal Music client", group = "launcher" }),
 
-    -- Process monitor
-    awful.key({ superkey, shiftkey }, "p",
-        apps.process_monitor,
-        { description = "Terminal Process monitor", group = "launcher" }),
-
     -- }}}
 
     -- ===================================== Scratchpad {{{
@@ -126,12 +126,8 @@ local keys = gears.table.join(
     -- Markdown input scratchpad (I for input)
     awful.key({ superkey, shiftkey }, "i",
         apps.markdown_input,
-        { description = "Markdown scratchpad", group = "launcher" }),
+        { description = "Markdown scratchpad", group = "launcher" })
 
-    -- Youtube Scratchpad
-    awful.key({ superkey, shiftkey }, "y",
-        apps.youtube,
-        { description = "Youtube scratchpad", group = "launcher" })
 
 -- }}}
 

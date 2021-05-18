@@ -116,7 +116,7 @@ sensitivity = 10
 ; background = default
 ; foreground = default
 
-foreground = yellow
+foreground = red
 
 # Gradient mode, only hex defined colors (and thereby ncurses mode) are supported,
 # background must also be defined in hex  or remain commented out. 1 = on, 0 = off.

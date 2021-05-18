@@ -12,28 +12,15 @@ local apps = {}
 
 apps.clipboard = "env CM_HISTLENGTH=20 CM_LAUNCHER=rofi clipmenu"
 
-apps.rofi = {
-    center = script_dir .. "rofi_center",
-    app_menu = script_dir .. "rofi_app_menu",
-    global_menu = script_dir .. "rofi_global_menu",
-    edit = script_dir .. "rofi_edit",
-    network = script_dir .. "rofi_network_manager",
-    pass = script_dir .. "rofi_pass",
-    record = script_dir .. "rofi_record",
-    shot = script_dir .. "rofi_shot",
-    todo = script_dir .. "rofi_todo",
-    translate = script_dir .. "rofi_translate -i",
-}
-
 apps.controller = {
     -- Volume Control
-    vol_up = script_dir .. "volume-controller up",
+    vol_up   = script_dir .. "volume-controller up",
     vol_down = script_dir .. "volume-controller down",
     vol_mute = script_dir .. "volume-controller mute",
     -- Brightness Control
-    bn_up = script_dir .. "brightness-controller up",
+    bn_up   = script_dir .. "brightness-controller up",
     bn_down = script_dir .. "brightness-controller down",
-    bn_opt = script_dir .. "brightness-controller optimize",
+    bn_opt  = script_dir .. "brightness-controller optimize",
     -- Music Control
     mus_n = script_dir .. "music-controller next",
     mus_p = script_dir .. "music-controller prev",
@@ -41,11 +28,25 @@ apps.controller = {
     mus_s = script_dir .. "music-controller stop",
     mus_c = script_dir .. "music-controller current",
     -- Shot
-    shot = script_dir .. "shot save",
-    shot_clip = script_dir .. "shot clipboard",
+    shot        = script_dir .. "shot save",
+    shot_clip   = script_dir .. "shot clipboard",
     shot_active = script_dir .. "shot active",
-    shot_sleep = script_dir .. "shot sleep",
+    shot_sleep  = script_dir .. "shot sleep",
     shot_select = script_dir .. "shot select",
+}
+
+apps.rofi = {
+    center      = script_dir .. "rofi_center",
+    app_menu    = script_dir .. "rofi_app_menu",
+    global_menu = script_dir .. "rofi_global_menu",
+    edit        = script_dir .. "rofi_edit",
+    network     = script_dir .. "rofi_network_manager",
+    pass        = script_dir .. "rofi_pass",
+    record      = script_dir .. "rofi_record",
+    shot        = script_dir .. "rofi_shot",
+    todo        = script_dir .. "rofi_todo",
+    translate   = script_dir .. "rofi_translate -i",
+    youtube     = script_dir .. "rofi_youtube",
 }
 
 apps.browser = function()
@@ -76,16 +77,16 @@ apps.password = function()
     awful.spawn.with_shell(apps.rofi.pass)
 end
 
+apps.youtube = function()
+    awful.spawn.with_shell(apps.rofi.youtube)
+end
+
 apps.editor = function()
     helpers.run_or_raise({ instance = "editor" }, false, user.editor, { switchtotag = true })
 end
 
 apps.music = function()
     helpers.scratchpad({ instance = "music" }, user.music_client, { floating = true })
-end
-
-apps.youtube = function()
-    awful.spawn.with_shell("ytfzf -fDH")
 end
 
 -- Scratchpad terminal with tmux (see bin/scratchpad)
