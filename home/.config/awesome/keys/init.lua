@@ -13,16 +13,7 @@ altkey   = "Mod1"
 ctrlkey  = "Control"
 shiftkey = "Shift"
 
-keys.apps       = require("keys.apps")
-keys.controller = require("keys.controller")
-keys.layout     = require("keys.layout")
-keys.tag        = require("keys.tag")
-
-keys.button         = require("keys.button")
-keys.client         = require("keys.client")
-keys.desktopbuttons = require("keys.desktop")
-
-
+-- Global keys {{{
 keys.globalkeys = gears.table.join(
     -- Reload Awesome
     awful.key({ superkey, ctrlkey }, "r", awesome.restart,
@@ -72,14 +63,6 @@ keys.globalkeys = gears.table.join(
         end,
         {description = "activate sidebar web search prompt", group = "awesome"}),
 
-    -- Dismiss notifications and elements that connect to the dismiss signal
-    awful.key( { ctrlkey }, "space",
-        function()
-            awesome.emit_signal("elemental::dismiss")
-            naughty.destroy_all_notifications()
-        end,
-        {description = "dismiss notification", group = "notifications"}),
-
     -- Dashboard
     awful.key({ superkey }, "F2", function()
         if dashboard_show then
@@ -112,11 +95,12 @@ keys.globalkeys = gears.table.join(
         {description = "App drawer", group = "awesome"})
 
 )
+-- --}}}
 
 keys.apps       = require("keys.apps")
 keys.controller = require("keys.controller")
 keys.layout     = require("keys.layout")
-keys.tag        = require("keys.tag")
+keys.tags       = require("keys.tags")
 
 keys.button         = require("keys.button")
 keys.client         = require("keys.client")
@@ -125,7 +109,7 @@ keys.desktopbuttons = require("keys.desktop")
 keys.globalkeys = gears.table.join(
     keys.globalkeys,
     keys.apps, keys.controller,
-    keys.layout, keys.tag,
+    keys.layout, keys.tags,
     keys.client.globals
 )
 

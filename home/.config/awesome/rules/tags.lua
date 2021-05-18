@@ -55,6 +55,19 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- Office {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "libreoffice", "DesktopEditors" },
+            instance = { "libreoffice", "DesktopEditors" },
+        },
+        properties = { 
+            tag = awful.screen.focused().tags[3].name,
+            switch_to_tags = true,
+        },
+    })
+    -- }}}
+
     -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {

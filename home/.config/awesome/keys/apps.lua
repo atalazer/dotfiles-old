@@ -9,7 +9,7 @@ local keys = gears.table.join(
     -- Rofi / dmenu
     awful.key({ superkey }, "d", function()
         awful.spawn.with_shell("rofi -matching fuzzy -show combi")
-    end, { description = "rofi launcher", group = "launcher" }),
+    end, { description = "Rofi launcher", group = "launcher" }),
 
     -- Rofo Action Center
     awful.key({ superkey }, "F12", function()
@@ -126,7 +126,12 @@ local keys = gears.table.join(
     -- Markdown input scratchpad (I for input)
     awful.key({ superkey, shiftkey }, "i",
         apps.markdown_input,
-        { description = "Markdown scratchpad", group = "launcher" })
+        { description = "Markdown scratchpad", group = "launcher" }),
+
+    -- Youtube Scratchpad
+    awful.key({ superkey, shiftkey }, "y",
+        apps.youtube,
+        { description = "Youtube scratchpad", group = "launcher" })
 
 -- }}}
 

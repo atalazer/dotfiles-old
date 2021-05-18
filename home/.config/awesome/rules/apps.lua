@@ -3,9 +3,8 @@ local beautiful = require("beautiful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
-
     -- Fixed terminal geometry for floating terminals {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             class = {
                 "Alacritty",
@@ -16,35 +15,36 @@ ruled.client.connect_signal("request::rules", function()
                 "URxvt",
             },
         },
-        properties = { 
+        properties = {
             width = screen_width * 0.45,
             height = screen_height * 0.6,
-            titlebars_enabled = false
+            titlebars_enabled = false,
         },
     })
     -- }}}
 
     -- Video Player {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule = { class = "mpv" },
-        properties = { 
+        properties = {
             floating = true,
             raise = true,
             titlebars_enabled = true,
             width = screen_width * 0.7,
             height = screen_height * 0.75,
             placement = centered_client_placement,
-        }
+        },
     })
     -- }}}
 
     -- Image viewers {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             class = {
                 "feh",
                 "Sxiv",
-                "Viewnior", "viewnior",
+                "Viewnior",
+                "viewnior",
             },
         },
         properties = {
@@ -59,29 +59,37 @@ ruled.client.connect_signal("request::rules", function()
     -- }}}
 
     -- File managers {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             class = {
                 "Nemo",
                 "Thunar",
+                "file"
             },
+            instance = { "file"}
         },
         except_any = {
             type = { "dialog" },
         },
-        properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.55 },
+        properties = {
+            titlebars_enabled = true,
+            floating = true,
+            width = screen_width * 0.65,
+            height = screen_height * 0.55,
+            placement = centered_client_placement,
+        },
     })
     -- }}}
 
     -- File chooser dialog {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = { role = { "GtkFileChooserDialog" } },
         properties = { floating = true, width = screen_width * 0.55, height = screen_height * 0.65 },
     })
     -- }}}
 
     -- Dragon drag and drop utility{{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             class = {
                 "Dragon-drag-and-drop",
@@ -105,31 +113,29 @@ ruled.client.connect_signal("request::rules", function()
     -- }}}
 
     -- Pavucontrol {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = { class = { "Pavucontrol" } },
         properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.8 },
     })
     -- }}}
 
     -- Scratchpad {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             instance = {
                 "scratchpad",
                 "markdown_input",
+                "youtube"
             },
             class = {
                 "scratchpad",
                 "markdown_input",
+                "youtube"
             },
         },
         properties = {
-            skip_taskbar = true,
             floating = true,
-            ontop = false,
             minimized = true,
-            sticky = false,
-            raise = true,
             width = screen_width * 0.7,
             height = screen_height * 0.75,
             placement = centered_client_placement,
@@ -138,10 +144,10 @@ ruled.client.connect_signal("request::rules", function()
     -- }}}
 
     -- System Monitoring {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
-            instance = {"htop", "monitoring"},
-            class = {"htop", "monitoring"},
+            instance = { "htop", "monitoring" },
+            class = { "htop", "monitoring" },
         },
         properties = {
             skip_taskbar = true,
@@ -155,15 +161,13 @@ ruled.client.connect_signal("request::rules", function()
     -- }}}
 
     -- E-mail {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             instance = { "email" },
             class = { "email" },
         },
         properties = {
             titlebars_enabled = true,
-            raise = true,
-            skip_taskbar = false,
             floating = true,
             width = screen_width * 0.7,
             height = screen_height * 0.75,
@@ -173,7 +177,7 @@ ruled.client.connect_signal("request::rules", function()
     -- }}}
 
     -- Music clients {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = {
             class = {
                 "music",
@@ -192,7 +196,7 @@ ruled.client.connect_signal("request::rules", function()
     -- }}}
 
     -- Visualizer {{{
-    ruled.client.append_rule({ 
+    ruled.client.append_rule({
         rule_any = { class = { "Visualizer" } },
         properties = {
             floating = true,
@@ -218,5 +222,4 @@ ruled.client.connect_signal("request::rules", function()
         properties = { floating = true },
     })
     -- }}}
-
 end)

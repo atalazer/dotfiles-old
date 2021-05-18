@@ -1,17 +1,12 @@
-local awful = require("awful")
-local wibox = require("wibox")
 local gears = require("gears")
 local theme_name = "amarena"
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
-local gfs = require("gears.filesystem")
-local themes_path = gfs.get_themes_dir()
 local layout_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/layout/"
 local titlebar_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/titlebar/"
 local taglist_icon_path = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/taglist/"
 local tip = titlebar_icon_path --alias to save time/space
-local xrdb = xresources.get_current_theme()
 -- local theme = dofile(themes_path.."default/theme.lua")
 local theme = {}
 

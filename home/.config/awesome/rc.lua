@@ -86,7 +86,7 @@ user = {
     terminal = os.getenv("TERMINAL") or "kitty",
     floating_terminal = "kitty --name floating_terminal",
     browser = "firefox",
-    file_manager = "kitty --name files -e nnn",
+    file_manager = "kitty --name file -e nnn",
     editor = "kitty --name editor -e nvim",
     email_client = "kitty --name email -e neomutt",
     music_client = "kitty -o font_size=12 --name music -e ncmpcpp",
@@ -103,8 +103,8 @@ user = {
             -detectsleep -resetsaver \
             -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
         ]],
-        "picom --experimental-backends --config ~/.config/picom/picom-blur.conf",
-        "fusuma -c ~/.config/fusuma/config-awesome.yml",
+        "picom -b --experimental-backends --config ~/.config/picom/picom.conf",
+        "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
         "wal --backend colorthief -n -s -t -i " .. wallpaper ,
         "xrdb -load ~/.Xresources",
     },
