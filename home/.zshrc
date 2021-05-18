@@ -43,6 +43,7 @@ SAVEHIST=1000
 HISTFILE=${ZDOTDIR:-${HOME}}/.zsh-history
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_DUPS
+setopt SHARE_HISTORY
 
 source $ZDIR/modules/compe.zsh
 source $ZDIR/modules/dir.zsh
