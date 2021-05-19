@@ -86,7 +86,7 @@ local options = {
     sidescrolloff = 15,
     shiftwidth = 4,
     tabstop = 4,
-    timeoutlen = 300,
+    timeoutlen = 400,
     updatetime = 100,
     redrawtime = 5000,
 }

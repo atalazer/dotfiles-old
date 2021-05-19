@@ -14,16 +14,12 @@ au FileType toml,yaml setlocal sw=2 ts=2 sts=2
 au FileType html,xml,css setlocal sw=2 ts=2 sts=2
 
 " spelling in markdown and text
-au FileType markdown,text setlocal conceallevel=0 
+au FileType markdown,text setlocal conceallevel=0
 au BufEnter */posts/**.md,*/docs/**.md,TODO setlocal spell spelllang=id
 au BufEnter */posts/**.en.md setlocal spell spelllang=en
 
 " Users
 au BufEnter TODO,SCHEDULE setlocal filetype=markdown spell spelllang=id
-
-" firenvim stuff
-au BufEnter github.com_*.txt setlocal filetype=markdown spell spelllang=en,id
-au BufEnter **.sch.id_*.txt setlocal spell spelllang=id
 
 " automatically go to insert mode on terminal buffer
 autocmd BufEnter term://* startinsert

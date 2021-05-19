@@ -2,29 +2,31 @@ vim.cmd([[packadd nvim-compe]])
 vim.cmd([[packadd vim-vsnip]])
 
 require("compe").setup({
-    enabled              = true,
-    autocomplete         = true,
+    enabled = true,
+    autocomplete = true,
     allow_prefix_unmatch = false,
-    documentation        = true;
-    preselect            = "enable",
-    min_length       = 1,
-    throttle_time    = 80,
-    source_timeout   = 200,
+    documentation = true,
+    preselect = "enable",
+    min_length = 1,
+    throttle_time = 80,
+    source_timeout = 200,
     incomplete_delay = 400,
-    max_abbr_width   = 1000,
-    max_kind_width   = 1000,
-    max_menu_width   = 1000000,
+    max_abbr_width = 1000,
+    max_kind_width = 1000,
+    max_menu_width = 1000000,
 
     source = {
-        buffer     = true,
-        calc       = true,
-        path       = true,
-        spell      = true,
-        tags       = true;
-        nvim_lsp   = true,
-        nvim_lua   = true,
-        vsnip      = true,
+        buffer = true,
+        calc = false,
+        emoji = false,
+        path = true,
+        spell = false,
+        tags = false,
+        nvim_lsp = true,
+        nvim_lua = true,
+        vsnip = true,
         treesitter = false,
+        omni = false,
     },
 })
 
@@ -63,14 +65,13 @@ end
 
 local keymap = vim.api.nvim_set_keymap
 
-keymap("i", "<C-space>",    "compe#complete()",              { expr = true, noremap = true, silent = true })
-keymap("i", "<CR>",         "compe#confirm('<CR>')",         { expr = true, noremap = true, silent = true })
-keymap("i", "<C-c>",        "compe#close('C-c')",            { expr = true, noremap = true, silent = true })
-keymap("i", "<C-f>",        "compe#scroll({ 'delta': +4 })", { expr = true, noremap = true, silent = true })
-keymap("i", "<C-d>",        "compe#scroll({ 'delta': -4 })", { expr = true, noremap = true, silent = true })
+keymap("i", "<C-space>", "compe#complete()", { expr = true, noremap = true, silent = true })
+keymap("i", "<CR>", "compe#confirm('<CR>')", { expr = true, noremap = true, silent = true })
+keymap("i", "<C-c>", "compe#close('C-c')", { expr = true, noremap = true, silent = true })
+keymap("i", "<C-f>", "compe#scroll({ 'delta': +4 })", { expr = true, noremap = true, silent = true })
+keymap("i", "<C-d>", "compe#scroll({ 'delta': -4 })", { expr = true, noremap = true, silent = true })
 
 keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
 keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
 keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
-

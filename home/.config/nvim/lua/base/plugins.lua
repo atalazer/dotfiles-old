@@ -19,8 +19,6 @@ if ok then
             -- open_cmd = "leftabove 60vnew [packer]",
             open_fn = function()
                 return require("packer.util").float({
-                    width  = 0.80,
-                    height = 0.80,
                     border = Util.border,
                 })
             end,
@@ -68,37 +66,6 @@ if ok then
             requires = { "kyazdani42/nvim-web-devicons" },
             config = function()
                 require("plugins.galaxyline")
-            end,
-        })
-
-        -- ======= LSP, Completion and Snippet =======
-        use({
-            "neovim/nvim-lspconfig",
-            opt = true,
-            requires = {
-                { "glepnir/lspsaga.nvim", opt = true },
-                { "onsails/lspkind-nvim", opt = true },
-                { "folke/lsp-trouble.nvim", opt = true },
-                { "folke/lsp-colors.nvim", opt = true },
-                { "simrat39/symbols-outline.nvim", opt = true },
-            },
-        })
-
-        use({
-            "hrsh7th/nvim-compe",
-            config = function()
-                require("plugins.compe")
-            end,
-        })
-
-        use({
-            "hrsh7th/vim-vsnip",
-            requires = {
-                { "hrsh7th/vim-vsnip-integ" },
-                { "rafamadriz/friendly-snippets" },
-            },
-            config = function()
-                require("plugins.vsnip")
             end,
         })
 
@@ -170,16 +137,26 @@ if ok then
             ft = { "tridactyl" },
         })
 
+        use({ "editorconfig/editorconfig-vim", opt = false })
+
         -- ======= Experience =======
-        -- Emmet Support for vim
+        -- Easy Commenting
+        use({ "tpope/vim-commentary" })
+
+        -- Align
+        use({ "junegunn/vim-easy-align" })
+
+        -- vim easy motion
         use({
-            "mattn/emmet-vim",
-            opt = true,
-            ft = { "html" },
+            "phaazon/hop.nvim",
+            opt = false,
             config = function()
-                require("plugins.emmet")
+                require("hop").setup({})
             end,
         })
+
+        -- sandwiched textobjects.
+        use({ "machakann/vim-sandwich", opt = false })
 
         -- Code formatter
         use({
@@ -195,65 +172,6 @@ if ok then
             config = function()
                 require("plugins.autopairs")
             end,
-        })
-
-        -- Multi Cursor
-        use({
-            "mg979/vim-visual-multi",
-            config = function()
-                require("plugins.visual-multi")
-            end,
-        })
-
-        -- vim easy motion
-        use({
-            "phaazon/hop.nvim",
-            opt = false,
-            config = function()
-                require("hop").setup({
-                    keys = "qwertyuipasdfghklzxcvbm",
-                    term_seq_bias = 0.5,
-                })
-            end,
-        })
-
-        -- Easy Commenting
-        use({
-            "tpope/vim-commentary",
-            requires = { "JoosepAlviste/nvim-ts-context-commentstring" },
-        })
-
-        -- Vim surround
-        use({
-            "blackcauldron7/surround.nvim",
-            config = function()
-                vim.g.surround_prefix = "s"
-                vim.g.surround_mappings_style = "sandwich" -- "surround" or "sandwich"
-                vim.g.surround_load_autogroups = true
-                vim.g.surround_load_keymaps = true
-                vim.g.surround_context_offset = 100
-                vim.g.surround_quotes = { "'", "\"", "`" }
-                vim.g.surround_brackets = { "(", "{", "[" }
-                vim.g.surround_pairs = {
-                    nestable = {
-                        { "(", ")" },
-                        { "[", "]" },
-                        { "{", "}" },
-                        { "<", ">" },
-                    },
-                    linear = {
-                        { "'", "'" },
-                        { "\"", "\"" },
-                        { "`", "`" },
-                    },
-                }
-                require("surround").setup({})
-            end,
-        })
-
-        -- Align
-        use({
-            "junegunn/vim-easy-align",
         })
 
         -- gf like plugins
@@ -281,53 +199,66 @@ if ok then
             end,
         })
 
-        -- Free Distraction-mode
+        -- Colorizer
         use({
-            "folke/zen-mode.nvim",
+            "norcalli/nvim-colorizer.lua",
+            opt = true,
+            ft = {
+                "lua",
+                "css",
+                "scss",
+                "html",
+                "javascript",
+                "typescript",
+            },
             config = function()
-                require("zen-mode").setup({
-                    window = {
-                        backdrop = 1.0,
-                        width = 0.80,
-                        height = 1.0,
-                        options = {
-                            signcolumn = "no",
-                            foldcolumn = "0",
-                        },
+                require("colorizer").setup({
+                    ["*"] = {
+                        css = true,
+                        css_fn = true,
+                        mode = "background",
                     },
                 })
             end,
         })
 
-        -- Better Terminal for Neovim
+        -- ======= LSP, Completion and Snippet =======
         use({
-            "numtostr/FTerm.nvim",
-            opt = false,
+            "neovim/nvim-lspconfig",
+            opt = true,
+            requires = {
+                { "glepnir/lspsaga.nvim", opt = true },
+                { "onsails/lspkind-nvim", opt = true },
+                { "folke/lsp-trouble.nvim", opt = true },
+                { "folke/lsp-colors.nvim", opt = true },
+                { "simrat39/symbols-outline.nvim", opt = true },
+            },
+        })
+
+        use({
+            "hrsh7th/nvim-compe",
             config = function()
-                require("plugins.fterm")
+                require("plugins.compe")
             end,
         })
 
-        -- Browser Integration plugin
         use({
-            "glacambre/firenvim",
-            run = function()
-                vim.fn["firenvim#install"](0)
-            end,
+            "hrsh7th/vim-vsnip",
+            requires = {
+                { "rafamadriz/friendly-snippets" },
+            },
             config = function()
-                if vim.fn.exists("g:started_by_firenvim") == 1 then
-                    vim.cmd([[set laststatus=0]])
-                    vim.cmd([[set showtabline=0]])
-                    vim.cmd([[set guifont=JetBrainsMono:h9]])
-                end
-                vim.g.firenvim_config = {
-                    localSettings = {
-                        [".*"] = {
-                            takeover = "never",
-                            priority = 1,
-                        },
-                    },
-                }
+                require("plugins.vsnip")
+            end,
+        })
+
+        -- Emmet Support for vim
+        use({
+            "mattn/emmet-vim",
+            opt = true,
+            ft = { "html" },
+            config = function()
+                require("plugins.emmet")
             end,
         })
 
@@ -341,7 +272,6 @@ if ok then
                 { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
                 { "nvim-telescope/telescope-media-files.nvim" },
                 { "nvim-telescope/telescope-frecency.nvim" },
-                { "nvim-telescope/telescope-cheat.nvim" },
             },
             config = function()
                 require("plugins.telescope")
@@ -375,75 +305,6 @@ if ok then
         })
 
         -- ======= Misc =======
-        -- Colorizer
-        use({
-            "norcalli/nvim-colorizer.lua",
-            opt = true,
-            ft = {
-                "lua",
-                "css",
-                "scss",
-                "html",
-                "javascript",
-                "typescript",
-            },
-            config = function()
-                require("colorizer").setup({
-                    ["*"] = {
-                        css = true,
-                        css_fn = true,
-                        mode = "background",
-                    },
-                })
-            end,
-        })
-
-        -- Dims inactive windows
-        use({
-            "sunjon/shade.nvim",
-            config = function()
-                require("shade").setup({
-                    overlay_opacity = 60,
-                    opacity_step = 2,
-                    keys = {
-                        brightness_up = "bb",
-                        brightness_down = "B",
-                        toggle = "<Leader>s",
-                    },
-                })
-            end,
-        })
-
-        use({
-            "kdav5758/NoCLC.nvim",
-            config = function()
-                require("no-clc").setup({
-                    load_at_startup = true,
-                    cursorline = true,
-                    cursorcolumn = false,
-                })
-            end,
-        })
-
-        -- Highlight, list and search todo comments in your projects
-        use({
-            "folke/todo-comments.nvim",
-            requires = "nvim-lua/plenary.nvim",
-            config = function()
-                require("todo-comments").setup({
-                    signs = true,
-                    keywords = {
-                        FIX = { icon = " ", alt = { "FIXME", "BUG", "FIXIT", "FIX", "ISSUE" } },
-                        TODO = { icon = " ", alt = { "TODOS", "TD" } },
-                        WARN = { icon = " ", alt = { "WARNING", "XXX" } },
-                        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-                        NOTE = { icon = " ", alt = { "INFO" } },
-                        HACK = { icon = " " },
-                    },
-                })
-            end,
-        })
-
         -- Smooth Scrolling
         use({
             "psliwka/vim-smoothie",
@@ -460,6 +321,15 @@ if ok then
         use({
             "mhinz/vim-sayonara",
             cmd = "Sayonara",
+            opt = true,
+        })
+
+        -- Highlight, list and search todo comments in your projects
+        use({
+            "folke/todo-comments.nvim",
+            config = function()
+                require("plugins.todo")
+            end,
         })
 
         -- vim which key
@@ -470,61 +340,21 @@ if ok then
             end,
         })
 
-        -- Translator
+        -- Better Terminal for Neovim
         use({
-            "voldikss/vim-translator",
+            "numtostr/FTerm.nvim",
             opt = false,
             config = function()
-                vim.g.translator_target_lang = "id"
-                vim.g.translator_source_lang = "auto"
-                vim.g.translator_default_engines = "google"
-                vim.g.translator_history_enable = true
-                vim.g.translator_window_type = "popup"
-                vim.g.translator_window_max_width = 0.6
-                vim.g.translator_window_max_height = 0.6
-                vim.g.translator_window_borderchars = {
-                    "─",
-                    "│",
-                    "─",
-                    "│",
-                    "┌",
-                    "┐",
-                    "┘",
-                    "└",
-                }
-            end,
-        })
-
-        -- Session manager
-        use({
-            "rmagatti/session-lens",
-            requires = {
-                { "nvim-telescope/telescope.nvim" },
-                { "nvim-lua/popup.nvim" },
-                { "nvim-lua/plenary.nvim" },
-                { "rmagatti/auto-session" },
-            },
-            opt = false,
-            config = function()
-                require("auto-session").setup({
-                    auto_session_root_dir = os.getenv("HOME") .. "/.cache/nvim/sessions/",
-                    auto_session_enable_last_session = false,
-                    logLevel = "info",
-                    pre_save_cmds = {},
-                    post_save_cmds = {},
-                    pre_restore_cmds = {},
-                    post_restore_cmds = {},
-                })
-                require("telescope").load_extension("session-lens")
-                require("telescope._extensions.session-lens").setup({
-                    prompt_title = "Sessions List",
-                    shorten_path = false,
-                })
+                require("plugins.fterm")
             end,
         })
 
         -- Check startup time
-        use({ "tweekmonster/startuptime.vim" })
+        use({
+            "tweekmonster/startuptime.vim",
+            opt = true,
+            cmd = "StartupTime",
+        })
     end
     packer.startup(plugins)
 end

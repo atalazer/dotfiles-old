@@ -5,9 +5,10 @@ local gl = require('galaxyline')
 local gls = gl.section
 local condition = require('galaxyline.condition')
 
+local appearance = require("base.appearances")
 
 local get_color = function()
-    if RC.use_xresources == true then
+    if appearance.colorscheme == "xresources" then
         local colors = require("xresources")
         return colors
     else

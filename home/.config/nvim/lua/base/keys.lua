@@ -16,27 +16,15 @@ map({"q:", "<Nop>"})
 -- move vertically by visual line on wrapped lines
 nnoremap({ "j", "gj" })
 nnoremap({ "k", "gk" })
-nmap({ "0", "^" })
 
 -- Files
 nnoremap({ "<C-s>", ":update<CR>" })
 inoremap({ "<C-s>", "<Esc>:update<CR>" })
 vnoremap({ "<C-s>", "<Esc>:update<CR>" })
 
-nnoremap({ "<C-q><C-q>", ":q!<CR>" })
-nnoremap({ "<leader>qq", ":q!<CR>" })
-nnoremap({ "<C-q><C-a>", ":qa<CR>" })
-nnoremap({ "<leader>qa", ":qa<CR>" })
-
 -- Open Neovim Config
 nnoremap({ "<leader>ec", ":tabe ~/.config/nvim/init.lua<CR>" })
 nnoremap({ "<leader>er", ":luafile ~/.config/nvim/init.lua<CR>" })
-
--- Better Ctrl + Arrow
-nmap({ "C-Left", "b", { silent = true } })
-vmap({ "C-Left", "b", { silent = true } })
-nmap({ "C-Right", "w", { silent = true } })
-vmap({ "C-Right", "w", { silent = true } })
 
 -- Alt+Delete
 inoremap({ "<M-BS>", "<C-w>" })
@@ -70,33 +58,24 @@ vnoremap({ ">", ">gv" })
 -- ===================================== Workspace
 
 -- Tabs Buffer
-nnoremap({ "<M-a>",      ":BufferLineCyclePrev<CR>", { silent = true } })
-nnoremap({ "<M-S-a>",    ":bf<CR>", { silent = true } })
-nnoremap({ "<M-d>",      ":BufferLineCycleNext<CR>", { silent = true } })
-nnoremap({ "<M-S-d>",    ":bl<CR>", { silent = true } })
-nnoremap({ "<M-w>",      ":bp<CR>:bd #<CR>", { silent = true } })
-nnoremap({ "<M-w><M-w>", ":bp<CR>:bd! #<CR>", { silent = true } })
-nnoremap({ "<M-e>",      ":BufferLineMoveNext<CR>", { silent = true } })
-nnoremap({ "<M-q>",      ":BufferLineMovePrev<CR>", { silent = true } })
-nnoremap({ "<M-z>",      ":BufferLineSortByDirectory<CR>", { silent = true } })
+nnoremap({ "<M-[>",      ":BufferLineCyclePrev<CR>", { silent = true } })
+nnoremap({ "<M-]>",      ":BufferLineCycleNext<CR>", { silent = true } })
+nnoremap({ "<M-{>",      ":BufferLineMovePrev<CR>", { silent = true } })
+nnoremap({ "<M-}>",      ":BufferLineMoveNext<CR>", { silent = true } })
+nnoremap({ "<M-w>",      ":Sayonara<CR>", { silent = true } })
+nnoremap({ "<M-w><M-w>", ":Sayonara!<CR>", { silent = true } })
 
 -- Movement between windows
-nnoremap({ "<M-h>", "<C-w><C-h>" })
-nnoremap({ "<M-j>", "<C-w><C-j>" })
-nnoremap({ "<M-k>", "<C-w><C-k>" })
-nnoremap({ "<M-l>", "<C-w><C-l>" })
+nnoremap({ "<M-Left>",  "<C-w><C-h>" })
+nnoremap({ "<M-Down>",  "<C-w><C-j>" })
+nnoremap({ "<M-Up>",    "<C-w><C-k>" })
+nnoremap({ "<M-Right>", "<C-w><C-l>" })
 
 -- Resize windows
-nnoremap({ "<C-h>", "<CMD>vertical resize -2<CR>" })
-nnoremap({ "<C-j>", "<CMD>resize +2<CR>" })
-nnoremap({ "<C-k>", "<CMD>resize -2<CR>" })
-nnoremap({ "<C-l>", "<CMD>vertical resize +2<CR>" })
-
--- ===================================== Spelling
-nnoremap({ "sd", "]s" })
-nnoremap({ "sa", "[s" })
-nnoremap({ "S", "zg" })
-nnoremap({ "sq", "z=" })
+nnoremap({ "<M-S-Left>",  "<CMD>vertical resize -2<CR>" })
+nnoremap({ "<M-S-Down>",  "<CMD>resize +2<CR>" })
+nnoremap({ "<M-S-Up>",    "<CMD>resize -2<CR>" })
+nnoremap({ "<M-S-Right>", "<CMD>vertical resize +2<CR>" })
 
 -- ===================================== Function
 nnoremap({ "<F1>", ":mksession! ~/.cache/nvim/sessions/last.vim<CR>", { silent = true } })
@@ -105,9 +84,9 @@ nnoremap({ "<F4>", "<cmd>!xdg-open %<CR>", { silent = true } })
 
 -- ===================================== Plugins
 -- Sayonara
-nnoremap({ "<C-q>", ":Sayonara<CR>" })
-nnoremap({ "<leader>sa", ":Sayonara<CR>" })
-nnoremap({ "<leader>q", ":Sayonara<CR>" })
+nnoremap({ "<leader>q",  ":Sayonara<CR>" })
+nnoremap({ "<leader>qq", ":Sayonara!<CR>" })
+nnoremap({ "<leader>qa", ":qa<CR>" })
 
 -- Bufferline
 nnoremap({ "<M-1>", ":lua require'bufferline'.go_to_buffer(1)<CR>", { silent = true } })
@@ -123,33 +102,25 @@ nnoremap({ "<M-0>", ":lua require'bufferline'.go_to_buffer(10)<CR>", { silent = 
 
 -- Telescope
 nnoremap({ "<C-p>", require("plugins.telescope").files })
-nnoremap({ "<C-p>l", require("telescope.builtin").live_grep }) 
-nnoremap({ "<C-p>f", require("telescope.builtin").file_browser }) 
-nnoremap({ "<C-p>h", require("telescope.builtin").oldfiles }) 
-nnoremap({ "<C-p>k", require("telescope.builtin").keymaps }) 
-nnoremap({ "<C-p>c", require("telescope.builtin").colorscheme }) 
+nnoremap({ "<leader>fl", require("telescope.builtin").live_grep })
+nnoremap({ "<leader>fk", require("telescope.builtin").keymaps })
+nnoremap({ "<leader>fc", require("telescope.builtin").colorscheme })
+nnoremap({ "<leader>fb", require("telescope.builtin").file_browser })
 
 -- Telescope Extensions
-nnoremap({ "<C-p>p", require("plugins.telescope").frecency })
-nnoremap({ "<C-p>m", require("plugins.telescope").media_files })
-nnoremap({ "<C-p>d", require("plugins.telescope").cheat })
+nnoremap({ "<leader>ff", require("plugins.telescope").frecency })
+nnoremap({ "<leader>fm", require("plugins.telescope").media_files })
 
 -- Dial
-nmap({ "<M-.>", "<Plug>(dial-increment)" })
-vmap({ "<M-.>", "<Plug>(dial-increment)" })
-vmap({ "g<M-.>", "<Plug>(dial-increment-additional)" })
-nmap({ "<M-,>", "<Plug>(dial-decrement)" })
-vmap({ "<M-,>", "<Plug>(dial-decrement)" })
-vmap({ "g<M-,>", "<Plug>(dial-decrement-additional)" })
+nmap({ "M",  "<Plug>(dial-increment)" })
+vmap({ "M",  "<Plug>(dial-increment)" })
+vmap({ "gM", "<Plug>(dial-increment-additional)" })
+nmap({ "N",  "<Plug>(dial-decrement)" })
+vmap({ "N",  "<Plug>(dial-decrement)" })
+vmap({ "gN", "<Plug>(dial-decrement-additional)" })
 
 -- Format
-nnoremap({ "<leader>fw", "<cmd>FormatWrite<CR>", { silent = false } })
-nnoremap({ "<leader>ff", "<cmd>Format<CR>", { silent = false } })
-
--- Session
-nnoremap({ "<leader>sf", "<Cmd>SearchSession<CR>" })
-nnoremap({ "<leader>ss", "<Cmd>SaveSession<CR>" })
-nnoremap({ "<leader>sr", "<Cmd>RestoreSession<CR>" })
+nnoremap({ "<leader>gf", "<cmd>Format<CR>", { silent = false } })
 
 -- Hop
 nmap({ "<space>z", ":HopChar1<CR>" })
@@ -164,14 +135,11 @@ nnoremap({ "<leader>cd", ":ColorizerDetachFromBuffer<CR>" })
 nnoremap({ "<leader>ca", ":ColorizerAttachToBuffer<CR>" })
 nnoremap({ "<leader>cr", ":ColorizerReloadAllBuffers<CR>" })
 
--- Zen-Mode
-nnoremap({ "<F9>", "<Cmd>ZenMode<CR>", { silent = true } })
-
 -- NvimTree
 nnoremap({ "`", ":NvimTreeToggle<CR>" })
 
 -- Glow.nvim
-nmap({ "<leader>g", ":Glow<CR>" })
+nmap({ "<leader>gg", ":Glow<CR>" })
 
 -- vim-commentary
 nmap({ "//", "gcc" })
@@ -181,26 +149,3 @@ vmap({ "//", "gcc<Esc>" })
 xmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 nmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
 
--- Vim Smoothie
-vim.g.smoothie_no_default_mappings = 1
-map({ "C-D", "<Plug>(SmoothieDownwards)" })
-map({ "C-U", "<Plug>(SmoothieUpwards)" })
-map({ "J", "<Plug>(SmoothieDownwards)" })
-map({ "K", "<Plug>(SmoothieUpwards)" })
-map({ "<S-Down>", "<Plug>(SmoothieDownwards)" })
-map({ "<S-Up>", "<Plug>(SmoothieUpwards)" })
-map({ "<PageDown>", "<Plug>(SmoothieForwards)" })
-map({ "<PageUp>", "<Plug>(SmoothieBackwards)" })
-
--- VIM Translate
--- " Echo translation in the cmdline
-nmap({ "tt", "<Plug>Translate" })
-vmap({ "tt", "<Plug>TranslateV" })
--- " Display translation in a window
-nmap({ "tw", "<Plug>TranslateW" })
-vmap({ "tw", "<Plug>TranslateWV" })
--- " Replace the text with translation
-nmap({ "tr", "<Plug>TranslateR" })
-vmap({ "tr", "<Plug>TranslateRV" })
--- " Translate the text in clipboard
-nmap({ "tx", "<Plug>TranslateX" })
