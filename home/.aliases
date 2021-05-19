@@ -118,9 +118,11 @@ if command -v "tmux" > /dev/null 2>&1; then
 fi
 
 # Kitty Terminal
-if command -v "kitty" > /dev/null 2>&1; then
+if [[ $TERMINAL == "kitty" ]]; then
     alias icat="kitty +kitten icat"
+    alias neofetch="neofetch --config ~/.config/neofetch/config-kitty.conf"
 fi
+
 # mpd ncmpcpp
 if command -v "ncmpcpp" > /dev/null 2>&1; then
     alias killmpd=" killall mpd ncmpcpp ncmpcpp_cover_art.sh"
