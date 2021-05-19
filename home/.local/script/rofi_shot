@@ -145,7 +145,7 @@ notify() {
     "
 }
 
-noparse(){
+_noparse(){
     case $1 in
         clipboard)
             check && \
@@ -181,7 +181,7 @@ noparse(){
     esac
 }
 
-parse(){
+_parse(){
     case $1 in
         clipboard)
             check && \
@@ -229,16 +229,16 @@ parse(){
 
 OPTIONS='''
 [
-    ["Clipboard",               "parse clipboard"],
-    ["Clipboard (Noparse)",     "noparse clipboard"],
-    ["Fullscreen",              "parse full"],
-    ["Fullscreen (Noparse)",    "noparse full"],
-    ["Active",                  "parse active"],
-    ["Active (Noparse)",        "noparse active"],
-    ["Select",                  "parse select"],
-    ["Select (Noparse)",        "noparse select"],
-    ["Delay",                   "parse delay"],
-    ["Delay (Noparse)",         "noparse delay"]
+    ["Clipboard",               "_parse clipboard"],
+    ["Clipboard (Noparse)",     "_noparse clipboard"],
+    ["Fullscreen",              "_parse full"],
+    ["Fullscreen (Noparse)",    "_noparse full"],
+    ["Active",                  "_parse active"],
+    ["Active (Noparse)",        "_noparse active"],
+    ["Select",                  "_parse select"],
+    ["Select (Noparse)",        "_noparse select"],
+    ["Delay",                   "_parse delay"],
+    ["Delay (Noparse)",         "_noparse delay"]
 ]
 '''
 
