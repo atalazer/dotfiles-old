@@ -1,0 +1,46 @@
+! special
+*foreground:  #8F93A2
+*background:  #0F111A
+*cursorColor: #FFCC00
+*borderColor: [100]#2A373E
+*.foreground:  #8F93A2
+*.background:  #0F111A
+*.cursorColor: #FFCC00
+*.borderColor: [100]#2A373E
+
+! black
+*.color0      : #000000
+*.color8      : #000022
+
+! red
+*.color1      : #F07178
+*.color9      : #FF9CAC
+
+! green
+*.color2      : #C3E88D
+*.color10     : #C4F8BC
+
+! yellow
+*.color3      : #FFCB6B
+*.color11     : #FFCB8F
+
+! blue
+*.color4      : #82AAFF
+*.color12     : #B0C9FF
+
+! magenta
+*.color5      : #C792EA
+*.color13     : #C7A4FC
+
+! cyan
+*.color6      : #89DDFF
+*.color14     : #ABFFFF
+
+! white
+*.color7      : #EEFFFF
+*.color15     : #EFFFFF
+
+! Black color that will not be affected by bold highlighting.
+*.color66: #1E1724
+*color66: #1E1724
+
