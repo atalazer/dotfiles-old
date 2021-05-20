@@ -23,10 +23,6 @@ if ok then
                 })
             end,
         },
-        profile = {
-            enable = true,
-            threshold = 1,
-        },
     })
 
     local plugins = function()
@@ -105,6 +101,9 @@ if ok then
         -- Terminal Markdown Previewer
         use({
             "npxbr/glow.nvim",
+            branch = "main",
+            opt = true,
+            ft = "markdown",
             run = ":GlowInstall",
         })
 

@@ -10,14 +10,6 @@ g.python_host_prog  = "/usr/bin/python"
 g.python3_host_prog = "/usr/bin/python3"
 g.node_host_prog    = "/home/atalariq/.fnm/node-versions/v14.16.1/installation/bin/neovim-node-host"
 
--- prevent typo when pressing `wq` or `q`
-cmd([[
-    cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
-    cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
-    cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
-    cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
-]])
-
 -- change cwd to current directory
 cmd("cd %:p:h")
 
