@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-rofi -show calc -modi calc -no-show-match -no-sort
+rofi -show calc -modi calc \
+    -no-show-match -no-sort \
+    -lines 8 -width 60 \
+    -location 6 -xoffset 0 -yoffset -15

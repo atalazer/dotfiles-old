@@ -1,24 +1,39 @@
 configuration {
-  font:                   "JetBrainsMono Nerd Font 11";
-  show-icons:             true;
-  icon-theme:             "Papirus";
-  cycle:                  true;
-  hide-scrollbar:         true;
-  sidebar-mode:           false;
-  disable-history:        false;
-  modi:                   "drun,run,window,file-browser";
-  display-drun:           "";
-  display-run:            "";
-  display-window:         "";
-  display-file-browser:   "";
-  display-calc:           "";
-  terminal:               "kitty";
-  columns:                1;
-  lines:                  15;
-  width:                  60;
-  bw:                     1;
-  padding:                3;
-  line-margin:            2;
-  line-padding:           1;
+  font:                      "JetBrainsMono Nerd Font 11";
+  show-icons:                true;
+  icon-theme:                "Papirus";
+  cycle:                     true;
+  hide-scrollbar:            true;
+  scroll-method:             1;
+  sidebar-mode:              false;
+  disable-history:           false;
+  max-history-size:          15;
+
+  threads:                   2;
+  sorting:                   true;
+  sorting-method:            "fzf";
+  matching:                  "fuzzy";
+  
+  modi:                      "drun,window,file-browser,calc";
+  combi-modi:                "window,drun";
+  
+  display-drun:              "APP";
+  drun-use-desktop-cache:    true;
+  drun-reload-desktop-cache: true;
+
+  display-run:               "CMD";
+  display-window:            "WIN";
+  display-file-browser:      "FLM";
+  display-calc:              "CLC";
+  
+  terminal:                  "kitty";
+  
+  columns:                   1;
+  lines:                     15;
+  width:                     40;
+  bw:                        1;
+  padding:                   3;
+  line-margin:               2;
+  line-padding:              1;
 }
 @import "~/.cache/wal/colors-rofi-dark"
