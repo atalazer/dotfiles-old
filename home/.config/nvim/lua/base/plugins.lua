@@ -165,14 +165,6 @@ if ok then
             end,
         })
 
-        -- Increment and decrement
-        use({
-            "monaqa/dial.nvim",
-            config = function()
-                require("plugins.dial")
-            end,
-        })
-
         -- Indenting
         use({
             "lukas-reineke/indent-blankline.nvim",

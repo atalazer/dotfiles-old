@@ -162,13 +162,6 @@ local servers = {
         cmd = {
             sumneko_cmd,
         },
-        -- delete root from workspace to make sure we don't trigger duplicate warnings
-        on_new_config = function(config, root)
-            local libs = vim.tbl_deep_extend("force", {}, library)
-            libs[root] = nil
-            config.settings.Lua.workspace.library = libs
-            return config
-        end,
         settings = {
             Lua = {
                 runtime = {
@@ -186,12 +179,7 @@ local servers = {
                 telemetry = { enable = false },
                 diagnostics = {
                     enable = true,
-                    disable = {
-                        "ambiguity-1",
-                        "trailing-space",
-                        "lowercase-global",
-                        "undefined-global",
-                    },
+                    disable = { "trailing-space", "lowercase-global" },
                     globals = {
                         -- VIM
                         "vim",
@@ -208,6 +196,7 @@ local servers = {
                         [vim.fn.expand("~/.local/share/nvim/site/pack/packer/opt/*")] = true,
                         [vim.fn.expand("~/.local/share/nvim/site/pack/packer/start/*")] = true,
                         [vim.fn.expand("/usr/share/awesome/lib")] = true,
+                        [vim.fn.expand("~/.config/awesome")] = true,
                     },
                     maxPreload = 2000,
                     preloadFileSize = 50000,

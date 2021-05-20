@@ -111,14 +111,6 @@ nnoremap({ "<leader>fb", require("telescope.builtin").file_browser })
 nnoremap({ "<leader>ff", require("plugins.telescope").frecency })
 nnoremap({ "<leader>fm", require("plugins.telescope").media_files })
 
--- Dial
-nmap({ "M",  "<Plug>(dial-increment)" })
-vmap({ "M",  "<Plug>(dial-increment)" })
-vmap({ "gM", "<Plug>(dial-increment-additional)" })
-nmap({ "N",  "<Plug>(dial-decrement)" })
-vmap({ "N",  "<Plug>(dial-decrement)" })
-vmap({ "gN", "<Plug>(dial-decrement-additional)" })
-
 -- Format
 nnoremap({ "<leader>gf", "<cmd>Format<CR>", { silent = false } })
 
