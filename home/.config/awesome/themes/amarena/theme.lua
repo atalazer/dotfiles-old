@@ -394,8 +394,8 @@ theme.hotkeys_border_color = x.color8
 theme.hotkeys_label_fg = x.color0
 theme.hotkeys_modifiers_fg = x.color4
 
-theme.hotkeys_border_width = dpi(2)
-theme.hotkeys_group_margin = dpi(5)
+theme.hotkeys_border_width = dpi(1)
+theme.hotkeys_group_margin = dpi(8)
 
 return theme
 

@@ -1,24 +1,56 @@
-local hotkeys_popup = require("awful.hotkeys_popup")
-require("awful.hotkeys_popup.keys")
+local awful = require("awful")
 
-local add_group_rules = hotkeys_popup.widget.add_group_rules
-local add_hotkeys = hotkeys_popup.widget.add_hotkeys
+-- Show Help Setup {{{
+local popup =
+    require("awful.hotkeys_popup").widget.new({
+        hide_without_description = true,
+        merge_duplicates = true,
+        width = awful.screen.focused().geometry.width * 0.8,
+        height = awful.screen.focused().geometry.height * 0.8,
+        labels = {
+            Control               = "C",
+            Shift                 = "S",
+            Mod1                  = "A",
+            ISO_Level3_Shift      = "Ag",
+            Mod4                  = "W",
+            Insert                = "INS",
+            Delete                = "DEL",
+            Backspace             = "BS",
+            Next                  = "NEXT>",
+            Prior                 = "<PREV",
+            Escape                = "ESC",
+            Tab                   = "TAB",
+            space                 = "SPC",
+            Return                = "RET",
+            XF86MonBrightnessUp   = "B+",
+            XF86MonBrightnessDown = "B-",
+            XF86AudioRaiseVolume  = "V+",
+            XF86AudioLowerVolume  = "V-",
+            XF86AudioMute         = "-V-",
+            XF86AudioPlay         = "||",
+            XF86AudioPrev         = "<|",
+            XF86AudioNext         = "|>",
+            XF86AudioStop         = "[]",
+        },
+})
+--}}}
+
 -- ================================================================== Firefox {{{
 local firefox_rule = { class = { "firefox", "Firefox" } }
 
 for group_name, group_data in pairs({
-    ["Firefox: tabs"] = { color = x.color3, rule_any = firefox_rule },
+    ["Firefox: Tabs"] = { color = x.color3, rule_any = firefox_rule },
 }) do
-    add_group_rules(group_name, group_data)
+    popup:add_group_rules(group_name, group_data)
 end
 
 -- Table with all of our hotkeys
-local firefox = {
-    ["Firefox: tabs"] = {
+popup:add_hotkeys({
+    ["Firefox: Tabs"] = {
         {
             modifiers = { "Mod1" },
             keys = {
-                ["1..9"] = "go to tab",
+                ["1-9"] = "go to tab",
             },
         },
         {
@@ -36,33 +68,32 @@ local firefox = {
             },
         },
     },
-}
+})
 -- }}}
-add_hotkeys(firefox)
 
 -- ================================================================== kitty {{{
-local kitty_rule = { class = { "kitty", "Kitty" } }
+local kitty_rule = { class = { "kitty" }, instance = { "kitty" } }
 
 for group_name, group_data in pairs({
-    ["kitty"] = { color = x.color2, rule_any = kitty_rule },
-    ["kitty: Tab"] = { color = x.color3, rule_any = kitty_rule },
-    ["kitty: Window"] = { color = x.color4, rule_any = kitty_rule },
+    ["Kitty"] = { color = x.color2, rule_any = kitty_rule },
+    ["Kitty: Tab"] = { color = x.color3, rule_any = kitty_rule },
+    ["Kitty: Window"] = { color = x.color4, rule_any = kitty_rule },
 }) do
-    add_group_rules(group_name, group_data)
+    popup:add_group_rules(group_name, group_data)
 end
 
-local kitty = {
+popup:add_hotkeys({    
     ["kitty"] = {
         {
             modifiers = { "Ctrl", "Shift" },
             keys = {
-                c = "copy to clipboard",
-                v = "paste from clipboard",
-                s = "copy to selection",
-                ["="] = "increase font size",
-                ["-"] = "decrease font size",
-                ["Backspace"] = "restore font size",
-                ["F6"] = "set font size to 16",
+                c = "Copy to clipboard",
+                v = "Paste from clipboard",
+                s = "Copy to selection",
+                ["="] = "Increase font size",
+                ["-"] = "Decrease font size",
+                ["Backspace"] = "Restore font size",
+                ["F6"] = "Set font size to 16",
             },
         },
     },
@@ -70,14 +101,14 @@ local kitty = {
         {
             modifiers = { "Ctrl", "Shift" },
             keys = {
-                t = "new tab",
-                q = "close tab",
-                l = "change layout",
-                [","] = "set tab title",
-                ["["] = "previous tab",
-                ["]"] = "next tab",
-                o = "move tab to previous",
-                p = "move tab to next",
+                t = "New tab",
+                q = "Close tab",
+                l = "Change layout",
+                [","] = "Set tab title",
+                ["["] = "Previous tab",
+                ["]"] = "Next tab",
+                o = "Move tab to previous",
+                p = "Move tab to next",
             },
         },
     },
@@ -85,29 +116,21 @@ local kitty = {
         {
             modifiers = { "Ctrl", "Shift" },
             keys = {
-                n = "new_os_window",
-                w = "close_window",
-                f = "move_window_forward",
-                b = "move_window_backward",
-                ["Enter"] = "new_window",
-                ["Right"] = "next_window",
-                ["Left"] = "previous_window",
-                ["`"] = "move_window_to_top",
-                ["1"] = "first_window",
-                ["2"] = "second_window",
-                ["3"] = "third_window",
-                ["4"] = "fourth_window",
-                ["5"] = "fifth_window",
-                ["6"] = "sixth_window",
-                ["7"] = "seventh_window",
-                ["8"] = "eighth_window",
-                ["9"] = "ninth_window",
-                ["0"] = "tenth_window",
+                n = "New OS Window",
+                w = "Close",
+                f = "Move Forward",
+                b = "Move Backward",
+                ["Enter"] = "New",
+                ["Right"] = "Next",
+                ["Left"] = "Previous",
+                ["`"] = "Move to top",
+                ["0-9"] = "Go To Window",
             },
         },
     },
-}
-
+})
 -- }}}
-add_hotkeys(kitty)
 
+return {
+    popup = popup
+}

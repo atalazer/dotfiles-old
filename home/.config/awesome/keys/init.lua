@@ -2,7 +2,6 @@ local awful = require("awful")
 local naughty = require("naughty")
 local gears = require("gears")
 
-local hotkeys_popup = require("awful.hotkeys_popup")
 require("keys.hotkeys_popup")
 
 local keys = {}
@@ -17,31 +16,25 @@ shiftkey = "Shift"
 keys.globalkeys = gears.table.join(
     -- Reload Awesome
     awful.key({ superkey, ctrlkey }, "r", awesome.restart,
-        {description = "reload awesome", group = "awesome"}),
+        {description = "Reload", group = "Awesome"}),
 
     -- Quit Awesome
     -- Logout, Shutdown, Restart, Suspend, Lock
-    awful.key({ superkey, shiftkey }, "x",
-        function ()
-            exit_screen_show()
-        end,
-        {description = "quit awesome", group = "awesome"}),
-
     awful.key({ superkey }, "Escape",
         function ()
             exit_screen_show()
         end,
-        {description = "quit awesome", group = "awesome"}),
+        {description = "Quit awesome", group = "Awesome"}),
 
     awful.key({ }, "XF86PowerOff",
         function ()
             exit_screen_show()
         end,
-        {description = "quit awesome", group = "awesome"}),
+        {description = "Quit awesome", group = "Awesome"}),
 
-    awful.key({ superkey }, "F1",
-        hotkeys_popup.show_help,
-        {description="show help", group="awesome"}),
+    awful.key({ superkey }, "F1", function()
+        require("keys.hotkeys_popup").popup:show_help()
+    end, { description = "Show help", group = "Awesome"}),
 
     -- Run
     awful.key({ superkey }, ";",
@@ -51,7 +44,7 @@ keys.globalkeys = gears.table.join(
                 sidebar_activate_prompt("run")
             end
         end,
-        {description = "activate sidebar run prompt", group = "awesome"}),
+        {description = "Run prompt", group = "Apps: Prompt"}),
 
     -- Web search
     awful.key({ superkey, shiftkey }, ";",
@@ -61,7 +54,7 @@ keys.globalkeys = gears.table.join(
                 sidebar_activate_prompt("web_search")
             end
         end,
-        {description = "activate sidebar web search prompt", group = "awesome"}),
+        {description = "Web search prompt", group = "Apps: Prompt"}),
 
     -- Dashboard
     awful.key({ superkey }, "F2", function()
@@ -69,30 +62,29 @@ keys.globalkeys = gears.table.join(
             dashboard_show()
         end
         -- rofi_show()
-    end, {description = "dashboard", group = "awesome"}),
+    end, {description = "Dashboard", group = "Awesome"}),
     
     -- Toggle tray visibility
     awful.key({ superkey }, "=",
         function ()
             tray_toggle()
         end,
-        {description = "toggle tray visibility", group = "awesome"}),
+        {description = "toggle tray visibility", group = "Awesome"}),
 
     -- Toggle sidebar
     awful.key({ superkey }, "grave", function()
         sidebar_toggle()
-    end, { description = "show or hide sidebar", group = "awesome" }),
+    end, { description = "show or hide sidebar", group = "Awesome" }),
 
     -- Toggle wibar(s)
     awful.key({ superkey }, "b", function()
         wibars_toggle()
-    end, { description = "show or hide wibar(s)", group = "awesome" }),
+    end, { description = "show or hide wibar(s)", group = "Awesome" }),
 
     -- App drawer
     awful.key({ superkey }, "a", function()
         app_drawer_show()
-                                 end,
-        {description = "App drawer", group = "awesome"})
+    end, {description = "App drawer", group = "Awesome"})
 
 )
 -- --}}}

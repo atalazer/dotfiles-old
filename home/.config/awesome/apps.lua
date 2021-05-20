@@ -37,6 +37,7 @@ apps.controller = {
 
 apps.rofi = {
     center      = script_dir .. "rofi_center",
+    calc        = script_dir .. "rofi_calc",
     app_menu    = script_dir .. "rofi_app_menu",
     global_menu = script_dir .. "rofi_global_menu",
     edit        = script_dir .. "rofi_edit",

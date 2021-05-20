@@ -18,6 +18,7 @@ ruled.client.connect_signal("request::rules", function()
             width = screen_width * 0.50,
             height = screen_height * 0.50,
             titlebars_enabled = false,
+            placement = centered_client_placement,
         },
     })
     -- }}}

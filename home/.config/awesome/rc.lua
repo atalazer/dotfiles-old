@@ -166,7 +166,7 @@ user = {
 
 
 -- Jit
---pcall(function() jit.on() end)
+pcall(function() jit.on() end)
 
 -- Initialization
 -- ===================================================================
@@ -177,31 +177,22 @@ local xrdb = beautiful.xresources.get_current_theme()
 dpi = beautiful.xresources.apply_dpi
 -- Make xresources colors global
 x = {
-    --           xrdb variable
     background = xrdb.background,
     foreground = xrdb.foreground,
-    -- Black
     color0     = xrdb.color0,
     color8     = xrdb.color8,
-    -- Red
     color1     = xrdb.color1,
     color9     = xrdb.color9,
-    -- Green
     color2     = xrdb.color2,
     color10    = xrdb.color10,
-    -- Yellow
     color3     = xrdb.color3,
     color11    = xrdb.color11,
-    -- Blue
     color4     = xrdb.color4,
     color12    = xrdb.color12,
-    -- Magenta
     color5     = xrdb.color5,
     color13    = xrdb.color13,
-    -- Cyan
     color6     = xrdb.color6,
     color14    = xrdb.color14,
-    -- White
     color7     = xrdb.color7,
     color15    = xrdb.color15,
 }
@@ -235,7 +226,7 @@ local icons = require("icons")
 icons.init(icon_theme)
 
 -- Keybinds and mousebinds
--- local keys = require("keys")
+local keys = require("keys")
 
 -- Load notification daemons and notification theme
 local notifications = require("notifications")
