@@ -81,23 +81,6 @@ if ok then
                 require("plugins.treesitter")
             end,
         })
-        use({
-            "code-biscuits/nvim-biscuits",
-            config = function()
-                require("nvim-biscuits").setup({
-                    default_config = {
-                        max_length = 30,
-                        min_destance = 5,
-                        prefix_string = " // ",
-                        on_events = { "InsertLeave", "CursorHoldI" },
-                    },
-                })
-                vim.cmd([[
-                highlight link BiscuitColor Comment
-                highlight BiscuitColorRust ctermfg=red
-                ]])
-            end,
-        })
 
         -- SQL Support
         use({ "tami5/sql.nvim" })
@@ -149,7 +132,8 @@ if ok then
         -- vim easy motion
         use({
             "phaazon/hop.nvim",
-            opt = false,
+            opt = true,
+            cmd = { "HopWord", "HopPattern" },
             config = function()
                 require("hop").setup({})
             end,
@@ -211,6 +195,7 @@ if ok then
                 "javascript",
                 "typescript",
             },
+            cmd = "ColorizerToggle",
             config = function()
                 require("colorizer").setup({
                     ["*"] = {
@@ -289,6 +274,8 @@ if ok then
         -- Open root previllage files
         use({
             "lambdalisue/suda.vim",
+            opt = true,
+            cmd = { "SudaRead", "SudaWrite" },
             config = function()
                 vim.g.suda_smart_edit = 1
                 vim.g["suda#prompt"] = "Password : "

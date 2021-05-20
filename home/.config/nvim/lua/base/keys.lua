@@ -49,7 +49,7 @@ nnoremap({ "<C-y>", ":redo<CR>" })
 inoremap({ "<C-y>", "<Esc>:redo<CR>" })
 
 -- Find
-nnoremap({ "<ESC><ESC>", ":nohlsearch<CR>" })
+nnoremap({ "<leader>n", ":nohlsearch<CR>" })
 
 -- Indent
 vnoremap({ "<", "<gv" })
@@ -123,11 +123,8 @@ vmap({ "gN", "<Plug>(dial-decrement-additional)" })
 nnoremap({ "<leader>gf", "<cmd>Format<CR>", { silent = false } })
 
 -- Hop
-nmap({ "<space>z", ":HopChar1<CR>" })
-nmap({ "<space>x", ":HopChar2<CR>" })
 nmap({ "<space>w", ":HopWord<CR>" })
-nmap({ "<space>l", ":HopLine<CR>" })
-nmap({ "<space>n", ":HopPattern<CR>" })
+nmap({ "<space>p", ":HopPattern<CR>" })
 
 -- Colorizer
 nnoremap({ "<leader>cc", ":ColorizerToggle<CR>" })
@@ -141,11 +138,7 @@ nnoremap({ "`", ":NvimTreeToggle<CR>" })
 -- Glow.nvim
 nmap({ "<leader>gg", ":Glow<CR>" })
 
--- vim-commentary
-nmap({ "//", "gcc" })
-vmap({ "//", "gcc<Esc>" })
-
 -- Vim Easy Align
-xmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
-nmap({ "A", "<Plug>(EasyAlign)", { silent = true } })
+xmap({ "ga", "<Plug>(EasyAlign)", { silent = true } })
+nmap({ "ga", "<Plug>(EasyAlign)", { silent = true } })
 

@@ -1,5 +1,5 @@
-column_width = 100
+column_width = 120
 indent_width = 4
 indent_type  = "Spaces"             # Tabs or Spaces
-line_endings = "Unix"             # Unix(LF) or Windows(CRLF)
-quote_style  = "ForceDouble" # AutoPreferDouble AutoPreferSingle ForceDouble ForceSingle
+line_endings = "Unix"               # Unix(LF) or Windows(CRLF)
+quote_style  = "AutoPreferDouble"   # AutoPreferDouble AutoPreferSingle ForceDouble ForceSingle
