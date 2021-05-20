@@ -104,25 +104,10 @@ ruled.client.connect_signal("request::rules", function()
             instance = {
                 "file_progress",
                 "Popup",
-                "nm-connection-editor",
                 "plugin-container",
                 "exe",
-                "floating_terminal",
-                "Devtools",
-            },
-            class = {
-                "scrcpy",
-                "Lxappearance",
-                "Nm-connection-editor",
-                "File-roller",
-            },
-            name = {
-                "Event Tester",
-                "Open File",
-                "Media viewer",
             },
             role = {
-                "AlarmWindow",
                 "pop-up",
                 "GtkFileChooserDialog",
                 "conversation",
@@ -134,119 +119,6 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             placement = centered_client_placement,
         },
-    })
-    -- }}}
-
-    -- Maximize {{{
-    ruled.client.append_rule({
-        id = "maximize",
-        rule_any = {
-            name = {
-                "Firefox Developer Edition",
-                "Mozilla Firefox",
-                "Home",
-            },
-        },
-        properties = { maximize  = true },
-    })
-    -- }}}
-    
-    -- Centered {{{
-    ruled.client.append_rule({
-        id = "centered",
-        rule_any = {
-            type = {
-                "dialog",
-            },
-            class = {
-                "Steam",
-                "discord",
-                "music",
-                "markdown_input",
-                "scratchpad",
-            },
-            instance = {
-                "music",
-                "markdown_input",
-                "scratchpad",
-            },
-            role = {
-                "GtkFileChooserDialog",
-                "conversation",
-            }
-        },
-        properties = { placement = centered_client_placement },
-    })
-    -- }}}
-
-    -- Fullscreen {{{
-    ruled.client.append_rule({
-        id = "fullscreen",
-        rule_any = {
-            class = {
-                "csgo_linux64",
-                "portal2_linux",
-                "dota2",
-                "dontstarve_steam",
-            },
-        },
-        properties = { fullscreen = true },
-    })
-    -- }}}
-
-    -- Titlebars OFF (explicitly) {{{
-    ruled.client.append_rule({
-        id = "titlebar_off",
-        rule_any = {
-            class = {
-                "TelegramDesktop",
-                "firefox",
-                "^editor$",
-                "markdown_input",
-            },
-        },
-        callback = function(c)
-            decorations.hide(c)
-        end,
-    })
-    -- }}}
-
-    -- Titlebars ON (explicitly) {{{
-    ruled.client.append_rule({
-        id = "titlebar_on",
-        rule_any = {
-            type = {
-                "dialog",
-            },
-            role = {
-                "conversation",
-            },
-        },
-        callback = function(c)
-            decorations.show(c)
-        end,
-    })
-    -- }}}
-
-    -- Urgent {{{
-    ruled.client.append_rule({
-        id = "urgent",
-        rule_any = {
-            class = {
-                "TelegramDesktop",
-                "firefox",
-            },
-            type = {
-                "dialog",
-            },
-        },
-        callback = function(c)
-            c:connect_signal("property::urgent", function()
-                if c.urgent then
-                    c:jump_to()
-                end
-            end)
-        end,
     })
     -- }}}
 

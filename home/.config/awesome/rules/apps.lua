@@ -2,7 +2,6 @@ local awful = require("awful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
-
     -- Fixed terminal geometry for floating terminals {{{
     ruled.client.append_rule({
         rule_any = {
@@ -16,8 +15,8 @@ ruled.client.connect_signal("request::rules", function()
             },
         },
         properties = {
-            width = screen_width * 0.45,
-            height = screen_height * 0.6,
+            width = screen_width * 0.50,
+            height = screen_height * 0.50,
             titlebars_enabled = false,
         },
     })
@@ -44,7 +43,9 @@ ruled.client.connect_signal("request::rules", function()
                 "feh",
                 "Sxiv",
                 "Viewnior",
-                "viewnior",
+            },
+            name = {
+                "Media viewer",
             },
         },
         properties = {
@@ -52,8 +53,8 @@ ruled.client.connect_signal("request::rules", function()
             raise = true,
             titlebars_enabled = true,
             placement = centered_client_placement,
-            width = screen_width * 0.7,
-            height = screen_height * 0.75,
+            width = screen_width * 0.70,
+            height = screen_height * 0.60,
         },
     })
     -- }}}
@@ -64,9 +65,9 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Nemo",
                 "Thunar",
-                "file"
+                "file",
             },
-            instance = { "file"}
+            instance = { "file" },
         },
         except_any = {
             type = { "dialog" },
@@ -84,7 +85,7 @@ ruled.client.connect_signal("request::rules", function()
     -- File Archive {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "Engrampa" },
+            class = { "Engrampa", "File-roller" },
         },
         properties = {
             titlebars_enabled = true,
@@ -98,8 +99,22 @@ ruled.client.connect_signal("request::rules", function()
 
     -- File chooser dialog {{{
     ruled.client.append_rule({
-        rule_any = { role = { "GtkFileChooserDialog" } },
+        rule_any = {
+            role = { "GtkFileChooserDialog" },
+            name = { "Open File" },
+        },
         properties = { floating = true, width = screen_width * 0.55, height = screen_height * 0.65 },
+    })
+    -- }}}
+
+    -- Color Picker {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "Gcolor3", "Gcolor2", "Gpick" },
+            instance = { "gcolor3", "gcolor2", "gpick" },
+            name = { "Color Picker" },
+        },
+        properties = { floating = true, titlebars_enabled = false },
     })
     -- }}}
 
@@ -133,12 +148,12 @@ ruled.client.connect_signal("request::rules", function()
             instance = {
                 "scratchpad",
                 "markdown_input",
-                "youtube"
+                "youtube",
             },
             class = {
                 "scratchpad",
                 "markdown_input",
-                "youtube"
+                "youtube",
             },
         },
         properties = {
@@ -230,5 +245,4 @@ ruled.client.connect_signal("request::rules", function()
         properties = { floating = true },
     })
     -- }}}
-
 end)
