@@ -4,13 +4,13 @@
 _rofi () {
     rofi -regex -tokenize -i -lines 30 -width 1500 -no-levenshtein-sort "$@"
 }
-noteroot="$HOME/Documents/bashtodo"
-done_notes="${noteroot}/done"
+noteroot="$HOME/Documents/Notes/TODO"
+done_notes="${noteroot}/Done"
 BROWSER=chromium
 url_length=100
 
 # hotkeys
-switch="Alt+Tab"
+switch="Alt+s"
 switch_agenda="Alt+a"
 new="Alt+n"
 
@@ -46,8 +46,9 @@ main () {
         view="active"
     fi
     cd "${notes}"
-    HELP="Welcome to dofi. Use <span color='${title_color}'>${new}</span> to create a new todo
-Use <span color='${title_color}'>${switch}</span> to switch between active/done todos. <span color='${title_color}'>${switch_agenda}</span> switches agenda view."
+    HELP="<span color='${title_color}'>${new}</span>   : Create a new todo
+<span color='${title_color}'>${switch}</span> : Switch between active/done todos
+<span color='${title_color}'>${switch_agenda}</span>   : Switches agenda view"
     if [[ $agenda == "1" ]]; then
       export view="agenda"
       listbydate
