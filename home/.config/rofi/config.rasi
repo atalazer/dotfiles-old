@@ -10,7 +10,7 @@ configuration {
   max-history-size:          15;
 
   threads:                   2;
-  sorting:                   true;
+  sort:                      true;
   sorting-method:            "fzf";
   matching:                  "fuzzy";
   
