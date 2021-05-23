@@ -53,7 +53,7 @@ wk.register({
 
 wk.register({
     l = { "<Cmd>luafile %<CR>", "Source Lua File" },
-    r = { "<Cmd>lua %<CR>", "Execute Current Lua File" },
+    r = { "<Cmd>!lua %<CR>", "Execute Current Lua File" },
     v = { "<Cmd>source %<CR>", "Source Vim File" },
     p = { "<Cmd>!python %<CR>", "Execute Current Python File" },
 }, {prefix = "<localleader>"})

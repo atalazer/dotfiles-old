@@ -30,6 +30,7 @@ require("nvim-treesitter.configs").setup({
             lua  = "-- %s",
             sh, bash, zsh   = "# %s",
             toml  = "# %s",
+            xdefaults = "! %s"
         }
     },
 })
