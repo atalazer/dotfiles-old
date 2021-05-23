@@ -9,72 +9,72 @@ local keys = gears.table.join(
     -- Rofi / dmenu
     awful.key({ superkey }, "d", function()
         awful.spawn.with_shell("rofi -show")
-    end, { description = "Rofi launcher", group = "Apps: Prompt" }),
+    end, { description = "Launcher", group = "Apps: Prompt" }),
 
     -- Rofi Action Center
-    awful.key({ superkey }, "c", function()
+    awful.key({ superkey }, "a", function()
         awful.spawn.with_shell(apps.rofi.center)
-    end, { description = "Rofi Action Center", group =  "Apps: Prompt" } ),
+    end, { description = "Action Center", group =  "Apps: Prompt" } ),
     
     -- Rofi App Center
     awful.key({ superkey }, "r", function()
         awful.spawn.with_shell(apps.rofi.app_menu)
-    end, { description = "Rofi App Center", group =  "Apps: Prompt" } ),
+    end, { description = "App Center", group =  "Apps: Prompt" } ),
     
     -- Rofi Global Menu
-    awful.key({ superkey }, "p", function()
+    awful.key({ superkey }, "g", function()
         awful.spawn.with_shell(apps.rofi.global_menu)
-    end, { description = "Rofi Global Menu", group =  "Apps: Prompt" } ),
+    end, { description = "Global Menu", group =  "Apps: Prompt" } ),
     
     -- Clipmenu
     awful.key({ superkey }, "Insert", function()
         awful.spawn(apps.clipboard)
-    end, { description = "Rofi Clipboard manager", group = "Apps: Prompt" }),
+    end, { description = "Clipboard manager", group = "Apps: Prompt" }),
 
     -- Rofi Screenshots
     awful.key({ superkey }, "Print", function()
         awful.spawn(apps.rofi.shot)
-    end, { description = "Rofi Shot", group = "Apps: Prompt" }),
+    end, { description = "Shot", group = "Apps: Prompt" }),
 
     -- Rofi Record
     awful.key({ superkey }, "F12", function()
         awful.spawn(apps.rofi.record)
-    end, { description = "Rofi Record", group = "Apps: Prompt" }),
+    end, { description = "Record", group = "Apps: Prompt" }),
 
     -- Network dialog
     awful.key({ superkey }, "n",
         apps.network,
-    { description = "Rofi Network dialog", group = "Apps: Prompt" }),
+    { description = "Network", group = "Apps: Prompt" }),
 
     -- Password
-    awful.key({ superkey, shiftkey }, "p",
+    awful.key({ superkey }, "p",
         apps.password,
-    { description = "Rofi Password dialog", group = "Apps: Prompt" }),
+    { description = "Password", group = "Apps: Prompt" }),
 
     -- Quick edit file
     awful.key({ superkey }, "e", function()
         awful.spawn.with_shell(apps.rofi.edit)
-    end, { description = "Rofi Quick edit file", group = "Apps: Prompt" }),
+    end, { description = "Edit file", group = "Apps: Prompt" }),
 
     -- Rofi Calculator
-    awful.key({ superkey, shiftkey }, "c", function()
+    awful.key({ superkey }, "c", function()
         awful.spawn.with_shell(apps.rofi.calc)
-    end, { description = "Rofi Calc", group =  "Apps: Prompt" } ),
+    end, { description = "Calculator", group =  "Apps: Prompt" } ),
     
     -- Rofi Todo
     awful.key({ superkey }, "/", function()
         awful.spawn.with_shell(apps.rofi.todo)
-    end, { description = "Rofi Todo", group = "Apps: Prompt" }),
+    end, { description = "Todo", group = "Apps: Prompt" }),
 
     -- Quick Translate
     awful.key({ superkey }, "t", function()
         awful.spawn.with_shell(apps.rofi.translate)
-    end, { description = "Rofi Quick Translate", group = "Apps: Prompt" }),
+    end, { description = "Translate", group = "Apps: Prompt" }),
 
     -- Youtube Prompt ( ytfzf)
     awful.key({ superkey }, "y",
         apps.youtube,
-        { description = "Prompt Youtube", group = "Apps: Prompt" }),
+        { description = "Youtube", group = "Apps: Prompt" }),
 
     -- }}}
 
@@ -102,22 +102,22 @@ local keys = gears.table.join(
     -- Terminal Editor
     awful.key({ superkey, shiftkey },"e",
         apps.editor,
-        { description = "Terminal Editor", group = "Apps: Terminal" }),
+        { description = "Editor", group = "Apps: Terminal" }),
 
     -- Terminal file manager
     awful.key({ superkey, shiftkey }, "f",
         apps.file_manager,
-        { description = "Terminal File Manager", group = "Apps: Terminal" }),
+        { description = "File Manager", group = "Apps: Terminal" }),
 
     -- Terminal e-mail client
     awful.key({ superkey, shiftkey }, "w",
         apps.mail,
-        { description = "Terminal E-mail client", group = "Apps: Terminal" }),
+        { description = "E-mail client", group = "Apps: Terminal" }),
 
     -- Terminal music client
     awful.key({ superkey, shiftkey }, "m",
         apps.music,
-        { description = "Terminal Music client", group = "Apps: Terminal" }),
+        { description = "Music client", group = "Apps: Terminal" }),
 
     -- }}}
 
@@ -126,12 +126,12 @@ local keys = gears.table.join(
     -- scratchpad
     awful.key({ superkey }, "\\", function()
         apps.scratchpad()
-    end, { description = "Scratchpad", group = "Apps: scratchpad" }),
+    end, { description = "Scratchpad", group = "Apps: Scratchpad" }),
 
     -- Markdown input scratchpad (I for input)
     awful.key({ superkey }, "i",
         apps.markdown_input,
-        { description = "Markdown scratchpad", group = "Apps: scratchpad" })
+        { description = "Markdown Input", group = "Apps: Scratchpad" })
 
 
 -- }}}

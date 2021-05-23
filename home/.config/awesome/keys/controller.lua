@@ -43,11 +43,11 @@ local keys = gears.table.join(
     end, { description = "Play Previous Song mpc", group = "Apps: Controller" }),
 
     -- ============================================================= Screenshot
-    awful.key({ S }, "Print", function()
+    awful.key({ shiftkey }, "Print", function()
         awful.spawn.with_shell(apps.controller.shot_select)
     end, { description = "Shot Select", group = "Apps: Controller" }),
 
-    awful.key({ A }, "Print", function()
+    awful.key({ altkey }, "Print", function()
         awful.spawn.with_shell(apps.controller.shot_active)
     end, { description = "Shot Active Client", group = "Apps: Controller" })
 

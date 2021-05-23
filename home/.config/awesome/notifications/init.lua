@@ -41,8 +41,6 @@ function notifications.init(theme_name)
     require("notifications.brightness")
     require("notifications.battery")
     require("notifications.mpd")
-    require("notifications.league_of_legends")
-    require("notifications.keyboardlayout")
     -- Load theme
     require("notifications.themes." .. theme_name)
 end

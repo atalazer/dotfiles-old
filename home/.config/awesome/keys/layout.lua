@@ -1,33 +1,35 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local helpers = require("helpers")
+
 local keys = gears.table.join(
     -- Number of master clients
     awful.key({ superkey, altkey }, "h", function()
         awful.tag.incnmaster(1, nil, true)
     end, {
-        description = "increase the number of master clients",
+        description = "Inscrease the number of master clients",
         group = "Layout",
     }),
 
     awful.key({ superkey, altkey }, "l", function()
         awful.tag.incnmaster(-1, nil, true)
     end, {
-        description = "decrease the number of master clients",
+        description = "Decrease the number of master clients",
         group = "Layout",
     }),
 
     awful.key({ superkey, altkey }, "Left", function()
         awful.tag.incnmaster(1, nil, true)
     end, {
-        description = "increase the number of master clients",
+        description = "Inscrease the number of master clients",
         group = "Layout",
     }),
 
     awful.key({ superkey, altkey }, "Right", function()
         awful.tag.incnmaster(-1, nil, true)
     end, {
-        description = "decrease the number of master clients",
+        description = "Decrease the number of master clients",
         group = "Layout",
     }),
 
@@ -35,42 +37,42 @@ local keys = gears.table.join(
     awful.key({ superkey, altkey }, "k", function()
         awful.tag.incncol(1, nil, true)
     end, {
-        description = "increase the number of columns",
+        description = "Inscrease the number of columns",
         group = "Layout",
     }),
 
     awful.key({ superkey, altkey }, "j", function()
         awful.tag.incncol(-1, nil, true)
     end, {
-        description = "decrease the number of columns",
+        description = "Decrease the number of columns",
         group = "Layout",
     }),
 
     awful.key({ superkey, altkey }, "Up", function()
         awful.tag.incncol(1, nil, true)
     end, {
-        description = "increase the number of columns",
+        description = "Inscrease the number of columns",
         group = "Layout",
     }),
 
     awful.key({ superkey, altkey }, "Down", function()
         awful.tag.incncol(-1, nil, true)
     end, {
-        description = "decrease the number of columns",
+        description = "Decrease the number of columns",
         group = "Layout",
     }),
 
     awful.key({ superkey }, "space", function()
-        awful.Layout.inc(1)
+        awful.layout.inc(1)
     end, {
-        description = "select next",
+        description = "Select next",
         group = "Layout",
     }),
 
     awful.key({ superkey, shiftkey }, "space", function()
-        awful.Layout.inc(-1)
+        awful.layout.inc(-1)
     end, {
-        description = "select previous",
+        description = "Select previous",
         group = "Layout",
     }),
 
@@ -78,7 +80,7 @@ local keys = gears.table.join(
     -- Max layout
     -- Single tap: Set max layout
     -- Double tap: Also disable floating for ALL visible clients in the tag
-    awful.key({ superkey }, "w", function()
+    awful.key({ superkey, altkey }, "m", function()
         awful.layout.set(awful.layout.suit.max)
         helpers.single_double_tap(nil, function()
             local clients = awful.screen.focused().clients
@@ -91,7 +93,7 @@ local keys = gears.table.join(
     -- Tiling
     -- Single tap: Set tiled layout
     -- Double tap: Also disable floating for ALL visible clients in the tag
-    awful.key({ superkey }, "s", function()
+    awful.key({ superkey, altkey }, "t", function()
         awful.layout.set(awful.layout.suit.tile)
         helpers.single_double_tap(nil, function()
             local clients = awful.screen.focused().clients
@@ -99,12 +101,12 @@ local keys = gears.table.join(
                 c.floating = false
             end
         end)
-    end, { description = "set tiled layout", group = "Layout" }),
+    end, { description = "Set Tiled", group = "Layout" }),
 
     -- Set floating layout
-    awful.key({ superkey, shiftkey }, "s", function()
+    awful.key({ superkey, altkey }, "f", function()
         awful.layout.set(awful.layout.suit.floating)
-    end, { description = "set floating layout", group = "Layout" })
+    end, { description = "Set floating", group = "Layout" })
     
     -- }}}
 

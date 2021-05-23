@@ -74,7 +74,7 @@ local exit_screen_theme = exit_screen_themes[2]
 -- ===================================================================
 -- User variables and preferences
 
-local wallpaper = "/home/atalariq/.wallpaper/eyecandy/mountain-1_HD.jpg"
+local wallpaper = "/home/atalariq/.wallpaper/tokyonight-minimal.jpg"
 
 user = {
     font = "JetBrainsMono Nerd Font",
@@ -105,7 +105,8 @@ user = {
         ]],
         "picom -b --experimental-backends --config ~/.config/picom/picom.conf",
         "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
-        "wal --backend colorthief -n -s -t -i " .. wallpaper ,
+        -- "wal --backend colorthief -n -s -t -i " .. wallpaper ,
+        "wal --theme ~/.config/wal/colorschemes/dark/tokyonight.json",
         "xrdb -load ~/.Xresources",
     },
     
