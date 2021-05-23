@@ -16,7 +16,7 @@ export CM_LAUNCHER="rofi"
 wal -n -R
 light -S 30
 xset -b
-xset r rate 300 25
+xset r rate 300 50
 xsetroot -cursor_name left_ptr
 
 xsettingsd &

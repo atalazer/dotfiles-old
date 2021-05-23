@@ -5,6 +5,7 @@
 !! Colorscheme
 
 #include "/home/atalariq/.Xresources.d/color/wal"
+!#include "/home/atalariq/.Xresources.d/color/deep-ocean"
 
 !! Settings
 #include "/home/atalariq/.Xresources.d/cursor"

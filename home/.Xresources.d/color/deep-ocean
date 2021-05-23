@@ -2,11 +2,6 @@
 *foreground:  #8F93A2
 *background:  #0F111A
 *cursorColor: #FFCC00
-*borderColor: [100]#2A373E
-*.foreground:  #8F93A2
-*.background:  #0F111A
-*.cursorColor: #FFCC00
-*.borderColor: [100]#2A373E
 
 ! black
 *.color0      : #000000
@@ -39,8 +34,3 @@
 ! white
 *.color7      : #EEFFFF
 *.color15     : #EFFFFF
-
-! Black color that will not be affected by bold highlighting.
-*.color66: #1E1724
-*color66: #1E1724
-
