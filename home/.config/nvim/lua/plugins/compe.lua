@@ -7,7 +7,7 @@ require("compe").setup({
     allow_prefix_unmatch = false,
     documentation = true,
     preselect = "enable",
-    min_length = 1,
+    min_length = 2,
     throttle_time = 80,
     source_timeout = 200,
     incomplete_delay = 400,
@@ -17,7 +17,7 @@ require("compe").setup({
 
     source = {
         buffer = true,
-        calc = false,
+        calc = true,
         emoji = false,
         path = true,
         spell = false,

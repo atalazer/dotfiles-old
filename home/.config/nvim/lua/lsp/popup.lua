@@ -1,5 +1,5 @@
-vim.cmd([[packadd lspsaga.nvim]])
-vim.cmd([[packadd lspkind-nvim]])
+vim.cmd("packadd lspsaga.nvim")
+vim.cmd("packadd lspkind-nvim")
 
 require("lspsaga").init_lsp_saga({
     border_style = "round", -- "single" "double" "round" "plus"
@@ -47,27 +47,29 @@ require("lspsaga").init_lsp_saga({
 })
 
 require("lspkind").init({
-    with_text = false,
-    symbol_map = {
-        Text = "",
-        Method = "",
-        Function = "ƒ",
-        Constructor = "",
-        Variable = "",
-        Class = "",
-        Interface = "ﰮ",
-        Module = "",
-        Property = "",
-        Unit = "",
-        Value = "",
-        Enum = "了",
-        Keyword = "",
-        Snippet = "﬌",
-        Color = "",
-        File = " ",
-        Folder = "",
-        EnumMember = "",
-        Constant = "",
-        Struct = "",
-    },
+    with_text = true,
+    -- STR: default, codicons
+    preset = "codicons",
+    -- symbol_map = {
+        -- Text = "",
+        -- Method = "",
+        -- Function = "ƒ",
+        -- Constructor = "",
+        -- Variable = "",
+        -- Class = "",
+        -- Interface = "ﰮ",
+        -- Module = "",
+        -- Property = "",
+        -- Unit = "",
+        -- Value = "",
+        -- Enum = "了",
+        -- Keyword = "",
+        -- Snippet = "﬌",
+        -- Color = "",
+        -- File = " ",
+        -- Folder = "",
+        -- EnumMember = "",
+        -- Constant = "",
+        -- Struct = "",
+    -- },
 })

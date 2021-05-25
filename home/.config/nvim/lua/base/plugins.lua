@@ -32,6 +32,9 @@ if ok then
         -- For keybindings
         use({ "tjdevries/astronauta.nvim" })
 
+        -- SQLite/LuaJIT binding for lua and neovim
+        use({ "tami5/sql.nvim" })
+
         -- ======= User Interface =======
         -- Colorscheme
         use({ "marko-cerovac/material.nvim", branch = "pure-lua", opt = false })
@@ -41,15 +44,16 @@ if ok then
         use({
             "kyazdani42/nvim-web-devicons",
             opt = true,
-            config = function()
-                require("plugins.devicons")
-            end,
+        })
+
+        use({
+            "yamatsum/nvim-nonicons",
+            opt = false
         })
 
         -- snazzy bufferline
         use({
             "akinsho/nvim-bufferline.lua",
-            requires = { "kyazdani42/nvim-web-devicons" },
             config = function()
                 require("plugins.bufferline")
             end,
@@ -59,7 +63,6 @@ if ok then
         use({
             "glepnir/galaxyline.nvim",
             branch = "main",
-            requires = { "kyazdani42/nvim-web-devicons" },
             config = function()
                 require("plugins.galaxyline")
             end,
@@ -77,9 +80,6 @@ if ok then
                 require("plugins.treesitter")
             end,
         })
-
-        -- SQL Support
-        use({ "tami5/sql.nvim" })
 
         -- Markdown Support
         use({
@@ -110,6 +110,8 @@ if ok then
         -- Hugo Helper
         use({
             "robertbasic/vim-hugo-helper",
+            opt = true,
+            ft = { "markdown" },
         })
 
         -- Syntax for tridactyl
@@ -117,6 +119,13 @@ if ok then
             "tridactyl/vim-tridactyl",
             opt = true,
             ft = { "tridactyl" },
+        })
+
+        -- Synchronising for fish script
+        use({
+            "georgewitteman/vim-fish",
+            opt = true,
+            ft = { "fish" },
         })
 
         use({ "editorconfig/editorconfig-vim", opt = false })
@@ -140,6 +149,15 @@ if ok then
 
         -- sandwiched textobjects.
         use({ "machakann/vim-sandwich", opt = false })
+
+        -- highlight, navigate, and operate on sets of matching text
+        use({
+            "andymass/vim-matchup",
+            opt = false,
+            config = function()
+                vim.g.matchup_matchparen_offscreen = { method = "popup" }
+            end,
+        })
 
         -- Code formatter
         use({

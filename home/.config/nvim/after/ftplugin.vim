@@ -5,6 +5,7 @@ au FileType * setlocal formatoptions-=ro
 au BufNewFile,BufRead *.ejs,*.hbs set filetype=html
 au BufNewFile,BufRead .prettierrc,.eslintrc,tsconfig.json set filetype=jsonc
 au BufNewFile,BufRead *.svx,*.mdx set filetype=markdown
+au BufNewFile,BufRead *.fish set filetype=fish
 
 " Set tabsize for each filetype
 au FileType php,javascript setlocal sw=4 ts=4
