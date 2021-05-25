@@ -18,7 +18,7 @@ if command -v "mvg" > /dev/null 2>&1; then
     alias mv="mvg -g"
 fi
 if command -v "cpg" > /dev/null 2>&1; then
-    alias cpg="cpg -g"
+    alias cp="cpg -g"
 fi
 
 # Use exa instead of ls
