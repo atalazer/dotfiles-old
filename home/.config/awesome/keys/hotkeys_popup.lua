@@ -8,14 +8,14 @@ local popup =
         width = awful.screen.focused().geometry.width * 0.9,
         height = awful.screen.focused().geometry.height * 0.9,
         labels = {
-            Control               = "CTRL",
-            Shift                 = "SHFT",
-            Mod1                  = "ALT" or "",
-            ISO_Level3_Shift      = "ALTG",
+            Control               = "Ctrl",
+            Shift                 = "Shift",
+            Mod1                  = "Alt" or "",
+            ISO_Level3_Shift      = "AltG",
             Mod4                  = "  ",
-            Insert                = "INS",
-            Delete                = "DEL",
-            Escape                = "ESC",
+            Insert                = "Ins",
+            Delete                = "Del",
+            Escape                = "Esc",
             Next                  = " ",
             Prior                 = "",
             Home                  = "Home",
@@ -65,7 +65,7 @@ popup:add_hotkeys({
             },
         },
         {
-            modifiers = { "Ctrl" },
+            modifiers = { "Control" },
             keys = {
                 t = "new tab",
                 w = "close tab",
@@ -73,7 +73,7 @@ popup:add_hotkeys({
             },
         },
         {
-            modifiers = { "Ctrl", "Shift" },
+            modifiers = { "Control", "Shift" },
             keys = {
                 ["Tab"] = "previous tab",
             },
@@ -96,7 +96,7 @@ end
 popup:add_hotkeys({    
     ["kitty"] = {
         {
-            modifiers = { "Ctrl", "Shift" },
+            modifiers = { "Control", "Shift" },
             keys = {
                 c = "Copy to clipboard",
                 v = "Paste from clipboard",
@@ -110,7 +110,7 @@ popup:add_hotkeys({
     },
     ["kitty: Tab"] = {
         {
-            modifiers = { "Ctrl", "Shift" },
+            modifiers = { "Control", "Shift" },
             keys = {
                 t = "New tab",
                 q = "Close tab",
@@ -125,7 +125,7 @@ popup:add_hotkeys({
     },
     ["kitty: Window"] = {
         {
-            modifiers = { "Ctrl", "Shift" },
+            modifiers = { "Control", "Shift" },
             keys = {
                 n = "New OS Window",
                 w = "Close",

@@ -21,7 +21,7 @@ local run_once = function(cmd)
                 app_name = 'Start-up Applications',
                 title = '<b>Oof! Error detected when starting an application!</b>',
                 message = stderr:gsub('%\n', ''),
-                timeout = 15,
+                timeout = 10,
                 icon = require('beautiful').awesome_icon
             })
         end

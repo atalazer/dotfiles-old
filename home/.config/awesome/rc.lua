@@ -96,18 +96,18 @@ user = {
     -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
     
     -- Autostart apps
-    autostart_debug = false,
+    autostart_debug = true,
     autostart = {
+        "picom --experimental-backends --config ~/.config/picom/picom.conf",
+        "fusuma -c ~/.config/fusuma/config.yml",
+        -- "wal --backend colorthief -n -s -t -i " .. wallpaper ,
+        "wal --theme ~/.config/wal/colorschemes/dark/tokyonight.json",
+        "xrdb -load ~/.Xresources",
         [[
         xautolock -time 5 -locker "$(awesome-client 'lock_screen_show()' && systemctl suspend)" \
             -detectsleep -resetsaver \
             -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
         ]],
-        "picom -b --experimental-backends --config ~/.config/picom/picom.conf",
-        "fusuma -d -c ~/.config/fusuma/config-awesome.yml",
-        -- "wal --backend colorthief -n -s -t -i " .. wallpaper ,
-        "wal --theme ~/.config/wal/colorschemes/dark/tokyonight.json",
-        "xrdb -load ~/.Xresources",
     },
     
     -- Enable rounded
@@ -202,6 +202,9 @@ x = {
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
+awful.util.shell = "sh"
+
 -- Default notification library
 local naughty = require("naughty")
 
@@ -227,7 +230,7 @@ local icons = require("icons")
 icons.init(icon_theme)
 
 -- Keybinds and mousebinds
-local keys = require("keys")
+-- local keys = require("keys")
 
 -- Load notification daemons and notification theme
 local notifications = require("notifications")

@@ -137,7 +137,7 @@ notify() {
     naughty.notification ({
         app_name = 'Screenshot Tool',
         icon = '${_FILE}',
-        timeout = 10,
+        timeout = 3,
         title = '<b>Shot</b>',
         message = '${_MSG}',
         actions = { open_image, open_folder, delete_image }
