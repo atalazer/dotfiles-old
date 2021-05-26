@@ -17,20 +17,55 @@
 <!-- /TOC -->
 
 # Screenshot
-<!-- ![AwesomeWM]() -->
-<!-- ![Terminal]() -->
+![AwesomeWM](https://user-images.githubusercontent.com/63155578/119593529-54fdd500-be04-11eb-9bdd-28b96c0603c5.png)
+![Terminal](https://user-images.githubusercontent.com/63155578/119593804-d2294a00-be04-11eb-970e-cd368b83dfa9.png)
 ![Neovim](https://user-images.githubusercontent.com/63155578/114947981-55f02e00-9e78-11eb-88c0-fad98264652f.png)
 
+<!-- Link -->
+[arch-link]: https://archlinux.org/
+[pacman-link]: https://wiki.archlinux.org/index.php/pacman
+[paru-link]: https://github.com/Morganamilo/paru
+
+[awesome-link]: https://github.com/awesomewm/awesome
+[picom-link]: https://github.com/yshui/picom
+[rofi-link]: https://github.com/davatorium/rofi
+
+[kitty-link]: https://github.com/kovidgoyal/kitty
+[tmux-link]: https://github.com/tmux/tmux
+[fish-link]: https://fishshell.com/
+[fisher-link]: https://github.com/jorgebucaran/fisher
+[zsh-link]: http://www.zsh.org/
+[zinit-link]: https://github.com/zdharma/zinit
+[starship-link]: https://starship.rs/
+
+[neovim-link]: https://github.com/neovim/neovim
+[mpd-link]: https://www.musicpd.org/
+[ncmpcpp-link]: https://rybczak.net/ncmpcpp/
+[nnn-link]: https://github.com/jarun/nnn
+
+[mpv-link]: https://mpv.io/
+[nemo-link]: https://github.com/linuxmint/nemo
+
+[nerd-font-link]: https://www.nerdfonts.com/
+[system-font]: https://github.com/rsms/inter/
+[stow-link]: https://www.gnu.org/software/stow/manual/stow.html
+[dotbare-link]: https://github.com//kazhala/dotbare
+
 # Configuration List
-##### WM Related
-- **WM**         : [AwesomeWM](https://awesomewm.org)
-- **COMPOSITOR** : [Picom](https://github.com/yshui/picom) and [Alacritty](https://github.com/alacritty/alacritty)
-- **TERMINAL**   : [Kitty](https://github.com/kovidgoyal/kitty)
-- **SHELL**      : [zsh](https://www.zsh.org) with [zinit](https://github.com/zdharma/zinit)
-- **MUSIC**      : [mpd](https://www.musicpd.org/) and [ncmpcpp](https://rybczak.net/ncmpcpp/)
-- **EDIROR**     : [Neovim](https://neovim.io)(Nightly)
-- **FILE**       : Nemo and [nnn](https://github.com/jarun/nnn)
-- **DOTS**       : [Stow](https://www.gnu.org/software/stow/manual/stow.html) and [Dotbare](https://github.com//kazhala/dotbare)
+| Name                | Details                                                                           |
+| :---:               | :-----:                                                                           |
+| **OS**              | [Archlinux][arch-link]                                                            |
+| **Package Manager** | [pacman][pacman-link] and [paru][paru-link]                                       |
+| **WM**              | [AwesomeWM][awesome-link]                                                         |
+| **COMPOSITOR**      | [Picom Jonaburg Fork][picom-link]                                                 |
+| **FONTS**           | [JetBrains Nerd Fonts][nerd-font-link] and [Inter Fonts][system-font]             |
+| **TERMINAL**        | [Kitty][kitty-link]                                                               |
+<!-- | **SHELL**           | [zsh][zsh-link] with [zinit][zinit-link]                                          | -->
+| **SHELL**            | [fish][fish-link] with [fisher][fisher-link] and [starship Prompt][starship-link] |
+| **MUSIC**            | [mpd][mpd-link] and [ncmpcpp][ncmpcpp-link]                                       |
+| **EDITOR**           | [Neovim 0.5][neovim-link]                                                         |
+| **FILE Manager**     | [Nemo][nemo-link] and [nnn][nnn-link]                                             |
+| **DOTFILES Manager** | [Stow][stow-link] and [Dotbare][dotbare-link]                                     |
 
 # Installation
 
@@ -66,4 +101,5 @@ git pull
 - [ ] Add Screenshot
 - [x] Add another config files
 - [ ] Add Wiki for details
+- [ ] Improve `setup` Script
 

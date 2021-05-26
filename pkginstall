@@ -60,8 +60,9 @@ if command -v "pacman" &> /dev/null; then
         pulseaudio playerctl pamixer \
         mpd mpc ncmpcpp mpdris2 \
         lm_sensors acpid jq fortune-mod redshift \
-        awesome-git picom-git light-git \
-        ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl
+        awesome-luajit-git picom-jonaburg-git light-git \
+        ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl \
+        ruby-fusuma-plugin-sendkeys ruby-fusuma-appmatcher
 
     read -r -p "Do you want to install neovim stuff(lsp and formatter) [yes/no]: " NVIM
 
@@ -73,7 +74,7 @@ if command -v "pacman" &> /dev/null; then
 
             echo "Install Package with $AUR_HELPER"
             $AUR_HELPER -S --noconfirm \
-                neovim-git \
+                neovim-nightly-bin \
                 python python-pip tree-sitter\
                 lua-language-server efm-langserver \
                 jedi-language-server clang \
