@@ -52,20 +52,19 @@
 [dotbare-link]: https://github.com//kazhala/dotbare
 
 # Configuration List
-| Name                | Details                                                                           |
-| :---:               | :-----:                                                                           |
-| **OS**              | [Archlinux][arch-link]                                                            |
-| **Package Manager** | [pacman][pacman-link] and [paru][paru-link]                                       |
-| **WM**              | [AwesomeWM][awesome-link]                                                         |
-| **COMPOSITOR**      | [Picom Jonaburg Fork][picom-link]                                                 |
-| **FONTS**           | [JetBrains Nerd Fonts][nerd-font-link] and [Inter Fonts][system-font]             |
-| **TERMINAL**        | [Kitty][kitty-link]                                                               |
-<!-- | **SHELL**           | [zsh][zsh-link] with [zinit][zinit-link]                                          | -->
-| **SHELL**            | [fish][fish-link] with [fisher][fisher-link] and [starship Prompt][starship-link] |
-| **MUSIC**            | [mpd][mpd-link] and [ncmpcpp][ncmpcpp-link]                                       |
-| **EDITOR**           | [Neovim 0.5][neovim-link]                                                         |
-| **FILE Manager**     | [Nemo][nemo-link] and [nnn][nnn-link]                                             |
-| **DOTFILES Manager** | [Stow][stow-link] and [Dotbare][dotbare-link]                                     |
+| Name                 | Details                                                                           |
+| :---:                | :-----:                                                                           |
+| **Operating System** | [Archlinux][arch-link]                                                            |
+| **Package Manager**  | [pacman][pacman-link] and [paru][paru-link]                                       |
+| **WM**               | [AwesomeWM][awesome-link]                                                         |
+| **Compositor**       | [Picom Jonaburg Fork][picom-link]                                                 |
+| **Fonts**            | [JetBrains Nerd Fonts][nerd-font-link] and [Inter Fonts][system-font]             |
+| **Terminal**         | [Kitty][kitty-link]                                                               |
+| **Shell**            | [fish][fish-link] with [fisher][fisher-link] and [starship Prompt][starship-link] |
+| **Music**            | [mpd][mpd-link] and [ncmpcpp][ncmpcpp-link]                                       |
+| **Editor**           | [Neovim 0.5][neovim-link]                                                         |
+| **File Manager**     | [Nemo][nemo-link] and [nnn][nnn-link]                                             |
+| **Dotfiles Manager** | [Stow][stow-link] and [Dotbare][dotbare-link]                                     |
 
 # Installation
 
