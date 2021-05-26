@@ -5,14 +5,7 @@ ruled.client.connect_signal("request::rules", function()
     -- Terminal {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = {
-                "Alacritty",
-                "Termite",
-                "kitty",
-                "st-256color",
-                "st",
-                "URxvt",
-            },
+            instance = { "Alacritty", "kitty" },
         },
         properties = {
             tag = awful.screen.focused().tags[1].name,
@@ -47,7 +40,10 @@ ruled.client.connect_signal("request::rules", function()
             class = { "mail" },
             instance = { "mail" },
         },
-        properties = { tag = awful.screen.focused().tags[3] },
+        properties = { 
+            tag = awful.screen.focused().tags[3],
+            switch_to_tags = true,
+        },
     })
     -- }}}
 
@@ -56,7 +52,10 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             class = { "TelegramDesktop" },
         },
-        properties = { tag = awful.screen.focused().tags[3] },
+        properties = { 
+            tag = awful.screen.focused().tags[3],
+            switch_to_tags = true
+        },
     })
     -- }}}
 
@@ -75,8 +74,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Office {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "libreoffice", "DesktopEditors" },
-            instance = { "libreoffice", "DesktopEditors" },
+            class = { "libreoffice", "DesktopEditors", "Wps" },
+            instance = { "libreoffice", "DesktopEditors", "wps" },
         },
         properties = {
             tag = awful.screen.focused().tags[3].name,
@@ -120,18 +119,12 @@ ruled.client.connect_signal("request::rules", function()
     -- Game clients/launchers {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "Steam",
-                "battle.net.exe",
-                "Lutris",
-            },
-            name = {
-                "Steam",
-            },
+            class = { "Steam" },
+            name = { "Steam" },
         },
         properties = {
             tag = awful.screen.focused().tags[5].name,
-            switch_to_tags = false,
+            switch_to_tags = true,
         },
     })
     -- }}}
@@ -139,14 +132,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Miscellaneous {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "htop",
-                "monitoring",
-            },
-            instance = {
-                "htop",
-                "monitoring",
-            },
+            class = { "htop", "monitoring" },
+            instance = { "htop", "monitoring" },
         },
         except_any = {
             type = { "dialog" },
