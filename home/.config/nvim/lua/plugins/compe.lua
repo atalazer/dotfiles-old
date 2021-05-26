@@ -1,32 +1,44 @@
-vim.cmd([[packadd nvim-compe]])
-vim.cmd([[packadd vim-vsnip]])
+-- don't load *all* modules
+vim.g.loaded_compe_snippets_nvim = 1
+-- vim.g.loaded_compe_spell      = 1
+vim.g.loaded_compe_tags          = 1
+vim.g.loaded_compe_treesitter    = 1
+vim.g.loaded_compe_emoji         = 1
+vim.g.loaded_compe_omni          = 1
+-- vim.g.loaded_compe_vsnip      = 1
+vim.g.loaded_compe_ultisnips     = 1
+vim.g.loaded_compe_vim_lsc       = 1
+vim.g.loaded_compe_luasnip       = 1
+-- vim.g.loaded_compe_calc       = 1
 
 require("compe").setup({
     enabled = true,
     autocomplete = true,
     allow_prefix_unmatch = false,
     documentation = true,
-    preselect = "enable",
-    min_length = 2,
+    preselect = "disable",
+    min_length = 1,
     throttle_time = 80,
     source_timeout = 200,
     incomplete_delay = 400,
-    max_abbr_width = 1000,
-    max_kind_width = 1000,
-    max_menu_width = 1000000,
+    max_abbr_width = 30,
+    max_kind_width = 20,
+    max_menu_width = 50,
 
     source = {
         buffer = true,
         calc = true,
-        emoji = false,
         path = true,
-        spell = false,
-        tags = false,
-        nvim_lsp = true,
-        nvim_lua = true,
+        spell = {
+            enable = true,
+            filetypes = { "text", "markdown" }
+        },
         vsnip = true,
-        treesitter = false,
-        omni = false,
+        nvim_lua = true,
+        nvim_lsp = {
+            enable = true,
+            priority = 10001
+        },
     },
 })
 
