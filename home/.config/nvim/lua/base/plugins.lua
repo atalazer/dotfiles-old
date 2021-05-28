@@ -12,6 +12,7 @@ local ok, packer = pcall(require, "packer")
 if ok then
     local use = packer.use
     packer.init({
+        transitive_opt = false,
         git = {
             clone_timeout = 300,
         },
@@ -44,11 +45,7 @@ if ok then
         use({
             "kyazdani42/nvim-web-devicons",
             opt = true,
-        })
-
-        use({
-            "yamatsum/nvim-nonicons",
-            opt = false
+            requires = { "yamatsum/nvim-nonicons" },
         })
 
         -- snazzy bufferline
@@ -219,14 +216,25 @@ if ok then
         -- ======= LSP, Completion and Snippet =======
         use({
             "neovim/nvim-lspconfig",
-            opt = true,
+            opt = false,
             requires = {
-                { "glepnir/lspsaga.nvim", opt = true },
-                { "onsails/lspkind-nvim", opt = true },
-                { "folke/lsp-trouble.nvim", opt = true },
-                { "folke/lsp-colors.nvim", opt = true },
-                { "simrat39/symbols-outline.nvim", opt = true },
+                { "onsails/lspkind-nvim" },
+                { "folke/lsp-colors.nvim" },
+                { "glepnir/lspsaga.nvim" },
+                { "ray-x/lsp_signature.nvim" },
+                { "folke/lsp-trouble.nvim" },
+                { "simrat39/symbols-outline.nvim" },
+
+                { "folke/lua-dev.nvim"},
             },
+        })
+
+        use({
+            "jose-elias-alvarez/null-ls.nvim",
+            opt = false,
+            config = function()
+                require("null-ls").setup({})
+            end,
         })
 
         use({
@@ -350,6 +358,28 @@ if ok then
             "tweekmonster/startuptime.vim",
             opt = true,
             cmd = "StartupTime",
+        })
+
+        -- Games
+        -- make you better at Vim Movements
+        use({
+            "ThePrimeagen/vim-be-good",
+            opt = true,
+            cmd = "VimBeGood",
+        })
+
+        -- Actions per minute
+        use({
+            "ThePrimeagen/vim-apm",
+            opt = true,
+            cmd = { "VimApm", "VimApmShutdown" },
+        })
+
+        -- Tetris
+        use({
+            "alec-gibson/nvim-tetris",
+            opt = true,
+            cmd = "Tetris",
         })
     end
     packer.startup(plugins)

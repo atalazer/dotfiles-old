@@ -132,33 +132,21 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
   ["lsp-colors.nvim"] = {
-    load_after = {
-      ["nvim-lspconfig"] = true
-    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lsp-colors.nvim"
   },
   ["lsp-trouble.nvim"] = {
-    load_after = {
-      ["nvim-lspconfig"] = true
-    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lsp-trouble.nvim"
   },
   ["lspkind-nvim"] = {
-    load_after = {
-      ["nvim-lspconfig"] = true
-    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lspkind-nvim"
   },
   ["lspsaga.nvim"] = {
-    load_after = {
-      ["nvim-lspconfig"] = true
-    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lspsaga.nvim"
@@ -179,7 +167,7 @@ _G.packer_plugins = {
   },
   ["nvim-colorizer.lua"] = {
     commands = { "ColorizerToggle" },
-    config = { "\27LJ\2\nh\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\6*\1\0\0\1\0\3\vcss_fn\2\tmode\15background\bcss\2\nsetup\14colorizer\frequire\0" },
+    config = { "\27LJ\2\nh\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\6*\1\0\0\1\0\3\vcss_fn\2\bcss\2\tmode\15background\nsetup\14colorizer\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
@@ -190,7 +178,6 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
   ["nvim-lspconfig"] = {
-    after = { "symbols-outline.nvim", "lsp-colors.nvim", "lspsaga.nvim", "lsp-trouble.nvim", "lspkind-nvim" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig"
@@ -198,6 +185,12 @@ _G.packer_plugins = {
   ["nvim-nonicons"] = {
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/nvim-nonicons"
+  },
+  ["nvim-tetris"] = {
+    commands = { "Tetris" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-tetris"
   },
   ["nvim-tree.lua"] = {
     config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.nvim-tree\frequire\0" },
@@ -253,9 +246,6 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/suda.vim"
   },
   ["symbols-outline.nvim"] = {
-    load_after = {
-      ["nvim-lspconfig"] = true
-    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/symbols-outline.nvim"
@@ -281,6 +271,18 @@ _G.packer_plugins = {
     config = { "\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plugins.todo\frequire\0" },
     loaded = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/todo-comments.nvim"
+  },
+  ["vim-apm"] = {
+    commands = { "VimApm", "VimApmShutdown" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-apm"
+  },
+  ["vim-be-good"] = {
+    commands = { "VimBeGood" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-be-good"
   },
   ["vim-commentary"] = {
     loaded = true,
@@ -353,62 +355,10 @@ _G.packer_plugins = {
 }
 
 time("Defining packer_plugins", false)
--- Config for: indent-blankline.nvim
-time("Config for indent-blankline.nvim", true)
-try_loadstring("\27LJ\2\n8\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\29plugins.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
-time("Config for indent-blankline.nvim", false)
--- Config for: telescope.nvim
-time("Config for telescope.nvim", true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
-time("Config for telescope.nvim", false)
--- Config for: todo-comments.nvim
-time("Config for todo-comments.nvim", true)
-try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plugins.todo\frequire\0", "config", "todo-comments.nvim")
-time("Config for todo-comments.nvim", false)
 -- Config for: curstr.nvim
 time("Config for curstr.nvim", true)
 try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plugins.curstr\frequire\0", "config", "curstr.nvim")
 time("Config for curstr.nvim", false)
--- Config for: format.nvim
-time("Config for format.nvim", true)
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plugins.format\frequire\0", "config", "format.nvim")
-time("Config for format.nvim", false)
--- Config for: nvim-treesitter
-time("Config for nvim-treesitter", true)
-try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
-time("Config for nvim-treesitter", false)
--- Config for: FTerm.nvim
-time("Config for FTerm.nvim", true)
-try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plugins.fterm\frequire\0", "config", "FTerm.nvim")
-time("Config for FTerm.nvim", false)
--- Config for: vim-matchup
-time("Config for vim-matchup", true)
-try_loadstring("\27LJ\2\nN\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\0\1\vmethod\npopup!matchup_matchparen_offscreen\6g\bvim\0", "config", "vim-matchup")
-time("Config for vim-matchup", false)
--- Config for: galaxyline.nvim
-time("Config for galaxyline.nvim", true)
-try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.galaxyline\frequire\0", "config", "galaxyline.nvim")
-time("Config for galaxyline.nvim", false)
--- Config for: nvim-tree.lua
-time("Config for nvim-tree.lua", true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.nvim-tree\frequire\0", "config", "nvim-tree.lua")
-time("Config for nvim-tree.lua", false)
--- Config for: which-key.nvim
-time("Config for which-key.nvim", true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.which-key\frequire\0", "config", "which-key.nvim")
-time("Config for which-key.nvim", false)
--- Config for: gitsigns.nvim
-time("Config for gitsigns.nvim", true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.gitsigns\frequire\0", "config", "gitsigns.nvim")
-time("Config for gitsigns.nvim", false)
--- Config for: nvim-bufferline.lua
-time("Config for nvim-bufferline.lua", true)
-try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.bufferline\frequire\0", "config", "nvim-bufferline.lua")
-time("Config for nvim-bufferline.lua", false)
--- Config for: nvim-autopairs
-time("Config for nvim-autopairs", true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.autopairs\frequire\0", "config", "nvim-autopairs")
-time("Config for nvim-autopairs", false)
 -- Config for: nvim-compe
 time("Config for nvim-compe", true)
 try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plugins.compe\frequire\0", "config", "nvim-compe")
@@ -417,48 +367,104 @@ time("Config for nvim-compe", false)
 time("Config for vim-smoothie", true)
 try_loadstring("\27LJ\2\n·\1\0\0\2\0\6\0\0176\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\30\0=\1\3\0006\0\0\0009\0\1\0)\1\n\0=\1\4\0006\0\0\0009\0\1\0)\1\n\0=\1\5\0K\0\1\0!smoothie_speed_linear_factor#smoothie_speed_constant_factor\29smoothie_update_interval\21smoothie_enabled\6g\bvim\0", "config", "vim-smoothie")
 time("Config for vim-smoothie", false)
+-- Config for: nvim-treesitter
+time("Config for nvim-treesitter", true)
+try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
+time("Config for nvim-treesitter", false)
+-- Config for: format.nvim
+time("Config for format.nvim", true)
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plugins.format\frequire\0", "config", "format.nvim")
+time("Config for format.nvim", false)
+-- Config for: telescope.nvim
+time("Config for telescope.nvim", true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
+time("Config for telescope.nvim", false)
+-- Config for: which-key.nvim
+time("Config for which-key.nvim", true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.which-key\frequire\0", "config", "which-key.nvim")
+time("Config for which-key.nvim", false)
+-- Config for: gitsigns.nvim
+time("Config for gitsigns.nvim", true)
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.gitsigns\frequire\0", "config", "gitsigns.nvim")
+time("Config for gitsigns.nvim", false)
+-- Config for: nvim-tree.lua
+time("Config for nvim-tree.lua", true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.nvim-tree\frequire\0", "config", "nvim-tree.lua")
+time("Config for nvim-tree.lua", false)
+-- Config for: nvim-autopairs
+time("Config for nvim-autopairs", true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.autopairs\frequire\0", "config", "nvim-autopairs")
+time("Config for nvim-autopairs", false)
+-- Config for: galaxyline.nvim
+time("Config for galaxyline.nvim", true)
+try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.galaxyline\frequire\0", "config", "galaxyline.nvim")
+time("Config for galaxyline.nvim", false)
+-- Config for: indent-blankline.nvim
+time("Config for indent-blankline.nvim", true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\29plugins.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
+time("Config for indent-blankline.nvim", false)
+-- Config for: FTerm.nvim
+time("Config for FTerm.nvim", true)
+try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plugins.fterm\frequire\0", "config", "FTerm.nvim")
+time("Config for FTerm.nvim", false)
+-- Config for: vim-matchup
+time("Config for vim-matchup", true)
+try_loadstring("\27LJ\2\nN\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\0\1\vmethod\npopup!matchup_matchparen_offscreen\6g\bvim\0", "config", "vim-matchup")
+time("Config for vim-matchup", false)
 -- Config for: vim-vsnip
 time("Config for vim-vsnip", true)
 try_loadstring("\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plugins.vsnip\frequire\0", "config", "vim-vsnip")
 time("Config for vim-vsnip", false)
+-- Config for: todo-comments.nvim
+time("Config for todo-comments.nvim", true)
+try_loadstring("\27LJ\2\n,\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\17plugins.todo\frequire\0", "config", "todo-comments.nvim")
+time("Config for todo-comments.nvim", false)
+-- Config for: nvim-bufferline.lua
+time("Config for nvim-bufferline.lua", true)
+try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.bufferline\frequire\0", "config", "nvim-bufferline.lua")
+time("Config for nvim-bufferline.lua", false)
 
 -- Command lazy-loads
 time("Defining lazy-load commands", true)
+vim.cmd [[command! -nargs=* -range -bang -complete=file SudaWrite lua require("packer.load")({'suda.vim'}, { cmd = "SudaWrite", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file VimApm lua require("packer.load")({'vim-apm'}, { cmd = "VimApm", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Sayonara lua require("packer.load")({'vim-sayonara'}, { cmd = "Sayonara", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Tetris lua require("packer.load")({'nvim-tetris'}, { cmd = "Tetris", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file HopWord lua require("packer.load")({'hop.nvim'}, { cmd = "HopWord", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file HopPattern lua require("packer.load")({'hop.nvim'}, { cmd = "HopPattern", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file SudaRead lua require("packer.load")({'suda.vim'}, { cmd = "SudaRead", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file SudaWrite lua require("packer.load")({'suda.vim'}, { cmd = "SudaWrite", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Sayonara lua require("packer.load")({'vim-sayonara'}, { cmd = "Sayonara", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file ColorizerToggle lua require("packer.load")({'nvim-colorizer.lua'}, { cmd = "ColorizerToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime.vim'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file VimApmShutdown lua require("packer.load")({'vim-apm'}, { cmd = "VimApmShutdown", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file VimBeGood lua require("packer.load")({'vim-be-good'}, { cmd = "VimBeGood", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file SudaRead lua require("packer.load")({'suda.vim'}, { cmd = "SudaRead", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 time("Defining lazy-load commands", false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time("Defining lazy-load filetype autocommands", true)
-vim.cmd [[au FileType css ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "css" }, _G.packer_plugins)]]
-vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode'}, { ft = "text" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-table-mode', 'glow.nvim', 'vim-hugo-helper', 'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType html ++once lua require("packer.load")({'emmet-vim', 'nvim-colorizer.lua'}, { ft = "html" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescript ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "typescript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tridactyl ++once lua require("packer.load")({'vim-tridactyl'}, { ft = "tridactyl" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-table-mode', 'glow.nvim', 'vim-hugo-helper', 'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode'}, { ft = "text" }, _G.packer_plugins)]]
+vim.cmd [[au FileType typescript ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "typescript" }, _G.packer_plugins)]]
 vim.cmd [[au FileType fish ++once lua require("packer.load")({'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
-vim.cmd [[au FileType scss ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "scss" }, _G.packer_plugins)]]
 vim.cmd [[au FileType javascript ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "javascript" }, _G.packer_plugins)]]
+vim.cmd [[au FileType html ++once lua require("packer.load")({'emmet-vim', 'nvim-colorizer.lua'}, { ft = "html" }, _G.packer_plugins)]]
 vim.cmd [[au FileType lua ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "lua" }, _G.packer_plugins)]]
+vim.cmd [[au FileType css ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "css" }, _G.packer_plugins)]]
+vim.cmd [[au FileType scss ++once lua require("packer.load")({'nvim-colorizer.lua'}, { ft = "scss" }, _G.packer_plugins)]]
 time("Defining lazy-load filetype autocommands", false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
 time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-tridactyl/ftdetect/tridactyl.vim", true)
 vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-tridactyl/ftdetect/tridactyl.vim]]
 time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-tridactyl/ftdetect/tridactyl.vim", false)
-time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", true)
-vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
-time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", false)
 time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim", true)
 vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
 time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim", false)
+time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", true)
+vim.cmd [[source /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
+time("Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim", false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

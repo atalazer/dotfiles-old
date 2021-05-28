@@ -1,5 +1,7 @@
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
+local fn, lsp = vim.fn, vim.lsp
+
+lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
+    lsp.diagnostic.on_publish_diagnostics,
     {
         underline = true,
         virtual_text = {
@@ -11,16 +13,16 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
 )
 
-vim.fn.sign_define(
+fn.sign_define(
     "LspDiagnosticsSignError",
     { text = "", texthl = "LspDiagnosticsDefaultError" }
 )
-vim.fn.sign_define(
+fn.sign_define(
     "LspDiagnosticsSignWarning",
     { text = "", texthl = "LspDiagnosticsDefaultWarning" }
 )
-vim.fn.sign_define("LspDiagnosticsSignInformation", {
+fn.sign_define("LspDiagnosticsSignInformation", {
     text = "",
     texthl = "LspDiagnosticsDefaultInformation",
 })
-vim.fn.sign_define("LspDiagnosticsSignHint", { text = "", texthl = "LspDiagnosticsDefaultHint" })
+fn.sign_define("LspDiagnosticsSignHint", { text = "", texthl = "LspDiagnosticsDefaultHint" })
