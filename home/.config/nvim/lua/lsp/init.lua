@@ -10,6 +10,8 @@ pcall(require, "lsp.trouble")
 
 pcall(require, "lsp.server.lua")
 pcall(require, "lsp.server.efm")
+pcall(require, "lsp.server.python")
+pcall(require, "lsp.server.tailwindcss")
 
 require("lsp-colors").setup({
     Error = "#db4b4b",
@@ -26,13 +28,6 @@ require("symbols-outline").setup({
 local capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-            "documentation",
-            "detail",
-            "additionalTextEdits",
-        },
-    }
 
     return capabilities
 end

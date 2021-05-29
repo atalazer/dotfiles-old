@@ -104,25 +104,11 @@ if ok then
             run = ":GlowInstall",
         })
 
-        -- Hugo Helper
+        -- Markdown Previewer
         use({
-            "robertbasic/vim-hugo-helper",
-            opt = true,
+            "iamcco/markdown-preview.nvim",
+            run = "cd app && yarn install",
             ft = { "markdown" },
-        })
-
-        -- Syntax for tridactyl
-        use({
-            "tridactyl/vim-tridactyl",
-            opt = true,
-            ft = { "tridactyl" },
-        })
-
-        -- Synchronising for fish script
-        use({
-            "georgewitteman/vim-fish",
-            opt = true,
-            ft = { "fish" },
         })
 
         use({ "editorconfig/editorconfig-vim", opt = false })
@@ -164,14 +150,6 @@ if ok then
             end,
         })
 
-        -- Autopairs
-        use({
-            "windwp/nvim-autopairs",
-            config = function()
-                require("plugins.autopairs")
-            end,
-        })
-
         -- gf like plugins
         use({
             "notomo/curstr.nvim",
@@ -187,6 +165,14 @@ if ok then
             config = function()
                 require("plugins.indent-blankline")
             end,
+        })
+
+        -- Neovim Autopair Plugin
+        use({
+            "steelsojka/pears.nvim",
+            config = function()
+                require("pears").setup()
+            end
         })
 
         -- Colorizer
@@ -224,8 +210,6 @@ if ok then
                 { "ray-x/lsp_signature.nvim" },
                 { "folke/lsp-trouble.nvim" },
                 { "simrat39/symbols-outline.nvim" },
-
-                { "folke/lua-dev.nvim"},
             },
         })
 
@@ -235,6 +219,19 @@ if ok then
             config = function()
                 require("null-ls").setup({})
             end,
+        })
+
+        use({
+            "steelsojka/headwind.nvim",
+            opt = true,
+            config = function()
+                require "headwind".setup {
+                    remove_duplicates = true,
+                    run_on_save = true,
+                    prepend_custom_classes = false,
+                    use_treesitter = true,
+                }
+            end
         })
 
         use({

@@ -5,7 +5,7 @@ vim.g.loaded_compe_snippets_nvim = 1
 -- vim.g.loaded_compe_spell      = 1
 vim.g.loaded_compe_tags = 1
 vim.g.loaded_compe_treesitter = 1
-vim.g.loaded_compe_emoji = 1
+-- vim.g.loaded_compe_emoji = 1
 vim.g.loaded_compe_omni = 1
 -- vim.g.loaded_compe_vsnip      = 1
 vim.g.loaded_compe_ultisnips = 1
@@ -17,6 +17,7 @@ require("compe").setup({
     enabled = true,
     allow_prefix_unmatch = false,
     preselect = "disable",
+    min_lengt = 2,
     source_timeout = 200,
     incomplete_delay = 400,
     max_abbr_width = 30,
@@ -29,11 +30,15 @@ require("compe").setup({
             enable = true,
             filetypes = { "text", "markdown" },
         },
-        path = true,
         spell = {
             enable = true,
             filetypes = { "text", "markdown" },
         },
+        emoji = {
+            enable = true,
+            filetypes = { "text", "markdown" },
+        },
+        path = true,
         vsnip = true,
         nvim_lua = true,
         nvim_lsp = {

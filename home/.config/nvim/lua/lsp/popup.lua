@@ -48,7 +48,6 @@ require("lspsaga").init_lsp_saga({
 
 require("lspkind").init({
     with_text = true,
-    -- STR: default, codicons
     preset = "codicons",
     -- symbol_map = {
         -- Text = "",

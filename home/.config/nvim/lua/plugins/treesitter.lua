@@ -1,14 +1,13 @@
-vim.cmd("packadd nvim-treesitter")
-vim.cmd("packadd nvim-ts-context-commentstring")
-vim.cmd("packadd nvim-ts-autotag")
-
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
-        "javascript", "typescript",
+        "javascript", "typescript", "tsx",
         "html", "css", "scss",
-        "bash", "python", "lua",
-        "toml", "yaml", "json",
-        "comment", "regex"
+        "cpp", "c", "go", "rust",
+        "python", "lua",
+        "bash", "fish",
+        "toml", "yaml",
+        "json", "jsdoc", "jsonc",
+        "query", "comment", "regex"
     },
     matchup = {
         enable = true,
@@ -26,9 +25,7 @@ require("nvim-treesitter.configs").setup({
         enable = true,
         config = {
             lua  = "-- %s",
-            zsh   = "# %s",
-            toml  = "# %s",
-            xdefaults = "! %s"
+            xdefaults = "! %s",
         }
     },
 })

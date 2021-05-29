@@ -1,6 +1,3 @@
-" Set formatoptions
-au FileType * setlocal formatoptions-=ro
-
 " Set filetypes
 au BufNewFile,BufRead *.ejs,*.hbs set filetype=html
 au BufNewFile,BufRead .prettierrc,.eslintrc,tsconfig.json set filetype=jsonc
@@ -13,6 +10,9 @@ au FileType go,java setlocal sw=4 ts=4 sts=4 noexpandtab
 au FileType c,cpp,python,rust setlocal sw=4 ts=4 sts=4
 au FileType toml,yaml setlocal sw=2 ts=2 sts=2
 au FileType html,xml,css setlocal sw=2 ts=2 sts=2
+
+" Set commentstring for each filetype
+au FileType xdefaults setlocal commentstring=\!\ %s
 
 " Users
 au BufEnter TODO,SCHEDULE setlocal filetype=markdown spell spelllang=id
@@ -30,6 +30,9 @@ augroup Compe
   au WinLeave,FileType TelescopePrompt let g:compe_enabled = v:true
   au WinEnter,FileType TelescopePrompt let g:compe_enabled = v:false
 augroup END
+
+" VIM-vsnip
+autocmd FileType * call vsnip#get_complete_items(bufnr())
 
 " hide the cursor if we're inside NvimTree
 augroup HideCursor

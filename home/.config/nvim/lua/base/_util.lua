@@ -2,6 +2,17 @@ local fn = vim.fn
 
 _G.Util = {}
 
+Util.borders = {
+    { "╭", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╮", "FloatBorder" },
+    { "│", "FloatBorder" },
+    { "╯", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╰", "FloatBorder" },
+    { "│", "FloatBorder" },
+}
+
 Util.check_backspace = function()
     local curr_col = fn.col(".")
     local is_first_col = fn.col(".") - 1 == 0
@@ -32,17 +43,6 @@ Util.t = function(cmd)
     return vim.api.nvim_replace_termcodes(cmd, true, true, true)
 end
 
-Util.borders = {
-    { "╭", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╮", "FloatBorder" },
-    { "│", "FloatBorder" },
-    { "╯", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╰", "FloatBorder" },
-    { "│", "FloatBorder" },
-}
-
 -- see lua/plugins/compe.lua for context
 Util.trigger_completion = function()
     if vim.fn.pumvisible() ~= 0 then
@@ -52,25 +52,6 @@ Util.trigger_completion = function()
     end
 
     local prev_col, next_col = vim.fn.col(".") - 1, vim.fn.col(".")
-    local prev_char = vim.fn.getline("."):sub(prev_col, prev_col)
-    local next_char = vim.fn.getline("."):sub(next_col, next_col)
-
-    -- minimal autopairs-like behaviour
-    if prev_char == "{" and next_char ~= "}" then
-        return Util.t("<CR>}<C-o>O")
-    end
-    if prev_char == "[" and next_char ~= "]" then
-        return Util.t("<CR>]<C-o>O")
-    end
-    if prev_char == "(" and next_char ~= ")" then
-        return Util.t("<CR>)<C-o>O")
-    end
-    if prev_char == ">" and next_char == "<" then
-        return Util.t("<CR><C-o>O")
-    end -- html indents
-    if prev_char == "(" and next_char == ")" then
-        return Util.t("<CR><C-o>O")
-    end -- flutter indents
 
     return Util.t("<CR>")
 end

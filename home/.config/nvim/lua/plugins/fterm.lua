@@ -1,11 +1,12 @@
 require("FTerm").setup({
+    cmd = "bash",
     dimensions = {
         height = 0.8,
         width = 0.8,
         x = 0.5,
         y = 0.5,
     },
-    border = "single",
+    border = Util.borders,
 })
 
 local makeTerminal = function(keybind, name, command, wd, hg)
@@ -17,7 +18,8 @@ local makeTerminal = function(keybind, name, command, wd, hg)
                 dimensions = {
                     width   = tonumber(wd) or 0.8,
                     height  = tonumber(hg) or 0.8
-                }
+                },
+                border = Util.borders
             })
             :toggle()
     end
@@ -26,8 +28,6 @@ end
 
 makeTerminal("<leader>tg", "Toggle_lazygit", "lazygit", 0.95, 0.9 )
 makeTerminal("<leader>tf", "Toggle_nnn", "nnn")
-makeTerminal("<leader>tl", "Toggle_xplr", "xplr")
-makeTerminal("<leader>th", "Toggle_htop", "htop")
 
 -- Keybinding
 vim.api.nvim_set_keymap(
