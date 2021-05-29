@@ -50,7 +50,7 @@ ruled.client.connect_signal("request::rules", function()
     -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "TelegramDesktop" },
+            class = { "TelegramDesktop", "KotatogramDesktop" },
         },
         properties = { 
             tag = awful.screen.focused().tags[3],

@@ -25,7 +25,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Video Player {{{
     ruled.client.append_rule({
-        rule = { class = "mpv" },
+        rule = { class = "mpv", "vlc" },
         properties = {
             floating = true,
             raise = true,
@@ -76,9 +76,9 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             titlebars_enabled = true,
             floating = true,
-            width = screen_width * 0.65,
-            height = screen_height * 0.55,
-            placement = centered_client_placement,
+            width = screen_width * 0.8,
+            height = screen_height * 0.8,
+            placement = awful.placement.centered,
         },
     })
     -- }}}

@@ -51,7 +51,7 @@ apps.rofi = {
 }
 
 apps.browser = function()
-    awful.spawn(user.browser, { switchtotag = true })
+    awful.spawn(user.browser)
 end
 
 apps.file_manager = function()

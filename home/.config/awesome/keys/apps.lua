@@ -80,10 +80,15 @@ local keys = gears.table.join(
 
     -- ===================================== GUI Apps {{{
 
-    -- browser
+    -- Web Browser
     awful.key({ superkey },"w",
         apps.browser,
     { description = "Browser", group = "Apps: GUI" }),
+
+    -- File Manager
+    awful.key({ superkey },"f", function() 
+        awful.spawn("thunar") 
+    end, { description = "File Manager", group = "Apps: GUI" }),
 
     -- }}}
 
