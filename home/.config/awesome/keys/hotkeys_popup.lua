@@ -50,35 +50,147 @@ local popup =
 local firefox_rule = { class = { "firefox", "Firefox" } }
 
 for group_name, group_data in pairs({
+    ["Firefox: Navigation"] = { color = x.color3, rule_any = firefox_rule },
     ["Firefox: Tabs"] = { color = x.color3, rule_any = firefox_rule },
+    ["Firefox: Tools"] = { color = x.color3, rule_any = firefox_rule },
+    ["Firefox: Search"] = { color = x.color3, rule_any = firefox_rule },
 }) do
     popup:add_group_rules(group_name, group_data)
 end
 
 -- Table with all of our hotkeys
 popup:add_hotkeys({
+    ["Firefox: Navigation"] = {
+        {
+            modifiers = { altkey },
+            keys = {
+                Home = "Go Homepage",
+                Left = "History Back",
+                Right = "History Forward",
+            }
+        },
+        {
+            modifiers = { ctrlkey },
+            keys = {
+                ["["] = "History Back",
+                ["]"] = "History Forward",
+                r = "Reload",
+                F5 = "Reload(Override cache)",
+                o = "Open File",
+            }
+
+        },
+        {
+            modifiers = { ctrlkey, shiftkey },
+            keys = { r = "Reload(Override cache)" }
+
+        },
+        {
+            modifiers = {},
+            keys = {
+                F5 = "Reload",
+                Esc = "Stop"
+            }
+        }
+    },
     ["Firefox: Tabs"] = {
         {
-            modifiers = { "Mod1" },
+            modifiers = { altkey },
+            keys = { ["1..9"] = "Go to tab" },
+        },
+        {
+            modifiers = { ctrlkey },
             keys = {
-                ["1..9"] = "go to tab",
+                t = "New tab",
+                w = "Close tab",
+                Tab = "Next tab",
+                PgDn = "Next tab",
+                PgUp = "Previous tab",
             },
         },
         {
-            modifiers = { "Control" },
+            modifiers = { ctrlkey, shiftkey },
             keys = {
-                t = "new tab",
-                w = "close tab",
-                ["Tab"] = "next tab",
-            },
-        },
-        {
-            modifiers = { "Control", "Shift" },
-            keys = {
-                ["Tab"] = "previous tab",
+                Tab = "Previous tab",
+                PgDn = "Move Next",
+                PgUp = "Move Previous",
             },
         },
     },
+    ["Firefox: Tools"] = {
+        {
+            modifiers = {},
+            keys = { F12 = "Dev Tools" }
+        },
+        {
+            modifiers = { ctrlkey, shiftkey},
+            keys = {
+                y = "Downloads",
+                a = "Add-ons",
+                i = "Dev Tools",
+                k = "Web Console",
+                c = "Inspector",
+                e = "Network",
+                m = "Responsive View",
+                j = "Browser Console",
+                s = "Screenshot"
+            }
+        },
+        {
+            modifiers = { shiftkey },
+            keys = {
+                F7 = "Style Editor",
+                F5 = "Profiler"
+            }
+        },
+        {
+            modifiers = { ctrlkey },
+            keys = {
+                u = "Page Source",
+                i = "Page Info",
+            }
+        }
+    },
+    ["Firefox: Search"] = {
+        {
+            modifiers = { altkey },
+            keys = {
+                Up = "Switch Search Engine",
+                Down = "Switch Search Engine",
+            }
+        },
+        {
+            modifiers = { ctrlkey },
+            keys = {
+                f = "Find in This Page",
+                g = "Find Again",
+                k = "Focus Address/Search Bar",
+                j = "Focus Address/Search Bar",
+                Up = "Switch Default Search Engine",
+                Down = "Switch Default Search Engine",
+            }
+        },
+        {
+            modifiers = { ctrlkey, shiftkey },
+            keys = {
+                g = "Find Previous",
+            }
+        },
+        {
+            modifiers = { shiftkey },
+            keys = {
+                F3 = "Find Previous"
+            }
+        },
+        {
+            modifiers = {},
+            keys = {
+                ["/"] = "Quick Find",
+                ["`"] = "Quick Find Link only",
+                F3 = "Find Again"
+            }
+        }
+    }
 })
 -- }}}
 
@@ -93,10 +205,11 @@ for group_name, group_data in pairs({
     popup:add_group_rules(group_name, group_data)
 end
 
+local kitty_mod = { ctrlkey, shiftkey}
 popup:add_hotkeys({    
     ["kitty"] = {
         {
-            modifiers = { "Control", "Shift" },
+            modifiers = kitty_mod,
             keys = {
                 c = "Copy to clipboard",
                 v = "Paste from clipboard",
@@ -110,7 +223,7 @@ popup:add_hotkeys({
     },
     ["kitty: Tab"] = {
         {
-            modifiers = { "Control", "Shift" },
+            modifiers = kitty_mod,
             keys = {
                 t = "New tab",
                 q = "Close tab",
@@ -125,7 +238,7 @@ popup:add_hotkeys({
     },
     ["kitty: Window"] = {
         {
-            modifiers = { "Control", "Shift" },
+            modifiers = kitty_mod,
             keys = {
                 n = "New OS Window",
                 w = "Close",

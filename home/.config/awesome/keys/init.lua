@@ -1,8 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 
-require("keys.hotkeys_popup")
-
 local keys = {}
 
 -- Mod keys
@@ -10,6 +8,8 @@ superkey = "Mod4"
 altkey   = "Mod1"
 ctrlkey  = "Control"
 shiftkey = "Shift"
+
+require("keys.hotkeys_popup")
 
 -- Global keys {{{
 keys.globalkeys = gears.table.join(
