@@ -5,7 +5,7 @@
   --containerBg: #272727;
   --searchBg: var(--containerBg);
   --scrollbarColor: #3f3f3f;
-  --fontFamily: 'Roboto Mono', monospace;
+  --fontFamily: "Roboto Mono", monospace;
 }
 
 body {
@@ -101,7 +101,7 @@ body {
   font-family: var(--fontFamily);
   font-size: 0.85rem;
   width: 25%;
-  height: 12em;
+  height: 16em;
   margin: 0em 0.5em;
   box-sizing: border-box;
 }
