@@ -25,12 +25,16 @@ g.loaded_spec         = 1
 -- change cwd to current directory
 cmd("cd %:p:h")
 
+-- Move to last cursor
+cmd([[ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif ]])
+-- Check if file changed when its window is focus, more eager than 'autoread'
+cmd([[au FocusGained * checktime]])
+
 -- TODO: Add Custom Command
 local modules = {
     -- "base.plugins",
     "base._util",
     "base.settings",
-    "base.events",
     -- "base.commands",
     "base.keys",
     "base.appearances",

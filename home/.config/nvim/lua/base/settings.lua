@@ -1,4 +1,4 @@
-require("base._opts")
+-- require("base._opts")
 
 -- Function to apply options table
 local apply_options = function(opts)
@@ -15,14 +15,11 @@ local options = {
     autoindent = true,
     backup = false,
     cursorline = true,
-    cursorcolumn = false,
     expandtab = true,
     hidden = true,
-    hlsearch = false,
     ignorecase = true,
     lazyredraw = false,
     list = true,
-    magic = true,
     number = true,
     relativenumber = true,
     showmode = false,
@@ -46,16 +43,13 @@ local options = {
     clipboard = "unnamedplus",
     completeopt = { "menu", "menuone", "noselect", "noinsert" },
     encoding = "UTF-8",
-    foldmethod = "marker",
-    fillchars = { vert = "│", eob = " " },
-    guicursor = {
-        ["n-v-c"] = "block",
-        ["i-ci"] = "ver25",
-        ["r-cr"] = "hor25",
-        o = "hor50",
-        a = "blinkwait800-blinkoff500-blinkon300-Cursor/lCursor",
-        sm = "block-blinkwait175-blinkoff150-blinkon175"
-    },
+    fillchars = { vert = "│", eob = " ", fold = " " },
+    foldmethod     = "marker",
+    -- foldexpr       = "nvim_treesitter#foldexpr()",
+    -- foldlevel      = 0,
+    -- foldnestmax    = 1,
+    foldopen       = {"percent", "search"},
+    -- foldcolumn     = "1",
     inccommand = "split",
     listchars = {
         -- tab = "  ",
@@ -66,17 +60,15 @@ local options = {
         extends = "❯",
         precedes = "❮",
     },
-    matchpairs = { ["("] = ")", ["["] = "]", ["{"] = "}", ["<"] = ">" },
     mouse = "a",
-    shell = "$SHELL",
+    shell = "/usr/bin/bash", -- use bash instead of zsh
     signcolumn = "yes",
     shortmess = "csa",
     showbreak = "↪",
-    t_Co = "256",
     undodir = "~/.local/share/nvim/undo",
 
     -- Number
-    -- colorcolumn = 100,
+    colorcolumn    = { "120" },
     cmdheight = 2,
     laststatus = 2,
     pumheight = 10,

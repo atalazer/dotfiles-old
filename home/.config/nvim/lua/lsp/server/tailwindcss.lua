@@ -25,7 +25,6 @@ nvim_lsp[server_name].setup({
     on_init = Util.lsp_on_init,
     on_attach = function()
         print("LSP Attached!")
-        vim.cmd("PackerLoad headwind.nvim")
 
         require("lsp_signature").on_attach {
             bind = true,

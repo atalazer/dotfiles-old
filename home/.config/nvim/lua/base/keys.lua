@@ -16,15 +16,26 @@ map({"q:", "<Nop>"})
 -- move vertically by visual line on wrapped lines
 nnoremap({ "j", "gj" })
 nnoremap({ "k", "gk" })
+nnoremap({ "<Down>", "gj" })
+nnoremap({ "<Up>", "gk" })
 
 -- Files
 nnoremap({ "<C-s>", ":update<CR>" })
 inoremap({ "<C-s>", "<Esc>:update<CR>" })
 vnoremap({ "<C-s>", "<Esc>:update<CR>" })
+nnoremap({ "cd", ":cd %:p:h<CR>", { silent = true } })
 
 -- Open Neovim Config
 nnoremap({ "<leader>ec", ":tabe ~/.config/nvim/init.lua<CR>" })
 nnoremap({ "<leader>er", ":luafile ~/.config/nvim/init.lua<CR>" })
+
+-- Run/Source File
+nnoremap({ "<localleader>l", "<Cmd>luafile %<CR>"})
+nnoremap({ "<localleader>sl", "<Cmd>luafile %<CR>"})
+nnoremap({ "<localleader>ss", "<Cmd>e!<CR>"})
+nnoremap({ "<localleader>sv", "<Cmd>source %<CR>"})
+nnoremap({ "<localleader>rl", "<Cmd>!lua %<CR>"})
+nnoremap({ "<localleader>rp", "<Cmd>!python %<CR>"})
 
 -- Alt+Delete
 inoremap({ "<M-BS>", "<C-w>" })
@@ -49,7 +60,7 @@ nnoremap({ "<C-y>", ":redo<CR>" })
 inoremap({ "<C-y>", "<Esc>:redo<CR>" })
 
 -- Find
-nnoremap({ "<leader>n", ":nohlsearch<CR>" })
+nnoremap({ "<C-n>", ":nohlsearch<CR>" })
 
 -- Indent
 vnoremap({ "<", "<gv" })
@@ -129,6 +140,9 @@ nnoremap({ "`", ":NvimTreeToggle<CR>" })
 
 -- Glow.nvim
 nmap({ "<leader>gg", ":Glow<CR>" })
+
+-- Glow.nvim
+nmap({ "<leader>gy", ":Goyo<CR>" })
 
 -- Vim Easy Align
 xmap({ "ga", "<Plug>(EasyAlign)", { silent = true } })

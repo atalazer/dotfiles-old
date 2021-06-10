@@ -67,8 +67,7 @@ require("lspconfig").sumneko_lua.setup({
                 },
             },
             workspace = {
-                maxPreload = 2000,
-                preloadFileSize = 50000,
+                preloadFileSize = 400,
                 library = library,
             },
         },

@@ -52,10 +52,17 @@ wk.register({
 }, {prefix = "<leader>"})
 
 wk.register({
-    l = { "<Cmd>luafile %<CR>", "Source Lua File" },
-    r = { "<Cmd>!lua %<CR>", "Execute Current Lua File" },
-    v = { "<Cmd>source %<CR>", "Source Vim File" },
-    p = { "<Cmd>!python %<CR>", "Execute Current Python File" },
+    s = {
+        name = "+Source",
+        s = "Current",
+        l = "Lua File",
+        v = "Vim File",
+    },
+    r = {
+        name = "+Run",
+        l = "Lua File",
+        p = "Python File",
+    },
 }, {prefix = "<localleader>"})
 
 wk.register({
@@ -79,7 +86,7 @@ wk.setup({
     plugins = {
         marks = true,
         registers = true,
-        spelling = { enabled = false },
+        spelling = { enabled = true },
         presets = {
             operators = true,
             motions = true,

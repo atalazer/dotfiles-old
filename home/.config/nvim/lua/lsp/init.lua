@@ -8,11 +8,6 @@ pcall(require, "lsp.diagnostic")
 pcall(require, "lsp.popup")
 pcall(require, "lsp.trouble")
 
-pcall(require, "lsp.server.lua")
-pcall(require, "lsp.server.efm")
-pcall(require, "lsp.server.python")
-pcall(require, "lsp.server.tailwindcss")
-
 require("lsp-colors").setup({
     Error = "#db4b4b",
     Warning = "#e0af68",
@@ -32,18 +27,39 @@ local capabilities = function()
     return capabilities
 end
 
+pcall(require, "lsp.server.lua")
+pcall(require, "lsp.server.python")
+pcall(require, "lsp.server.tailwindcss")
+
 local servers = {
     bashls = {},
     vimls = {},
     clangd = {},
-    html = {},
-    cssls = {},
+    html = { root_dir = vim.loop.cwd },
+    cssls = { root_dir = vim.loop.cwd },
     rome = {
         cmd = { "rome", "lsp" },
         filetypes = { "javascript", "typescript", "typescriptreact" },
         root_dir = vim.loop.cwd,
     },
-    yamlls = {},
+    yamlls = {
+        settings = {
+            yaml = {
+                format = {
+                    enable = true,
+                    singleQuote = false,
+                    bracketSpacing = true,
+                },
+                editor = {
+                    tabSize = 2,
+                },
+                schemas = {
+                    ["https://json.schemastore.org/github-workflow.json"] = "ci.yml",
+                    ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose.yml",
+                },
+            },
+        },
+    },
     jsonls = {},
 }
 

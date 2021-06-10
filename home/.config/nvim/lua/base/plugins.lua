@@ -58,60 +58,11 @@ if ok then
 
         -- Beautiful Statusline
         use({
-            "glepnir/galaxyline.nvim",
-            branch = "main",
+            "windwp/windline.nvim",
             config = function()
-                require("plugins.galaxyline")
-            end,
+                require("wlsample.bubble")
+            end
         })
-
-        -- ======= Languange =======
-        -- Nvim Treesitter configurations and abstraction layer
-        use({
-            "nvim-treesitter/nvim-treesitter",
-            requires = {
-                { "windwp/nvim-ts-autotag" },
-                { "JoosepAlviste/nvim-ts-context-commentstring" },
-            },
-            config = function()
-                require("plugins.treesitter")
-            end,
-        })
-
-        -- Markdown Support
-        use({
-            "plasticboy/vim-markdown",
-            opt = true,
-            ft = { "markdown" },
-            config = function()
-                vim.g.vim_markdown_frontmatter = 1
-            end,
-        })
-
-        -- VIM Table Mode for instant table creation.
-        use({
-            "dhruvasagar/vim-table-mode",
-            ft = { "text", "markdown" },
-            opt = true,
-        })
-
-        -- Terminal Markdown Previewer
-        use({
-            "npxbr/glow.nvim",
-            branch = "main",
-            opt = true,
-            ft = "markdown",
-            run = ":GlowInstall",
-        })
-
-        -- Markdown Previewer
-        use({
-            "iamcco/markdown-preview.nvim",
-            run = "cd app && yarn install",
-            ft = { "markdown" },
-        })
-
-        use({ "editorconfig/editorconfig-vim", opt = false })
 
         -- ======= Experience =======
         -- Easy Commenting
@@ -169,9 +120,10 @@ if ok then
 
         -- Neovim Autopair Plugin
         use({
-            "steelsojka/pears.nvim",
+            "windwp/nvim-autopairs",
+            opt = false,
             config = function()
-                require("pears").setup()
+                require("plugins.autopairs")
             end
         })
 
@@ -198,6 +150,58 @@ if ok then
                 })
             end,
         })
+
+        -- ======= Languange =======
+        -- Nvim Treesitter configurations and abstraction layer
+        use({
+            "nvim-treesitter/nvim-treesitter",
+            requires = {
+                { "windwp/nvim-ts-autotag" },
+                { "JoosepAlviste/nvim-ts-context-commentstring" },
+            },
+            config = function()
+                require("plugins.treesitter")
+            end,
+        })
+
+        -- Markdown Support
+        use({
+            "plasticboy/vim-markdown",
+            opt = true,
+            ft = { "markdown" },
+            config = function()
+                vim.g.vim_markdown_frontmatter = 1
+                vim.g.vim_markdown_folding_disabled = 1
+                vim.g.vim_markdown_math = 1
+                vim.g.vim_markdown_conceal = 2
+                vim.g.vim_markdown_strikethrough = 1
+            end,
+        })
+
+        -- VIM Table Mode for instant table creation.
+        use({
+            "dhruvasagar/vim-table-mode",
+            ft = { "text", "markdown" },
+            opt = true,
+        })
+
+        -- Terminal Markdown Previewer
+        use({
+            "npxbr/glow.nvim",
+            branch = "main",
+            opt = true,
+            ft = "markdown",
+            run = ":GlowInstall",
+        })
+
+        -- Markdown Previewer
+        use({
+            "iamcco/markdown-preview.nvim",
+            run = "cd app && yarn install",
+            ft = { "markdown" },
+        })
+
+        use({ "editorconfig/editorconfig-vim", opt = false })
 
         -- ======= LSP, Completion and Snippet =======
         use({
@@ -254,8 +258,7 @@ if ok then
         -- Emmet Support for vim
         use({
             "mattn/emmet-vim",
-            opt = true,
-            ft = { "html" },
+            opt = false,
             config = function()
                 require("plugins.emmet")
             end,
@@ -338,6 +341,22 @@ if ok then
             "folke/which-key.nvim",
             config = function()
                 require("plugins.which-key")
+            end,
+        })
+
+        -- Free Distraction Mode
+        use({
+            "junegunn/goyo.vim",
+            opt = true,
+            cmd = "Goyo",
+            requires = {"junegunn/limelight.vim"},
+            config = function()
+                vim.g.goyo_width = "120"
+                vim.g.goyo_height = "90%"
+                vim.cmd([[
+                    autocmd! User GoyoEnter Limelight
+                    autocmd! User GoyoLeave Limelight!
+                ]])
             end,
         })
 
