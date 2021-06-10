@@ -50,6 +50,7 @@ fi
 # Editor Alias
 alias {e,vi}="$editor"
 alias se="sudoedit"
+alias el="nvim --cmd 'source ~/.cache/nvim/sessions/last.vim'"
 alias {envim,ev}="$editor ~/.config/nvim/init.lua"
 alias {zshrc,ez}="$editor ~/.zshrc"
 alias {xrc,ex}="$editor ~/.Xresources"
@@ -97,7 +98,7 @@ if command -v "pacman" > /dev/null 2>&1; then
     alias pacupd="$PERMISSION pacman -Syy"
     alias pacupg="$PERMISSION pacman -Syu"
     alias pacrem="$PERMISSION pacman -Rns"
-    alias pacrmorp="$PERMISSION pacman -Rns $(pacman -Qtdq)"
+    alias pacrmorp="$PERMISSION pacman Qtdq | $PERMISSION pacman -Rns -"
 fi
 
 if command -v "paru" > /dev/null 2>&1; then
@@ -106,7 +107,7 @@ if command -v "paru" > /dev/null 2>&1; then
     alias paupd="paru -Syy"
     alias paupg="paru -Syu"
     alias parem="paru -Rcns"
-    alias parmorp="paru -Qtdq | pacman -Rns -"
+    alias parmorp="paru -Qtdq | paru -Rns -"
 fi
 
 # tmux

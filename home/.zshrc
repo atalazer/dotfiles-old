@@ -3,21 +3,13 @@
 export ZDIR=$HOME/.zsh
 fpath=($HOME/.zsh/completions $fpath)
 
-# available: antigen, zinit
-PLUG_MAN=zinit
-
-# available: starship, spaceship
-PROMPT="starship"
-
 # }}}
 
 # ===== Plugins ===== {{{
 
-if [[ $PLUG_MAN = "zinit" ]]; then
-    [[ -f $ZDIR/zinit.zsh ]] && source $ZDIR/zinit.zsh
-elif [[ $PLUG_MAN = "antigen" ]]; then
-    [[ -f $ZDIR/antigen.zsh ]] && source $ZDIR/antigen.zsh
-fi
+setopt promptsubst
+
+[[ -f $ZDIR/zinit.zsh ]] && source $ZDIR/zinit.zsh
 
 source $ZDIR/plug-conf/nnn.zsh
 source $ZDIR/plug-conf/dotbare.zsh
@@ -25,13 +17,13 @@ source $ZDIR/plug-conf/dotbare.zsh
 # }}}
 
 # ===== Prompt ===== {{{
+function set_win_title(){
+    print -Pn "\e]0;%~\a"
+}
+precmd_functions+=(set_win_title)
 
-if [[ $PROMPT = "starship" ]]; then
-    export STARSHIP_CONFIG=$HOME/.config/starship.toml
-    eval "$(starship init zsh)"
-elif [[ $PROMPT = "spaceship" ]]; then
-    source $ZDIR/plug-conf/spaceship-prompt.zsh
-fi
+export STARSHIP_CONFIG=$HOME/.config/starship.toml
+eval "$(starship init zsh)"
 
 # }}}
 
@@ -44,6 +36,7 @@ HISTFILE=${ZDOTDIR:-${HOME}}/.zsh-history
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
+setopt HIST_IGNORE_SPACE
 
 source $ZDIR/modules/compe.zsh
 source $ZDIR/modules/dir.zsh

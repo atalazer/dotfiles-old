@@ -108,9 +108,6 @@ bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 
 bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
-bindkey -s '\el' '^u ls\n'                               # [Esc-l] - run command: ls
-bindkey -s '\ep' '^u zi\n'                               # [Esc-p] - run command: zi (zoxide)
-bindkey -s '\ed' '^u de\n'                               # [Esc-d] - run command: de (dotbare edit)
 bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search history
 
 # Edit line in vim with ctrl-e:

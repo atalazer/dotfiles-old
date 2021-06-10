@@ -16,3 +16,4 @@ export LESS_TERMCAP_me=$(tput sgr0)
 # Rust Cargo
 source "$HOME/.cargo/env"
 
+if [ -e /home/atalariq/.nix-profile/etc/profile.d/nix.sh ]; then . /home/atalariq/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

@@ -39,7 +39,9 @@ todo(){
         case $OPT in
             -e|--edit) ${EDITOR:-nvim} $TODO;;
             -s|--show)
-                if command -v "bat" &> /dev/null; then
+                if command -v "glow" &> /dev/null; then
+                    glow $TODO
+                elif command -v "bat" &> /dev/null; then
                     bat --paging=never $TODO
                 else
                     cat $TODO

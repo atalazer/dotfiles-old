@@ -1,29 +1,10 @@
 format = "$all"
 add_newline = false
-scan_timeout = 100
-command_timeout = 1000
-
-[character]
-success_symbol = "[➜](bold green) "
-error_symbol = "[➜](bold red) "
-vicmd_symbol = "[V](bold green) "
 
 [directory]
 truncation_length = 8
 
 [git_status]
-disabled  = false
-format   = '([\($all_status$ahead_behind\)]($style) )'
-ahead    = "⇡${count}"
-behind   = "⇣${count}"
-diverged = "⇕⇡${ahead_count} ⇣${behind_count}"
-staged.enabled    = true
-untracked.enabled = true
-modified.enabled  = true
-
-[lua]
-format = "via [🌕 $version](bold blue) "
-
-[package]
-disabled = true
-
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
