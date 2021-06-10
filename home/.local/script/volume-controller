@@ -8,15 +8,15 @@ get="pamixer --get-volume-human"
 case $1 in
     up)
         bash -c "$up"
-        notify-send $(bash -c "$get")
+        # notify-send $(bash -c "$get")
     ;;
     down)
         bash -c "$down"
-        notify-send $(bash -c "$get")
+        # notify-send $(bash -c "$get")
     ;;
     mute)
         bash -c "$mute"
-        notify-send $(bash -c "$get")
+        # notify-send $(bash -c "$get")
     ;;
     get)
         bash -c "$get"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-up="light -A 5"
-down="light -U 5"
+up="light -A 2"
+down="light -U 2"
 
 current_bn() {
     light -G | cut -c 1-2
@@ -21,11 +21,11 @@ optimize (){
 case $1 in
     up)
         bash -c "$up"
-        notify-send $(current_bn)
+        # notify-send $(current_bn)
     ;;
     down)
         bash -c "$down"
-        notify-send $(current_bn)
+        # notify-send $(current_bn)
     ;;
     optimize)
         optimize

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 current_musicpl=$(cat ~/.cache/music-mode)
 
-user_music_notify=yes
+user_music_notify=no
 
-if [ $user_music_notify = "yes" ]; then
+if [ ! $user_music_notify = "no" ]; then
     notify="~/.local/script/music-notify.sh"
 else
     notify=""

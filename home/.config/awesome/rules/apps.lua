@@ -40,14 +40,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Image viewers {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "feh",
-                "Sxiv",
-                "Viewnior",
-            },
-            name = {
-                "Media viewer",
-            },
+            class = { "feh", "Sxiv", "Viewnior" },
+            name = { "Media viewer" },
         },
         properties = {
             floating = true,
@@ -64,9 +58,7 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "Nemo",
-                "Thunar",
-                "file",
+                "Nemo", "Thunar", "file",
             },
             instance = { "file" },
         },
@@ -91,8 +83,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             titlebars_enabled = true,
             floating = true,
-            width = screen_width * 0.60,
-            height = screen_height * 0.70,
             placement = centered_client_placement,
         },
     })
@@ -104,7 +94,7 @@ ruled.client.connect_signal("request::rules", function()
             role = { "GtkFileChooserDialog" },
             name = { "Open File" },
         },
-        properties = { floating = true, width = screen_width * 0.55, height = screen_height * 0.65 },
+        properties = { floating = true, width = screen_width * 0.60, height = screen_height * 0.60 },
     })
     -- }}}
 
@@ -119,19 +109,25 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
-    -- Dragon drag and drop utility{{{
+    -- Dragon drag and drop utility {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "Dragon-drag-and-drop",
-                "Dragon",
-            },
+            class = { "Dragon-drag-and-drop", "Dragon" },
         },
         properties = {
             floating = true,
             ontop = true,
             sticky = true,
-            width = screen_width * 0.3,
+        },
+    })
+    -- }}}
+
+    -- Password Manager {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "KeePassXC" },
+        },
+        properties = {  floating = true, width = screen_width * 0.8, height = screen_height * 0.8,
         },
     })
     -- }}}
@@ -149,12 +145,10 @@ ruled.client.connect_signal("request::rules", function()
             instance = {
                 "scratchpad",
                 "markdown_input",
-                "youtube",
             },
             class = {
                 "scratchpad",
                 "markdown_input",
-                "youtube",
             },
         },
         properties = {
@@ -203,12 +197,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Music clients {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "music",
-            },
-            instance = {
-                "music",
-            },
+            class = { "music" },
+            instance = { "music" },
         },
         properties = {
             floating = true,

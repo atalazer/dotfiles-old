@@ -140,10 +140,10 @@ ICON="$HOME/Dotfiles/icons/linebit/keyboard.png"
 
 COUNTRY='''
 [
-  { "code": "ar", "name": "Arabic" },
-  { "code": "en", "name": "English" },
   { "code": "id", "name": "Indonesian" },
-  { "code": "jv", "name": "Javanese" }
+  { "code": "en", "name": "English" },
+  { "code": "jv", "name": "Javanese" },
+  { "code": "ar", "name": "Arabic" }
 ]
 '''
 
