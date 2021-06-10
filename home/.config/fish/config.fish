@@ -49,9 +49,6 @@ zoxide init fish | source
 # Node Env
 fnm env | source
 
-# Navi widget for fish shell
-navi widget fish | source
-
 # }}}
 
 # vim:ft=fish:nofoldenable

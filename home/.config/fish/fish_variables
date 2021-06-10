@@ -1,0 +1,55 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export ABBR_TIPS_PROMPT:\x5cn\U0001f4a1\x20\x5ce\x5b1m\x7b\x7b\x20\x2eabbr\x20\x7d\x7d\x5ce\x5b0m\x20\x3d\x3e\x20\x7b\x7b\x20\x2ecmd\x20\x7d\x7d
+SETUVAR --export ABBR_TIPS_REGEXES:\x28\x5e\x28\x5cw\x2b\x5cs\x2b\x29\x2b\x28\x2d\x7b1\x2c2\x7d\x29\x5cw\x2b\x29\x28\x5cs\x5cS\x2b\x29\x1e\x28\x5e\x28\x5cs\x3f\x28\x5cw\x2d\x3f\x29\x2b\x29\x7b3\x7d\x29\x2e\x2a\x1e\x28\x5e\x28\x5cs\x3f\x28\x5cw\x2d\x3f\x29\x2b\x29\x7b2\x7d\x29\x2e\x2a\x1e\x28\x5e\x28\x5cs\x3f\x28\x5cw\x2d\x3f\x29\x2b\x29\x7b1\x7d\x29\x2e\x2a
+SETUVAR --export __ABBR_TIPS_KEYS:a__fish_key_reader\x1ea__fm\x1e\x1e\x2dU\x1ea__dotbare\x1ea__dotbare\x1ea__dotbare\x1ea__dotbare
+SETUVAR --export __ABBR_TIPS_VALUES:/usr/bin/fish_key_reader\x1eenv\x20VISUAL\x3dnnn_e\x20nnn\x20\x2der\x22\x20alias\x20fmp\x20pnnn\x22\x20alias\x20fmq\x20qnnn\x22\x20alias\x20sfm\x20sudo\x20\x2dE\x20nnn\x20\x2ddH\x1e\x1e\x2d\x2d\x20ef\x20\x27\x24EDITOR\x20\x7e/\x2econfig/fish/config\x2efish\x27\x1ebash\x20\x2dc\x20source\x20\x7e/\x2ezinit/plugins/kazhala\x2d\x2d\x2ddotbare/dotbare\x1ebash\x20\x2dc\x20source\x20\x7e/\x2ezinit/plugins/kazhala\x2d\x2d\x2ddotbare/dotbare\x1e\x1eecho\x20dotbare
+SETUVAR __fish_initialized:3100
+SETUVAR _fish_abbr_c:clear
+SETUVAR _fish_abbr_cdb:cd\x20\x24BLOG
+SETUVAR _fish_abbr_cdf:cd\x20\x24DOTS
+SETUVAR _fish_abbr_e:\x24EDITOR
+SETUVAR _fish_abbr_ef:\x24EDITOR\x20\x7e/\x2econfig/fish/config\x2efish
+SETUVAR _fish_abbr_ev:\x24EDITOR\x20\x7e/\x2econfig/nvim/init\x2elua
+SETUVAR _fish_abbr_pain:paru\x20\x2dS
+SETUVAR _fish_abbr_pasearch:paru\x20\x2dSs
+SETUVAR _fish_abbr_paupd:paru\x20\x2dSyy
+SETUVAR _fish_abbr_paupg:paru\x20\x2dSyu
+SETUVAR _fish_abbr_q:exit
+SETUVAR _fish_abbr_r:exec\x20fish
+SETUVAR _fisher_acomagu_2F_fish_2D_async_2D_prompt_files:/home/atalariq/\x2econfig/fish/conf\x2ed/__async_prompt\x2efish
+SETUVAR _fisher_gazorby_2F_fish_2D_abbreviation_2D_tips_files:/home/atalariq/\x2econfig/fish/functions/__abbr_tips_bind_newline\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/__abbr_tips_bind_space\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/__abbr_tips_init\x2efish\x1e/home/atalariq/\x2econfig/fish/conf\x2ed/abbr_tips\x2efish
+SETUVAR _fisher_jorgebucaran_2F_autopair_2E_fish_files:/home/atalariq/\x2econfig/fish/functions/_autopair_backspace\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/_autopair_insert_left\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/_autopair_insert_right\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/_autopair_insert_same\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/_autopair_tab\x2efish\x1e/home/atalariq/\x2econfig/fish/conf\x2ed/autopair\x2efish
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:/home/atalariq/\x2econfig/fish/functions/fisher\x2efish\x1e/home/atalariq/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_jorgebucaran_2F_replay_2E_fish_files:/home/atalariq/\x2econfig/fish/functions/replay\x2efish\x1e/home/atalariq/\x2econfig/fish/completions/replay\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_bang_2D_bang_files:/home/atalariq/\x2econfig/fish/functions/__history_previous_command\x2efish\x1e/home/atalariq/\x2econfig/fish/functions/__history_previous_command_arguments\x2efish\x1e/home/atalariq/\x2econfig/fish/conf\x2ed/plugin\x2dbang\x2dbang\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/autopair\x2efish\x1ejorgebucaran/replay\x2efish\x1egazorby/fish\x2dabbreviation\x2dtips\x1eacomagu/fish\x2dasync\x2dprompt\x1eoh\x2dmy\x2dfish/plugin\x2dbang\x2dbang
+SETUVAR fish_color_autosuggestion:969896
+SETUVAR fish_color_cancel:\x2dr
+SETUVAR fish_color_command:c397d8
+SETUVAR fish_color_comment:e7c547
+SETUVAR fish_color_cwd:green
+SETUVAR fish_color_cwd_root:red
+SETUVAR fish_color_end:c397d8
+SETUVAR fish_color_error:d54e53
+SETUVAR fish_color_escape:00a6b2
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:normal
+SETUVAR fish_color_host_remote:yellow
+SETUVAR fish_color_match:\x2d\x2dbackground\x3dbrblue
+SETUVAR fish_color_normal:normal
+SETUVAR fish_color_operator:00a6b2
+SETUVAR fish_color_param:7aa6da
+SETUVAR fish_color_quote:b9ca4a
+SETUVAR fish_color_redirection:70c0b1
+SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_status:red
+SETUVAR fish_color_user:brgreen
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_key_bindings:fish_default_key_bindings
+SETUVAR fish_pager_color_completion:normal
+SETUVAR fish_pager_color_description:B3A06D\x1eyellow
+SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
+SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_user_paths:/home/atalariq/\x2ezinit/plugins/kazhala\x2d\x2d\x2ddotbare\x1e/usr/local/bin
