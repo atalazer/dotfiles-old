@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+DIR=${XDG_CONFIG_DIR:-$HOME/.config}/hosts
+OPT=${1:-help}
+MODE=$DIR/.mode
+
+help(){
+    echo "Usage:"
+    echo "hostsman which-profile"
+    echo "Command:"
+    echo "--help | -h      show help message"
+    echo "--list | -l      show available profile"
+    echo "--mode | -m      show current profile"
+}
+
+list(){
+    ls $DIR
+}
+
+mode(){
+    cat $MODE
+}
+
+case $OPT in
+    "--help"|"-h") help;;
+    "--list"|"-l") list;;
+    "--mode"|"-m") mode;;
+    *)
+        if [[ -f $DIR/$1 ]]; then
+            # sudo mv /etc/hosts{,-$(date +%Y%m%d-%H%M%S)}
+            sudo rm /etc/hosts
+            sudo cp $DIR/$1 /etc/hosts
+            echo "$1 Profile Applied"
+            echo "$1" > $MODE
+            sudo systemctl restart NetworkManager.service
+            echo "Restarting Network ..."
+        else
+            echo "No Such Profile. ./apply --help to show available command"
+        fi
+    ;;
+esac

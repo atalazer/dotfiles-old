@@ -1,0 +1,49 @@
+/* @import url("../../.cache/wal//colors-waybar.css"); */
+
+/* use the below line for semi-transparent waybar */
+@import url("../../.cache/wal/colors-custom-gtk3.css");
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "Inter", sans-serif;
+  font-size: small;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @background;
+  color: @foreground;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  background: transparent;
+  color: @foreground;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+}
+
+#workspaces button.focused {
+  background: @foreground;
+  color: @background;
+}
+
+#mode,
+#clock,
+#xmr,
+#memory,
+#temperature.cpu,
+#temperature.gpu,
+#pulseaudio,
+#pulseaudio.muted,
+#idle_inhibitor {
+  padding: 0 5px;
+  margin: 0 5px;
+  background: transparent;
+  background-color: transparent;
+  color: @foreground;
+}

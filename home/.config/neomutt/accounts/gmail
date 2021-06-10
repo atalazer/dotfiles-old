@@ -1,0 +1,37 @@
+# vim: filetype=muttrc
+unmailboxes *
+
+source "gpg -dq $HOME/.config/neomutt/accounts/.gmail-pwd.gpg |"
+
+# in/out mail servers
+set realname = "Atalariq Barra Hadinugraha"
+set imap_user = "baraboyolali@gmail.com"
+set imap_pass = $my_pass
+
+# for Gmail users
+set smtp_url = "smtps://baraboyolali@smtp.gmail.com:587"
+set smtp_pass = $my_pass
+
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+
+# Location of drafts
+set postponed = "+[GMail]/Drafts"
+set record = "+Sent"
+set trash = "+Trash"
+set mail_check = 6
+
+set from = "Atalariq Barra H. baraboyolali@gmail.com"
+set envelope_from
+set use_from = "yes"
+
+# Activate caching, as it can greatly improve speed
+set header_cache = "~/.cache/neomutt/headers"
+set message_cachedir = "~/.cache/neomutt/bodies"
+
+## Hook -- IMPORTANT!
+account-hook $folder "set imap_pass=$my_pass"
+
+# Disable saving outgoing mail since Gmail saves them by default.
+set record = ""
+

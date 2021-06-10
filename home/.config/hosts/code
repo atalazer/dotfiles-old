@@ -1,0 +1,170 @@
+# Static table lookup for hostnames.
+# See hosts(5) for details.
+127.0.0.1   localhost
+::1 		localhost
+
+# ===============
+# Social Media
+# ===============
+127.0.0.1   facebook.com
+127.0.0.1   twitter.com
+127.0.0.1   instagram.com
+127.0.0.1   reddit.com
+127.0.0.1   pinterest.com
+127.0.0.1   tumblr.com
+127.0.0.1   deviantart.com
+
+127.0.0.1   quora.com
+127.0.0.1   id.quora.com
+
+# ===============
+# Streaming
+# ===============
+127.0.0.1   netflix.com
+127.0.0.1   hulu.com
+127.0.0.1   imgur.com
+127.0.0.1   vimeo.com
+127.0.0.1   ted.com
+127.0.0.1   blogger.com
+127.0.0.1   imdb.com
+127.0.0.1   break.com
+127.0.0.1   twitch.tv
+127.0.0.1   soundcloud.com
+127.0.0.1   vice.com
+
+# ===============
+# Shopping
+# ===============
+127.0.0.1   ebay.com
+127.0.0.1   craigslist.org
+127.0.0.1   etsy.com
+127.0.0.1   amazon.com
+127.0.0.1   tokopedia.com
+127.0.0.1   shopee.co.id
+127.0.0.1   bukalapak.com
+
+# ===============
+# Anime & Comics
+# ===============
+127.0.0.1   nimegami.com
+127.0.0.1   otakudesu.moe
+127.0.0.1   otakudesu.online
+127.0.0.1   anikyojin.id
+127.0.0.1   anikyojin.net
+127.0.0.1   anoboy.media
+127.0.0.1   anoboy.me
+127.0.0.1   anoboy.online
+127.0.0.1   anoboy.cc
+
+127.0.0.1   webtoons.com
+127.0.0.1   komiku.id
+127.0.0.1   sektekomik.com
+127.0.0.1   pojokmanga.com
+127.0.0.1   bacakomik.co
+
+# ===============
+# Crypto
+# ===============
+127.0.0.1   coinmarketcap.com
+127.0.0.1   blockchain.info
+127.0.0.1   coinbase.com
+127.0.0.1   indodax.com
+127.0.0.1   tokocrypto.com
+127.0.0.1   binance.com
+
+# ===============
+# Danger
+# ===============
+127.0.0.1   4chan.org
+127.0.0.1   xnxx.com
+127.0.0.1   pornhub.com
+127.0.0.1   xhamster.com
+127.0.0.1   nekopoi.care
+
+127.0.0.1   manhwaland.cc
+127.0.0.1   nhentai.net
+
+###
+### EOF
+###
+
+# ===============
+# Social Media
+# ===============
+127.0.0.1   www.facebook.com
+127.0.0.1   www.twitter.com
+127.0.0.1   www.instagram.com
+127.0.0.1   www.reddit.com
+127.0.0.1   www.pinterest.com
+127.0.0.1   www.tumblr.com
+127.0.0.1   www.deviantart.com
+127.0.0.1   www.quora.com
+
+# ===============
+# Streaming
+# ===============
+127.0.0.1   www.netflix.com
+127.0.0.1   www.hulu.com
+127.0.0.1   www.imgur.com
+127.0.0.1   www.vimeo.com
+127.0.0.1   www.ted.com
+127.0.0.1   www.blogger.com
+127.0.0.1   www.imdb.com
+127.0.0.1   www.break.com
+127.0.0.1   www.twitch.tv
+127.0.0.1   www.soundcloud.com
+127.0.0.1   www.vice.com
+
+# ===============
+# Shopping
+# ===============
+127.0.0.1   www.ebay.com
+127.0.0.1   www.craigslist.org
+127.0.0.1   www.etsy.com
+127.0.0.1   www.amazon.com
+127.0.0.1   www.tokopedia.com
+127.0.0.1   www.shopee.co.id
+127.0.0.1   www.bukalapak.com
+
+# ===============
+# Anime & Comics
+# ===============
+127.0.0.1   www.nimegami.com
+127.0.0.1   www.otakudesu.moe
+127.0.0.1   www.otakudesu.online
+127.0.0.1   www.anikyojin.id
+127.0.0.1   www.anikyojin.net
+127.0.0.1   www.anoboy.media
+127.0.0.1   www.anoboy.me
+127.0.0.1   www.anoboy.online
+127.0.0.1   www.anoboy.cc
+
+127.0.0.1   www.webtoons.com
+127.0.0.1   www.komiku.id
+127.0.0.1   www.sektekomik.com
+127.0.0.1   www.pojokmanga.com
+127.0.0.1   www.bacakomik.co
+
+# ===============
+# Crypto
+# ===============
+127.0.0.1   www.coinmarketcap.com
+127.0.0.1   www.blockchain.info
+127.0.0.1   www.coinbase.com
+127.0.0.1   www.indodax.com
+127.0.0.1   www.tokocrypto.com
+127.0.0.1   www.binance.com
+
+# ===============
+# Danger
+# ===============
+127.0.0.1   www.4chan.org
+127.0.0.1   www.xnxx.com
+127.0.0.1   www.pornhub.com
+127.0.0.1   www.xhamster.com
+127.0.0.1   www.nekopoi.care
+
+127.0.0.1   www.manhwaland.cc
+127.0.0.1   www.nhentai.net
+
+

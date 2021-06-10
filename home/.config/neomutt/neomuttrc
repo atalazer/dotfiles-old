@@ -1,0 +1,20 @@
+# vim: filetype=muttrc
+
+source ~/.config/neomutt/settings
+source ~/.config/neomutt/colors
+source ~/.config/neomutt/mappings
+
+# Accounts
+
+source ~/.config/neomutt/accounts/gmail
+folder-hook $folder 'source ~/.config/neomutt/accounts/gmail'
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/gmail<enter><change-folder>!<enter>'
+
+# source ~/.config/neomutt/accounts/school
+# folder-hook $folder 'source ~/.config/neomutt/accounts/school'
+# macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/school<enter><change-folder>!<enter>'
+
+# source ~/.config/neomutt/accounts/main
+# folder-hook $folder 'source ~/.config/neomutt/accounts/main'
+# macro index,pager <f4> '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/main<enter><change-folder>!<enter>'
+

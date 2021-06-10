@@ -1,0 +1,33 @@
+# vim: filetype=muttrc
+unmailboxes *
+
+# in/out mail servers
+set realname = "Atalariq Barra Hadinugraha"
+set imap_user = "atalariqhadinugraha60@smp.belajar.id"
+set imap_pass = ""
+
+# for Gmail users
+# set smtp_url = "smtps://baraboyolali@smtp.gmail.com:587"
+# set smtp_pass = ""
+
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+
+# Location of drafts
+set postponed = "+[GMail]/Drafts"
+set record = "+Sent"
+set trash = "+Trash"
+set mail_check = 6
+
+set from = "Atalariq Barra H. atalariqhadinugraha60@smp.belajar.id"
+set envelope_from
+set use_from = "yes"
+
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+## Hook -- IMPORTANT!
+account-hook $folder "set imap_pass="

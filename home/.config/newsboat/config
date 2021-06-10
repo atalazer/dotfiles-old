@@ -1,0 +1,54 @@
+# vim: set ft=conf
+#
+# Basic configuration
+#
+# auto-reload yes
+datetime-format "%Y/%m/%d, %R"
+external-url-viewer "urlview"
+browser "env GTK_THEME=Adwaita /sbin/firefox %u"
+
+#
+# Colorscheme
+#
+color background         default   default
+color listnormal         default   default
+color listnormal_unread  default   default bold
+color listfocus          black     cyan
+color listfocus_unread   black     cyan bold
+color info               cyan    black
+color article            default   default
+
+#
+# Hightlight
+#
+highlight article "^(Title):.*$" blue default
+highlight article "https?://[^ ]+" red default
+highlight article "\\[image\\ [0-9]+\\]" green default
+
+#
+# Keybinding
+#
+bind-key j down
+bind-key k up
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key G end
+bind-key gg home
+bind-key d pagedown
+bind-key u pageup
+bind-key o open
+bind-key q quit
+bind-key a toggle-article-read
+bind-key n next-unread
+bind-key N prev-unread
+#bind-key D pb-download
+bind-key x pb-delete
+bind-key D delete-article
+bind-key U show-urls
+
+#
+# Macro
+#
+macro . open-in-browser
+
+
