@@ -14,26 +14,21 @@ export CM_LAUNCHER="rofi"
 # Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 wal -n -R
-light -S 30
+light -S 20
 xset -b
 xset r rate 300 50
 xsetroot -cursor_name left_ptr
 
-xsettingsd &
+xsettingsd &> /dev/null &
 clipmenud &>/dev/null &
-/lib/mate-polkit/polkit-mate-authentication-agent-1 &
-mpd && mpDris2 &
+/lib/mate-polkit/polkit-mate-authentication-agent-1 &> /dev/null &
+mpd &> /dev/null &
 # florence &
-
-# Start pulse/pipewire
-# pulseaudio --start
-# /usr/bin/pipewire &
-# /usr/bin/pipewire-pulse &
-# /usr/bin/pipewire-media-session &
 
 # Start session
 SESSION=${1:-awesome}
 case $SESSION in
     awesome)    exec awesome ;;
+    sway)       exec sway ;;
     *)          exec $1;;
 esac
