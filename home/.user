@@ -5,7 +5,7 @@
 ## Apps
 export TERMINAL="kitty"
 export BROWSER="firefox"
-export FILEMAN="nemo"
+export FILEMAN="thunar"
 
 export EDITOR="nvim"
 export VISUAL="nvim"

@@ -2,11 +2,19 @@
 
 [ -f $HOME/.user ] && source $HOME/.user
 
-export TERMINFO=$HOME/.terminfo
-
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --ignore-file ".gitignore"'
 export SKIM_DEFAULT_COMMAND='rg --files --no-ignore --ignore-file ".gitignore"'
 
+export CC="gcc"
+export GOPATH="$HOME/.local/go"
+export GOBIN="$HOME/.local/go/bin"
+
+export TERMINFO=$HOME/.terminfo
+export LESSHISTFILE="${XDG_CONFIG_HOME}less/history"
+export LESSKEY="${XDG_CONFIG_HOME}less/keys"
+export ICEAUTHORITY="${XDG_CACHE_HOME}ICEauthority"
+
+### $PATH {{{
 TO_PATH(){
     if [[ -z $(printf $PATH | grep $1) ]]; then
         export PATH="$1:$PATH"
@@ -16,14 +24,17 @@ TO_PATH(){
 TO_PATH ${APP_DIR:-$HOME/Applications}
 TO_PATH ${BIN_DIR:-$HOME/.local/bin}
 TO_PATH $HOME/.local/script
+TO_PATH $HOME/.local/go/bin
+
+# }}}
 
 # added by Nix installer
 if [ -e /home/atalariq/.nix-profile/etc/profile.d/nix.sh ]; then
-    source /home/atalariq/.nix-profile/etc/profile.d/nix.sh; 
-fi 
+    source /home/atalariq/.nix-profile/etc/profile.d/nix.sh;
+fi
 if [ -e /home/atalariq/.nix-profile/etc/profile.d/nix-daemon.sh ]; then
-    source /home/atalariq/.nix-profile/etc/profile.d/nix-daemon.sh; 
-fi 
+    source /home/atalariq/.nix-profile/etc/profile.d/nix-daemon.sh;
+fi
 
 export LF_ICONS="\
 tw= :\

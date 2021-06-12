@@ -1,0 +1,10 @@
+
+:root {{
+  --bg: {background};
+  --fg: {foreground};
+  --secondaryFg: {color15};
+  --containerBg: {color0};
+  --searchBg: var(--containerBg);
+  --scrollbarColor: {color8};
+  --fontFamily: monospace;
+}}

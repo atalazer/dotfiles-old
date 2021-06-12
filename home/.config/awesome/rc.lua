@@ -74,12 +74,12 @@ local exit_screen_theme = exit_screen_themes[2]
 -- ===================================================================
 -- User variables and preferences
 
-local wallpaper = "/home/atalariq/.wallpaper/tokyonight-minimal.jpg"
+local wallpaper = os.getenv("HOME") .. "/.wallpaper/tokyonight-minimal.jpg"
 
 user = {
     font = "JetBrainsMono Nerd Font",
     fsize = "11",
-    icon = "/home/atalariq/.icons/Papirus-Dark",
+    icon = os.getenv("HOME") .. "/.icons/Papirus-Dark",
 
     -- >> Default applications <<
     -- Check apps.lua for more
@@ -94,14 +94,12 @@ user = {
     -- >> Web Search <<
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
     -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
-    
+
     -- Autostart apps
-    autostart_debug = true,
+    autostart_debug = false,
     autostart = {
-        "picom --experimental-backends --config ~/.config/picom/picom.conf",
+        "picom --experimental-backends --config ~/.config/picom/picom-blur.conf",
         "fusuma -c ~/.config/fusuma/config.yml",
-        -- "wal --backend colorthief -n -s -t -i " .. wallpaper ,
-        "wal --theme ~/.config/wal/colorschemes/dark/tokyonight.json",
         "xrdb -load ~/.Xresources",
         [[
         xautolock -time 5 -locker "$(awesome-client 'lock_screen_show()' && systemctl suspend)" \
@@ -109,7 +107,7 @@ user = {
             -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
         ]],
     },
-    
+
     -- Enable rounded
     round_enabled = true,
 

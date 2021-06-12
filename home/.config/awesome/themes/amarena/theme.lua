@@ -21,6 +21,8 @@ theme.font          = user.font .." ".. user.fsize or "monospace 11"
 -- This is how to get other .Xresources values (beyond colors 0-15, or custom variables)
 -- local cool_color = awesome.xrdb_get_value("", "color16")
 
+local x = require("themes.amarena.colors")
+
 theme.bg_dark       = x.background
 theme.bg_normal     = x.color0
 theme.bg_focus      = x.color8

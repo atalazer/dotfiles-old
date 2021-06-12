@@ -1,12 +1,14 @@
-:root {
-  --bg: #999;
-  --fg: #ffffff;
-  --secondaryFg: #b3b3b3;
-  --containerBg: #272727;
-  --searchBg: var(--containerBg);
-  --scrollbarColor: #3f3f3f;
-  --fontFamily: "Roboto Mono", monospace;
-}
+/* :root { */
+/*   --fg: #1A1B26; */
+/*   --bg: #C0CAF5; */
+/*   --secondaryFg: #1B1C28; */
+/*   --containerBg: #D0DBE4; */
+/*   --searchBg: var(--containerBg); */
+/*   --scrollbarColor: #1C1D30; */
+/*   --fontFamily: "Roboto Mono", monospace; */
+/* } */
+
+@import url("../../.cache/wal/startpage.css");
 
 body {
     background-color: var(--bg);

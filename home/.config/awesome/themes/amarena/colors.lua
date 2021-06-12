@@ -1,0 +1,1 @@
+/home/atalariq/.cache/wal/colors.lua

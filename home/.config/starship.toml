@@ -1,5 +1,6 @@
 format = "$all"
-add_newline = false
+scan_timeout = 100
+command_timeout = 1000
 
 [directory]
 truncation_length = 8
@@ -8,3 +9,9 @@ truncation_length = 8
 ahead = "⇡${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
+
+[shell]
+fish_indicator = ""
+zsh_indicator = "_"
+disabled = false
+
