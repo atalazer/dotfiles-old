@@ -41,8 +41,8 @@ autocmd BufEnter term://* startinsert
 " enable/disable wordwrap
 augroup Goyo
     au!
-    au User GoyoEnter setlocal linebreak laststatus=0 scrolloff=999 nocursorline
-    au User GoyoLeave setlocal nolinebreak laststatus=2 scrolloff=3 cursorline
+    au User GoyoEnter setlocal nolist laststatus=0 scrolloff=999 nocursorline
+    au User GoyoLeave setlocal list laststatus=2 scrolloff=3 cursorline
 augroup END
 
 " disable nvim-compe inside telescope
