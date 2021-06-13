@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DMENU="rofi -dmenu -p Screenshot -lines 10 -width 30"
+DMENU="rofi -dmenu -i -p Screenshot -lines 10 -width 30"
 _XDG_=$(xdg-user-dir PICTURES)/Screenshots
 SCREENSHOT_DIR=${_XDG_:-$HOME/Pictures/Screenshots}
 SAVED_NAME=$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S)-maim.png
@@ -157,7 +157,7 @@ _noparse(){
             check && \
             maim -m 1 $TMP_IMG && \
             mv $TMP_IMG $SAVED_NAME && \
-            notify "Screenshot Saved" 
+            notify "Screenshot Saved"
         ;;
         active)
             check && \
@@ -169,14 +169,14 @@ _noparse(){
             check && \
             maim -u -m 1 -s $TMP_IMG && \
             mv $TMP_IMG $SAVED_NAME && \
-            notify "Screenshot Selected Has been Saved" 
+            notify "Screenshot Selected Has been Saved"
         ;;
         delay)
             check && \
             notify-send "Shot" "Shot After ${sleep} Sec" && \
             maim -m 1 -d $sleep $TMP_IMG && \
             mv $TMP_IMG $SAVED_NAME && \
-            notify "Screenshot Saved" 
+            notify "Screenshot Saved"
         ;;
     esac
 }
@@ -197,7 +197,7 @@ _parse(){
             notify-send "Shot" "Parsing Image ..." && \
             parse && \
             mv $TMP_IMG $SAVED_NAME && \
-            notify "Screenshot Saved" 
+            notify "Screenshot Saved"
         ;;
         active)
             check && \
@@ -213,7 +213,7 @@ _parse(){
             notify-send "Shot" "Parsing Image ..." && \
             parse && \
             mv $TMP_IMG $SAVED_NAME && \
-            notify "Screenshot Selected Has been Saved" 
+            notify "Screenshot Selected Has been Saved"
         ;;
         delay)
             check && \
@@ -222,7 +222,7 @@ _parse(){
             notify-send "Shot" "Parsing Image ..." && \
             parse && \
             mv $TMP_IMG $SAVED_NAME && \
-            notify "Screenshot Saved" 
+            notify "Screenshot Saved"
         ;;
     esac
 }

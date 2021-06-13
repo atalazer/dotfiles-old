@@ -50,7 +50,7 @@ fi
 # Editor Alias
 alias {e,vi}="$editor"
 alias se="sudoedit"
-alias el="nvim --cmd 'source ~/.cache/nvim/sessions/last.vim'"
+alias el="$editor -S ~/.cache/nvim/sessions/last.vim"
 alias {envim,ev}="$editor ~/.config/nvim/init.lua"
 alias {zshrc,ez}="$editor ~/.zshrc"
 alias {xrc,ex}="$editor ~/.Xresources"

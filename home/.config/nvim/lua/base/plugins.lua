@@ -38,7 +38,6 @@ if ok then
 
         -- ======= User Interface =======
         -- Colorscheme
-        use({ "marko-cerovac/material.nvim", branch = "pure-lua", opt = false })
         use({ "nekonako/xresources-nvim", opt = false })
 
         -- vim-devicons written in lua
@@ -71,7 +70,7 @@ if ok then
         -- Align
         use({ "junegunn/vim-easy-align" })
 
-        -- vim easy motion
+        -- Vim easy motion
         use({
             "phaazon/hop.nvim",
             opt = true,
@@ -81,10 +80,10 @@ if ok then
             end,
         })
 
-        -- sandwiched textobjects.
+        -- Sandwiched textobjects.
         use({ "machakann/vim-sandwich", opt = false })
 
-        -- highlight, navigate, and operate on sets of matching text
+        -- Highlight, Navigate, and Operate on sets of matching text
         use({
             "andymass/vim-matchup",
             opt = false,
@@ -132,21 +131,25 @@ if ok then
             "norcalli/nvim-colorizer.lua",
             opt = true,
             ft = {
-                "lua",
-                "css",
-                "scss",
-                "html",
-                "javascript",
-                "typescript",
+                "lua", "css", "scss", "html",
+                "javascript", "typescript",
             },
             cmd = "ColorizerToggle",
             config = function()
                 require("colorizer").setup({
                     ["*"] = {
-                        css = true,
-                        css_fn = true,
+                        names    = false,
+                        RGB      = true,
+                        RRGGBB   = true,
+                        RRGGBBAA = true,
+                        rgb_fn   = true,
+                        hsl_fn   = true,
+                        css      = true,
+                        css_fn   = true,
                         mode = "background",
                     },
+                    css = { names = true },
+                    html = { names = true }
                 })
             end,
         })
@@ -156,12 +159,29 @@ if ok then
         use({
             "nvim-treesitter/nvim-treesitter",
             requires = {
+                { "nvim-treesitter/nvim-treesitter-textobjects" },
+                { "nvim-treesitter/playground" },
+                { "nvim-treesitter/nvim-treesitter-refactor" },
                 { "windwp/nvim-ts-autotag" },
                 { "JoosepAlviste/nvim-ts-context-commentstring" },
             },
             config = function()
                 require("plugins.treesitter")
             end,
+        })
+
+        -- LaTeX Support
+        use({
+            "lervag/vimtex",
+            opt = true,
+            ft = { "tex", "bib", "markdown" },
+            config = function()
+                vim.g.vimtex_enabled = 1
+                vim.g.vimtex_compiler_method = "tectonic"
+                vim.g.vimtex_compiler_tectonic = {
+                    options = {}
+                }
+            end
         })
 
         -- Markdown Support
@@ -229,7 +249,7 @@ if ok then
             "steelsojka/headwind.nvim",
             opt = true,
             config = function()
-                require "headwind".setup {
+                require("headwind").setup {
                     remove_duplicates = true,
                     run_on_save = true,
                     prepend_custom_classes = false,
@@ -349,7 +369,7 @@ if ok then
             "junegunn/goyo.vim",
             opt = true,
             cmd = "Goyo",
-            requires = {"junegunn/limelight.vim"},
+            requires = {{"junegunn/limelight.vim", opt = true, cmd = "Limelight" }},
             config = function()
                 vim.g.goyo_width = "120"
                 vim.g.goyo_height = "90%"
@@ -374,28 +394,6 @@ if ok then
             "tweekmonster/startuptime.vim",
             opt = true,
             cmd = "StartupTime",
-        })
-
-        -- Games
-        -- make you better at Vim Movements
-        use({
-            "ThePrimeagen/vim-be-good",
-            opt = true,
-            cmd = "VimBeGood",
-        })
-
-        -- Actions per minute
-        use({
-            "ThePrimeagen/vim-apm",
-            opt = true,
-            cmd = { "VimApm", "VimApmShutdown" },
-        })
-
-        -- Tetris
-        use({
-            "alec-gibson/nvim-tetris",
-            opt = true,
-            cmd = "Tetris",
         })
     end
     packer.startup(plugins)

@@ -15,17 +15,17 @@ local keys = gears.table.join(
     awful.key({ superkey }, "a", function()
         awful.spawn.with_shell(apps.rofi.center)
     end, { description = "Action Center", group =  "Apps: Prompt" } ),
-    
+
     -- Rofi App Center
     awful.key({ superkey }, "r", function()
         awful.spawn.with_shell(apps.rofi.app_menu)
     end, { description = "App Center", group =  "Apps: Prompt" } ),
-    
+
     -- Rofi Global Menu
     awful.key({ superkey }, "g", function()
         awful.spawn.with_shell(apps.rofi.global_menu)
     end, { description = "Global Menu", group =  "Apps: Prompt" } ),
-    
+
     -- Clipmenu
     awful.key({ superkey }, "Insert", function()
         awful.spawn(apps.clipboard)
@@ -60,7 +60,7 @@ local keys = gears.table.join(
     awful.key({ superkey }, "c", function()
         awful.spawn.with_shell(apps.rofi.calc)
     end, { description = "Calculator", group =  "Apps: Prompt" } ),
-    
+
     -- Rofi Todo
     awful.key({ superkey }, "/", function()
         awful.spawn.with_shell(apps.rofi.todo)
@@ -70,6 +70,11 @@ local keys = gears.table.join(
     awful.key({ superkey }, "t", function()
         awful.spawn.with_shell(apps.rofi.translate)
     end, { description = "Translate", group = "Apps: Prompt" }),
+
+    -- Quick Translate
+    awful.key({ superkey, shiftkey }, "t", function()
+        awful.spawn.with_shell("rofi_translate -c")
+    end, { description = "Translate(Clipboard)", group = "Apps: Prompt" }),
 
     -- Youtube Prompt ( ytfzf)
     awful.key({ superkey }, "y",
@@ -86,8 +91,8 @@ local keys = gears.table.join(
     { description = "Browser", group = "Apps: GUI" }),
 
     -- File Manager
-    awful.key({ superkey },"f", function() 
-        awful.spawn("thunar") 
+    awful.key({ superkey },"f", function()
+        awful.spawn("thunar")
     end, { description = "File Manager", group = "Apps: GUI" }),
 
     -- }}}

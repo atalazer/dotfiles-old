@@ -42,6 +42,7 @@ local servers = {
         filetypes = { "javascript", "typescript", "typescriptreact" },
         root_dir = vim.loop.cwd,
     },
+    jsonls = {},
     yamlls = {
         settings = {
             yaml = {
@@ -60,7 +61,29 @@ local servers = {
             },
         },
     },
-    jsonls = {},
+    texlab = {
+        cmd = { "texlab" },
+        settings = {
+            texlab = {
+                auxDirectory = ".",
+                bibtexFormatter = "texlab",
+                build = {
+                    args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                    executable = "latexmk",
+                    isContinuous = false
+                },
+                chktex = {
+                    onEdit = false,
+                    onOpenAndSave = true
+                },
+                diagnosticsDelay = 300,
+                formatterLineLength = 120,
+                forwardSearch = {
+                    args = {}
+                }
+            }
+        }
+    }
 }
 
 for name, opts in pairs(servers) do
