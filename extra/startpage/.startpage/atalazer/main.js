@@ -3,8 +3,8 @@ const TITLE = document.querySelector(".greet");
 const USER = "Atalariq";
 
 // Search settings
-// const searchUrl = "https://google.com/search?q=";           // Google
-const searchUrl = "https://duckduckgo.com/?q=";           // Duckduckgo
+const searchUrl = "https://google.com/search?q=";           // Google
+// const searchUrl = "https://duckduckgo.com/?q=";           // Duckduckgo
 
 // Weather settings
 const myWeatherApiKey = "8f867e7b117a4eb09af8a54b0be530c2";

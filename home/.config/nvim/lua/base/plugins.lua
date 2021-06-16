@@ -170,17 +170,28 @@ if ok then
             end,
         })
 
-        -- LaTeX Support
+        -- LaTeX Support with Texlab LSP
         use({
-            "lervag/vimtex",
+            "jakewvincent/texmagic.nvim",
             opt = true,
-            ft = { "tex", "bib", "markdown" },
+            ft = { "tex", "bib" },
             config = function()
-                vim.g.vimtex_enabled = 1
-                vim.g.vimtex_compiler_method = "tectonic"
-                vim.g.vimtex_compiler_tectonic = {
-                    options = {}
-                }
+                vim.g["tex_flavor"] = "latex"
+                require("texmagic").setup({
+                    engines = {
+                        pdflatex = {
+                            executable = "latexmk",
+                            args = {
+                                "-pdflatex",
+                                "-interaction=nonstopmode",
+                                "-synctex=1",
+                                "-pv",
+                                "%f"
+                            },
+                            isContinuous = false
+                        },
+                    }
+                })
             end
         })
 
@@ -190,11 +201,21 @@ if ok then
             opt = true,
             ft = { "markdown" },
             config = function()
-                vim.g.vim_markdown_frontmatter = 1
+                vim.g.vim_markdown_auto_insert_bullets = 0
+                vim.g.vim_markdown_conceal = 0
+                vim.g.vim_markdown_edit_url_in = "tab"
                 vim.g.vim_markdown_folding_disabled = 1
+                vim.g.vim_markdown_folding_level = 6
+                vim.g.vim_markdown_follow_anchor = 1
+                vim.g.vim_markdown_frontmatter = 1
+                vim.g.vim_markdown_json_frontmatter = 1
                 vim.g.vim_markdown_math = 1
-                vim.g.vim_markdown_conceal = 2
+                vim.g.vim_markdown_new_list_item_indent = 2
+                vim.g.vim_markdown_no_extensions_in_markdown = 1
                 vim.g.vim_markdown_strikethrough = 1
+                vim.g.vim_markdown_toc_autofit = 1
+                vim.g.vim_markdown_toml_frontmatter = 1
+                vim.g.vim_markdown_fenced_languages = { "csharp = cs", "c++=cpp", "viml=vim", "bash=sh", "ini=dosini" }
             end,
         })
 
@@ -217,8 +238,14 @@ if ok then
         -- Markdown Previewer
         use({
             "iamcco/markdown-preview.nvim",
-            run = "cd app && yarn install",
+            run = "cd app && npm install",
             ft = { "markdown" },
+            config = function()
+                vim.g.mkdp_auto_start = 0
+                vim.g.mkdp_auto_close = 0
+                vim.g.mkdp_refresh_slow = 0
+                vim.g.mkdp_browser = "firefox"
+            end
         })
 
         use({ "editorconfig/editorconfig-vim", opt = false })
@@ -229,7 +256,6 @@ if ok then
             opt = false,
             requires = {
                 { "onsails/lspkind-nvim" },
-                { "folke/lsp-colors.nvim" },
                 { "glepnir/lspsaga.nvim" },
                 { "ray-x/lsp_signature.nvim" },
                 { "folke/lsp-trouble.nvim" },
@@ -248,6 +274,7 @@ if ok then
         use({
             "steelsojka/headwind.nvim",
             opt = true,
+            ft = { "html" },
             config = function()
                 require("headwind").setup {
                     remove_duplicates = true,
@@ -265,11 +292,9 @@ if ok then
             end,
         })
 
+        use({ "rafamadriz/friendly-snippets" })
         use({
             "hrsh7th/vim-vsnip",
-            requires = {
-                { "rafamadriz/friendly-snippets" },
-            },
             config = function()
                 require("plugins.vsnip")
             end,
@@ -328,6 +353,17 @@ if ok then
             end,
         })
 
+        use({
+            "kdheepak/lazygit.nvim",
+            config = function()
+                vim.g.lazygit_floating_window_winblend = 0
+                vim.g.lazygit_floating_window_scaling_factor = 0.80
+                vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
+                vim.g.lazygit_floating_window_use_plenary = 0
+                vim.g.lazygit_use_neovim_remote = 0
+            end
+        })
+
         -- ======= Misc =======
         -- Smooth Scrolling
         use({
@@ -377,15 +413,6 @@ if ok then
                     autocmd! User GoyoEnter Limelight
                     autocmd! User GoyoLeave Limelight!
                 ]])
-            end,
-        })
-
-        -- Better Terminal for Neovim
-        use({
-            "numtostr/FTerm.nvim",
-            opt = false,
-            config = function()
-                require("plugins.fterm")
             end,
         })
 

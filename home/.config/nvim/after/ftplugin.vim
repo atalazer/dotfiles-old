@@ -24,7 +24,8 @@ augroup Indents
 augroup END
 
 augroup Markdown
-    au FileType markdown,text setlocal conceallevel=0 spell spelllang=id
+    au FileType markdown,text setlocal nospell
+    au BufEnter */posts/**.md setlocal spell spelllang=id
     au BufEnter */posts/**.en.md setlocal spell spelllang=en
 augroup END
 

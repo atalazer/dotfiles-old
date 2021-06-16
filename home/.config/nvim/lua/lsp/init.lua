@@ -1,5 +1,4 @@
 vim.cmd("packadd nvim-lspconfig")
-vim.cmd("packadd lsp-colors.nvim")
 vim.cmd("packadd symbols-outline.nvim")
 
 local nvim_lsp = require("lspconfig")
@@ -7,13 +6,6 @@ local nvim_lsp = require("lspconfig")
 pcall(require, "lsp.diagnostic")
 pcall(require, "lsp.popup")
 pcall(require, "lsp.trouble")
-
-require("lsp-colors").setup({
-    Error = "#db4b4b",
-    Warning = "#e0af68",
-    Information = "#0db9d7",
-    Hint = "#10B981",
-})
 
 require("symbols-outline").setup({
     highlight_hovered_item = true,
@@ -27,24 +19,23 @@ local capabilities = function()
     return capabilities
 end
 
-pcall(require, "lsp.server.lua")
-pcall(require, "lsp.server.python")
-pcall(require, "lsp.server.tailwindcss")
-
 local servers = {
+    sumneko_lua = require("lsp.server.lua").config,
+    jedi_language_server = require("lsp.server.python").config,
+    texlab = require("lsp.server.tex").config,
+    tsserver = require("lsp.server.javascript").config,
+    jsonls = require("lsp.server.json").config,
+    html = { cmd = { "vscode-html-language-server", "--stdio" }},
+    cssls = { cmd = { "vscode-css-language-server", "--stdio" }},
+    tailwindcss = {
+        filetypes = { "css", "html", "sass", "scss" },
+    },
     bashls = {},
     vimls = {},
     clangd = {},
-    html = { root_dir = vim.loop.cwd },
-    cssls = { root_dir = vim.loop.cwd },
-    rome = {
-        cmd = { "rome", "lsp" },
-        filetypes = { "javascript", "typescript", "typescriptreact" },
-        root_dir = vim.loop.cwd,
-    },
-    jsonls = {},
     yamlls = {
         settings = {
+            redhat = { telemetry = { enabled = false } },
             yaml = {
                 format = {
                     enable = true,
@@ -54,36 +45,9 @@ local servers = {
                 editor = {
                     tabSize = 2,
                 },
-                schemas = {
-                    ["https://json.schemastore.org/github-workflow.json"] = "ci.yml",
-                    ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose.yml",
-                },
             },
         },
     },
-    texlab = {
-        cmd = { "texlab" },
-        settings = {
-            texlab = {
-                auxDirectory = ".",
-                bibtexFormatter = "texlab",
-                build = {
-                    args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-                    executable = "latexmk",
-                    isContinuous = false
-                },
-                chktex = {
-                    onEdit = false,
-                    onOpenAndSave = true
-                },
-                diagnosticsDelay = 300,
-                formatterLineLength = 120,
-                forwardSearch = {
-                    args = {}
-                }
-            }
-        }
-    }
 }
 
 for name, opts in pairs(servers) do

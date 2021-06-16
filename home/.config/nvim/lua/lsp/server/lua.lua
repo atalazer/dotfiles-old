@@ -1,7 +1,5 @@
--- require("lsp.custom.emmetls")
--- local sumneko_cmd = {sumneko_root .. "/bin/Linux/lua-language-server", "-E", sumneko_root .. "/main.lua"}
 local sumneko_cmd = "lua-language-server"
-
+local M = {}
 local library = {}
 
 local add = function(lib)
@@ -12,24 +10,14 @@ local add = function(lib)
 end
 
 -- Neovim
--- base VIMRUNTIME library
 add("$VIMRUNTIME")
--- user config
 add("~/.config/nvim")
--- all neovim plugins
-add("~/.local/share/nvim/site/pack/packer/start/*")
-add("~/.local/share/nvim/site/pack/packer/opt/*")
 
 -- AwesomeWM
--- base library
 add("/usr/share/awesome/lib")
--- user config
-add("~/.config/awesome")
 
-require("lspconfig").sumneko_lua.setup({
-    cmd = {
-        sumneko_cmd,
-    },
+M.config = {
+    cmd = { sumneko_cmd },
     on_attach = Util.lsp_on_attach,
     on_init = Util.lsp_on_init,
     on_new_config = function(config, root)
@@ -72,4 +60,6 @@ require("lspconfig").sumneko_lua.setup({
             },
         },
     },
-})
+}
+
+return M

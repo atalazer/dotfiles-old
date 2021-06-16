@@ -1,4 +1,6 @@
-require("lspconfig").jedi_language_server.setup({
+local M = {}
+
+M.config = {
     root_dir = vim.loop.cwd,
     on_attach = Util.lsp_on_attach,
     on_init = Util.lsp_on_init,
@@ -12,7 +14,7 @@ require("lspconfig").jedi_language_server.setup({
                 completion = { disableSnippets = false },
                 diagnostics = { enable = true, didOpen = true, didSave = true, didChange = true },
             },
-            workspace = { extraPaths = {} },
         },
     },
-})
+}
+return M

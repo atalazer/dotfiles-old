@@ -2,6 +2,7 @@ local wk = require("which-key")
 
 wk.register({
     [","] = "Curstr Toggle",
+    lg = "Lazygit",
     g = {
         name = "+Misc",
         g = "Glow",
@@ -27,11 +28,6 @@ wk.register({
         l = "Live Grep",
         k = "Keybindings",
         c = "Colorscheme"
-    },
-    t = {
-        name = "+Terminal",
-        f = "File Manager",
-        g = "Lazygit",
     },
     l = {
         name = "+LSP",

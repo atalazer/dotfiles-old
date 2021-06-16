@@ -1,17 +1,88 @@
+local Job = require("plenary.job")
 local fn = vim.fn
 
 _G.Util = {}
 
-Util.borders = {
-    { "╭", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╮", "FloatBorder" },
-    { "│", "FloatBorder" },
-    { "╯", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╰", "FloatBorder" },
-    { "│", "FloatBorder" },
-}
+local to_rgb = function(hex)
+    local red, green, blue, alpha
+
+    if #hex == 9 then
+        _, red, green, blue, alpha = hex:match("(.)(..)(..)(..)(..)")
+        return string.format(
+            "rgba(%s, %s, %s, %s)",
+            tonumber("0x" .. red),
+            tonumber("0x" .. green),
+            tonumber("0x" .. blue),
+            tonumber("0x" .. alpha)
+        )
+    end
+
+    _, red, green, blue = hex:match("(.)(..)(..)(..)")
+    return string.format("rgb(%s, %s, %s)", tonumber("0x" .. red), tonumber("0x" .. green), tonumber("0x" .. blue))
+end
+
+local to_hex = function(rgb)
+    local red, green, blue, alpha
+    if #rgb >= 16 then
+        red, green, blue, alpha = rgb:match("%((%d+),%s(%d+),%s(%d+),%s(%d+)")
+        return string.format("#%x%x%x%x", red, green, blue, alpha)
+    end
+
+    red, green, blue = rgb:match("%((%d+),%s(%d+),%s(%d+)")
+    return string.format("#%x%x%x", red, green, blue)
+end
+
+Util.get_word = function()
+    local first_line, last_line = fn.getpos("'<")[2], fn.getpos("'>")[2]
+    local first_col, last_col = fn.getpos("'<")[3], fn.getpos("'>")[3]
+    local current_word = fn.getline(first_line, last_line)[1]:sub(first_col, last_col)
+
+    return current_word
+end
+
+-- convert colours
+Util.convert_colour = function(mode)
+    local result
+
+    if mode == "rgb" then
+        result = to_rgb(Util.get_word())
+    elseif mode == "hex" then
+        result = to_hex(Util.get_word())
+    else
+        return print("Not Supported!")
+    end
+
+    vim.cmd(string.format("s/%s/%s", Util.get_word(), result))
+end
+
+vim.cmd([[
+  command! -nargs=? -range=% ToRgb call v:lua.Util.convert_color('rgb')
+  command! -nargs=? -range=% ToHex call v:lua.Util.convert_color('hex')
+]])
+
+-- translate selected word, useful for when I do jp assignments
+Util.translate = function(lang)
+    local word = Util.get_word()
+    local job = Job:new({
+        command = "trans",
+        args = { "-b", ":" .. (lang or "en"), word },
+    })
+
+    local ok, result = pcall(function()
+        return vim.trim(job:sync()[1])
+    end)
+    if ok then
+        return print(result)
+    end
+    print("Failed to translate.")
+end
+vim.cmd([[command! -range -nargs=1 Translate call v:lua.Util.translate(<f-args>)]])
+
+Util.is_cfg_present = function(cfg_name)
+    -- this returns 1 if it's not present and 0 if it's present
+    -- we need to compare it with 1 because both 0 and 1 is `true` in lua
+    return fn.empty(fn.glob(vim.loop.cwd() .. cfg_name)) ~= 1
+end
 
 Util.check_backspace = function()
     local curr_col = fn.col(".")
@@ -51,8 +122,6 @@ Util.trigger_completion = function()
         end
     end
 
-    local prev_col, next_col = vim.fn.col(".") - 1, vim.fn.col(".")
-
     return Util.t("<CR>")
 end
 
@@ -60,14 +129,14 @@ Util.lsp_on_attach = function()
     print("LSP Attached!")
     require("lsp.keys").mappings()
 
-    require("lsp_signature").on_attach {
+    require("lsp_signature").on_attach({
         bind = true,
         doc_lines = 2,
         hint_enable = false,
         handler_opts = {
-            border = Util.borders
-        }
-    }
+            border = Util.borders,
+        },
+    })
 end
 
 Util.lsp_on_init = function()
@@ -77,5 +146,16 @@ Util.lsp_on_init = function()
         client.config.flags.allow_incremental_sync = true
     end
 end
+
+Util.borders = {
+    { "╭", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╮", "FloatBorder" },
+    { "│", "FloatBorder" },
+    { "╯", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╰", "FloatBorder" },
+    { "│", "FloatBorder" },
+}
 
 return Util

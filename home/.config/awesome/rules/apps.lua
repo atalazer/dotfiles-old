@@ -54,6 +54,15 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- Image viewers {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "Okular", "Zathura", "Evince" },
+        },
+        properties = { floating = true },
+    })
+    -- }}}
+
     -- File managers {{{
     ruled.client.append_rule({
         rule_any = {
@@ -70,7 +79,7 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             width = screen_width * 0.8,
             height = screen_height * 0.8,
-            placement = awful.placement.centered,
+            placement = centered_client_placement,
         },
     })
     -- }}}
@@ -118,16 +127,19 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             ontop = true,
             sticky = true,
+            placement = centered_client_placement,
         },
     })
     -- }}}
 
     -- Password Manager {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = { "KeePassXC" },
-        },
-        properties = {  floating = true, width = screen_width * 0.8, height = screen_height * 0.8,
+        rule_any = { class = { "KeePassXC" } },
+        properties = {
+            floating = true,
+            width = screen_width * 0.8,
+            height = screen_height * 0.8,
+            placement = centered_client_placement,
         },
     })
     -- }}}

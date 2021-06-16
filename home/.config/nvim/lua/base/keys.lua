@@ -4,7 +4,6 @@ local map = _Key.map
 local nmap = _Key.nmap
 local nnoremap = _Key.nnoremap
 local inoremap = _Key.inoremap
-local vmap = _Key.vmap
 local vnoremap = _Key.vnoremap
 local xmap = _Key.xmap
 local cnoremap = _Key.cnoremap
@@ -136,13 +135,16 @@ nnoremap({ "<leader>ca", ":ColorizerAttachToBuffer<CR>" })
 nnoremap({ "<leader>cr", ":ColorizerReloadAllBuffers<CR>" })
 
 -- NvimTree
-nnoremap({ "`", ":NvimTreeToggle<CR>" })
+nnoremap({ "`", ":NvimTreeToggle<CR>", { silent = true } })
+
+-- Lazygit.nvim
+nnoremap({ "<leader>lg", "<Cmd>LazyGit<CR>", { silent = true } })
 
 -- Glow.nvim
-nmap({ "<leader>gg", ":Glow<CR>" })
+nnoremap({ "<leader>gg", ":Glow<CR>", { silent = true } })
 
 -- Glow.nvim
-nmap({ "<leader>gy", ":Goyo<CR>" })
+nnoremap({ "<leader>gy", ":Goyo<CR>", { silent = true } })
 
 -- Vim Easy Align
 xmap({ "ga", "<Plug>(EasyAlign)", { silent = true } })
