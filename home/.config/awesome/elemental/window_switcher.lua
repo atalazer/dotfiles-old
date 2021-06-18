@@ -2,7 +2,6 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local helpers = require("helpers")
-local keys = require("keys")
 local gears = require("gears")
 local capi = { screen = screen, client = client }
 local icons = require("icons")

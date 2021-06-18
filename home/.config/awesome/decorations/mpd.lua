@@ -3,7 +3,6 @@ local awful = require("awful")
 local wibox = require("wibox")
 local helpers = require("helpers")
 local notifications = require("notifications")
-local keys = require("keys")
 
 local create_little_circle = function(color)
     return wibox.widget {
@@ -221,7 +220,7 @@ awesome.connect_signal("evil::mpd_options", function(loop, random)
     else
         random_textbox.markup = helpers.colorize_text(random_symbol, disabled_color)
     end
-end) 
+end)
 
 local notifications_color = x.color2
 local notifications_symbol = ""

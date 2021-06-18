@@ -3,7 +3,6 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local helpers = require("helpers")
-local keys = require("keys")
 local decorations = require("decorations")
 
 -- This decoration theme will round clients according to your theme's

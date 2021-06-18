@@ -59,7 +59,7 @@ if ok then
         use({
             "windwp/windline.nvim",
             config = function()
-                require("wlsample.bubble")
+                require("wlsample.evil_line")
             end
         })
 

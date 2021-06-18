@@ -2,7 +2,6 @@ local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local apps = require("apps")
 
 local helpers = require("helpers")
 
@@ -284,10 +283,10 @@ volume:buttons(gears.table.join(
     -- Right click - Run or raise pavucontrol
     awful.button({ }, 3, apps.volume),
     -- Scroll - Increase / Decrease volume
-    awful.button({ }, 4, function () 
+    awful.button({ }, 4, function ()
         helpers.volume_control(2)
     end),
-    awful.button({ }, 5, function () 
+    awful.button({ }, 5, function ()
         helpers.volume_control(-2)
     end)
 ))

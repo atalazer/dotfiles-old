@@ -12,32 +12,23 @@
 
 
 local themes = {
-    "manta",        -- 1 --
-    "lovelace",     -- 2 --
-    "skyfall",      -- 3 --
-    "ephemeral",    -- 4 --
-    "amarena",      -- 5 --
+    "atalazer",      -- 1 --
 }
 -- Change this number to use a different theme
-local theme = themes[5]
+local theme = themes[1]
 -- ===================================================================
 -- Affects the window appearance: titlebar, titlebar buttons...
 local decoration_themes = {
-    "lovelace",       -- 1 -- Standard titlebar with 3 buttons (close, max, min)
-    "skyfall",        -- 2 -- No buttons, only title
-    "ephemeral",      -- 3 -- Text-generated titlebar buttons
+    "ephemeral",      -- 1 -- Text-generated titlebar buttons
 }
-local decoration_theme = decoration_themes[3]
+local decoration_theme = decoration_themes[1]
 -- ===================================================================
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
-    "manta",        -- 1 -- Taglist, client counter, date, time, layout
-    "lovelace",     -- 2 -- Start button, taglist, layout
-    "skyfall",      -- 3 -- Weather, taglist, window buttons, pop-up tray
-    "ephemeral",    -- 4 -- Taglist, start button, tasklist, and more buttons
-    "amarena",      -- 5 -- Minimal taglist and dock with autohide
+    "ephemeral",    -- 1 -- Taglist, start button, tasklist, and more buttons
+    "amarena",      -- 2 -- Minimal taglist and dock with autohide
 }
-local bar_theme = bar_themes[5]
+local bar_theme = bar_themes[2]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
@@ -49,28 +40,24 @@ local icon_theme = icon_themes[2]
 -- ===================================================================
 local notification_themes = {
     "lovelace",       -- 1 -- Plain with standard image icons
-    "ephemeral",      -- 2 -- Outlined text icons and a rainbow stripe
     "amarena",        -- 3 -- Filled text icons on the right, text on the left
 }
-local notification_theme = notification_themes[3]
+local notification_theme = notification_themes[1]
 -- ===================================================================
 local sidebar_themes = {
-    "lovelace",       -- 1 -- Uses image icons
-    "amarena",        -- 2 -- Text-only (consumes less RAM)
+    "amarena",        -- 1 -- Text-only (consumes less RAM)
 }
-local sidebar_theme = sidebar_themes[2]
+local sidebar_theme = sidebar_themes[1]
 -- ===================================================================
 local dashboard_themes = {
-    "skyfall",        -- 1 --
-    "amarena",        -- 2 -- Displays coronavirus stats
+    "amarena",        -- 1 -- Displays coronavirus stats
 }
-local dashboard_theme = dashboard_themes[2]
+local dashboard_theme = dashboard_themes[1]
 -- ===================================================================
 local exit_screen_themes = {
-    "lovelace",      -- 1 -- Uses image icons
-    "ephemeral",     -- 2 -- Uses text-generated icons (consumes less RAM)
+    "ephemeral",     -- 1 -- Uses text-generated icons (consumes less RAM)
 }
-local exit_screen_theme = exit_screen_themes[2]
+local exit_screen_theme = exit_screen_themes[1]
 -- ===================================================================
 -- User variables and preferences
 
@@ -171,10 +158,12 @@ pcall(function() jit.on() end)
 -- ===================================================================
 -- Theme handling library
 local beautiful = require("beautiful")
-local xrdb = beautiful.xresources.get_current_theme()
+
 -- Make dpi function global
 dpi = beautiful.xresources.apply_dpi
+
 -- Make xresources colors global
+local xrdb = require("xcolors") or beautiful.xresources.get_current_theme()
 x = {
     background = xrdb.background,
     foreground = xrdb.foreground,
@@ -219,16 +208,19 @@ naughty.connect_signal("request::display_error", function(message, startup)
         message = message
     }
 end)
-require("autostart")
+require("configs.autostart")
 
 -- Features
 -- ===================================================================
+-- Apps
+apps = require("configs.apps")
+
+-- Keybinds and mousebinds
+keys = require("configs.keys")
+
 -- Initialize icons array and load icon theme
 local icons = require("icons")
 icons.init(icon_theme)
-
--- Keybinds and mousebinds
--- local keys = require("keys")
 
 -- Load notification daemons and notification theme
 local notifications = require("notifications")
@@ -398,11 +390,11 @@ end)
 -- Rules
 -- ===================================================================
 -- Rules to apply to new clients (through the "manage" signal).
-require("rules")
+require("configs.rules")
 
 -- Signals
 -- ===================================================================
-require("signals")
+require("configs.signals")
 
 -- Show the dashboard on login
 -- Add `touch /tmp/awesomewm-show-dashboard` to your ~/.xprofile in order to make the dashboard appear on login

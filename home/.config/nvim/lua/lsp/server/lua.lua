@@ -44,7 +44,10 @@ M.config = {
             telemetry = { enable = false },
             diagnostics = {
                 enable = true,
-                disable = { "trailing-space", "lowercase-global" },
+                disable = {
+                    "trailing-space", "unused-local",
+                    "lowercase-global", "undefined-global"
+                },
                 globals = {
                     -- VIM
                     "vim",

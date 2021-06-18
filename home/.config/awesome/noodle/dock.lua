@@ -5,7 +5,6 @@ local awful = require("awful")
 local wibox = require("wibox")
 local helpers = require("helpers")
 local beautiful = require("beautiful")
-local apps = require("apps")
 local cairo = require("lgi").cairo
 local icons = require("icons")
 local class_icons = icons.text.by_class

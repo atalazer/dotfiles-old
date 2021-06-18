@@ -5,7 +5,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local icons = require("icons")
 local helpers = require("helpers")
-local apps = require("apps")
 
 local keygrabber = require("awful.keygrabber")
 
@@ -376,7 +375,7 @@ local function create_url_petal(text, bg_color, hover_color, url, tl, tr, br, bl
         forced_width = dpi(65),
         shape = helpers.prrect(99, tl, tr, br, bl),
         widget = wibox.container.background()
-    } 
+    }
 
     local petal = wibox.widget {
         {
