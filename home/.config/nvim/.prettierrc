@@ -5,5 +5,5 @@
     "tabWidth": 4,
     "printWidth": 120,
     "arrowParents": "avoid",
-    "trailingComma": "es5",
+    "trailingComma": "es5"
 }

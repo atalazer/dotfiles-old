@@ -16,10 +16,10 @@ augroup END
 " Set tabsize for each filetype
 augroup Indents
     au!
-    au FileType php,javascript setlocal sw=4 ts=4
     au FileType go,java setlocal sw=4 ts=4 sts=4 noexpandtab
     au FileType c,cpp,python,rust setlocal sw=4 ts=4 sts=4
     au FileType html,xml,css setlocal sw=2 ts=2 sts=2
+    au FileType php,javascript setlocal sw=2 ts=2
     au FileType toml,yaml,json setlocal sw=2 ts=2 sts=2
 augroup END
 

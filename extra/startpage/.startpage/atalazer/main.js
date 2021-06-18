@@ -30,13 +30,13 @@ function search(e) {
         window.open(searchUrl + val);
     }
 }
-// Handle Weather request
 const getUnits = () => {
     if ( myUnit == "metric"   ) { return " C"; }
     else if ( myUnit == "imperial" ) { return " F"; }
     else { return " C"; }
 }
 
+// Handle Weather request
 function getWeather() {
     let xhr = new XMLHttpRequest();
     // Request to open weather map

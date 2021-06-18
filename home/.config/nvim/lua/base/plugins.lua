@@ -129,12 +129,7 @@ if ok then
         -- Colorizer
         use({
             "norcalli/nvim-colorizer.lua",
-            opt = true,
-            ft = {
-                "lua", "css", "scss", "html",
-                "javascript", "typescript",
-            },
-            cmd = "ColorizerToggle",
+            opt = false,
             config = function()
                 require("colorizer").setup({
                     ["*"] = {
