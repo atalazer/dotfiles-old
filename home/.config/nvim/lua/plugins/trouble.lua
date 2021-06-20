@@ -1,4 +1,3 @@
-vim.cmd("packadd lsp-trouble.nvim")
 require("trouble").setup({
     height = 10,
     icons = true,

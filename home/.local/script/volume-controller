@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-up="pamixer -i 5"
-down="pamixer -d 5"
+step=2
+
+up="pamixer -i $step"
+down="pamixer -d $step"
 mute="pamixer -t"
 get="pamixer --get-volume-human"
 

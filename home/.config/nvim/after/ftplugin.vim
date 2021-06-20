@@ -37,13 +37,18 @@ augroup Whitespace
 augroup END
 
 " automatically go to insert mode on terminal buffer
-autocmd BufEnter term://* startinsert
+augroup Term
+    au!
+    au BufEnter term://* startinsert
+    au BufEnter term://* setlocal laststatus=0 noruler nonumber norelativenumber nolist
+    au BufLeave term://* setlocal laststatus=2 ruler number relativenumber list
+augroup END
 
 " enable/disable wordwrap
 augroup Goyo
     au!
-    au User GoyoEnter setlocal nolist laststatus=0 scrolloff=999 nocursorline
-    au User GoyoLeave setlocal list laststatus=2 scrolloff=3 cursorline
+    au User GoyoEnter setlocal nolist noruler laststatus=0 scrolloff=999 nocursorline
+    au User GoyoLeave setlocal list ruler laststatus=2 scrolloff=3 cursorline
 augroup END
 
 " disable nvim-compe inside telescope

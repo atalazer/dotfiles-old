@@ -21,6 +21,7 @@ const bookmarks = [
       { name: "School", url: "https://e.smpn1boyolali.sch.id/" },
       { name: "Translate", url: "https://translate.google.com" },
       { name: "Anki", url: "https://ankiweb.net" },
+      { name: "RainyMood", url: "https://www.rainymood.com/" },
       { name: "Math", url: "https://www.wardayacollege.com/matematika/" },
       {
         name: "Part of Speech",

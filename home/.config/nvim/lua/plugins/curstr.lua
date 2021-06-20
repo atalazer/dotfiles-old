@@ -1,5 +1,3 @@
-vim.cmd([[packadd curstr.nvim]])
-
 require("curstr").setup({
     source_aliases = {
         swagger = {
@@ -12,7 +10,7 @@ require("curstr").setup({
             filetypes = { "yaml" },
         },
         openable = {
-            names = { "vim/function", "lua", "file", "directory", "swagger", "vim/runtime" }, 
+            names = { "vim/function", "lua", "file", "directory", "swagger", "vim/runtime" },
         },
 
         camel_snake = {
@@ -64,17 +62,17 @@ require("curstr").setup({
 })
 
 -- Keymap
-local _Key = require("astronauta.keymap")
+local _Key = vim.keymap
 local nnoremap = _Key.nnoremap
 
 -- # Mappings
 nnoremap({
     "gf",
-    '<Cmd>lua require("curstr").execute("openable", { action = "open" })<CR>', 
+    '<Cmd>lua require("curstr").execute("openable", { action = "open" })<CR>',
     { silent = true },
 })
 nnoremap({
-    "<leader>,",
-    '<Cmd>lua require("curstr").execute("togglable")<CR>', 
+    ".,",
+    '<Cmd>lua require("curstr").execute("togglable")<CR>',
     { silent = true },
 })

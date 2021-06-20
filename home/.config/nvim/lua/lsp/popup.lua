@@ -1,6 +1,3 @@
-vim.cmd("packadd lspsaga.nvim")
-vim.cmd("packadd lspkind-nvim")
-
 require("lspsaga").init_lsp_saga({
     border_style = "round", -- "single" "double" "round" "plus"
     max_preview_lines = 12,

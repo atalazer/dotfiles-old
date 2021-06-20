@@ -1,16 +1,8 @@
-vim.cmd("packadd nvim-lspconfig")
-vim.cmd("packadd symbols-outline.nvim")
-
 local nvim_lsp = require("lspconfig")
 
 pcall(require, "lsp.diagnostic")
 pcall(require, "lsp.popup")
 pcall(require, "lsp.trouble")
-
-require("symbols-outline").setup({
-    highlight_hovered_item = true,
-    show_guides = true,
-})
 
 local capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()

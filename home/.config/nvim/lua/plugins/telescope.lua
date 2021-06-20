@@ -1,26 +1,53 @@
+local _, telescope = pcall(require, "telescope")
 local actions = require("telescope.actions")
 local previewers = require("telescope.previewers")
 
 local M = {}
-local _, telescope = pcall(require, "telescope")
+
+local no_preview = function()
+    return require("telescope.themes").get_dropdown({
+        borderchars = {
+            { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+            prompt = { "─", "│", " ", "│", "╭", "╮", "╯", "╰" },
+            result = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+            preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        },
+        width = 0.8,
+        previewer = false,
+    })
+end
+
+local delta = previewers.new_termopen_previewer({
+    get_command = function(entry)
+        return {
+            "git",
+            "-c",
+            "core.pager=delta",
+            "-c",
+            "delta.side-by-side=false",
+            "diff",
+            entry.value .. "^!",
+        }
+    end,
+})
 
 telescope.setup({
     defaults = {
-        file_previewer   = previewers.vim_buffer_cat.new,
-        grep_previewer   = previewers.vim_buffer_vimgrep.new,
+        file_previewer = previewers.vim_buffer_cat.new,
+        grep_previewer = previewers.vim_buffer_vimgrep.new,
         qflist_previewer = previewers.vim_buffer_qflist.new,
-        scroll_strategy    = "cycle",
+        scroll_strategy = "cycle",
         selection_strategy = "reset",
-        layout_strategy    = "flex",
-        borderchars        = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+        layout_strategy = "flex",
+        borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         layout_defaults = {
             horizontal = {
-                width_padding  = 0.10,
+                width_padding = 0.10,
                 height_padding = 0.10,
-                preview_width  = 0.65,
+                preview_width = 0.65,
             },
             vertical = {
-                width_padding  = 0.10,
+                width_padding = 0.10,
                 height_padding = 1.00,
                 preview_height = 0.60,
             },
@@ -58,6 +85,19 @@ telescope.setup({
             },
         },
     },
+    pickers = {
+        find_files = {
+            file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
+        },
+        lsp_code_actions = no_preview(),
+        git_commits = {
+            previewer = {
+                delta,
+                previewers.git_commit_message.new({}),
+                previewers.git_commit_diff_as_was.new({}),
+            },
+        },
+    },
     extensions = {
         fzf = {
             override_generic_sorter = true,
@@ -78,7 +118,6 @@ telescope.setup({
                 ["repos"] = os.getenv("REPO_DIR") or "/home/atalariq/Work/Repos",
                 ["nvim"] = "/home/atalariq/.config/nvim",
                 ["awesome"] = "/home/atalariq/.config/awesome",
-                ["alacritty"] = "/home/atalariq/.config/alacritty",
                 ["kitty"] = "/home/atalariq/.config/kitty",
                 ["zsh"] = "/home/atalariq/.zsh",
             },
@@ -90,42 +129,12 @@ pcall(require("telescope").load_extension, "fzf") -- superfast sorter
 pcall(require("telescope").load_extension, "media_files") -- media preview
 pcall(require("telescope").load_extension, "frecency") -- frecency
 
-local no_preview = function()
-    return require("telescope.themes").get_dropdown({
-        borderchars = {
-            {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-            prompt  = { '─', '│', ' ', '│', '╭', '╮', '╯', '╰' },
-            result  = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-            preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
-        },
-        width     = 0.8,
-        previewer = false,
-    })
-end
-
-M.files = function()
-    require("telescope.builtin").find_files({
-        file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
-    })
-end
-
-M.code_action = function()
-    require("telescope.builtin").lsp_code_actions(no_preview())
-end
-
 M.frecency = function()
-    require("telescope").extensions.frecency.frecency(no_preview())
-end
-M.media_files = function()
-    require("telescope").extensions.media_files.media_files()
+    telescope.extensions.frecency.frecency(no_preview())
 end
 
-return setmetatable({}, {
-    __index = function(_, k)
-        if M[k] then
-            return M[k]
-        else
-            return require("telescope.builtin")[k]
-        end
-    end,
-})
+M.media_files = function()
+    telescope.extensions.media_files.media_files()
+end
+
+return M

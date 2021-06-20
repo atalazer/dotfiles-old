@@ -1,4 +1,5 @@
 #### Files
+mpd_music_dir = ~/Music
 ncmpcpp_directory  = ~/.config/ncmpcpp
 lyrics_directory  = ~/.config/ncmpcpp/lyrics
 mpd_host = "localhost"
@@ -53,7 +54,7 @@ color2 = "blue"
 #### can consider ─━⠤⠤
 progressbar_look = "━━━"
 progressbar_elapsed_color = "blue"
-progressbar_color = "cyan"
+progressbar_color = "default"
 connected_message_on_startup = no
 
 #### Visualizer stuff

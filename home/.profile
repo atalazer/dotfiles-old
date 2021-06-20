@@ -16,8 +16,10 @@ export ICEAUTHORITY="${XDG_CACHE_HOME}ICEauthority"
 
 ### $PATH {{{
 TO_PATH(){
-    if [[ -z $(printf $PATH | grep $1) ]]; then
-        export PATH="$1:$PATH"
+    if [[ -d $1 ]]; then
+        if [[ -z $(printf $PATH | grep $1) ]]; then
+            export PATH="$1:$PATH"
+        fi
     fi
 }
 
@@ -25,6 +27,7 @@ TO_PATH ${APP_DIR:-$HOME/Applications}
 TO_PATH ${BIN_DIR:-$HOME/.local/bin}
 TO_PATH $HOME/.local/script
 TO_PATH $HOME/.local/go/bin
+TO_PATH $HOME/.emacs.d/bin
 
 # }}}
 

@@ -1,5 +1,4 @@
--- Keymap
-local _Key = require("astronauta.keymap")
+local _Key = vim.keymap
 local map = _Key.map
 local nmap = _Key.nmap
 local nnoremap = _Key.nnoremap
@@ -59,7 +58,7 @@ nnoremap({ "<C-y>", ":redo<CR>" })
 inoremap({ "<C-y>", "<Esc>:redo<CR>" })
 
 -- Find
-nnoremap({ "<C-n>", ":nohlsearch<CR>" })
+nnoremap({ "<Esc><Esc>", ":nohlsearch<CR>" })
 
 -- Indent
 vnoremap({ "<", "<gv" })
@@ -92,6 +91,12 @@ nnoremap({ "<F1>", ":mksession! ~/.cache/nvim/sessions/last.vim<CR>", { silent =
 nnoremap({ "<F2>", ":source ~/.cache/nvim/sessions/last.vim<CR>", { silent = true } })
 nnoremap({ "<F4>", "<cmd>!xdg-open %<CR>", { silent = true } })
 
+nnoremap({
+    "<F3>",
+    ":let g:strip_whitespace = !g:strip_whitespace | echo 'Strip whitespace mode toggled!'<CR>",
+    { silent = true },
+})
+
 -- ===================================== Plugins
 -- Sayonara
 nnoremap({ "<leader>q",  ":Sayonara<CR>" })
@@ -111,18 +116,16 @@ nnoremap({ "<M-9>", ":lua require'bufferline'.go_to_buffer(9)<CR>", { silent = t
 nnoremap({ "<M-0>", ":lua require'bufferline'.go_to_buffer(10)<CR>", { silent = true } })
 
 -- Telescope
-nnoremap({ "<C-p>", require("plugins.telescope").files })
-nnoremap({ "<leader>fl", require("telescope.builtin").live_grep })
-nnoremap({ "<leader>fk", require("telescope.builtin").keymaps })
-nnoremap({ "<leader>fc", require("telescope.builtin").colorscheme })
-nnoremap({ "<leader>fb", require("telescope.builtin").file_browser })
+nnoremap({ "<C-p>", require("telescope.builtin").find_files, { silent = true } })
+nnoremap({ "<leader>fl", require("telescope.builtin").live_grep, { silent = true } })
+nnoremap({ "<leader>fg", require("telescope.builtin").git_commits, { silent = true } })
+nnoremap({ "<leader>fb", require("telescope.builtin").file_browser, { silent = true } })
+nnoremap({ "<leader>fk", require("telescope.builtin").keymaps, { silent = true } })
+nnoremap({ "<leader>fc", require("telescope.builtin").colorscheme, { silent = true } })
 
 -- Telescope Extensions
-nnoremap({ "<leader>ff", require("plugins.telescope").frecency })
-nnoremap({ "<leader>fm", require("plugins.telescope").media_files })
-
--- Format
-nnoremap({ "<leader>gf", "<cmd>Format<CR>", { silent = false } })
+nnoremap({ "<leader>ff", require("plugins.telescope").frecency, { silent = true } })
+nnoremap({ "<leader>fm", require("plugins.telescope").media_files, { silent = true } })
 
 -- Hop
 nmap({ "<space>w", ":HopWord<CR>" })
@@ -138,7 +141,7 @@ nnoremap({ "<leader>cr", ":ColorizerReloadAllBuffers<CR>" })
 nnoremap({ "`", ":NvimTreeToggle<CR>", { silent = true } })
 
 -- Lazygit.nvim
-nnoremap({ "<leader>lg", "<Cmd>LazyGit<CR>", { silent = true } })
+nnoremap({ "<leader>gt", "<Cmd>LazyGit<CR>", { silent = true } })
 
 -- Glow.nvim
 nnoremap({ "<leader>gg", ":Glow<CR>", { silent = true } })
