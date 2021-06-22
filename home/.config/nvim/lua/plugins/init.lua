@@ -129,6 +129,7 @@ local plugins = {
     -- gf like plugins
     {
         "notomo/curstr.nvim",
+        event = "CursorHold",
         config = function()
             require("plugins.curstr")
         end,
@@ -136,7 +137,7 @@ local plugins = {
 
     {
         "norcalli/nvim-colorizer.lua",
-        cmd = "ColorizerToggle",
+        event = "BufRead",
         config = function()
             require("colorizer").setup({
                 ["*"] = {
@@ -231,7 +232,10 @@ local plugins = {
     },
 
     -- Vim Table mode
-    { "dhruvasagar/vim-table-mode", ft = { "text", "markdown" } },
+    {
+        "dhruvasagar/vim-table-mode",
+        ft = { "text", "markdown" } ,
+    },
 
     -- Terminal Markdown Previewer
     {
@@ -344,9 +348,19 @@ local plugins = {
         requires = {
             { "nvim-lua/popup.nvim" },
             { "nvim-lua/plenary.nvim" },
-            { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-            { "nvim-telescope/telescope-media-files.nvim", after = "telescope.nvim" },
-            { "nvim-telescope/telescope-frecency.nvim", after = "telescope.nvim" },
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                after = "telescope.nvim",
+                run = "make",
+            },
+            {
+                "nvim-telescope/telescope-media-files.nvim",
+                after = "telescope.nvim"
+            },
+            {
+                "nvim-telescope/telescope-frecency.nvim",
+                after = "telescope.nvim"
+            },
         },
         config = function()
             require("plugins.telescope")
@@ -424,6 +438,7 @@ local plugins = {
     -- vim which key
     {
         "folke/which-key.nvim",
+        event = "BufRead",
         config = function()
             require("plugins.which-key")
         end,
@@ -434,7 +449,10 @@ local plugins = {
         "junegunn/goyo.vim",
         cmd = "Goyo",
         requires = {
-            { "junegunn/limelight.vim", cmd = "Limelight" },
+            {
+                "junegunn/limelight.vim",
+                cmd = "Limelight"
+            },
         },
         config = function()
             vim.g.goyo_width = "120"
@@ -447,7 +465,10 @@ local plugins = {
     },
 
     -- Startuptime
-    { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
+    {
+        "tweekmonster/startuptime.vim",
+        cmd = "StartupTime"
+    },
 }
 
 packer.startup(function(use)

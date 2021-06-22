@@ -24,6 +24,8 @@ add_author=false
 author_position=("South" "+0+26")
 author="By: Atalariq Barra H."
 
+[[ -f ~/.config/script/shot.conf ]] && source ~/.config/script/shot.conf
+
 check(){
     if [ ! -d "$SCREENSHOT_DIR" ];then
         /bin/mkdir -p "$SCREENSHOT_DIR"
@@ -32,6 +34,17 @@ check(){
     if [ -f "$TMP_IMG" ];then
         /bin/rm "$TMP_IMG"
     fi
+}
+
+# Check DE/WM
+get_desktop_env() {
+    # Identify environment
+    DE="${DESKTOP_STARTUP_ID}"
+    if [[ ! -z "$DE" && "$DE" == *"awesome"* ]] || [[ ! -z "$CHECK_AWESOME_CLIENT" ]]; then
+        echo "AWESOME"
+        return
+    fi
+    echo "NOT_AWESOME"
 }
 
 parse(){
@@ -96,99 +109,178 @@ notify() {
     _MSG=$1
     _FILE=$SAVED_NAME
 
-    awesome-client "
-    -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
-    naughty = require('naughty')
-    awful = require('awful')
-    beautiful = require('beautiful')
-    dpi = beautiful.xresources.apply_dpi
+    if [[ "$(get_desktop_env)" == "AWESOME" ]]; then
+        awesome-client "
+        -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
+        naughty = require('naughty')
+        awful = require('awful')
+        beautiful = require('beautiful')
+        dpi = beautiful.xresources.apply_dpi
 
-    local open_image = naughty.action {
-        name = 'Open',
-        icon_only = false,
-    }
+        local open_image = naughty.action {
+            name = 'Open',
+            icon_only = false,
+        }
 
-    local open_folder = naughty.action {
-        name = 'Open Folder',
-        icon_only = false,
-    }
+        local open_folder = naughty.action {
+            name = 'Open Folder',
+            icon_only = false,
+        }
 
-    local delete_image = naughty.action {
-        name = 'Delete',
-        icon_only = false,
-    }
+        local delete_image = naughty.action {
+            name = 'Delete',
+            icon_only = false,
+        }
 
-    -- Execute the callback when 'Open' is pressed
-    open_image:connect_signal('invoked', function()
-        awful.spawn('xdg-open ' .. '${_FILE}', false)
-    end)
+        -- Execute the callback when 'Open' is pressed
+        open_image:connect_signal('invoked', function()
+            awful.spawn('xdg-open ' .. '${_FILE}', false)
+        end)
 
-    open_folder:connect_signal('invoked', function()
-        awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
-    end)
+        open_folder:connect_signal('invoked', function()
+            awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
+        end)
 
-    -- Execute the callback when 'Delete' is pressed
-    delete_image:connect_signal('invoked', function()
-        awful.spawn('gio trash ' .. '${_FILE}', false)
-    end)
+        -- Execute the callback when 'Delete' is pressed
+        delete_image:connect_signal('invoked', function()
+            awful.spawn('gio trash ' .. '${_FILE}', false)
+        end)
 
-    -- Show notification
-    naughty.notification ({
-        app_name = 'Screenshot Tool',
-        icon = '${_FILE}',
-        timeout = 10,
-        title = '<b>Shot</b>',
-        message = '${_MSG}',
-        actions = { open_image, open_folder, delete_image }
-    })
-    "
+        -- Show notification
+        naughty.notification ({
+            app_name = 'Screenshot Tool',
+            icon = '${_FILE}',
+            timeout = 5,
+            title = '<b>Shot</b>',
+            message = '${_MSG}',
+            actions = { open_image, open_folder, delete_image }
+        })
+        "
+    else
+        notify-send "Shot" "${_MSG}"
+    fi
 }
 
-case ${1:-noparse} in
-    noparse)
-        check && \
-        maim -u -s $SAVED_NAME && \
-        notify "Screenshot Saved" 
-        ;;
-    clipboard)
-        check && \
-        maim -m 1 $TMP_IMG && \
-        notify-send "Shot" "Parsing Image ..." && \
-        parse && \
-        notify "Screenshot Saved to Clipboard" && \
+to_clip(){
+    if [ $XDG_SESSION_TYPE == "wayland" ]; then
+        wl-copy < $TMP_IMG
+    else
         xclip -selection clipboard -i $TMP_IMG -t image/png
+    fi
+
+}
+
+_shot(){
+    if [ $XDG_SESSION_TYPE == "wayland" ]; then
+        case $1 in
+            normal) grimshot output $TMP_IMG ;;
+            active) grimshot active $TMP_IMG ;;
+            select) grimshot area $TMP_IMG ;;
+            delay) sleep $sleep && grimshot output $TMP_IMG  ;;
+        esac
+    else
+        case $1 in
+            normal) maim -m 1 $TMP_IMG ;;
+            active) maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG ;;
+            select) maim -u -m 1 -s $TMP_IMG ;;
+            delay) maim -m 1 -d $sleep $TMP_IMG ;;
+        esac
+    fi
+}
+
+_noparse(){
+    case $1 in
+        clipboard)
+            check && \
+            _shot normal && \
+            notify "Screenshot Saved to Clipboard" && \
+            to_clip
         ;;
-    save)
-        check && \
-        maim -m 1 $TMP_IMG && \
-        notify-send "Shot" "Parsing Image ..." && \
-        parse && \
-        mv $TMP_IMG $SAVED_NAME && \
-        notify "Screenshot Saved" 
+        full)
+            check && \
+            _shot normal && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved"
         ;;
-    sleep)
-        check && \
-        notify-send "Shot" "Shot After ${sleep} Sec" && \
-        maim -m 1 -d $sleep $TMP_IMG && \
-        notify-send "Shot" "Parsing Image ..." && \
-        parse && \
-        mv $TMP_IMG $SAVED_NAME && \
-        notify "Screenshot Saved" 
+        active)
+            check && \
+            _shot active && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot from Active Windows Saved"
         ;;
-    select)
-        check && \
-        maim -u -m 1 -s $TMP_IMG && \
-        notify-send "Shot" "Parsing Image ..." && \
-        parse && \
-        mv $TMP_IMG $SAVED_NAME && \
-        notify "Screenshot Selected Has been Saved" 
+        select)
+            check && \
+            _shot active && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Selected Has been Saved"
         ;;
-    active)
-        check && \
-        maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG && \
-        notify-send "Shot" "Parsing Image ..." && \
-        parse && \
-        mv $TMP_IMG $SAVED_NAME && \
-        notify "Screenshot from Active Windows Saved"
+        delay)
+            check && \
+            notify-send "Shot" "Shot After ${sleep} Sec" && \
+            _shot delay && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved"
         ;;
+    esac
+}
+
+_parse(){
+    case $1 in
+        clipboard)
+            check && \
+            _shot normal && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            notify "Screenshot Saved to Clipboard" && \
+            to_clip
+        ;;
+        full)
+            check && \
+            _shot normal && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved"
+        ;;
+        active)
+            check && \
+            _shot active && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot from Active Windows Saved"
+        ;;
+        select)
+            check && \
+            _shot select && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Selected Has been Saved"
+        ;;
+        delay)
+            check && \
+            notify-send "Shot" "Shot After ${sleep} Sec" && \
+            _shot delay && \
+            notify-send "Shot" "Parsing Image ..." && \
+            parse && \
+            cp $TMP_IMG $SAVED_NAME && \
+            notify "Screenshot Saved"
+        ;;
+    esac
+}
+
+OPT=${1:-save_noparse}
+case $OPT in
+    active)             _parse active ;;
+    clipboard)          _parse clipboard ;;
+    delay)              _parse delay;;
+    full)               _parse full ;;
+    select)             _parse select ;;
+    active_noparse)     _noparse active ;;
+    clipboard_noparse)  _noparse clipboard ;;
+    delay_noparse)      _noparse delay ;;
+    full_noparse)       _noparse full ;;
+    select_noparse)     _noparse select ;;
+
 esac

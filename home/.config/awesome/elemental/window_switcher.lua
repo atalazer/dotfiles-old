@@ -1,9 +1,9 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-local helpers = require("helpers")
 local gears = require("gears")
 local capi = { screen = screen, client = client }
+local helpers = require("helpers")
 local icons = require("icons")
 local class_icons = icons.text.by_class
 
@@ -163,7 +163,7 @@ end
 
 local window_search = function()
     window_switcher_hide()
-    awful.spawn.with_shell("rofi_awesome_window")
+    awful.spawn.with_shell("rofi_switcher")
 end
 
 local unminimize = function()
@@ -183,6 +183,7 @@ end
 local keybinds = {
     ['Escape'] = window_switcher_hide,
     ['Tab'] = function() awful.client.focus.byidx(1) end,
+    ['`'] = function() awful.client.focus.byidx(-1) end,
     -- (Un)Minimize
     ['n'] = function() if client.focus then client.focus.minimized = true end end,
     ['N'] = unminimize,

@@ -28,10 +28,10 @@ apps.controller = {
     mus_s = script_dir .. "music-controller stop",
     mus_c = script_dir .. "music-controller current",
     -- Shot
-    shot        = script_dir .. "shot save",
+    shot        = script_dir .. "shot full",
     shot_clip   = script_dir .. "shot clipboard",
     shot_active = script_dir .. "shot active",
-    shot_sleep  = script_dir .. "shot sleep",
+    shot_sleep  = script_dir .. "shot delay",
     shot_select = script_dir .. "shot select",
 }
 

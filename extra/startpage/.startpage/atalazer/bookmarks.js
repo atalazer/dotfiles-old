@@ -23,11 +23,6 @@ const bookmarks = [
       { name: "Anki", url: "https://ankiweb.net" },
       { name: "RainyMood", url: "https://www.rainymood.com/" },
       { name: "Math", url: "https://www.wardayacollege.com/matematika/" },
-      {
-        name: "Part of Speech",
-        url: "https://wilenglish.com/kelas-part-of-speech/",
-      },
-      { name: "Tenses", url: "https://wilenglish.com/kelas-tenses/" },
       { name: "Physics", url: "https://www.wardayacollege.com/fisika/" },
       { name: "Trading", url: "https://belajartrading.co.id/" },
       { name: "Crypto", url: "https://learncrypto.com/" },
@@ -56,11 +51,6 @@ const bookmarks = [
       { name: "Kotakode", url: "https://kotakode.com" },
       { name: "GitHub", url: "https://github.com" },
       { name: "Blog", url: "https://atalazer.github.io" },
-      {
-        name: "Blog Repo",
-        url: "https://github.com/atalazer/atalazer.github.io",
-      },
-      { name: "Dotfiles", url: "https://github.com/atalazer/dotfiles" },
     ],
   },
 ];

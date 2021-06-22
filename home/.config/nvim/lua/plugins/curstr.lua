@@ -62,8 +62,8 @@ require("curstr").setup({
 })
 
 -- Keymap
-local _Key = vim.keymap
-local nnoremap = _Key.nnoremap
+local k = vim.keymap
+local nnoremap = k.nnoremap
 
 -- # Mappings
 nnoremap({
