@@ -28,6 +28,8 @@ TO_PATH ${BIN_DIR:-$HOME/.local/bin}
 TO_PATH $HOME/.local/script
 TO_PATH $HOME/.local/go/bin
 TO_PATH $HOME/.emacs.d/bin
+TO_PATH $HOME/.choosenim/toolchains/nim-1.4.8/bin
+TO_PATH $HOME/.nimble/bin
 
 # }}}
 

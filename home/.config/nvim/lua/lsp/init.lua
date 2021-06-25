@@ -25,6 +25,8 @@ local servers = {
     bashls = {},
     vimls = {},
     clangd = {},
+    gopls = {},
+    nimls = {},
     yamlls = {
         settings = {
             redhat = { telemetry = { enabled = false } },

@@ -1,4 +1,4 @@
-local Job = require("plenary.job")
+local job_ok, Job = pcall(require, "plenary.job")
 local fn = vim.fn
 
 _G.Util = {}
@@ -125,28 +125,6 @@ Util.trigger_completion = function()
     return Util.t("<CR>")
 end
 
-Util.lsp_on_attach = function()
-    print("LSP Attached!")
-    require("lsp.keys").mappings()
-
-    require("lsp_signature").on_attach({
-        bind = true,
-        doc_lines = 2,
-        hint_enable = false,
-        handler_opts = {
-            border = Util.borders,
-        },
-    })
-end
-
-Util.lsp_on_init = function()
-    print("Language Server Protocol started!")
-
-    if client.config.flags then
-        client.config.flags.allow_incremental_sync = true
-    end
-end
-
 Util.borders = {
     { "╭", "FloatBorder" },
     { "─", "FloatBorder" },
@@ -157,5 +135,14 @@ Util.borders = {
     { "╰", "FloatBorder" },
     { "│", "FloatBorder" },
 }
+
+Util.lsp_on_attach = function()
+    print("LSP Attached!")
+    require("lsp.keys").mappings()
+end
+
+Util.lsp_on_init = function()
+    print("Language Server Protocol started!")
+end
 
 return Util

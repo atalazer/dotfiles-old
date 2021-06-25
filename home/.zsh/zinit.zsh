@@ -30,11 +30,12 @@ autoload -Uz _zinit
 # =================================================
 
 # ===== Basic =====
-zinit light-mode for \
+zinit wait lucid light-mode for \
+    atinit"zicompinit; zicdreplay" \
         zdharma/fast-syntax-highlighting \
-    wait lucid atload"!_zsh_autosuggest_start" \
+    atload"_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
-    wait lucid atpull"zinit creinstall -q ." atinit"zicompinit; zicdreplay" blockf \
+    blockf atpull'zinit creinstall -q .' \
         zsh-users/zsh-completions
 
 # ===== Script =====

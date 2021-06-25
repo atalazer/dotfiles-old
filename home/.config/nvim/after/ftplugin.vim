@@ -1,5 +1,17 @@
-" Set formatoptions
-au BufRead,FileType * set formatoptions-=ro
+" prevent typo when pressing `wq` or `q`
+cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
+cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
+cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
+
+" Set current working directory
+au VimEnter * cd %:p:h
+
+" Move to last cursor
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" Check if file changed when its window is focus, more eager than 'autoread'
+au FocusGained * checktime
 
 " Set filetypes
 augroup Filetypes
@@ -29,19 +41,25 @@ augroup Markdown
     au BufEnter */posts/**.en.md setlocal spell spelllang=en
 augroup END
 
-" Remove trailing whitespace on save
-let g:strip_whitespace = v:true
-augroup Whitespace
-    au!
-    au BufWritePre * if g:strip_whitespace | %s/\s\+$//e
-augroup END
-
 " automatically go to insert mode on terminal buffer
 augroup Term
     au!
     au BufEnter term://* startinsert
     au BufEnter term://* setlocal laststatus=0 noruler nonumber norelativenumber nolist
     au BufLeave term://* setlocal laststatus=2 ruler number relativenumber list
+augroup END
+
+" highlight yanked text for 250ms
+augroup Yank
+    au!
+    au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "Visual" }
+augroup END
+
+" Remove trailing whitespace on save
+let g:strip_whitespace = v:true
+augroup Whitespace
+    au!
+    au BufWritePre * if g:strip_whitespace | %s/\s\+$//e
 augroup END
 
 " enable/disable wordwrap
@@ -61,12 +79,6 @@ augroup END
 augroup Emmet
     au!
     autocmd FileType html,svelte,javascriptreact EmmetInstall
-augroup END
-
-" highlight yanked text for 250ms
-augroup Yank
-    au!
-    au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "Visual" }
 augroup END
 
 " " hide the cursor if we're inside NvimTree

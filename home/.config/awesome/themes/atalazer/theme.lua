@@ -377,7 +377,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = user.icon or "/usr/share/icons/Numix"
+theme.icon_theme = user.icon or "Adwaita"
 
 theme.hotkeys_font = user.font .." 9"
 theme.hotkeys_description_font = user.font .." 8"

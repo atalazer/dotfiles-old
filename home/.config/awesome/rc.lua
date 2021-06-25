@@ -66,14 +66,14 @@ local wallpaper = os.getenv("HOME") .. "/.wallpaper/tokyonight-minimal.jpg"
 user = {
     font = "JetBrainsMono Nerd Font",
     fsize = "11",
-    icon = os.getenv("HOME") .. "/.icons/Papirus-Dark",
+    icon = "Adwaita",
 
     -- >> Default applications <<
     -- Check apps.lua for more
     terminal = os.getenv("TERMINAL") or "kitty",
     floating_terminal = "kitty --name floating_terminal",
     browser = "firefox",
-    file_manager = "kitty --name file -e nnn",
+    file_manager = "kitty --name file -e nnn_wrapper",
     editor = "kitty --name editor -e nvim",
     email_client = "kitty --name email -e neomutt",
     music_client = "kitty -o font_size=12 --name music -e ncmpcpp",
@@ -89,9 +89,9 @@ user = {
         "fusuma -c ~/.config/fusuma/config.yml",
         "xrdb -load ~/.Xresources",
         [[
-        xautolock -time 5 -locker "$(awesome-client 'lock_screen_show()' && systemctl suspend)" \
-            -detectsleep -resetsaver \
-            -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
+        xautolock -time 5 -locker "awesome-client 'lock_screen_show()'" \
+            -detectsleep -resetsaver -corners 00-- -cornersize 1000 \
+            -notify 15 -notifier "notify-send 'Lockscreen' 'System will be suspended in 15s From now'"
         ]],
     },
 

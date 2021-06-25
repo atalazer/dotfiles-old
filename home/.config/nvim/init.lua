@@ -5,16 +5,10 @@ local packpath = vim.fn.stdpath("data") .. "/site/pack"
 local ensure = function(user, repo)
     local install_path = string.format("%s/packer/opt/%s", packpath, repo)
     if fn.empty(fn.glob(install_path)) > 0 then
-        cmd(string.format(
-        [[
+        cmd(string.format([[
             !git clone https://github.com/%s/%s %s
             packadd %s
-        ]],
-            user,
-            repo,
-            install_path,
-            repo
-        ))
+        ]], user, repo, install_path, repo ))
     end
 end
 
@@ -43,27 +37,16 @@ g.loaded_matchit = 1
 g.loaded_matchparen = 1
 g.loaded_spec = 1
 
--- prevent typo when pressing `wq` or `q`
-cmd([[
-  cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
-  cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
-  cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
-  cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
-]])
+-- cmd([[
+--   runtime! lua/modules/keymap.lua
+--   runtime! lua/modules/util.lua
+--   runtime! lua/modules/settings.lua
+--   runtime! lua/modules/keys.lua
+-- ]])
 
--- Move to last cursor
-cmd([[ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif ]])
-
--- Check if file changed when its window is focus, more eager than 'autoread'
-cmd([[ au FocusGained * checktime ]])
-
--- change cwd to current directory
-cmd([[ cd %:p:h ]])
-
--- TODO: Add Custom Command
 local modules = {
-    "base._keymap",
-    "base._util",
+    "base.keymap",
+    "base.util",
     "base.settings",
     "base.keys",
 }

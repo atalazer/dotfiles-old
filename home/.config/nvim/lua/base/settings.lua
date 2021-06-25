@@ -1,11 +1,4 @@
--- require("base._opts")
-
--- Function to apply options table
-local apply_options = function(opts)
-    for k, v in pairs(opts) do
-        vim.opt[k] = v
-    end
-end
+local o = vim.opt
 
 -- Settings vim options
 local options = {
@@ -18,6 +11,7 @@ local options = {
     expandtab = true,
     hidden = true,
     ignorecase = true,
+    joinspaces = false,
     lazyredraw = false,
     list = true,
     number = true,
@@ -43,13 +37,14 @@ local options = {
     clipboard = "unnamedplus",
     completeopt = { "menu", "menuone", "noselect", "noinsert" },
     encoding = "UTF-8",
-    fillchars = { vert = "│", eob = " ", fold = " " },
-    foldmethod     = "marker",
+    fillchars = { vert = "│", eob = " ", fold = " ", diff = " " },
+    formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2",
+    foldmethod = "manual",
+    foldopen = { "percent", "search" },
+    -- foldcolumn     = "1",
     -- foldexpr       = "nvim_treesitter#foldexpr()",
     -- foldlevel      = 0,
     -- foldnestmax    = 1,
-    foldopen       = {"percent", "search"},
-    -- foldcolumn     = "1",
     inccommand = "split",
     listchars = {
         -- tab = "  ",
@@ -68,7 +63,7 @@ local options = {
     undodir = "~/.local/share/nvim/undo",
 
     -- Number
-    colorcolumn    = { "120" },
+    colorcolumn = { "120" },
     cmdheight = 2,
     laststatus = 2,
     pumheight = 10,
@@ -80,8 +75,14 @@ local options = {
     tabstop = 4,
     timeoutlen = 400,
     updatetime = 100,
-    redrawtime = 5000,
 }
 
--- Call apply_options func
+-- Function to apply options table
+local apply_options = function(opts)
+    for k, v in pairs(opts) do
+        o[k] = v
+    end
+end
+
+-- Call apply_options func for options
 apply_options(options)

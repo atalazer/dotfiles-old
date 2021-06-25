@@ -197,6 +197,12 @@ local plugins = {
         end,
     },
 
+    -- nim.nvim for nim development
+    {
+        "alaviss/nim.nvim",
+        ft = "nim",
+    },
+
     -- LaTeX Support with Texlab LSP
     {
         "jakewvincent/texmagic.nvim",
@@ -267,12 +273,6 @@ local plugins = {
                 "glepnir/lspsaga.nvim",
                 after = "nvim-lspconfig",
             },
-
-            {
-                "ray-x/lsp_signature.nvim",
-                after = "nvim-lspconfig",
-            },
-
             {
                 "onsails/lspkind-nvim",
                 after = "nvim-lspconfig",
