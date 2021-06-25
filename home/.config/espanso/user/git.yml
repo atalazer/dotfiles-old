@@ -1,0 +1,32 @@
+name: git
+parent: default
+
+matches:
+  # chore:
+  - trigger: ":gch"
+    replace: "chore: "
+    force_clipboard: true
+
+  # chore:
+  - trigger: ":gfx"
+    replace: "fix: "
+    force_clipboard: true
+
+  # chore:
+  - trigger: ":grf"
+    replace: "refactor: "
+    force_clipboard: true
+
+  # Outputs git commit command, with cursor in the message block
+  - trigger: :commit
+    replace: git commit -m "$|$"
+
+  # Fetches a funny commit message from whatthecommit.com
+  - trigger: :wtc
+    replace: "{{output}}"
+    vars:
+    - name: output
+      type: shell
+      params: {cmd: "curl -s whatthecommit.com/index.txt"}
+
+

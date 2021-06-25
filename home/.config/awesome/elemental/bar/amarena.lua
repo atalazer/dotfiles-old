@@ -4,6 +4,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local helpers = require("helpers")
+local keys = require("configs.keys")
 
 local dock_autohide_delay = 0.5 -- seconds
 

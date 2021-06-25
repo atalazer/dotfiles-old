@@ -5,6 +5,7 @@ local beautiful = require("beautiful")
 -- local naughty = require("naughty")
 
 local helpers = require("helpers")
+local apps = require("configs.apps")
 
 -- Appearance
 -- local button_size = beautiful.app_drawer_icon_size or dpi(100)

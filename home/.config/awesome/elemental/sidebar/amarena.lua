@@ -4,6 +4,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local helpers = require("helpers")
+local apps = require("configs.apps")
 
 -- Helper function that changes the appearance of progress bars and their icons
 local function format_progress_bar(bar)

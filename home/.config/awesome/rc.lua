@@ -212,11 +212,6 @@ require("configs.autostart")
 
 -- Features
 -- ===================================================================
--- Apps
-apps = require("configs.apps")
-
--- Keybinds and mousebinds
-keys = require("configs.keys")
 
 -- Initialize icons array and load icon theme
 local icons = require("icons")

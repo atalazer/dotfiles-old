@@ -2,8 +2,11 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+
 local helpers = require("helpers")
 local decorations = require("decorations")
+
+local keys = require("configs.keys")
 
 -- This decoration theme will round clients according to your theme's
 -- border_radius value

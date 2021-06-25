@@ -2,6 +2,7 @@ local awful = require("awful")
 local ruled = require("ruled")
 local beautiful = require("beautiful")
 
+local keys = require("configs.keys")
 local decorations = require("decorations")
 
 ruled.client.connect_signal("request::rules", function()

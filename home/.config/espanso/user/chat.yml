@@ -1,0 +1,12 @@
+name: chat
+parent: default
+
+matches:
+  # Salam
+  - trigger: ":salam"
+    replace: "Assalaamu'alaikum warahmatullaahi wabarakaatuh"
+
+  # Jawab Salam
+  - trigger: ":jawab"
+    replace: "Wa'alaikumus salam wa rahmatullahi wabarakatuh"
+

@@ -4,6 +4,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local helpers = require("helpers")
+local keys = require("configs.keys")
 
 -- Helper function that creates a button widget
 local create_button = function (symbol, color, bg_color, hover_color)

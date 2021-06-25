@@ -1,0 +1,13 @@
+name: global
+parent: default
+
+matches:
+  - trigger: ":name"
+    replace: "Atalariq Barra Hadinugraha"
+
+  - trigger: ":user"
+    replace: "atalazer"
+
+  - trigger: ":email"
+    replace: "baraboyolali@gmail.com"
+

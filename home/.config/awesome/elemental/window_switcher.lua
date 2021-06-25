@@ -3,9 +3,12 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
 local capi = { screen = screen, client = client }
+
 local helpers = require("helpers")
 local icons = require("icons")
 local class_icons = icons.text.by_class
+
+local keys = require("configs.keys")
 
 -- TODO ability to switch to specific minimized clients without using the mouse:
 -- Might need to ditch the "easy" tasklist approach for something manual

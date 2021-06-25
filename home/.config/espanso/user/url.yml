@@ -1,0 +1,39 @@
+name: url
+parent: default
+
+matches:
+  - trigger: ":blog"
+    replace: "https://atalazer.github.io"
+
+  - trigger: ":ugh"
+    replace: "https://github.com"
+
+  - trigger: ":umd"
+    replace: "https://medium.com"
+
+  - trigger: ":udt"
+    replace: "https://dev.to"
+
+  - trigger: ":uhn"
+    replace: "https://hackernoon.com"
+
+  # Social Media
+  - trigger: ":ufb"
+    replace: "https://facebook.com"
+
+  - trigger: ":uig"
+    replace: "https://instagram.com"
+
+  - trigger: ":utw"
+    replace: "https://twitter.com"
+
+  - trigger: ":uru"
+    replace: "https://reddit.com/r/unixporn"
+
+  - trigger: ":urn"
+    replace: "https://reddit.com/r/neovim"
+
+  # Quora Indonesia
+  - trigger: ":uiq"
+    replace: "https://id.quora.com"
+

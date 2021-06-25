@@ -1,8 +1,11 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+
 local helpers = require("helpers")
 local notifications = require("notifications")
+
+local keys = require("configs.keys")
 
 local create_little_circle = function(color)
     return wibox.widget {

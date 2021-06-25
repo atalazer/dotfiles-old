@@ -1,6 +1,8 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local apps = require("configs.apps")
+
 local keys = gears.table.join(
 
     -- ===================================== Prompt {{{

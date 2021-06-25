@@ -3,11 +3,14 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
-local helpers = require("helpers")
 local beautiful = require("beautiful")
 local cairo = require("lgi").cairo
+
+local helpers = require("helpers")
 local icons = require("icons")
 local class_icons = icons.text.by_class
+
+local apps = require("configs.apps")
 
 -- TODO: These variables (and more) should ideally be retrieved through `beautiful`
 local item_font = "icomoon 15"
