@@ -34,24 +34,24 @@ theme.fg_urgent     = x.color9
 theme.fg_minimize   = x.color8
 
 -- Gaps
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(3)
 -- This could be used to manually determine how far away from the
 -- screen edge the bars / notifications should be.
-theme.screen_margin = dpi(5)
+theme.screen_margin = dpi(2)
 
 -- Borders
-theme.border_width  = dpi(0)
+theme.border_width  = dpi(1)
 -- theme.border_color = x.color0
 theme.border_normal = x.background
 theme.border_focus  = x.background
 -- Rounded corners
-theme.border_radius = dpi(6)
+theme.border_radius = dpi(8)
 
 -- Titlebars
 -- (Titlebar items can be customized in titlebars.lua)
 theme.titlebars_enabled = true
-theme.titlebar_size = dpi(35)
-theme.titlebar_title_enabled = false
+theme.titlebar_size = dpi(28)
+theme.titlebar_title_enabled = true
 theme.titlebar_font = user.font .. " bold 9" or "sans bold 9"
 -- Window title alignment: left, right, center
 theme.titlebar_title_align = "center"
@@ -60,7 +60,7 @@ theme.titlebar_position = "top"
 theme.titlebar_bg = x.background
 -- theme.titlebar_bg_focus = x.color12
 -- theme.titlebar_bg_normal = x.color8
-theme.titlebar_fg_focus = x.background
+theme.titlebar_fg_focus = x.foreground
 theme.titlebar_fg_normal = x.color8
 --theme.titlebar_fg = x.color7
 
@@ -92,7 +92,7 @@ theme.notification_spacing = theme.screen_margin * 4
 -- Edge snap
 theme.snap_shape = gears.shape.rectangle
 theme.snap_bg = x.foreground
-theme.snap_border_width = dpi(3)
+theme.snap_border_width = dpi(2)
 
 -- Tag names
 theme.tagnames = {
@@ -117,8 +117,7 @@ theme.separator_fg = x.color8
 
 -- Wibar(s)
 -- Keep in mind that these settings could be ignored by the bar theme
-theme.wibar_position = "bottom"
-theme.wibar_height = dpi(45)
+theme.wibar_position = "right"
 theme.wibar_fg = x.background
 theme.wibar_bg = x.foreground
 --theme.wibar_opacity = 0.7
@@ -126,6 +125,7 @@ theme.wibar_border_color = x.color0
 theme.wibar_border_width = dpi(0)
 theme.wibar_border_radius = dpi(0)
 theme.wibar_width = dpi(380)
+theme.wibar_height = dpi(32)
 
 theme.prefix_fg = x.color8
 
@@ -162,12 +162,12 @@ theme.tasklist_align = "center"
 -- (Sidebar items can be customized in sidebar.lua)
 theme.sidebar_bg = x.background
 theme.sidebar_fg = x.color7
-theme.sidebar_opacity = 1
+theme.sidebar_opacity = 0.95
 theme.sidebar_position = "left" -- left or right
 theme.sidebar_width = dpi(300)
 theme.sidebar_x = 0
 theme.sidebar_y = 0
-theme.sidebar_border_radius = dpi(40)
+theme.sidebar_border_radius = dpi(30)
 -- theme.sidebar_border_radius = theme.border_radius
 
 -- Dashboard

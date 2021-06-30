@@ -5,21 +5,6 @@ matches:
   - trigger: "yg"
     replace: "yang"
 
-  - trigger: "pd"
-    replace: "pada"
-
-  - trigger: "sy"
-    replace: "saya"
-
-  - trigger: "km"
-    replace: "kamu"
-
-  - trigger: "kt"
-    replace: "kita"
-
-  - trigger: "kln"
-    replace: "kalian"
-
   - trigger: "tdk"
     replace: "tidak"
 
@@ -38,3 +23,5 @@ matches:
   - trigger: "dll"
     replace: "dan lain-lain"
 
+  - trigger: "dsb"
+    replace: "dan lain sebagainya"

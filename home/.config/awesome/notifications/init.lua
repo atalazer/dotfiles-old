@@ -10,9 +10,9 @@ local notifications = {}
 naughty.config.defaults['border_width'] = beautiful.notification_border_width
 
 -- Timeouts
-naughty.config.defaults.timeout = 5
-naughty.config.presets.low.timeout = 2
-naughty.config.presets.critical.timeout = 12
+naughty.config.defaults.timeout = 7
+naughty.config.presets.low.timeout = 5
+naughty.config.presets.critical.timeout = 10
 
 -- >> Notify DWIM (Do What I Mean):
 -- Create or update notification automagically. Requires storing the

@@ -19,43 +19,42 @@ local default_icon = ""
 -- (This will be removed when notification rules are released)
 -- Using icomoon font
 local app_config = {
-    ['battery'] = { icon = "", title = false },
-    ['charger'] = { icon = "", title = false },
-    ['volume'] = { icon = "", title = false },
-    ['brightness'] = { icon = "", title = false },
-    ['screenshot'] = { icon = "", title = false },
-    ['Telegram Desktop'] = { icon = "", title = true },
-    ['night_mode'] = { icon = "", title = false },
-    ['NetworkManager'] = { icon = "", title = true },
-    ['youtube'] = { icon = "", title = true },
-    ['mpd'] = { icon = "", title = true },
-    ['mpv'] = { icon = "", title = true },
-    ['keyboard'] = { icon = "", title = false },
-    ['email'] = { icon = "", title = true },
+    ["battery"] = { icon = "", title = false },
+    ["charger"] = { icon = "", title = false },
+    ["volume"] = { icon = "", title = false },
+    ["brightness"] = { icon = "", title = false },
+    ["screenshot"] = { icon = "", title = false },
+    ["Telegram Desktop"] = { icon = "", title = true },
+    ["night_mode"] = { icon = "", title = false },
+    ["NetworkManager"] = { icon = "", title = true },
+    ["youtube"] = { icon = "", title = true },
+    ["mpd"] = { icon = "", title = true },
+    ["mpv"] = { icon = "", title = true },
+    ["keyboard"] = { icon = "", title = false },
+    ["email"] = { icon = "", title = true },
 }
 
 local urgency_color = {
-    ['low'] = x.color2,
-    ['normal'] = x.color4,
-    ['critical'] = x.color11,
+    ["low"] = x.color2,
+    ["normal"] = x.color4,
+    ["critical"] = x.color11,
 }
 
 -- Template
 -- ===================================================================
 naughty.connect_signal("request::display", function(n)
-
     -- Custom icon widget
     -- It can be used instead of naughty.widget.icon if you prefer your icon to be
     -- a textbox instead of an image. However, you have to determine its
     -- text/markup value from the notification before creating the
     -- naughty.layout.box.
-    local custom_notification_icon = wibox.widget {
+    local custom_notification_icon = wibox.widget({
         font = "icomoon 18",
         -- font = "icomoon bold 40",
         align = "center",
         valign = "center",
-        widget = wibox.widget.textbox
-    }
+        widget = wibox.widget.textbox,
+    })
 
     local icon, title_visible
     local color = urgency_color[n.urgency]
@@ -68,39 +67,39 @@ naughty.connect_signal("request::display", function(n)
         title_visible = true
     end
 
-    local actions = wibox.widget {
+    local actions = wibox.widget({
         notification = n,
-        base_layout = wibox.widget {
+        base_layout = wibox.widget({
             spacing = dpi(3),
-            layout = wibox.layout.flex.horizontal
-        },
+            layout = wibox.layout.flex.horizontal,
+        }),
         widget_template = {
             {
                 {
                     {
-                        id = 'text_role',
+                        id = "text_role",
                         font = beautiful.notification_font,
-                        widget = wibox.widget.textbox
+                        widget = wibox.widget.textbox,
                     },
                     left = dpi(6),
                     right = dpi(6),
-                    widget = wibox.container.margin
+                    widget = wibox.container.margin,
                 },
-                widget = wibox.container.place
+                widget = wibox.container.place,
             },
-            bg = x.color8.."32",
+            bg = x.color8 .. "32",
             forced_height = dpi(25),
             forced_width = dpi(70),
-            widget = wibox.container.background
+            widget = wibox.container.background,
         },
         style = {
             underline_normal = false,
-            underline_selected = true
+            underline_selected = true,
         },
-        widget = naughty.list.actions
-    }
+        widget = naughty.list.actions,
+    })
 
-    naughty.layout.box {
+    naughty.layout.box({
         notification = n,
         type = "notification",
         -- For antialiasing: The real shape is set in widget_template
@@ -120,7 +119,7 @@ naughty.connect_signal("request::display", function(n)
                         },
                         forced_width = dpi(50),
                         bg = x.background,
-                        widget  = wibox.container.background,
+                        widget = wibox.container.background,
                     },
                     {
                         {
@@ -128,7 +127,7 @@ naughty.connect_signal("request::display", function(n)
                                 align = "center",
                                 visible = title_visible,
                                 font = beautiful.notification_font,
-                                markup = "<b>"..n.title.."</b>",
+                                markup = "<b>" .. n.title .. "</b>",
                                 widget = wibox.widget.textbox,
                                 -- widget = naughty.widget.title,
                             },
@@ -145,26 +144,37 @@ naughty.connect_signal("request::display", function(n)
                                     widget = wibox.container.background,
                                 },
                                 visible = n.actions and #n.actions > 0,
-                                layout  = wibox.layout.fixed.vertical
+                                layout = wibox.layout.fixed.vertical,
                             },
-                            layout  = wibox.layout.align.vertical,
+                            layout = wibox.layout.align.vertical,
                         },
                         margins = beautiful.notification_margin,
-                        widget  = wibox.container.margin,
+                        widget = wibox.container.margin,
                     },
-                    layout  = wibox.layout.fixed.horizontal,
+                    layout = wibox.layout.fixed.horizontal,
                 },
                 strategy = "max",
-                width    = beautiful.notification_max_width or dpi(350),
-                height   = beautiful.notification_max_height or dpi(180),
-                widget   = wibox.container.constraint,
+                width = beautiful.notification_max_width or dpi(350),
+                height = beautiful.notification_max_height or dpi(180),
+                widget = wibox.container.constraint,
             },
             -- Anti-aliasing container
             shape = helpers.rrect(beautiful.notification_border_radius),
             bg = x.color0,
-            widget = wibox.container.background
-        }
-    }
+            widget = wibox.container.background,
+        },
+    })
+
+    -- For Notification Center
+    if panel_visible or dont_disturb then
+        naughty.destroy_all_notifications()
+    end
+
+    if not dont_disturb then
+        -- Add Sound fx to notif
+        -- Depends: canberra-gtk-play
+        awful.spawn("canberra-gtk-play -i message", false)
+    end
 end)
 
 -- naughty.disconnect_signal("request::display", naughty.default_notification_handler)

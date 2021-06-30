@@ -14,10 +14,16 @@ ruled.client.connect_signal("request::rules", function()
                 "URxvt",
             },
         },
+        except_any = {
+            instance = {
+                "Alacritty",
+                "kitty",
+            }
+        },
         properties = {
             width = screen_width * 0.50,
             height = screen_height * 0.50,
-            titlebars_enabled = false,
+            titlebars_enabled = true,
             placement = centered_client_placement,
         },
     })
@@ -25,13 +31,14 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Video Player {{{
     ruled.client.append_rule({
-        rule = { class = "mpv", "vlc" },
+        rule_any = { 
+            class = { "mpv", "vlc" },
+        },
         properties = {
             floating = true,
-            raise = true,
             titlebars_enabled = true,
-            width = screen_width * 0.7,
-            height = screen_height * 0.75,
+            width = screen_width * 0.5,
+            height = screen_height * 0.5,
             placement = centered_client_placement,
         },
     })
@@ -59,7 +66,12 @@ ruled.client.connect_signal("request::rules", function()
         rule_any = {
             class = { "Okular", "Zathura", "Evince" },
         },
-        properties = { floating = true },
+        properties = {
+            floating = true,
+            placement = centered_client_placement,
+            width = screen_width * 0.30,
+            height = screen_height * 0.80,
+        },
     })
     -- }}}
 
@@ -67,7 +79,9 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "Nemo", "Thunar", "file",
+                "Nemo",
+                "Thunar",
+                "file",
             },
             instance = { "file" },
         },
@@ -185,6 +199,22 @@ ruled.client.connect_signal("request::rules", function()
             raise = true,
             width = screen_width * 0.8,
             height = screen_height * 0.85,
+            placement = centered_client_placement,
+        },
+    })
+    -- }}}
+
+    -- Editor {{{
+    ruled.client.append_rule({
+        rule_any = {
+            instance = { "emacs", "editor" },
+            class = { "Emacs", "editor" },
+        },
+        properties = {
+            titlebars_enabled = true,
+            floating = true,
+            width = screen_width * 0.8,
+            height = screen_height * 0.8,
             placement = centered_client_placement,
         },
     })

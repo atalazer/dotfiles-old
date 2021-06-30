@@ -86,6 +86,14 @@ local plugins = {
         end,
     },
 
+    -- Dasboard
+    {
+        "glepnir/dashboard-nvim",
+        config = function()
+            require("plugins.dashboard")
+        end
+    },
+
     -- ======= Experience =======
     -- Easy Commenting
     { "tpope/vim-commentary", keys = "gc" },
@@ -197,12 +205,6 @@ local plugins = {
         end,
     },
 
-    -- nim.nvim for nim development
-    {
-        "alaviss/nim.nvim",
-        ft = "nim",
-    },
-
     -- LaTeX Support with Texlab LSP
     {
         "jakewvincent/texmagic.nvim",
@@ -227,6 +229,26 @@ local plugins = {
         end,
     },
 
+    -- nim Support
+    {
+        "alaviss/nim.nvim",
+        ft = "nim",
+    },
+
+    -- Org.mode for nvim
+    {
+        "kristijanhusak/orgmode.nvim",
+        ft = "org",
+        keys = "<Leader>o",
+        config = function()
+            require("orgmode").setup({
+                org_agenda_files = { "~/Sync/Notes/Org/*", "~/Documents/Notes/Org/*" },
+                org_default_notes_file = "~/Sync/Notes/Org/Notes.org"
+            })
+        end
+    },
+
+    -- Markdown Support
     {
         "plasticboy/vim-markdown",
         ft = "markdown",
@@ -317,6 +339,7 @@ local plugins = {
     {
         "hrsh7th/nvim-compe",
         event = "InsertEnter",
+        after = { "orgmode.nvim" },
         config = function()
             require("plugins.compe")
         end,
@@ -390,6 +413,7 @@ local plugins = {
     -- show git stuff in signcolumn
     {
         "lewis6991/gitsigns.nvim",
+        wants = { "plenary.nvim" },
         event = "BufRead",
         config = function()
             require("plugins.gitsigns")

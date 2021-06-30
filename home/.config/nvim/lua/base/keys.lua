@@ -119,6 +119,8 @@ nnoremap({ "<M-0>", ":lua require'bufferline'.go_to_buffer(10)<CR>", { silent = 
 nnoremap({ "<C-p>", require("telescope.builtin").find_files, { silent = true } })
 nnoremap({ "<leader>fl", require("telescope.builtin").live_grep, { silent = true } })
 nnoremap({ "<leader>fg", require("telescope.builtin").git_commits, { silent = true } })
+nnoremap({ "<leader>fo", require("telescope.builtin").oldfiles, { silent = true } })
+nnoremap({ "<leader>fd", require("telescope.builtin").marks, { silent = true } })
 nnoremap({ "<leader>fb", require("telescope.builtin").file_browser, { silent = true } })
 nnoremap({ "<leader>fk", require("telescope.builtin").keymaps, { silent = true } })
 nnoremap({ "<leader>fc", require("telescope.builtin").colorscheme, { silent = true } })
@@ -126,6 +128,10 @@ nnoremap({ "<leader>fc", require("telescope.builtin").colorscheme, { silent = tr
 -- Telescope Extensions
 nnoremap({ "<leader>ff", require("plugins.telescope").frecency, { silent = true } })
 nnoremap({ "<leader>fm", require("plugins.telescope").media_files, { silent = true } })
+
+-- Dashboard.nvim
+nnoremap({ "<leader>sl", ":SessionLoad<CR>" })
+nnoremap({ "<leader>ss", ":SessionSave<CR>" })
 
 -- Hop
 nmap({ "<space>w", ":HopWord<CR>" })

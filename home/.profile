@@ -33,14 +33,6 @@ TO_PATH $HOME/.nimble/bin
 
 # }}}
 
-# added by Nix installer
-if [ -e /home/atalariq/.nix-profile/etc/profile.d/nix.sh ]; then
-    source /home/atalariq/.nix-profile/etc/profile.d/nix.sh;
-fi
-if [ -e /home/atalariq/.nix-profile/etc/profile.d/nix-daemon.sh ]; then
-    source /home/atalariq/.nix-profile/etc/profile.d/nix-daemon.sh;
-fi
-
 export LF_ICONS="\
 tw= :\
 st= :\

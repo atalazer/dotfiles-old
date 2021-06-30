@@ -2,10 +2,10 @@ name: global
 parent: default
 
 matches:
-  - trigger: ":name"
+  - triggers: [":name", ":nama"]
     replace: "Atalariq Barra Hadinugraha"
 
-  - trigger: ":user"
+  - triggers: [":user", ":pengguna"]
     replace: "atalazer"
 
   - trigger: ":email"

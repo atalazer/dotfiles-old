@@ -31,25 +31,29 @@ local keys = gears.table.join(
         if dashboard_show then
             dashboard_show()
         end
-        -- rofi_show()
-    end, {description = "Toggle Dashboard", group = "Awesome"}),
+    end, {description = "Dashboard", group = "Awesome"}),
+
+    -- Notification Center
+    awful.key({ superkey }, "'", function()
+        screen.primary.notif_panel:toggle()
+    end, {description = "Notification Center", group = "Awesome"}),
 
     -- Toggle tray visibility
     awful.key({ superkey }, "=",
         function ()
             tray_toggle()
         end,
-        {description = "Toggle Tray", group = "Awesome"}),
+        {description = "Tray", group = "Awesome"}),
 
     -- Toggle sidebar
     awful.key({ superkey }, "`", function()
         sidebar_toggle()
-    end, { description = "Toggle Sidebar", group = "Awesome" }),
+    end, { description = "Sidebar", group = "Awesome" }),
 
     -- Toggle wibar(s)
     awful.key({ superkey }, "b", function()
         wibars_toggle()
-    end, { description = "Toggle Bars", group = "Awesome" }),
+    end, { description = "Bars", group = "Awesome" }),
 
     -- App drawer
     awful.key({ superkey }, "F3", function()

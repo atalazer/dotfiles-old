@@ -21,7 +21,7 @@ g.mapleader = "."
 g.maplocalleader = ","
 
 -- Others options
-g.python_host_prog = "/usr/bin/python"
+g.python_host_prog = "/usr/bin/python3"
 g.python3_host_prog = "/usr/bin/python3"
 g.node_host_prog = "/home/atalariq/.fnm/node-versions/v14.16.1/installation/bin/neovim-node-host"
 
@@ -36,13 +36,6 @@ g.loaded_netrwPlugin = 1
 g.loaded_matchit = 1
 g.loaded_matchparen = 1
 g.loaded_spec = 1
-
--- cmd([[
---   runtime! lua/modules/keymap.lua
---   runtime! lua/modules/util.lua
---   runtime! lua/modules/settings.lua
---   runtime! lua/modules/keys.lua
--- ]])
 
 local modules = {
     "base.keymap",

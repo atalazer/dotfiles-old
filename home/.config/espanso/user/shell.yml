@@ -16,3 +16,7 @@ matches:
     replace: "export PATH=$PATH:$|$"
     force_clipboard: true
 
+  - trigger: ":firep"
+    replace: "firefox -ProfileManager &> /dev/null"
+    force_clipboard: true
+

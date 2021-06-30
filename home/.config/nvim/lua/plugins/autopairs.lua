@@ -10,22 +10,29 @@ npairs.setup({
         ["{"] = "}",
         ["`"] = "`",
     },
-    disable_filetype = { "TelescopePrompt", "vim" },
-    break_line_filetype = nil,
+    fast_wrap = {},
+    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
     check_line_pair = true,
-    html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
-    ignored_next_char = "%w",
     check_ts = true,
+    ts_config = {
+        lua = { "string" }, -- it will not add pair on that treesitter node
+    },
+    break_line_filetype = nil,
+    html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
+    disable_filetype = { "TelescopePrompt", "vim" },
 })
 
 -- Rule
 -- ==========
--- add space paranthess
+-- Latex
 npairs.add_rules({
-    Rule(" ", " ")
-        :with_pair(function (opts)
-            local pair = opts.line:sub(opts.col, opts.col + 1)
-            return vim.tbl_contains({ "()", "[]", "{}" }, pair)
-        end)
+    Rule("$$", "$$", "tex"),
 })
 
+-- add space paranthess
+npairs.add_rules({
+    Rule(" ", " "):with_pair(function(opts)
+        local pair = opts.line:sub(opts.col, opts.col + 1)
+        return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+    end),
+})

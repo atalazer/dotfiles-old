@@ -19,16 +19,15 @@ local theme = themes[1]
 -- ===================================================================
 -- Affects the window appearance: titlebar, titlebar buttons...
 local decoration_themes = {
-    "ephemeral",      -- 1 -- Text-generated titlebar buttons
+    "atalazer",      -- 1 -- Text-generated titlebar buttons
 }
 local decoration_theme = decoration_themes[1]
 -- ===================================================================
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
-    "ephemeral",    -- 1 -- Taglist, start button, tasklist, and more buttons
-    "amarena",      -- 2 -- Minimal taglist and dock with autohide
+    "atalazer",     -- 1 -- Minimal taglist and dock with autohide
 }
-local bar_theme = bar_themes[2]
+local bar_theme = bar_themes[1]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
@@ -39,23 +38,23 @@ local icon_themes = {
 local icon_theme = icon_themes[2]
 -- ===================================================================
 local notification_themes = {
-    "lovelace",       -- 1 -- Plain with standard image icons
-    "amarena",        -- 3 -- Filled text icons on the right, text on the left
+    "atalazer",       -- 1 -- Filled text icons on the right, text on the left
+    "lovelace",       -- 2 -- Plain with standard image icons
 }
-local notification_theme = notification_themes[1]
+local notification_theme = notification_themes[2]
 -- ===================================================================
 local sidebar_themes = {
-    "amarena",        -- 1 -- Text-only (consumes less RAM)
+    "atalazer",        -- 1 -- Text-only (consumes less RAM)
 }
 local sidebar_theme = sidebar_themes[1]
 -- ===================================================================
 local dashboard_themes = {
-    "amarena",        -- 1 -- Displays coronavirus stats
+    "atalazer",        -- 1 -- Displays coronavirus stats
 }
 local dashboard_theme = dashboard_themes[1]
 -- ===================================================================
 local exit_screen_themes = {
-    "ephemeral",     -- 1 -- Uses text-generated icons (consumes less RAM)
+    "atalazer",     -- 1 -- Uses text-generated icons (consumes less RAM)
 }
 local exit_screen_theme = exit_screen_themes[1]
 -- ===================================================================
@@ -119,6 +118,12 @@ user = {
         show_on_mouse_screen_edge = true,
     },
 
+    -- >> Notification Center <<
+    notif = {
+        hide_on_mouse_leave = true,
+        show_on_mouse_screen_edge = true,
+    },
+
     -- >> Lock screen <<
     -- This password will ONLY be used if you have not installed
     -- https://github.com/RMTT/lua-pam
@@ -149,10 +154,6 @@ user = {
 
 }
 -- ===================================================================
-
-
--- Jit
-pcall(function() jit.on() end)
 
 -- Initialization
 -- ===================================================================
@@ -240,6 +241,9 @@ require("elemental.sidebar."..sidebar_theme)
 
 -- Dashboard (previously called: Start screen)
 require("elemental.dashboard."..dashboard_theme)
+
+-- Notification Center
+require("elemental.notif_center")
 
 -- Lock screen
 -- Make sure to install lua-pam as described in the README or configure your
@@ -411,5 +415,5 @@ end)
 -- collectgarbage("setpause", 160)
 -- collectgarbage("setstepmul", 400)
 
-collectgarbage("setpause", 150)
-collectgarbage("setstepmul", 1000)
+collectgarbage("setpause", 200)
+collectgarbage("setstepmul", 800)

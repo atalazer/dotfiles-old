@@ -45,6 +45,7 @@ require("compe").setup({
             enable = true,
             priority = 10001,
         },
+        orgmode = true,
     },
 })
 

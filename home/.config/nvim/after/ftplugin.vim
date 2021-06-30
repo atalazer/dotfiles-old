@@ -44,9 +44,9 @@ augroup END
 " automatically go to insert mode on terminal buffer
 augroup Term
     au!
-    au BufEnter term://* startinsert
-    au BufEnter term://* setlocal laststatus=0 noruler nonumber norelativenumber nolist
-    au BufLeave term://* setlocal laststatus=2 ruler number relativenumber list
+    au TermEnter * startinsert
+    au TermEnter * setlocal showtabline=0 laststatus=0 noruler nonumber norelativenumber nolist
+    au TermLeave * setlocal showtabline=2 laststatus=2 ruler number relativenumber list
 augroup END
 
 " highlight yanked text for 250ms
@@ -56,17 +56,23 @@ augroup Yank
 augroup END
 
 " Remove trailing whitespace on save
-let g:strip_whitespace = v:true
+let g:strip_whitespace = v:false
 augroup Whitespace
     au!
     au BufWritePre * if g:strip_whitespace | %s/\s\+$//e
 augroup END
 
-" enable/disable wordwrap
+augroup Dashboard
+    au!
+    au FileType dashboard set showtabline=0 laststatus=0 signcolumn=no nolist noruler | au WinLeave <buffer> set showtabline=2 laststatus=2 signcolumn=yes list ruler
+augroup END
+
 augroup Goyo
     au!
-    au User GoyoEnter setlocal nolist noruler laststatus=0 scrolloff=999 nocursorline
-    au User GoyoLeave setlocal list ruler laststatus=2 scrolloff=3 cursorline
+    au User GoyoEnter setlocal showtabline=0 laststatus=0 scrolloff=999 signcolumn=no nolist noruler
+    au User GoyoEnter IndentBlanklineDisable
+    au User GoyoLeave setlocal showtabline=2 laststatus=2 scrolloff=3 signcolumn=yes list ruler
+    au User GoyoLeave IndentBlanklineEnable
 augroup END
 
 " disable nvim-compe inside telescope
@@ -78,7 +84,7 @@ augroup END
 
 augroup Emmet
     au!
-    autocmd FileType html,svelte,javascriptreact EmmetInstall
+    autocmd FileType html,css,markdown,svelte,javascriptreact EmmetInstall
 augroup END
 
 " " hide the cursor if we're inside NvimTree

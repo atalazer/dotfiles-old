@@ -30,10 +30,11 @@ vim.g.indent_blankline_buftype_exclude = {
 
 vim.g.indent_blankline_filetype_exclude = {
     "help",
+    "markdown",
+    "text",
     "Nvimtree",
     "Outline",
     "Trouble",
     "packer",
-    "markdown",
-    "text",
+    "dashboard"
 }
