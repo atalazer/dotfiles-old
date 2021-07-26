@@ -21,6 +21,10 @@ color_profile="/usr/share/color/icc/colord/sRGB.icc"
 font_size=11
 font='JetBrains-Mono-Bold-Nerd-Font-Complete'
 
+add_annotate=false
+long_text="$(date '+%A, %d/%m/%Y') $(date '+%H:%M:%S')"
+short_text="$(date '+%d/%m/%Y')"
+
 add_author=false
 author_position=("South" "+0+26")
 author="By: Atalariq Barra H."
@@ -38,7 +42,7 @@ check(){
 }
 
 # Check DE/WM
-get_desktop_env() {
+check_wm() {
     # Identify environment
     DE="${DESKTOP_STARTUP_ID}"
     if [[ ! -z "$DE" && "$DE" == *"awesome"* ]] || [[ ! -z "$CHECK_AWESOME_CLIENT" ]]; then
@@ -82,11 +86,27 @@ parse(){
         \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
     fi
 
-    # Set image shadow + border
+    # Set image shadow
     convert $IMG \( +clone -background black \
     -shadow ${shadow_size} \) +swap -background none \
-    -layers merge +repage $IMG && \
-    convert "$IMG" -bordercolor $background_color -border $background_size "$IMG"
+    -layers merge +repage $IMG
+
+    # Set image border
+    convert "$IMG" -bordercolor ${background_color} \
+        -border ${background_size} "$IMG"
+
+    # Set annotate if enabled
+    if [[ $add_annotate == true ]]; then
+        width=$(identify -format "%w" $IMG)
+        text="$long_text"
+        if (($width <= 200)); then
+            text="$shor_ttext"
+        fi
+
+        convert $IMG -font $font -gravity north \
+            -background ${background_color} -fill ${color_fg} \
+            -splice 0x18 -annotate +0+1 "$text" $IMG
+    fi
 
     # Set image author if enabled
     if [[ $add_author == true ]]; then
@@ -95,11 +115,12 @@ parse(){
         -undercolor ${color_bg} -font ${font} \
         -annotate ${author_position[1]} @- $IMG && \
         convert $IMG -gravity South -chop 0x$(( $background_size / 2)) $IMG
-    fi
+    
+        # Add top bg
+        convert $IMG -gravity North -background ${background_color} \
+            -splice 0x$(( $background_size / 2)) $IMG
 
-    # Add top bg
-    convert $IMG -gravity North -background ${background_color} \
-    -splice 0x$(( $background_size / 2)) $IMG
+    fi
 
     # Set image profile
     convert $IMG -profile ${color_profile} $IMG
@@ -110,7 +131,7 @@ notify() {
     _MSG=$1
     _FILE=$SAVED_NAME
 
-    if [[ "$(get_desktop_env)" == "AWESOME" ]]; then
+    if [[ "$(check_wm)" == "AWESOME" ]]; then
         awesome-client "
         -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
         naughty = require('naughty')
@@ -149,7 +170,7 @@ notify() {
 
         -- Show notification
         naughty.notification ({
-            app_name = 'Screenshot Tool',
+            app_name = 'screenshot',
             icon = '${_FILE}',
             timeout = 5,
             title = '<b>Shot</b>',
@@ -157,8 +178,8 @@ notify() {
             actions = { open_image, open_folder, delete_image }
         })
         "
-    else
-        notify-send "Shot" "${_MSG}"
+    elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
+        notify-send --app-name=screenshot "Shot" "${_MSG}"
     fi
 }
 
@@ -194,7 +215,7 @@ _noparse(){
         clipboard)
             check && \
             _shot normal && \
-            notify "Screenshot Saved to Clipboard" && \
+            notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard" && \
             to_clip
         ;;
         full)
@@ -211,13 +232,13 @@ _noparse(){
         ;;
         select)
             check && \
-            _shot active && \
+            _shot select && \
             cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Selected Has been Saved"
         ;;
         delay)
             check && \
-            notify-send "Shot" "Shot After ${sleep} Sec" && \
+            notify-send --app-name=screenshot "Shot" "Shot After ${sleep} Sec" && \
             _shot delay && \
             cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"
@@ -230,15 +251,15 @@ _parse(){
         clipboard)
             check && \
             _shot normal && \
-            notify-send "Shot" "Parsing Image ..." && \
+            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
-            notify "Screenshot Saved to Clipboard" && \
+            notify-send "Shot" "Screenshot Saved to Clipboard" && \
             to_clip
         ;;
         full)
             check && \
             _shot normal && \
-            notify-send "Shot" "Parsing Image ..." && \
+            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
             cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"
@@ -246,7 +267,7 @@ _parse(){
         active)
             check && \
             _shot active && \
-            notify-send "Shot" "Parsing Image ..." && \
+            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
             cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot from Active Windows Saved"
@@ -254,16 +275,16 @@ _parse(){
         select)
             check && \
             _shot select && \
-            notify-send "Shot" "Parsing Image ..." && \
+            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
             cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Selected Has been Saved"
         ;;
         delay)
             check && \
-            notify-send "Shot" "Shot After ${sleep} Sec" && \
+            notify-send --app-name=screenshot "Shot" "Shot After ${sleep} Sec" && \
             _shot delay && \
-            notify-send "Shot" "Parsing Image ..." && \
+            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
             cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"

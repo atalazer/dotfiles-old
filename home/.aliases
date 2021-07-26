@@ -94,11 +94,11 @@ alias {lg,lz}="lazygit"
 # Archlinux
 if command -v "pacman" > /dev/null 2>&1; then
     alias pacin="$PERMISSION pacman -S"
-    alias pacsearch="$PERMISSION pacman -Ss"
+    alias pacsearch="pacman -Ss"
     alias pacupd="$PERMISSION pacman -Syy"
     alias pacupg="$PERMISSION pacman -Syu"
     alias pacrem="$PERMISSION pacman -Rns"
-    alias pacrmorp="$PERMISSION pacman Qtdq | $PERMISSION pacman -Rns -"
+    alias pacrmorp="pacman Qtdq | $PERMISSION pacman -Rns -"
 fi
 
 if command -v "paru" > /dev/null 2>&1; then
@@ -133,6 +133,7 @@ fi
 
 # youtube-dl
 if command -v "youtube-dl" > /dev/null 2>&1; then
+    alias yt720p="youtube-dl -f 'best[height<=720][ext=mp4]' --embed-thumbnail"
     alias yt480p="youtube-dl -f 'best[height<=480][ext=mp4]' --embed-thumbnail"
     alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
 fi

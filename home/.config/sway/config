@@ -67,7 +67,7 @@ input type:keyboard {
 
 input "6127:24717:PixArt_Lenovo_USB_Optical_Mouse" {
     accel_profile   flat
-    pointer_accel   -0.15
+    pointer_accel   -0.10
 }
 
 #

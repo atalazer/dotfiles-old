@@ -1,23 +1,29 @@
-local tsc = require("nvim-treesitter.configs")
+local ts_configs = require("nvim-treesitter.configs")
 
-tsc.setup({
+ts_configs.setup({
     ensure_installed = {
-        "javascript", "typescript", "tsx",
-        "html", "css", "scss",
-        "cpp", "c", "go", "rust",
-        "python", "lua",
-        "bash", "fish",
-        "toml", "yaml", "latex",
-        "json", "jsdoc", "jsonc",
-        "query", "comment", "regex"
+        "javascript",
+        "typescript",
+        "tsx",
+        "html",
+        "css",
+        "scss",
+        "cpp",
+        "c",
+        "go",
+        "rust",
+        "python",
+        "lua",
+        "bash",
+        "toml",
+        "yaml",
+        "latex",
+        "json",
+        "jsonc",
+        "query",
+        "comment",
     },
     matchup = {
-        enable = true,
-    },
-    highlight = {
-        enable = true,
-    },
-    indent = {
         enable = true,
     },
     autopairs = {
@@ -29,8 +35,14 @@ tsc.setup({
     context_commentstring = {
         enable = true,
         config = {
-            lua  = "-- %s",
-        }
+            lua = "-- %s",
+        },
+    },
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = true,
     },
     incremental_selection = {
         enable = true,
@@ -62,4 +74,3 @@ tsc.setup({
         },
     },
 })
-

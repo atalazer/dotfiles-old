@@ -55,7 +55,7 @@ vnoremap({ "x", "\"_x" })
 nnoremap({ "<C-z>", ":undo<CR>" })
 inoremap({ "<C-z>", "<Esc>:undo<CR>" })
 nnoremap({ "<C-y>", ":redo<CR>" })
-inoremap({ "<C-y>", "<Esc>:redo<CR>" })
+inoremap({ "<c-y>", "<esc>:redo<cR>" })
 
 -- Find
 nnoremap({ "<Esc><Esc>", ":nohlsearch<CR>" })
@@ -63,6 +63,10 @@ nnoremap({ "<Esc><Esc>", ":nohlsearch<CR>" })
 -- Indent
 vnoremap({ "<", "<gv" })
 vnoremap({ ">", ">gv" })
+
+-- ===================================== Spelling
+nnoremap({ "csU", "<Cmd>s/\\<./\\u&/g | nohlsearch<CR>", { silent = true } })
+nnoremap({ "csu", "<Cmd>s/\\<./\\l&/g | nohlsearch<CR>", { silent = true } })
 
 -- ===================================== Workspace
 
@@ -116,21 +120,21 @@ nnoremap({ "<M-9>", ":lua require'bufferline'.go_to_buffer(9)<CR>", { silent = t
 nnoremap({ "<M-0>", ":lua require'bufferline'.go_to_buffer(10)<CR>", { silent = true } })
 
 -- Telescope
-nnoremap({ "<C-p>", require("telescope.builtin").find_files, { silent = true } })
-nnoremap({ "<leader>fl", require("telescope.builtin").live_grep, { silent = true } })
-nnoremap({ "<leader>fg", require("telescope.builtin").git_commits, { silent = true } })
-nnoremap({ "<leader>fo", require("telescope.builtin").oldfiles, { silent = true } })
-nnoremap({ "<leader>fd", require("telescope.builtin").marks, { silent = true } })
-nnoremap({ "<leader>fb", require("telescope.builtin").file_browser, { silent = true } })
-nnoremap({ "<leader>fk", require("telescope.builtin").keymaps, { silent = true } })
-nnoremap({ "<leader>fc", require("telescope.builtin").colorscheme, { silent = true } })
+nnoremap({ "<C-p>",      ":Telescope find_files<CR>"   , { silent = true } })
+nnoremap({ "<leader>fl", ":Telescope live_grep<CR>"    , { silent = true } })
+nnoremap({ "<leader>fg", ":Telescope git_commits<CR>"  , { silent = true } })
+nnoremap({ "<leader>fo", ":Telescope oldfiles<CR>"     , { silent = true } })
+nnoremap({ "<leader>fd", ":Telescope marks<CR>"        , { silent = true } })
+nnoremap({ "<leader>fb", ":Telescope file_browser<CR>" , { silent = true } })
+nnoremap({ "<leader>fk", ":Telescope keymaps<CR>"      , { silent = true } })
+nnoremap({ "<leader>fc", ":Telescope colorscheme<CR>"  , { silent = true } })
 
--- Telescope Extensions
-nnoremap({ "<leader>ff", require("plugins.telescope").frecency, { silent = true } })
-nnoremap({ "<leader>fm", require("plugins.telescope").media_files, { silent = true } })
+-- :Telescope Extensions
+nnoremap({ "<leader>ff", ":Telescope frecency<CR>"     , { silent = true } })
+nnoremap({ "<leader>fm", ":Telescope media_files<CR>"  , { silent = true } })
 
 -- Dashboard.nvim
-nnoremap({ "<leader>sl", ":SessionLoad<CR>" })
+nnoremap({ "<leader>sl", ":SessionLoad last<CR>" })
 nnoremap({ "<leader>ss", ":SessionSave<CR>" })
 
 -- Hop
@@ -139,9 +143,6 @@ nmap({ "<space>p", ":HopPattern<CR>" })
 
 -- Colorizer
 nnoremap({ "<leader>cc", ":ColorizerToggle<CR>" })
-nnoremap({ "<leader>cd", ":ColorizerDetachFromBuffer<CR>" })
-nnoremap({ "<leader>ca", ":ColorizerAttachToBuffer<CR>" })
-nnoremap({ "<leader>cr", ":ColorizerReloadAllBuffers<CR>" })
 
 -- NvimTree
 nnoremap({ "`", ":NvimTreeToggle<CR>", { silent = true } })
@@ -152,7 +153,7 @@ nnoremap({ "<leader>gt", "<Cmd>LazyGit<CR>", { silent = true } })
 -- Glow.nvim
 nnoremap({ "<leader>gg", ":Glow<CR>", { silent = true } })
 
--- Glow.nvim
+-- goyo.vim
 nnoremap({ "<leader>gy", ":Goyo<CR>", { silent = true } })
 
 -- Vim Easy Align

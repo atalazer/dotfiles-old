@@ -1,46 +1,161 @@
 #!/usr/bin/env bash
 
-DMENU="rofi -dmenu -lines 3 -width 30 -i -p Record"
+DMENU="rofi -dmenu -lines 5 -width 30 -i -p Record"
 _XDG_=$(xdg-user-dir VIDEOS)/Recordings
 OUTDIR="${_XDG_:-$HOME/Videos/Recordings}"
 recordid="/tmp/recordid"
+recordicon="/tmp/recordicon"
+recordfilename="/tmp/recordfilename"
+
+if [[ ! -f $recordicon ]]; then
+    touch $recordicon
+    echo "NOREC" > $recordicon
+fi
+
+# Check DE/WM
+check_wm() {
+    # Identify environment
+    DE="${DESKTOP_STARTUP_ID}"
+    if [[ ! -z "$DE" && "$DE" == *"awesome"* ]] || [[ ! -z "$CHECK_AWESOME_CLIENT" ]]; then
+        echo "AWESOME"
+        return
+    fi
+    echo "NOT_AWESOME"
+}
+
+notify() {
+    _OPT=$1
+    _MSG=$2
+
+    case $_OPT in
+    -1)
+        _FILE=$3
+        if [[ "$(check_wm)" == "AWESOME" ]]; then
+            awesome-client "
+            -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
+            naughty = require('naughty')
+            awful = require('awful')
+            beautiful = require('beautiful')
+            dpi = beautiful.xresources.apply_dpi
+
+            local open_image = naughty.action {
+                name = 'Open',
+                icon_only = false,
+            }
+
+            local open_folder = naughty.action {
+                name = 'Open Folder',
+                icon_only = false,
+            }
+
+            local delete_image = naughty.action {
+                name = 'Delete',
+                icon_only = false,
+            }
+
+            -- Execute the callback when 'Open' is pressed
+            open_image:connect_signal('invoked', function()
+                awful.spawn('xdg-open ' .. '${_FILE}', false)
+            end)
+
+            open_folder:connect_signal('invoked', function()
+                awful.spawn('xdg-open ' .. '${OUTDIR}', false)
+            end)
+
+            -- Execute the callback when 'Delete' is pressed
+            delete_image:connect_signal('invoked', function()
+                awful.spawn('gio trash ' .. '${_FILE}', false)
+            end)
+
+            -- Show notification
+            naughty.notification ({
+                app_name = 'record',
+                icon = '${_FILE}',
+                timeout = 5,
+                title = '<b>Recording</b>',
+                message = '${_MSG}',
+                actions = { open_image, open_folder, delete_image }
+            })
+            "
+        elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
+            notify-send --app-name=record "Shot" "${_MSG}"
+        fi
+    ;;
+    -2)
+        notify-send --app-name=record "Shot" "${_MSG}"
+    ;;
+    esac
+}
 
 function audioVideo() {
-    notify-send "Start Recording" "With:\nVideo On\nAudio On"
-
     filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mkv"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
-    ffmpeg -y -f x11grab -framerate 30 -s $dimensions \
-        -i :0.0 -f alsa -i default \
+    
+    notify -2 "<b>Start Record Audio and Video</b>"
+
+    ffmpeg -y -f x11grab -framerate 30 \
+        -s $dimensions -i :0.0 \
+        -f alsa -i default \
         -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
         -c:a aac $filename &
 
+    echo $filename > $recordfilename
     echo $! >$recordid
+    echo "難REC" > $recordicon
+}
+
+function videoOnlyArea() {
+    filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mp4"
+    slop=$(slop -f "%x %y %w %h %g %i") || exit 1
+    read -r X Y W H G ID < <(echo $slop)
+
+    notify -2 "<b>Start Record Video on Specific Area</b>" $filename
+
+    ffmpeg -y -f x11grab -framerate 30 \
+        -draw_mouse 1 \
+        -s "$W"x"$H" -i :0.0+$X,$Y \
+        -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 \
+        -vf setpts=N/FR/TB \
+        -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
+        $filename &
+    
+    echo $filename > $recordfilename
+    echo $! >$recordid
+    echo " REC" > $recordicon
 }
 
 function video() {
-    notify-send "Start Recording" "With:\nVideo On\nAudio Off"
-
     filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mp4"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
-    ffmpeg -y -f x11grab -framerate 30 -s $dimensions \
-        -i :0.0 -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 \
-        -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 $filename &
 
+    notify -2 "<b>Start Recording Video</b>" $filename
+
+    ffmpeg -y -f x11grab -framerate 30 \
+        -s $dimensions -i :0.0 \
+        -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 \
+        -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
+        $filename &
+
+    echo $filename > $recordfilename
     echo $! >$recordid
+    echo " REC" > $recordicon
 }
 
 function audio() {
-    notify-send "Start Recording" "With:\nVideo Off\nAudio On"
-
     filename="$OUTDIR/audio-$(date '+%y%m%d-%H%M-%S').mp3"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
+    
+    notify -2 "<b>Start Recording Audio</b>" $filename
+
     ffmpeg -f alsa -i default -ac 2 -acodec libmp3lame -ab 128k $filename &
 
+    echo $filename > $recordfilename
     echo $! >$recordid
+    echo " REC" > $recordicon
 }
 
 function stoprecord() {
+    echo "NOREC" > $recordicon
     if [ -f $recordid ]; then
         kill -15 $(cat $recordid)
         rm $recordid
@@ -52,11 +167,13 @@ function stoprecord() {
     fi
 }
 
-
 function endrecord() {
+    filename=$(cat $recordfilename)
     OPTIONS='["Yes", "No"]'
     select=$(echo $OPTIONS | jq -r ".[]" | $DMENU -mesg "Stop Recording")
-    [ "$select" == "Yes" ] && stoprecord
+    [ "$select" == "Yes" ] && \
+        stoprecord && \
+        notify -1 "Stop Recording" $filename
 }
 
 function startrecord() {
@@ -64,6 +181,7 @@ function startrecord() {
     [
         ["難 Audio Video",        "audioVideo"],
         ["  Video Only",         "video"],
+        ["  Video Only (Area)",   "videoOnlyArea"],
         ["  Audio Only",         "audio"]
     ]
     '''

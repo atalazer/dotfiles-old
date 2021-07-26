@@ -370,6 +370,7 @@ helpers.add_hover_cursor(fortune_box, "hand1")
 local petal_font = "Sans Bold 11"
 local function create_url_petal(text, bg_color, hover_color, url, tl, tr, br, bl)
     local petal_container = wibox.widget {
+        fg = x.foreground,
         bg = bg_color,
         forced_height = dpi(65),
         forced_width = dpi(65),
@@ -483,6 +484,7 @@ local notification_state = wibox.widget {
     font = "icomoon 25",
     widget = wibox.widget.textbox("")
 }
+
 local function update_notification_state_icon()
     if naughty.suspended then
         notification_state.markup = helpers.colorize_text(notification_state.text, x.color8)
@@ -490,7 +492,9 @@ local function update_notification_state_icon()
         notification_state.markup = helpers.colorize_text(notification_state.text, x.color2)
     end
 end
+
 update_notification_state_icon()
+
 local notification_state_box = create_boxed_widget(notification_state, dpi(150), dpi(78), x.background)
 notification_state_box:buttons(gears.table.join(
     -- Left click - Toggle notification state
@@ -513,12 +517,11 @@ local screenshot_box = create_boxed_widget(screenshot, dpi(150), dpi(78), x.back
 screenshot_box:buttons(gears.table.join(
     -- Left click - Take screenshot
     awful.button({ }, 1, function ()
-        apps.screenshot("full")
+        awful.spawn(apps.controller.shot)
     end),
     -- Right click - Take screenshot in 5 seconds
     awful.button({ }, 3, function ()
-        naughty.notify({title = "Say cheese!", text = "Taking shot in 5 seconds", timeout = 4, icon = icons.image.screenshot})
-        apps.screenshot("full", 5)
+        awful.spawn(apps.controller.shot_sleep)
     end)
 ))
 

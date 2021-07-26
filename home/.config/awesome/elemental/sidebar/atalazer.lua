@@ -438,16 +438,21 @@ if user.sidebar.hide_on_mouse_leave then
 end
 -- Activate sidebar by moving the mouse at the edge of the screen
 if user.sidebar.show_on_mouse_screen_edge then
+    local activator_width = dpi(4)
+    local activator_height =  sidebar.height * 0.3
+
     local sidebar_activator = wibox({
-        y = sidebar.y,
-        width = 1,
+        bg = x.background,
+        shape = helpers.rrect(activator_width/2),
+        width = activator_width,
+        height = activator_height,
         visible = true,
-        ontop = false,
-        opacity = 0,
+        ontop = true,
+        opacity = 0.8,
         below = true,
         screen = screen.primary,
     })
-    sidebar_activator.height = sidebar.height
+
     sidebar_activator:connect_signal("mouse::enter", function()
         sidebar.visible = true
     end)
@@ -565,7 +570,7 @@ sidebar:setup({
         },
         layout = wibox.layout.align.vertical,
     },
-    shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, false, false),
+    shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, true, false),
     bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111",
     widget = wibox.container.background,
 })

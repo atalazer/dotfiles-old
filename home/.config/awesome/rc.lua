@@ -26,8 +26,9 @@ local decoration_theme = decoration_themes[1]
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
     "atalazer",     -- 1 -- Minimal taglist and dock with autohide
+    "default",
 }
-local bar_theme = bar_themes[1]
+local bar_theme = bar_themes[2]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
@@ -84,14 +85,11 @@ user = {
     -- Autostart apps
     autostart_debug = false,
     autostart = {
+        "pkill dunst",
         "picom --experimental-backends --config ~/.config/picom/picom-blur.conf",
         "fusuma -c ~/.config/fusuma/config.yml",
         "xrdb -load ~/.Xresources",
-        [[
-        xautolock -time 5 -locker "awesome-client 'lock_screen_show()'" \
-            -detectsleep -resetsaver -corners 00-- -cornersize 1000 \
-            -notify 15 -notifier "notify-send 'Lockscreen' 'System will be suspended in 15s From now'"
-        ]],
+        "xautolock -time 15 -locker \"awesome-client 'lock_screen_show()'\" -detectsleep -resetsaver -notify 5 -notifier \"notify-send 'Lockscreen' 'System will be suspended in 5s From now'\"",
     },
 
     -- Enable rounded
@@ -266,6 +264,10 @@ require("elemental.window_switcher")
 -- their needed evil signals.
 require("evil")
 
+-- >> Layout Machi
+local machi = require("layout-machi")
+beautiful.layout_machi = machi.get_icon()
+
 -- ===================================================================
 -- ===================================================================
 
@@ -300,6 +302,7 @@ end
 -- ===================================================================
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    machi.default_layout,
     awful.layout.suit.tile,
     awful.layout.suit.floating,
     awful.layout.suit.max,

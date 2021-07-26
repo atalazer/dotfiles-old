@@ -72,15 +72,17 @@ local options = {
     sidescroll = 3,
     sidescrolloff = 15,
     shiftwidth = 4,
+    softtabstop = 4,
     tabstop = 4,
-    timeoutlen = 400,
+    textwidth = 120,
+    timeoutlen = 300,
     updatetime = 100,
 }
 
 -- Function to apply options table
 local apply_options = function(opts)
     for k, v in pairs(opts) do
-        o[k] = v
+        vim.opt[k] = v
     end
 end
 

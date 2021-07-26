@@ -23,7 +23,8 @@ local app_config = {
     ["charger"] = { icon = "", title = false },
     ["volume"] = { icon = "", title = false },
     ["brightness"] = { icon = "", title = false },
-    ["screenshot"] = { icon = "", title = false },
+    ["screenshot"] = { icon = "", title = true },
+    ["record"] = { icon = "", title = true },
     ["Telegram Desktop"] = { icon = "", title = true },
     ["night_mode"] = { icon = "", title = false },
     ["NetworkManager"] = { icon = "", title = true },
@@ -32,6 +33,7 @@ local app_config = {
     ["mpv"] = { icon = "", title = true },
     ["keyboard"] = { icon = "", title = false },
     ["email"] = { icon = "", title = true },
+    ["notify-send"] = { icon = "", title = true },
 }
 
 local urgency_color = {
@@ -164,17 +166,6 @@ naughty.connect_signal("request::display", function(n)
             widget = wibox.container.background,
         },
     })
-
-    -- For Notification Center
-    if panel_visible or dont_disturb then
-        naughty.destroy_all_notifications()
-    end
-
-    if not dont_disturb then
-        -- Add Sound fx to notif
-        -- Depends: canberra-gtk-play
-        awful.spawn("canberra-gtk-play -i message", false)
-    end
 end)
 
 -- naughty.disconnect_signal("request::display", naughty.default_notification_handler)

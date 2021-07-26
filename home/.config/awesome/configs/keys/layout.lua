@@ -2,8 +2,24 @@ local awful = require("awful")
 local gears = require("gears")
 
 local helpers = require("helpers")
+local machi = require("layout-machi")
 
 local keys = gears.table.join(
+    -- Layout Machi
+    awful.key({ superkey, altkey }, ".", function()
+        machi.default_editor.start_interactive()
+    end, {
+        description = "Edit Layout",
+        group = "Layout: Machi"
+    }),
+
+    awful.key({ superkey, altkey }, "/", function()
+        machi.switcher.start(client.focus)
+    end, {
+        description = "Switch Window",
+        group = "Layout: Machi"
+    }),
+
     -- Number of master clients
     awful.key({ superkey, altkey }, "h", function()
         awful.tag.incnmaster(1, nil, true)

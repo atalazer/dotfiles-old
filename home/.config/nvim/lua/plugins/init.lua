@@ -1,3 +1,19 @@
+local packpath = vim.fn.stdpath("data") .. "/site/pack"
+
+-- Ensures a given github.com/USER/REPO is cloned in the pack/packer/start directory.
+local ensure = function(user, repo)
+    local install_path = string.format("%s/packer/opt/%s", packpath, repo)
+    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+        vim.cmd(string.format([[
+            !git clone https://github.com/%s/%s %s
+            packadd %s
+        ]], user, repo, install_path, repo ))
+    end
+end
+
+-- Bootstrap essential plugins required for installing and loading the rest.
+ensure("wbthomason", "packer.nvim")
+
 vim.cmd("packadd packer.nvim")
 
 local packer_ok, packer = pcall(require, "packer")
@@ -15,15 +31,18 @@ packer.init({
             return require("packer.util").float({ border = Util.borders })
         end,
     },
+    profile = {
+        enable = true
+    },
 })
 
 local plugins = {
     -- ======= Base =======
     -- Package Manager
-    { "wbthomason/packer.nvim", opt = true },
-
-    -- SQLite/LuaJIT binding for lua and neovim
-    { "tami5/sql.nvim" },
+    { 
+        "wbthomason/packer.nvim",
+        opt = true,
+    },
 
     -- ======= User Interface =======
     -- Colorscheme
@@ -36,41 +55,34 @@ local plugins = {
         end,
     },
 
-    -- {
-    --     "rktjmp/lush.nvim",
-    --     event = "VimEnter",
-    --     requires = { "~/Work/Repos/wally.nvim" },
-    --     config = function()
-    --         require("lush")(require("lush_theme.wally")) -- activate the colourscheme
-    --     end,
-    -- },
-
     -- vim-devicons written in lua
     {
         "kyazdani42/nvim-web-devicons",
         after = "xresources-nvim",
-        config = function()
-            require("nvim-web-devicons").setup({ default = true })
-        end,
         requires = {
             -- requires nonicons font installed
             { "yamatsum/nvim-nonicons", after = "nvim-web-devicons" },
         },
+        config = function()
+            require("nvim-web-devicons").setup({ default = true })
+        end,
     },
 
     -- Beautiful Statusline with Animation
     {
         "windwp/windline.nvim",
-        after = { "xresources-nvim", "nvim-web-devicons" },
+        after = "xresources-nvim",
+        wants = "nvim-web-devicons",
         config = function()
-            require("wlsample.evil_line")
+            require("plugins.windline")
         end,
     },
 
     -- Snazzy bufferline
     {
         "akinsho/nvim-bufferline.lua",
-        after = { "xresources-nvim", "nvim-web-devicons" },
+        after = "xresources-nvim",
+        wants =  "nvim-web-devicons",
         config = function()
             require("plugins.bufferline")
         end,
@@ -79,7 +91,6 @@ local plugins = {
     -- Indenting
     {
         "lukas-reineke/indent-blankline.nvim",
-        branch = "lua",
         after = "xresources-nvim",
         config = function()
             require("plugins.indent-blankline")
@@ -89,7 +100,9 @@ local plugins = {
     -- Dasboard
     {
         "glepnir/dashboard-nvim",
-        config = function()
+        event = "VimEnter",
+        cmd = { "Dashboard", "SessionSave", "SessionLoad" },
+        setup = function()
             require("plugins.dashboard")
         end
     },
@@ -239,7 +252,6 @@ local plugins = {
     {
         "kristijanhusak/orgmode.nvim",
         ft = "org",
-        keys = "<Leader>o",
         config = function()
             require("orgmode").setup({
                 org_agenda_files = { "~/Sync/Notes/Org/*", "~/Documents/Notes/Org/*" },
@@ -252,7 +264,7 @@ local plugins = {
     {
         "plasticboy/vim-markdown",
         ft = "markdown",
-        config = function()
+        setup = function()
             vim.g.vim_markdown_folding_disabled = 1
             vim.g.vim_markdown_frontmatter = 1
             vim.g.vim_markdown_math = 1
@@ -278,7 +290,7 @@ local plugins = {
         "iamcco/markdown-preview.nvim",
         run = "cd app && npm install",
         ft = "markdown",
-        config = function()
+        setup = function()
             vim.g.mkdp_auto_start = 0
             vim.g.mkdp_auto_close = 0
             vim.g.mkdp_refresh_slow = 0
@@ -324,12 +336,9 @@ local plugins = {
     },
     {
         "jose-elias-alvarez/null-ls.nvim",
-        ft = {
-            "typescript", "javascript",
-            "json", "markdown",
-            "css", "html",
-            "lua", "python",
-            "sh", "bash", "zsh"
+        after = "nvim-lspconfig",
+        requires = {
+            {"nvim-lua/plenary.nvim"}
         },
         config = function()
             require("plugins.null-ls")
@@ -339,25 +348,33 @@ local plugins = {
     {
         "hrsh7th/nvim-compe",
         event = "InsertEnter",
-        after = { "orgmode.nvim" },
+        wants = { "orgmode.nvim", "vim-vsnip" },
+        requires = {
+            {
+                "hrsh7th/vim-vsnip",
+                event = "InsertCharPre",
+                requires = { "rafamadriz/friendly-snippets", event = "InsertCharPre" },
+                setup = function()
+                    vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
+                    vim.g.vsnip_filetypes = {}
+
+                    local keymap = vim.api.nvim_set_keymap
+                    keymap("i", "<C-]>", "vsnip#jumpable(1) ? \"<Plug>(vsnip-jump-next)\" : \"<C-]>\"", { expr = true })
+                    keymap("s", "<C-]>", "vsnip#jumpable(1) ? \"<Plug>(vsnip-jump-next)\" : \"<C-]>\"", { expr = true })
+                    keymap("i", "<C-[>", "vsnip#jumpable(-1) ? \"<Plug>(vsnip-jump-prev)\" : \"<C-[>\"", { expr = true })
+                    keymap("s", "<C-[>", "vsnip#jumpable(-1) ? \"<Plug>(vsnip-jump-prev)\" : \"<C-[>\"", { expr = true })
+                end,
+            },
+        },
         config = function()
             require("plugins.compe")
         end,
     },
 
     {
-        "hrsh7th/vim-vsnip",
-        event = "InsertCharPre",
-        requires = { "rafamadriz/friendly-snippets", after = "vim-vsnip" },
-        config = function()
-            require("plugins.vsnip")
-        end,
-    },
-
-    {
         "mattn/emmet-vim",
         cmd = "EmmetInstall",
-        config = function()
+        setup = function()
             vim.g.user_emmet_install_global = 0
             vim.g.user_emmet_mode = "a"
             vim.g.user_emmet_leader_key = ","
@@ -368,26 +385,39 @@ local plugins = {
     -- Fuzzy Finder
     {
         "nvim-telescope/telescope.nvim",
+        module = "telescope",
+        cmd = "Telescope",
+        keys = {
+            "<Leader>f"
+        },
         requires = {
-            { "nvim-lua/popup.nvim" },
-            { "nvim-lua/plenary.nvim" },
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                after = "telescope.nvim",
-                run = "make",
-            },
-            {
-                "nvim-telescope/telescope-media-files.nvim",
-                after = "telescope.nvim"
-            },
-            {
-                "nvim-telescope/telescope-frecency.nvim",
-                after = "telescope.nvim"
-            },
+            {"nvim-lua/popup.nvim"}, 
+            {"nvim-lua/plenary.nvim"}
+        },
+        wants = { 
+            "popup.nvim", 
+            "plenary.nvim",
+            "telescope-fzf-native.nvim",
+            "telescope-media-files.nvim",
+            "telescope-frecency.nvim",
         },
         config = function()
             require("plugins.telescope")
         end,
+    },
+    {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        cmd = "Telescope",
+        run = "make",
+    },
+    {
+        "nvim-telescope/telescope-frecency.nvim",
+        cmd = "Telescope",
+        requires = "tami5/sql.nvim"
+    },
+    {
+        "nvim-telescope/telescope-media-files.nvim",
+        cmd = "Telescope",
     },
 
     -- Superfast Tree File
@@ -403,7 +433,7 @@ local plugins = {
     {
         "lambdalisue/suda.vim",
         cmd = { "SudaRead", "SudaWrite" },
-        config = function()
+        setup = function()
             vim.g.suda_smart_edit = 1
             vim.g["suda#prompt"] = "Password : "
         end,
@@ -413,8 +443,10 @@ local plugins = {
     -- show git stuff in signcolumn
     {
         "lewis6991/gitsigns.nvim",
-        wants = { "plenary.nvim" },
         event = "BufRead",
+        requires = {
+            {"nvim-lua/plenary.nvim"}
+        },
         config = function()
             require("plugins.gitsigns")
         end,
@@ -423,7 +455,7 @@ local plugins = {
     {
         "kdheepak/lazygit.nvim",
         cmd = { "LazyGit", "LazyGitFilter" },
-        config = function()
+        setup = function()
             vim.g.lazygit_floating_window_winblend = 0
             vim.g.lazygit_floating_window_scaling_factor = 0.80
             vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
@@ -436,8 +468,8 @@ local plugins = {
     -- Smooth Scrolling
     {
         "psliwka/vim-smoothie",
-        after = "xresources-nvim",
-        config = function()
+        event = "WinScrolled",
+        setup = function()
             vim.g.smoothie_update_interval = 30
             vim.g.smoothie_speed_constant_factor = 10
             vim.g.smoothie_speed_linear_factor = 10
@@ -478,13 +510,37 @@ local plugins = {
                 cmd = "Limelight"
             },
         },
-        config = function()
+        setup = function()
             vim.g.goyo_width = "120"
             vim.g.goyo_height = "90%"
             vim.cmd([[
                 autocmd! User GoyoEnter Limelight
                 autocmd! User GoyoLeave Limelight!
             ]])
+        end,
+    },
+
+    -- Vim Silicon, Generate Image Source Code
+    {
+        "segeljakt/vim-silicon",
+        cmd = "Silicon",
+        setup = function()
+            vim.g.silicon = {
+                theme                  = "Dracula",
+                font                   = "JetBrainsMono Nerd Font",
+                background             = "#a999ff",
+                ["shadow-color"]       = "#434434",
+                ["line-pad"]           = 2,
+                ["pad-horiz"]          = 40,
+                ["pad-vert"]           = 50,
+                ["shadow-blur-radius"] = 0,
+                ["shadow-offset-x"]    = 0,
+                ["shadow-offset-y"]    = 0,
+                ["line-number"]        = true,
+                ["round-corner"]       = true,
+                ["window-controls"]    = true,
+            }
+            vim.g.silicon["output"] = os.getenv("HOME").."/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
         end,
     },
 

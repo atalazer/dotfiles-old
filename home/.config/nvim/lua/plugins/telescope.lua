@@ -1,6 +1,6 @@
-local _, telescope = pcall(require, "telescope")
-local actions = require("telescope.actions")
+local telescope = require("telescope")
 local previewers = require("telescope.previewers")
+local actions = require("telescope.actions")
 
 local M = {}
 
@@ -12,24 +12,12 @@ local no_preview = function()
             result = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
             preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         },
-        width = 0.8,
+        layout_config = {
+            width = 0.8,
+        },
         previewer = false,
     })
 end
-
-local delta = previewers.new_termopen_previewer({
-    get_command = function(entry)
-        return {
-            "git",
-            "-c",
-            "core.pager=delta",
-            "-c",
-            "delta.side-by-side=false",
-            "diff",
-            entry.value .. "^!",
-        }
-    end,
-})
 
 telescope.setup({
     defaults = {
@@ -38,19 +26,35 @@ telescope.setup({
         qflist_previewer = previewers.vim_buffer_qflist.new,
         scroll_strategy = "cycle",
         selection_strategy = "reset",
-        layout_strategy = "flex",
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-        layout_defaults = {
+        color_devicons = true,
+        use_less = true,
+        set_env = {["COLORTERM"] = "truecolor"},
+        layout_strategy = "flex",
+        layout_config = {
+            width = 0.8,
+            height = 0.9,
             horizontal = {
-                width_padding = 0.10,
-                height_padding = 0.10,
+                prompt_position = "bottom",
+                preview_cutoff = 120,
                 preview_width = 0.65,
             },
             vertical = {
-                width_padding = 0.10,
-                height_padding = 1.00,
+                preview_cutoff = 40,
                 preview_height = 0.60,
             },
+            center = {
+                preview_cutoff = 40,
+            },
+        },
+        vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case"
         },
         mappings = {
             i = {
@@ -62,10 +66,11 @@ telescope.setup({
                 ["<C-t>"] = actions.select_tab,
 
                 ["<C-c>"] = actions.close,
-                ["<Esc>"] = actions.close,
+                -- ["<Esc>"] = actions.close,
 
                 ["<C-u>"] = actions.preview_scrolling_up,
                 ["<C-d>"] = actions.preview_scrolling_down,
+                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                 ["<Tab>"] = actions.toggle_selection,
             },
             n = {
@@ -90,13 +95,6 @@ telescope.setup({
             file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
         },
         lsp_code_actions = no_preview(),
-        git_commits = {
-            previewer = {
-                delta,
-                previewers.git_commit_message.new({}),
-                previewers.git_commit_diff_as_was.new({}),
-            },
-        },
     },
     extensions = {
         fzf = {
@@ -125,16 +123,8 @@ telescope.setup({
     },
 })
 
-pcall(require("telescope").load_extension, "fzf") -- superfast sorter
-pcall(require("telescope").load_extension, "media_files") -- media preview
-pcall(require("telescope").load_extension, "frecency") -- frecency
-
-M.frecency = function()
-    telescope.extensions.frecency.frecency(no_preview())
-end
-
-M.media_files = function()
-    telescope.extensions.media_files.media_files()
-end
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("media_files")
+require("telescope").load_extension("frecency")
 
 return M

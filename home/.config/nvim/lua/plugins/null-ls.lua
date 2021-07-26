@@ -40,3 +40,11 @@ local sources = {
 null_ls.setup({
     sources = sources,
 })
+
+require("lspconfig")["null-ls"].setup({
+    on_attach = function()
+        print("LSP Attached!")
+        require("lsp.keys").mappings()
+    end
+})
+

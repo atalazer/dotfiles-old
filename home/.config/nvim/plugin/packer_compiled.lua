@@ -1,20 +1,17 @@
-" Automatically generated packer.nvim plugin loader code
+-- Automatically generated packer.nvim plugin loader code
 
-if !has('nvim-0.5')
-  echohl WarningMsg
-  echom "Invalid Neovim version for packer.nvim!"
-  echohl None
-  finish
-endif
+if vim.api.nvim_call_function('has', {'nvim-0.5'}) ~= 1 then
+  vim.api.nvim_command('echohl WarningMsg | echom "Invalid Neovim version for packer.nvim! | echohl None"')
+  return
+end
 
-packadd packer.nvim
+vim.api.nvim_command('packadd packer.nvim')
 
-try
+local no_errors, error_msg = pcall(function()
 
-lua << END
   local time
   local profile_info
-  local should_profile = false
+  local should_profile = true
   if should_profile then
     local hrtime = vim.loop.hrtime
     profile_info = {}
@@ -79,13 +76,13 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/curstr.nvim"
   },
   ["dashboard-nvim"] = {
-    config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.dashboard\frequire\0" },
-    loaded = true,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/dashboard-nvim"
+    commands = { "Dashboard", "SessionSave", "SessionLoad" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/dashboard-nvim"
   },
   ["emmet-vim"] = {
     commands = { "EmmetInstall" },
-    config = { "\27LJ\2\n…\1\0\0\2\0\a\0\r6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\6,\26user_emmet_leader_key\6a\20user_emmet_mode\30user_emmet_install_global\6g\bvim\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/emmet-vim"
@@ -98,17 +95,15 @@ _G.packer_plugins = {
     config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.gitsigns\frequire\0" },
     loaded = false,
     needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/gitsigns.nvim",
-    wants = { "plenary.nvim" }
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/gitsigns.nvim"
   },
   ["glow.nvim"] = {
     loaded = false,
-    needs_bufread = false,
+    needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/glow.nvim"
   },
   ["goyo.vim"] = {
     commands = { "Goyo" },
-    config = { "\27LJ\2\nÖ\1\0\0\3\0\b\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\6\0'\2\a\0B\0\2\1K\0\1\0v                autocmd! User GoyoEnter Limelight\n                autocmd! User GoyoLeave Limelight!\n            \bcmd\b90%\16goyo_height\b120\15goyo_width\6g\bvim\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/goyo.vim"
@@ -137,7 +132,6 @@ _G.packer_plugins = {
   },
   ["lazygit.nvim"] = {
     commands = { "LazyGit", "LazyGitFilter" },
-    config = { "\27LJ\2\nª\2\0\0\2\0\b\1\0216\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\0\0=\1\6\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0K\0\1\0\30lazygit_use_neovim_remote(lazygit_floating_window_use_plenary\1\5\0\0\bâ•­\bâ•®\bâ•°\bâ•¯)lazygit_floating_window_corner_chars+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvimµæÌ™\19™³¦ÿ\3\0" },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
@@ -172,7 +166,6 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lspsaga.nvim"
   },
   ["markdown-preview.nvim"] = {
-    config = { "\27LJ\2\n˜\1\0\0\2\0\a\0\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0)\1\0\0=\1\3\0006\0\0\0009\0\1\0)\1\0\0=\1\4\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\ffirefox\17mkdp_browser\22mkdp_refresh_slow\20mkdp_auto_close\20mkdp_auto_start\6g\bvim\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim"
@@ -184,6 +177,9 @@ _G.packer_plugins = {
   },
   ["null-ls.nvim"] = {
     config = { "\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plugins.null-ls\frequire\0" },
+    load_after = {
+      ["nvim-lspconfig"] = true
+    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/null-ls.nvim"
@@ -201,15 +197,15 @@ _G.packer_plugins = {
   ["nvim-bufferline.lua"] = {
     config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.bufferline\frequire\0" },
     load_after = {
-      ["nvim-web-devicons"] = true,
       ["xresources-nvim"] = true
     },
     loaded = false,
     needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-bufferline.lua"
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-bufferline.lua",
+    wants = { "nvim-web-devicons" }
   },
   ["nvim-colorizer.lua"] = {
-    config = { "\27LJ\2\nÃ\1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\2B\0\2\1K\0\1\0\thtml\1\0\1\nnames\2\bcss\1\0\1\nnames\2\6*\1\0\0\1\0\t\tmode\15background\bcss\2\nnames\1\vRRGGBB\2\vrgb_fn\2\rRRGGBBAA\2\vhsl_fn\2\vcss_fn\2\bRGB\2\nsetup\14colorizer\frequire\0" },
+    config = { "\27LJ\2\nÃ\1\0\0\4\0\n\0\r6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\2B\0\2\1K\0\1\0\thtml\1\0\1\nnames\2\bcss\1\0\1\nnames\2\6*\1\0\0\1\0\t\bcss\2\tmode\15background\vrgb_fn\2\vcss_fn\2\bRGB\2\vRRGGBB\2\vhsl_fn\2\rRRGGBBAA\2\nnames\1\nsetup\14colorizer\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-colorizer.lua"
@@ -217,15 +213,13 @@ _G.packer_plugins = {
   ["nvim-compe"] = {
     after_files = { "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe.vim" },
     config = { "\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plugins.compe\frequire\0" },
-    load_after = {
-      ["orgmode.nvim"] = true
-    },
     loaded = false,
     needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe"
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-compe",
+    wants = { "orgmode.nvim", "vim-vsnip" }
   },
   ["nvim-lspconfig"] = {
-    after = { "lspkind-nvim", "lspsaga.nvim" },
+    after = { "lspkind-nvim", "lspsaga.nvim", "null-ls.nvim" },
     config = { "\27LJ\2\n#\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\blsp\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -278,7 +272,7 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-ts-context-commentstring"
   },
   ["nvim-web-devicons"] = {
-    after = { "windline.nvim", "nvim-bufferline.lua", "nvim-nonicons" },
+    after = { "nvim-nonicons" },
     config = { "\27LJ\2\nO\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\fdefault\2\nsetup\22nvim-web-devicons\frequire\0" },
     load_after = {
       ["xresources-nvim"] = true
@@ -288,9 +282,7 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons"
   },
   ["orgmode.nvim"] = {
-    after = { "nvim-compe" },
     config = { "\27LJ\2\n¶\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21org_agenda_files\1\0\1\27org_default_notes_file\31~/Sync/Notes/Org/Notes.org\1\3\0\0\23~/Sync/Notes/Org/*\28~/Documents/Notes/Org/*\nsetup\forgmode\frequire\0" },
-    keys = { { "", "<Leader>o" } },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/orgmode.nvim"
@@ -329,7 +321,6 @@ _G.packer_plugins = {
   },
   ["suda.vim"] = {
     commands = { "SudaRead", "SudaWrite" },
-    config = { "\27LJ\2\nY\0\0\2\0\5\0\t6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0K\0\1\0\16Password : \16suda#prompt\20suda_smart_edit\6g\bvim\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/suda.vim"
@@ -342,29 +333,34 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/symbols-outline.nvim"
   },
   ["telescope-frecency.nvim"] = {
-    load_after = {},
+    commands = { "Telescope" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/telescope-frecency.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
-    load_after = {},
+    commands = { "Telescope" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/telescope-fzf-native.nvim"
   },
   ["telescope-media-files.nvim"] = {
-    load_after = {},
+    commands = { "Telescope" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/telescope-media-files.nvim"
   },
   ["telescope.nvim"] = {
-    after = { "telescope-fzf-native.nvim", "telescope-frecency.nvim", "telescope-media-files.nvim" },
-    only_config = true
+    commands = { "Telescope" },
+    config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0" },
+    keys = { { "", "<Leader>f" } },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/telescope.nvim",
+    wants = { "popup.nvim", "plenary.nvim", "telescope-fzf-native.nvim", "telescope-media-files.nvim", "telescope-frecency.nvim" }
   },
   ["texmagic.nvim"] = {
-    config = { "\27LJ\2\nò\1\0\0\6\0\14\0\0176\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\f\0005\3\n\0005\4\a\0005\5\b\0=\5\t\4=\4\v\3=\3\r\2B\0\2\1K\0\1\0\fengines\1\0\0\rpdflatex\1\0\0\targs\1\6\0\0\14-pdflatex\29-interaction=nonstopmode\15-synctex=1\b-pv\a%f\1\0\2\17isContinuous\1\15executable\flatexmk\nsetup\rtexmagic\frequire\nlatex\15tex_flavor\6g\bvim\0" },
+    config = { "\27LJ\2\nò\1\0\0\6\0\14\0\0176\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\f\0005\3\n\0005\4\a\0005\5\b\0=\5\t\4=\4\v\3=\3\r\2B\0\2\1K\0\1\0\fengines\1\0\0\rpdflatex\1\0\0\targs\1\6\0\0\14-pdflatex\29-interaction=nonstopmode\15-synctex=1\b-pv\a%f\1\0\2\15executable\flatexmk\17isContinuous\1\nsetup\rtexmagic\frequire\nlatex\15tex_flavor\6g\bvim\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/texmagic.nvim"
@@ -390,7 +386,6 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-easy-align"
   },
   ["vim-markdown"] = {
-    config = { '\27LJ\2\nŠ\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\1\0=\1\3\0006\0\0\0009\0\1\0)\1\1\0=\1\4\0K\0\1\0\22vim_markdown_math\29vim_markdown_frontmatter"vim_markdown_folding_disabled\6g\bvim\0' },
     loaded = false,
     needs_bufread = true,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-markdown"
@@ -413,11 +408,13 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-sayonara"
   },
+  ["vim-silicon"] = {
+    commands = { "Silicon" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-silicon"
+  },
   ["vim-smoothie"] = {
-    config = { "\27LJ\2\n–\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\30\0=\1\2\0006\0\0\0009\0\1\0)\1\n\0=\1\3\0006\0\0\0009\0\1\0)\1\n\0=\1\4\0K\0\1\0!smoothie_speed_linear_factor#smoothie_speed_constant_factor\29smoothie_update_interval\6g\bvim\0" },
-    load_after = {
-      ["xresources-nvim"] = true
-    },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-smoothie"
@@ -428,7 +425,6 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-table-mode"
   },
   ["vim-vsnip"] = {
-    config = { "\27LJ\2\n-\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\18plugins.vsnip\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/vim-vsnip"
@@ -440,17 +436,17 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/which-key.nvim"
   },
   ["windline.nvim"] = {
-    config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23wlsample.evil_line\frequire\0" },
+    config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.windline\frequire\0" },
     load_after = {
-      ["nvim-web-devicons"] = true,
       ["xresources-nvim"] = true
     },
     loaded = false,
     needs_bufread = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/windline.nvim"
+    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/windline.nvim",
+    wants = { "nvim-web-devicons" }
   },
   ["xresources-nvim"] = {
-    after = { "windline.nvim", "nvim-bufferline.lua", "nvim-web-devicons", "vim-smoothie", "indent-blankline.nvim" },
+    after = { "windline.nvim", "nvim-bufferline.lua", "indent-blankline.nvim", "nvim-web-devicons" },
     config = { "\27LJ\2\n>\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\16colorscheme\15xresources\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -459,87 +455,188 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+local module_lazy_loads = {
+  ["^telescope"] = "telescope.nvim"
+}
+local lazy_load_called = {['packer.load'] = true}
+local function lazy_load_module(module_name)
+  local to_load = {}
+  if lazy_load_called[module_name] then return nil end
+  lazy_load_called[module_name] = true
+  for module_pat, plugin_name in pairs(module_lazy_loads) do
+    if not _G.packer_plugins[plugin_name].loaded and string.match(module_name, module_pat) then
+      to_load[#to_load + 1] = plugin_name
+    end
+  end
+
+  if #to_load > 0 then
+    require('packer.load')(to_load, {module = module_name}, _G.packer_plugins)
+    local loaded_mod = package.loaded[module_name]
+    if loaded_mod then
+      return function(modname) return loaded_mod end
+    end
+  end
+end
+
+if not vim.g.packer_custom_loader_enabled then
+  table.insert(package.loaders, 1, lazy_load_module)
+  vim.g.packer_custom_loader_enabled = true
+end
+
 -- Setup for: vim-matchup
 time([[Setup for vim-matchup]], true)
 try_loadstring("\27LJ\2\nj\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\0\3\14fullwidth\2\vmethod\npopup\14highlight\vNormal!matchup_matchparen_offscreen\6g\bvim\0", "setup", "vim-matchup")
 time([[Setup for vim-matchup]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
--- Config for: dashboard-nvim
-time([[Config for dashboard-nvim]], true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.dashboard\frequire\0", "config", "dashboard-nvim")
-time([[Config for dashboard-nvim]], false)
--- Load plugins in order defined by `after`
-time([[Sequenced loading]], true)
-vim.cmd [[ packadd telescope-fzf-native.nvim ]]
-vim.cmd [[ packadd telescope-frecency.nvim ]]
-vim.cmd [[ packadd telescope-media-files.nvim ]]
-time([[Sequenced loading]], false)
+-- Setup for: vim-vsnip
+time([[Setup for vim-vsnip]], true)
+try_loadstring("\27LJ\2\n¬\3\0\0\a\0\20\0*6\0\0\0009\0\1\0006\1\0\0009\1\3\0019\1\4\1'\3\5\0B\1\2\2'\2\6\0&\1\2\1=\1\2\0006\0\0\0009\0\1\0004\1\0\0=\1\a\0006\0\0\0009\0\b\0009\0\t\0\18\1\0\0'\3\n\0'\4\v\0'\5\f\0005\6\r\0B\1\5\1\18\1\0\0'\3\14\0'\4\v\0'\5\f\0005\6\15\0B\1\5\1\18\1\0\0'\3\n\0'\4\16\0'\5\17\0005\6\18\0B\1\5\1\18\1\0\0'\3\14\0'\4\16\0'\5\17\0005\6\19\0B\1\5\1K\0\1\0\1\0\1\texpr\2\1\0\1\texpr\2=vsnip#jumpable(-1) ? \"<Plug>(vsnip-jump-prev)\" : \"<C-[>\"\n<C-[>\1\0\1\texpr\2\6s\1\0\1\texpr\2<vsnip#jumpable(1) ? \"<Plug>(vsnip-jump-next)\" : \"<C-]>\"\n<C-]>\6i\20nvim_set_keymap\bapi\20vsnip_filetypes\14/snippets\vconfig\fstdpath\afn\22vsnip_snippet_dir\6g\bvim\0", "setup", "vim-vsnip")
+time([[Setup for vim-vsnip]], false)
+-- Setup for: goyo.vim
+time([[Setup for goyo.vim]], true)
+try_loadstring("\27LJ\2\nÖ\1\0\0\3\0\b\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0006\0\0\0009\0\6\0'\2\a\0B\0\2\1K\0\1\0v                autocmd! User GoyoEnter Limelight\n                autocmd! User GoyoLeave Limelight!\n            \bcmd\b90%\16goyo_height\b120\15goyo_width\6g\bvim\0", "setup", "goyo.vim")
+time([[Setup for goyo.vim]], false)
+-- Setup for: vim-silicon
+time([[Setup for vim-silicon]], true)
+try_loadstring("\27LJ\2\ný\2\0\0\4\0\t\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\0\0009\0\1\0009\0\2\0006\1\5\0009\1\6\1'\3\a\0B\1\2\2'\2\b\0&\1\2\1=\1\4\0K\0\1\0=/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png\tHOME\vgetenv\aos\voutput\1\0\r\rpad-vert\0032\14pad-horiz\3(\rline-pad\3\2\23shadow-blur-radius\3\0\17shadow-color\f#434434\20shadow-offset-x\3\0\15background\f#a999ff\20window-controls\2\17round-corner\2\16line-number\2\20shadow-offset-y\3\0\ntheme\fDracula\tfont\28JetBrainsMono Nerd Font\fsilicon\6g\bvim\0", "setup", "vim-silicon")
+time([[Setup for vim-silicon]], false)
+-- Setup for: markdown-preview.nvim
+time([[Setup for markdown-preview.nvim]], true)
+try_loadstring("\27LJ\2\n˜\1\0\0\2\0\a\0\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0)\1\0\0=\1\3\0006\0\0\0009\0\1\0)\1\0\0=\1\4\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\ffirefox\17mkdp_browser\22mkdp_refresh_slow\20mkdp_auto_close\20mkdp_auto_start\6g\bvim\0", "setup", "markdown-preview.nvim")
+time([[Setup for markdown-preview.nvim]], false)
+-- Setup for: dashboard-nvim
+time([[Setup for dashboard-nvim]], true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.dashboard\frequire\0", "setup", "dashboard-nvim")
+time([[Setup for dashboard-nvim]], false)
+-- Setup for: vim-smoothie
+time([[Setup for vim-smoothie]], true)
+try_loadstring("\27LJ\2\n–\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\30\0=\1\2\0006\0\0\0009\0\1\0)\1\n\0=\1\3\0006\0\0\0009\0\1\0)\1\n\0=\1\4\0K\0\1\0!smoothie_speed_linear_factor#smoothie_speed_constant_factor\29smoothie_update_interval\6g\bvim\0", "setup", "vim-smoothie")
+time([[Setup for vim-smoothie]], false)
+-- Setup for: emmet-vim
+time([[Setup for emmet-vim]], true)
+try_loadstring("\27LJ\2\n…\1\0\0\2\0\a\0\r6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\6,\26user_emmet_leader_key\6a\20user_emmet_mode\30user_emmet_install_global\6g\bvim\0", "setup", "emmet-vim")
+time([[Setup for emmet-vim]], false)
+-- Setup for: suda.vim
+time([[Setup for suda.vim]], true)
+try_loadstring("\27LJ\2\nY\0\0\2\0\5\0\t6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0K\0\1\0\16Password : \16suda#prompt\20suda_smart_edit\6g\bvim\0", "setup", "suda.vim")
+time([[Setup for suda.vim]], false)
+-- Setup for: vim-markdown
+time([[Setup for vim-markdown]], true)
+try_loadstring('\27LJ\2\nŠ\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\1\0=\1\3\0006\0\0\0009\0\1\0)\1\1\0=\1\4\0K\0\1\0\22vim_markdown_math\29vim_markdown_frontmatter"vim_markdown_folding_disabled\6g\bvim\0', "setup", "vim-markdown")
+time([[Setup for vim-markdown]], false)
+-- Setup for: lazygit.nvim
+time([[Setup for lazygit.nvim]], true)
+try_loadstring("\27LJ\2\nª\2\0\0\2\0\b\1\0216\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\0\0=\1\6\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0K\0\1\0\30lazygit_use_neovim_remote(lazygit_floating_window_use_plenary\1\5\0\0\bâ•­\bâ•®\bâ•°\bâ•¯)lazygit_floating_window_corner_chars+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvimµæÌ™\19™³¦ÿ\3\0", "setup", "lazygit.nvim")
+time([[Setup for lazygit.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-vim.cmd [[command! -nargs=* -range -bang -complete=file LazyGit lua require("packer.load")({'lazygit.nvim'}, { cmd = "LazyGit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file LazyGitFilter lua require("packer.load")({'lazygit.nvim'}, { cmd = "LazyGitFilter", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file EmmetInstall lua require("packer.load")({'emmet-vim'}, { cmd = "EmmetInstall", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file TSHighlightCapturesUnderCursor lua require("packer.load")({'playground'}, { cmd = "TSHighlightCapturesUnderCursor", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file TSPlaygroundToggle lua require("packer.load")({'playground'}, { cmd = "TSPlaygroundToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Limelight lua require("packer.load")({'limelight.vim'}, { cmd = "Limelight", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Trouble lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "Trouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file TroubleToggle lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "TroubleToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime.vim'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file SudaRead lua require("packer.load")({'suda.vim'}, { cmd = "SudaRead", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file SudaWrite lua require("packer.load")({'suda.vim'}, { cmd = "SudaWrite", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file SymbolsOutline lua require("packer.load")({'symbols-outline.nvim'}, { cmd = "SymbolsOutline", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Sayonara lua require("packer.load")({'vim-sayonara'}, { cmd = "Sayonara", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+if vim.fn.exists(":HopWord") ~= 2 then
 vim.cmd [[command! -nargs=* -range -bang -complete=file HopWord lua require("packer.load")({'hop.nvim'}, { cmd = "HopWord", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":HopPattern") ~= 2 then
 vim.cmd [[command! -nargs=* -range -bang -complete=file HopPattern lua require("packer.load")({'hop.nvim'}, { cmd = "HopPattern", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file NvimTreeToggle lua require("packer.load")({'nvim-tree.lua'}, { cmd = "NvimTreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file TodoTelescope lua require("packer.load")({'todo-comments.nvim'}, { cmd = "TodoTelescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file TodoTrouble lua require("packer.load")({'todo-comments.nvim'}, { cmd = "TodoTrouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
-vim.cmd [[command! -nargs=* -range -bang -complete=file Goyo lua require("packer.load")({'goyo.vim'}, { cmd = "Goyo", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Sayonara") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Sayonara lua require("packer.load")({'vim-sayonara'}, { cmd = "Sayonara", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Silicon") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Silicon lua require("packer.load")({'vim-silicon'}, { cmd = "Silicon", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":LazyGit") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file LazyGit lua require("packer.load")({'lazygit.nvim'}, { cmd = "LazyGit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":TSPlaygroundToggle") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file TSPlaygroundToggle lua require("packer.load")({'playground'}, { cmd = "TSPlaygroundToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Limelight") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Limelight lua require("packer.load")({'limelight.vim'}, { cmd = "Limelight", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":SessionLoad") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file SessionLoad lua require("packer.load")({'dashboard-nvim'}, { cmd = "SessionLoad", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":TSHighlightCapturesUnderCursor") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file TSHighlightCapturesUnderCursor lua require("packer.load")({'playground'}, { cmd = "TSHighlightCapturesUnderCursor", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Trouble") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Trouble lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "Trouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":TroubleToggle") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file TroubleToggle lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "TroubleToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":EmmetInstall") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file EmmetInstall lua require("packer.load")({'emmet-vim'}, { cmd = "EmmetInstall", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":SymbolsOutline") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file SymbolsOutline lua require("packer.load")({'symbols-outline.nvim'}, { cmd = "SymbolsOutline", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":LazyGitFilter") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file LazyGitFilter lua require("packer.load")({'lazygit.nvim'}, { cmd = "LazyGitFilter", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":TodoQuickFix") ~= 2 then
 vim.cmd [[command! -nargs=* -range -bang -complete=file TodoQuickFix lua require("packer.load")({'todo-comments.nvim'}, { cmd = "TodoQuickFix", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":TodoTelescope") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file TodoTelescope lua require("packer.load")({'todo-comments.nvim'}, { cmd = "TodoTelescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":TodoTrouble") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file TodoTrouble lua require("packer.load")({'todo-comments.nvim'}, { cmd = "TodoTrouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Telescope") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Telescope lua require("packer.load")({'telescope-media-files.nvim', 'telescope.nvim', 'telescope-frecency.nvim', 'telescope-fzf-native.nvim'}, { cmd = "Telescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":NvimTreeToggle") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file NvimTreeToggle lua require("packer.load")({'nvim-tree.lua'}, { cmd = "NvimTreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":SessionSave") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file SessionSave lua require("packer.load")({'dashboard-nvim'}, { cmd = "SessionSave", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":StartupTime") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime.vim'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Dashboard") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Dashboard lua require("packer.load")({'dashboard-nvim'}, { cmd = "Dashboard", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":Goyo") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file Goyo lua require("packer.load")({'goyo.vim'}, { cmd = "Goyo", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":SudaRead") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file SudaRead lua require("packer.load")({'suda.vim'}, { cmd = "SudaRead", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
+if vim.fn.exists(":SudaWrite") ~= 2 then
+vim.cmd [[command! -nargs=* -range -bang -complete=file SudaWrite lua require("packer.load")({'suda.vim'}, { cmd = "SudaWrite", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+end
 time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[noremap <silent> <Leader>o <cmd>lua require("packer.load")({'orgmode.nvim'}, { keys = "<lt>Leader>o", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'vim-commentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> s <cmd>lua require("packer.load")({'vim-sandwich'}, { keys = "s", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>(EasyAlign) <cmd>lua require("packer.load")({'vim-easy-align'}, { keys = "<lt>Plug>(EasyAlign)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Leader>f <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>Leader>f", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> s <cmd>lua require("packer.load")({'vim-sandwich'}, { keys = "s", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'vim-commentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType html ++once lua require("packer.load")({'null-ls.nvim', 'headwind.nvim'}, { ft = "html" }, _G.packer_plugins)]]
-vim.cmd [[au FileType css ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "css" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-table-mode', 'glow.nvim', 'markdown-preview.nvim', 'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType html ++once lua require("packer.load")({'headwind.nvim'}, { ft = "html" }, _G.packer_plugins)]]
 vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode'}, { ft = "text" }, _G.packer_plugins)]]
-vim.cmd [[au FileType bib ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "bib" }, _G.packer_plugins)]]
-vim.cmd [[au FileType sh ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "sh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType bash ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "bash" }, _G.packer_plugins)]]
-vim.cmd [[au FileType json ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "json" }, _G.packer_plugins)]]
-vim.cmd [[au FileType lua ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "lua" }, _G.packer_plugins)]]
-vim.cmd [[au FileType latex ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "latex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescript ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "typescript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType tex ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "tex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType org ++once lua require("packer.load")({'orgmode.nvim'}, { ft = "org" }, _G.packer_plugins)]]
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "javascript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType zsh ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "zsh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim', 'vim-table-mode', 'null-ls.nvim', 'glow.nvim', 'vim-markdown'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType python ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "python" }, _G.packer_plugins)]]
+vim.cmd [[au FileType latex ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "latex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType bib ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "bib" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "tex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType nim ++once lua require("packer.load")({'nim.nvim'}, { ft = "nim" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au CursorMoved * ++once lua require("packer.load")({'vim-matchup'}, { event = "CursorMoved *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'which-key.nvim', 'nvim-lspconfig', 'nvim-treesitter', 'nvim-colorizer.lua', 'gitsigns.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'xresources-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'dashboard-nvim', 'xresources-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au InsertCharPre * ++once lua require("packer.load")({'vim-vsnip'}, { event = "InsertCharPre *" }, _G.packer_plugins)]]
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-compe'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au CursorHold * ++once lua require("packer.load")({'curstr.nvim'}, { event = "CursorHold *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-compe'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au CursorMoved * ++once lua require("packer.load")({'vim-matchup'}, { event = "CursorMoved *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'gitsigns.nvim', 'which-key.nvim', 'nvim-treesitter', 'nvim-colorizer.lua', 'nvim-lspconfig'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au WinScrolled * ++once lua require("packer.load")({'vim-smoothie'}, { event = "WinScrolled *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
@@ -558,11 +655,8 @@ time([[Sourcing ftdetect script at: /home/atalariq/.local/share/nvim/site/pack/p
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
-END
+end)
 
-catch
-  echohl ErrorMsg
-  echom "Error in packer_compiled: " .. v:exception
-  echom "Please check your config for correctness"
-  echohl None
-endtry
+if not no_errors then
+  vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
+end

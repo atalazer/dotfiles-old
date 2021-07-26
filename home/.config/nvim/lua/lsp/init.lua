@@ -7,6 +7,13 @@ pcall(require, "lsp.trouble")
 local capabilities = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+            "documentation",
+            "detail",
+            "additionalTextEdits",
+        },
+    }
 
     return capabilities
 end
@@ -17,11 +24,9 @@ local servers = {
     texlab = require("lsp.server.tex").config,
     tsserver = require("lsp.server.javascript").config,
     jsonls = require("lsp.server.json").config,
-    html = { cmd = { "vscode-html-language-server", "--stdio" }},
-    cssls = { cmd = { "vscode-css-language-server", "--stdio" }},
-    tailwindcss = {
-        filetypes = { "css", "html", "sass", "scss" },
-    },
+    html = { cmd = { "vscode-html-language-server", "--stdio" } },
+    cssls = { cmd = { "vscode-css-language-server", "--stdio" } },
+    tailwindcss = {},
     bashls = {},
     vimls = {},
     clangd = {},

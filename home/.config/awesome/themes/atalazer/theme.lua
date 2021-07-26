@@ -168,11 +168,23 @@ theme.sidebar_width = dpi(300)
 theme.sidebar_x = 0
 theme.sidebar_y = 0
 theme.sidebar_border_radius = dpi(30)
--- theme.sidebar_border_radius = theme.border_radius
 
 -- Dashboard
 theme.dashboard_bg = x.color0.."CC"
 theme.dashboard_fg = x.color7
+
+-- notif_center
+theme.notif_center_bg = x.background
+theme.notif_center_fg = x.color7
+theme.notif_center_opacity = 0.95
+theme.notif_center_width = dpi(350)
+theme.notif_center_border_radius = dpi(30)
+
+if theme.sidebar_position == "left" then
+    theme.notif_center_position = "right"
+else
+    theme.notif_center_position = "left"
+end
 
 -- Exit screen
 theme.exit_screen_bg = x.color0 .. "CC"

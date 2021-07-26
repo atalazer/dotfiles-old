@@ -68,9 +68,10 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             floating = true,
+            titlebars_enabled = true,
             placement = centered_client_placement,
-            width = screen_width * 0.30,
-            height = screen_height * 0.80,
+            width = screen_width * 0.40,
+            height = screen_height * 0.90,
         },
     })
     -- }}}

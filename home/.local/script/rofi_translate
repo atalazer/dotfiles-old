@@ -1,17 +1,18 @@
-#!/bin/bash
-# File              : dmenu_translate
+#!/usr/bin/env bash
+# File              : dmenu_translate (rofi_translate)
 # License           : MIT License
 # Author            : M. Nabil Adani <nblid48@gmail.com>
 # Last Modified By  : Atalazer <baraboyolali@gmail.com>
 
 DMENU="rofi -dmenu -i -l 5"
-ICON="$HOME/Dotfiles/icons/linebit/keyboard.png"
+ICON="$HOME/.config/awesome/icons/linebit/keyboard.png"
 
 COUNTRY='''
 [
   { "code": "id", "name": "Indonesian" },
   { "code": "en", "name": "English" },
   { "code": "jv", "name": "Javanese" },
+  { "code": "ja", "name": "Japanese" },
   { "code": "ar", "name": "Arabic" }
 ]
 '''
@@ -27,13 +28,17 @@ translateText() {
         result=$(trans -b --download-audio-as /tmp/trans.ts :$code "$text")
         again=true
 
-        notify-send -i $ICON "Translate" "Result saved to clipboard"
-        echo  -n "$result" | xclip
+        # notify-send -i $ICON "Translate" "Result of '$text' in $name is '$result'"
+
+        # notify-send -u low -i $ICON "Translate" "Result saved to clipboard"
+        echo -n "$result" | xclip
 
         while $again; do
-            speak=$(echo -e "Yes\nNo" | $DMENU -lines 2 -p "Play Audio" -mesg "Result: $result")
-            if [[ $speak == "Yes" ]]; then
-                notify-send -i $ICON "Translate" "Listen to the translation."
+            menu=$(echo -e "Repeat\nPlay Audio\nExit" | $DMENU -lines 2 -p "Menu" -mesg "Result: $result")
+            if [[ $menu == "Repeat" ]]; then
+                text=$($DMENU -p "Translate")
+                translateText "$text"
+            elif [[ $menu == "Play Audio" ]]; then
                 mpv /tmp/trans.ts
             else
                 again=false

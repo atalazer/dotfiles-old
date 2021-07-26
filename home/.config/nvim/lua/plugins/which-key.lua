@@ -1,6 +1,28 @@
 local wk = require("which-key")
 
 wk.register({
+    -- Gistsign.nvim
+    ["[c"] = "Previous Hunk",
+    ["]c"] = "Next Hunk",
+    [";l"] = "Blame Hunk",
+    [";p"] = "Preview Hunk",
+    [";r"] = "Reset Hunk",
+    [";R"] = "Reset Buffer",
+    [";s"] = "Stage Hunk",
+    [";u"] = "Undo Stage Hunk",
+
+    -- vim-sandwich
+    sa = "Add Surrounding Character",
+    sd = "Remove Surrounding Character",
+    sr = "Replace Surrounding Character",
+
+    -- User Custom
+    csu = "Lowercase First Letter",
+    csU = "Uppercase First Letter",
+})
+
+-- Leader Key
+wk.register({
     [","] = "Curstr Toggle",
     lg = "Lazygit",
     g = {
@@ -47,6 +69,7 @@ wk.register({
     },
 }, {prefix = "<leader>"})
 
+-- Local Leader Key
 wk.register({
     s = {
         name = "+Source",
@@ -60,23 +83,6 @@ wk.register({
         p = "Python File",
     },
 }, {prefix = "<localleader>"})
-
-wk.register({
-    -- Gistsign.nvim
-    ["[c"] = "Previous Hunk",
-    ["]c"] = "Next Hunk",
-    [";l"] = "Blame Hunk",
-    [";p"] = "Preview Hunk",
-    [";r"] = "Reset Hunk",
-    [";R"] = "Reset Buffer",
-    [";s"] = "Stage Hunk",
-    [";u"] = "Undo Stage Hunk",
-
-    -- vim-sandwich
-    sa = "Add Surrounding Character",
-    sd = "Remove Surrounding Character",
-    sr = "Replace Surrounding Character",
-})
 
 wk.setup({
     plugins = {

@@ -36,8 +36,10 @@ return wibox.widget({
             spacing = dpi(5),
             require("elemental.notif_center.subwidgets.notif_center.dont_disturb"),
             require("elemental.notif_center.subwidgets.notif_center.clear_all"),
+            -- require("elemental.notif_center.clear_all"),
         },
     },
     separator,
     require("elemental.notif_center.subwidgets.notif_center.generate_notifbox"),
+    -- require("elemental.notif_center.build_notifbox").notifbox_layout,
 })

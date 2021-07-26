@@ -23,7 +23,7 @@ matches:
       ---
       title: "$|$"
       description: "some description"
-      author: "Atalazer"
+      author: "Atalariq Barra Hadinugraha"
       date: {{date}}
       draft: true
       ---

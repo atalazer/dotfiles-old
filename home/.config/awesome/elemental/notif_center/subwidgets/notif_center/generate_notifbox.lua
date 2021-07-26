@@ -3,127 +3,32 @@ local naughty = require("naughty")
 local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
-
 local dpi = require("beautiful").xresources.apply_dpi
 
-local HOME = os.getenv("HOME")
-local PATH_TO_ICONS = HOME .. "/.config/awesome/elemental/notif_center/icons/"
+local PATH_TO_ICONS = os.getenv("HOME") .. "/.config/awesome/elemental/notif_center/icons/"
+
+local clickable_container = require("elemental.notif_center.subwidgets.clickable_container")
 
 -- Boolean variable to remove empty message
 local remove_notifbox_empty = true
 
--- Notification boxes container layout
-local notifbox_layout = wibox.layout.fixed.vertical()
-
--- Notification boxes container layout spacing
-notifbox_layout.spacing = dpi(5)
-
-notifbox_layout.expand = "none"
-
--- Notification icon container
-local notifbox_icon = function(ico_image)
-    local noti_icon = wibox.widget({
-        {
-            id = "icon",
-            resize = true,
-            forced_height = dpi(25),
-            forced_width = dpi(25),
-            widget = wibox.widget.imagebox,
-        },
-        layout = wibox.layout.fixed.horizontal,
-    })
-    noti_icon.icon:set_image(ico_image)
-    return noti_icon
-end
-
--- Notification title container
-local notifbox_title = function(title)
-    return wibox.widget({
-        text = title,
-        font = "SFNS Display Bold 12",
-        align = "left",
-        valign = "center",
-        widget = wibox.widget.textbox,
-    })
-end
-
--- Notification message container
-local notifbox_message = function(msg)
-    return wibox.widget({
-        text = msg,
-        font = "SFNS Display Regular 11",
-        align = "left",
-        valign = "center",
-        widget = wibox.widget.textbox,
-    })
-end
-
--- Notification app name container
-local notifbox_appname = function(app)
-    return wibox.widget({
-        text = app,
-        font = "SFNS Display Bold 12",
-        align = "left",
-        valign = "center",
-        widget = wibox.widget.textbox,
-    })
-end
-
--- Get current time
-local current_time = function()
-    return os.date("%H:%M:%S")
-end
-
--- Get exact time of creation
-local exact_time = function()
-    return os.date("%b %d, %I:%M %p")
-end
-
--- Convert time to seconds
-local parse_to_seconds = function(time)
-    -- Convert HH in HH:MM:SS
-    hourInSec = tonumber(string.sub(time, 1, 2)) * 3600
-
-    -- Convert MM in HH:MM:SS
-    minInSec = tonumber(string.sub(time, 4, 5)) * 60
-
-    -- Get SS in HH:MM:SS
-    getSec = tonumber(string.sub(time, 7, 8))
-
-    return (hourInSec + minInSec + getSec)
-end
-
--- Notification actions container
-local notifbox_actions = function(notif)
-    actions_template = wibox.widget({
-        notification = notif,
-        base_layout = wibox.widget({
-            spacing = dpi(5),
-            layout = wibox.layout.flex.vertical,
-        }),
-        widget_template = {
-            {
-                {
-                    {
-                        id = "text_role",
-                        font = "SFNS Display Regular 10",
-                        widget = wibox.widget.textbox,
-                    },
-                    widget = wibox.container.place,
-                },
-                bg = beautiful.bg_actions,
-                shape = gears.shape.rounded_rect,
-                forced_height = 30,
-                widget = wibox.container.background,
-            },
-            margins = 4,
-            widget = wibox.container.margin,
-        },
-        style = { underline_normal = false, underline_selected = true },
-        widget = naughty.list.actions,
-    })
-
-    return actions_template
+local scroller = function(widget)
+    widget:buttons(gears.table.join(
+        awful.button({}, 4, nil, function()
+            if #widget.children == 1 then
+                return
+            end
+            widget:insert(1, widget.children[#widget.children])
+            widget:remove(#widget.children)
+        end),
+        awful.button({}, 5, nil, function()
+            if #widget.children == 1 then
+                return
+            end
+            widget:insert(#widget.children + 1, widget.children[1])
+            widget:remove(1)
+        end)
+    ))
 end
 
 -- Empty notification message
@@ -182,11 +87,122 @@ local notifbox_empty = function()
     return centered_empty_notifbox
 end
 
+-- Notification boxes container layout
+local notifbox_layout = wibox.widget({
+    layout = wibox.layout.fixed.vertical,
+    spacing = dpi(5),
+    notifbox_empty(),
+})
+scroller(notifbox_layout)
+
+-- Notification icon container
+local notifbox_icon = function(ico_image)
+    local noti_icon = wibox.widget({
+        {
+            id = "icon",
+            resize = true,
+            forced_height = dpi(24),
+            forced_width = dpi(24),
+            widget = wibox.widget.imagebox,
+        },
+        layout = wibox.layout.fixed.horizontal,
+    })
+    noti_icon.icon:set_image(ico_image)
+    return noti_icon
+end
+
+-- Notification app name container
+local notifbox_appname = function(app)
+    return wibox.widget({
+        markup = app or "System Notification",
+        font = "SFNS Display Bold 12",
+        align = "left",
+        valign = "center",
+        widget = wibox.widget.textbox,
+    })
+end
+
+-- Notification title container
+local notifbox_title = function(title)
+    return wibox.widget({
+        markup = "<b>" .. title .. "</b>",
+        font = "SFNS Display Bold 12",
+        align = "left",
+        valign = "center",
+        widget = wibox.widget.textbox,
+    })
+end
+
+-- Notification message container
+local notifbox_message = function(msg)
+    return wibox.widget({
+        markup = msg,
+        font = "SFNS Display Regular 11",
+        align = "left",
+        valign = "center",
+        widget = wibox.widget.textbox,
+    })
+end
+
+-- Notification actions container
+local notifbox_actions = function(notif)
+    actions_template = wibox.widget({
+        notification = notif,
+        base_layout = wibox.widget({
+            spacing = dpi(0),
+            layout = wibox.layout.flex.horizontal,
+        }),
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            id = "text_role",
+                            font = "Inter Regular 10",
+                            widget = wibox.widget.textbox,
+                        },
+                        widget = wibox.container.place,
+                    },
+                    widget = clickable_container,
+                },
+                bg = beautiful.groups_bg,
+                shape = gears.shape.rounded_rect,
+                forced_height = 30,
+                widget = wibox.container.background,
+            },
+            margins = 4,
+            widget = wibox.container.margin,
+        },
+        style = { underline_normal = false, underline_selected = true },
+        widget = naughty.list.actions,
+    })
+
+    return actions_template
+end
+
 -- Reset notifbox_layout
 reset_notifbox_layout = function()
     notifbox_layout:reset(notifbox_layout)
     notifbox_layout:insert(1, notifbox_empty())
     remove_notifbox_empty = true
+end
+
+-- Get current time
+local current_time = function()
+    return os.date("%H:%M:%S")
+end
+
+-- Get exact time of creation
+local exact_time = function()
+    return os.date("%b %d, %I:%M %p")
+end
+
+-- Convert time to seconds
+local parse_to_seconds = function(time)
+    hourInSec = tonumber(string.sub(time, 1, 2)) * 3600
+    minInSec = tonumber(string.sub(time, 4, 5)) * 60
+    getSec = tonumber(string.sub(time, 7, 8))
+    return (hourInSec + minInSec + getSec)
 end
 
 -- Returns the notification box
@@ -200,7 +216,7 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
     -- Notification time pop container
     local notifbox_timepop = wibox.widget({
         id = "time_pop",
-        text = nil,
+        markup = nil,
         font = "SFNS Display Regular 10",
         align = "left",
         valign = "center",
@@ -242,6 +258,32 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
         end,
     })
 
+    local dismiss_imagebox = wibox.widget({
+        {
+            id = "dismiss_icon",
+            image = PATH_TO_ICONS .. "delete.svg",
+            resize = true,
+            forced_height = dpi(5),
+            widget = wibox.widget.imagebox,
+        },
+        layout = wibox.layout.fixed.horizontal,
+    })
+    local dismiss_button = wibox.widget({
+        {
+            dismiss_imagebox,
+            margins = dpi(5),
+            widget = wibox.container.margin,
+        },
+        widget = clickable_container,
+    })
+    local notifbox_dismiss = wibox.widget({
+        dismiss_button,
+        visible = false,
+        bg = beautiful.bg_normal,
+        shape = gears.shape.circle,
+        widget = wibox.container.background,
+    })
+
     -- Template of notification box
     local notifbox_template = wibox.widget({
         id = "notifbox_template",
@@ -260,7 +302,11 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
                         notifbox_appname(app),
                     },
                     nil,
-                    notifbox_timepop,
+                    {
+                        notifbox_timepop,
+                        notifbox_dismiss,
+                        layout = wibox.layout.fixed.horizontal,
+                    },
                 },
                 {
                     layout = wibox.layout.fixed.vertical,
@@ -283,25 +329,47 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
         widget = wibox.container.background,
     })
 
+    -- Put the generated template to a container
+    local notifbox = wibox.widget({
+        notifbox_template,
+        shape = function(cr, width, height)
+            gears.shape.partially_rounded_rect(cr, width, height, true, true, true, true, beautiful.groups_radius)
+        end,
+        widget = wibox.container.background,
+    })
+
     -- Delete notification box
     local notifbox_delete = function()
-        notifbox_layout:remove_widgets(notifbox_template, true)
+        notifbox_layout:remove_widgets(notifbox, true)
     end
 
-    -- Delete notification box when pressed
-    notifbox_template:connect_signal("button::press", function(_, _, _, button)
+    -- Delete notifbox on LMB
+    notifbox:buttons(awful.util.table.join(awful.button({}, 1, function()
         if #notifbox_layout.children == 1 then
             reset_notifbox_layout()
         else
             notifbox_delete()
         end
+        collectgarbage("collect")
+    end)))
+
+    -- Add hover, and mouse leave events
+    notifbox_template:connect_signal("mouse::enter", function()
+        notifbox.bg = beautiful.bg_focus
+        notifbox_timepop.visible = false
+        notifbox_dismiss.visible = true
     end)
 
-    return notifbox_template
-end
+    notifbox_template:connect_signal("mouse::leave", function()
+        notifbox.bg = beautiful.bg_normal
+        notifbox_timepop.visible = true
+        notifbox_dismiss.visible = false
+    end)
 
--- Add empty notification message on start-up
-notifbox_layout:insert(1, notifbox_empty())
+    collectgarbage("collect")
+
+    return notifbox
+end
 
 -- Connect to naughty
 naughty.connect_signal("request::display", function(n)
@@ -313,7 +381,7 @@ naughty.connect_signal("request::display", function(n)
     end
 
     -- Set background color based on urgency level
-    local notifbox_color = beautiful.bg_modal
+    local notifbox_color = beautiful.bg_normal
     if n.urgency == "critical" then
         notifbox_color = n.bg .. "66"
     end
@@ -324,9 +392,26 @@ naughty.connect_signal("request::display", function(n)
         appicon = PATH_TO_ICONS .. "new-notif" .. ".svg"
     end
 
+    -- Check if app_name is notify-send
+    local appname = n.app_name
+    if appname:match("notify-send") then
+        appname = "System Notification"
+    end
+
     -- Throw data from naughty to notifbox_layout
     -- Generates notifbox
-    notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, n.app_name, notifbox_color))
+    notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, appname, notifbox_color))
+
+    -- For Notification Center
+    if panel_visible or dont_disturb then
+        naughty.destroy_all_notifications(nil, 1)
+    end
+
+    if not dont_disturb then
+        -- Add Sound fx to notif
+        -- Depends: canberra-gtk-play
+        awful.spawn("canberra-gtk-play -i message", false)
+    end
 end)
 
 return notifbox_layout
