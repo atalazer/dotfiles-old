@@ -67,14 +67,6 @@ augroup Dashboard
     au FileType dashboard map q :quit<CR> | au WinLeave <buffer> unmap q
 augroup END
 
-augroup Goyo
-    au!
-    au User GoyoEnter setlocal showtabline=0 laststatus=0 scrolloff=999 signcolumn=no nolist noruler
-    au User GoyoEnter IndentBlanklineDisable
-    au User GoyoLeave setlocal showtabline=2 laststatus=2 scrolloff=3 signcolumn=yes list ruler
-    au User GoyoLeave IndentBlanklineEnable
-augroup END
-
 " disable nvim-compe inside telescope
 augroup Compe
     au!
@@ -85,7 +77,6 @@ augroup END
 augroup Emmet
     au!
     au FileType html,css,markdown EmmetInstall
-    au BufRead *.html,*.css,*.md EmmetInstall
 augroup END
 
 " " hide the cursor if we're inside NvimTree

@@ -6,25 +6,36 @@ local keys = require("configs.keys")
 local decorations = require("decorations")
 
 ruled.client.connect_signal("request::rules", function()
-
     -- All clients will match this rule {{{
     ruled.client.append_rule({
         id = "global",
         rule = {},
         properties = {
-            size_hints_honor = false,
-            honor_workarea = true,
-            honor_padding = true,
-            maximized = false,
+            -- maximized = false,
+            -- floating = true,
+            -- titlebars_enabled = true,
             raise = true,
             focus = awful.client.focus.filter,
             keys = keys.clientkeys,
             buttons = keys.clientbuttons,
             border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
-            -- titlebars_enabled = beautiful.titlebars_enabled,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen ,
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+        },
+    })
+    -- }}}
+
+    -- Normal {{{
+    ruled.client.append_rule({
+        id = "normal",
+        rule_any = {
+            type = { "normal" },
+        },
+        properties = {
+            titlebars_enabled = true,
+            floating = true,
+            placement = centered_client_placement,
         },
     })
     -- }}}
@@ -39,9 +50,7 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             titlebars_enabled = true,
             floating = true,
-            above = true,
-            skip_decoration = true,
-            placement = centered_client_placement ,
+            placement = centered_client_placement,
         },
     })
     -- }}}
@@ -55,8 +64,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             titlebars_enabled = true,
             floating = true,
-            above = true,
-            skip_decoration = true,
             placement = centered_client_placement,
         },
     })
@@ -71,7 +78,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             titlebars_enabled = false,
             floating = true,
-            skip_decoration = true,
             placement = centered_client_placement,
         },
     })
@@ -106,11 +112,23 @@ ruled.client.connect_signal("request::rules", function()
                 "Popup",
                 "plugin-container",
                 "exe",
+                "pinentry",
+            },
+            class = {
+                "Sxiv",
+                "SimpleScreenRecorder",
+                "Anki",
+                "lxappearance",
+                "Lxappearance",
+            },
+            name = {
+                "Event Tester", -- xev.
+                "Open File", -- file picker
+                "Media viewer", -- new telegram image viewer
             },
             role = {
-                "pop-up",
-                "GtkFileChooserDialog",
-                "conversation",
+                "GtkFileChooserDialog", -- file picker
+                "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
             },
         },
         properties = {
@@ -121,9 +139,7 @@ ruled.client.connect_signal("request::rules", function()
         },
     })
     -- }}}
-
 end)
 
 require("configs.rules.apps")
 require("configs.rules.tags")
-

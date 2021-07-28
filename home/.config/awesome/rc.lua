@@ -26,9 +26,8 @@ local decoration_theme = decoration_themes[1]
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
     "atalazer",     -- 1 -- Minimal taglist and dock with autohide
-    "default",
 }
-local bar_theme = bar_themes[2]
+local bar_theme = bar_themes[1]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
@@ -42,7 +41,7 @@ local notification_themes = {
     "atalazer",       -- 1 -- Filled text icons on the right, text on the left
     "lovelace",       -- 2 -- Plain with standard image icons
 }
-local notification_theme = notification_themes[2]
+local notification_theme = notification_themes[1]
 -- ===================================================================
 local sidebar_themes = {
     "atalazer",        -- 1 -- Text-only (consumes less RAM)
@@ -254,9 +253,6 @@ require("elemental.app_drawer")
 
 -- Window switcher
 require("elemental.window_switcher")
-
--- Toggle-able microphone overlay
--- require("elemental.microphone_overlay")
 
 -- >> Daemons
 -- Most widgets that display system/external info depend on evil.

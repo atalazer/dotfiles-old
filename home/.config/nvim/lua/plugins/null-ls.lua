@@ -5,46 +5,36 @@ local b = null_ls.builtins
 
 vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc"
 
-local shfmt = h.make_builtin({
-    method = m.FORMATTING,
-    filetypes = { "sh", "zsh", "bash" },
-    generator_opts = {
-        command = "shfmt",
-        args = { "-i", vim.bo.shiftwidth or 2, "-s", "$FILENAME" },
-        to_stdin = true,
-    },
-    factory = h.formatter_factory,
-})
-
-local sources = {
-    shfmt,
-    b.formatting.black,
-    b.formatting.prettierd.with({
-        filetypes = {
-            "typescript",
-            "javascript",
-            "json",
-            "css",
-            "html",
-        },
-    }),
-    b.formatting.stylua.with({
-        args = {
-            "--config-path",
-            vim.env.HOME .. "/.config/nvim/.stylua.toml",
-            "-",
-        },
-    }),
-}
-
 null_ls.setup({
-    sources = sources,
+    sources = {
+        b.code_actions.gitsigns,
+        b.formatting.trim_whitespace.with({ 
+            filetypes = { "sh", "bash", "zsh" } 
+        }),
+        b.formatting.shfmt.with({
+            filetypes = { "sh", "bash", "zsh" },
+            args = { "-i", vim.bo.shiftwidth or 2, "-s", "$FILENAME" },
+        }),
+        b.formatting.black,
+        -- b.formatting.prettierd,
+        b.formatting.prettier_d_slim,
+        b.formatting.stylua.with({
+            args = {
+                "--config-path",
+                vim.env.HOME .. "/.config/nvim/.stylua.toml",
+                "-",
+            },
+        }),
+    }
 })
 
 require("lspconfig")["null-ls"].setup({
     on_attach = function()
         print("LSP Attached!")
-        require("lsp.keys").mappings()
-    end
-})
 
+        local k = vim.keymap
+        local nnoremap = k.nnoremap
+        local buf = vim.lsp.buf
+        nnoremap({ "<leader>gf", buf.formatting, { silent = true } })
+    end,
+})

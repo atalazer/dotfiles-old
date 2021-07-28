@@ -2,77 +2,93 @@ local awful = require("awful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
+
+    -- Terminal {{{
+    ruled.client.append_rule({
+        rule_any = {
+            instance = { "Alacritty", "kitty" },
+        },
+        properties = {
+            floating = false,
+            titlebars_enabled = false,
+        },
+    })
+    -- }}}
+
     -- Fixed terminal geometry for floating terminals {{{
     ruled.client.append_rule({
         rule_any = {
             class = {
                 "Alacritty",
-                "Termite",
                 "kitty",
-                "st-256color",
-                "st",
-                "URxvt",
             },
-        },
-        except_any = {
-            instance = {
-                "Alacritty",
-                "kitty",
-            }
         },
         properties = {
             width = screen_width * 0.50,
             height = screen_height * 0.50,
-            titlebars_enabled = true,
             placement = centered_client_placement,
         },
     })
     -- }}}
 
-    -- Video Player {{{
-    ruled.client.append_rule({
-        rule_any = { 
-            class = { "mpv", "vlc" },
-        },
-        properties = {
-            floating = true,
-            titlebars_enabled = true,
-            width = screen_width * 0.5,
-            height = screen_height * 0.5,
-            placement = centered_client_placement,
-        },
-    })
-    -- }}}
-
-    -- Image viewers {{{
+    -- Browser{{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "feh", "Sxiv", "Viewnior" },
-            name = { "Media viewer" },
+            class = {
+                "firefox",
+                "Nightly",
+            },
         },
         properties = {
             floating = true,
-            raise = true,
             titlebars_enabled = true,
             placement = centered_client_placement,
-            width = screen_width * 0.70,
-            height = screen_height * 0.60,
         },
+        callback = function(c)
+            if c.instance == "Navigator" then
+                c.maximized = true
+                c.titlebars_enabled = false
+            end
+        end
     })
     -- }}}
 
-    -- Image viewers {{{
+    -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "Okular", "Zathura", "Evince" },
+            class = {
+                "TelegramDesktop", 
+                "KotatogramDesktop",
+            },
         },
         properties = {
             floating = true,
             titlebars_enabled = true,
             placement = centered_client_placement,
-            width = screen_width * 0.40,
-            height = screen_height * 0.90,
+        }
+    })
+    -- }}}
+
+    -- Urgent - Browser and Chatting {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = {
+                "TelegramDesktop", 
+                "KotatogramDesktop",
+                "firefox",
+                "Nightly",
+            },
+            type = {
+                "dialog",
+            },
         },
+        callback = function (c)
+            c:connect_signal("property::urgent", function ()
+                if c.urgent then
+                    c:jump_to()
+                end
+            end)
+        end
     })
     -- }}}
 
@@ -122,27 +138,68 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
-    -- Color Picker {{{
+    -- Video Player {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = { "Gcolor3", "Gcolor2", "Gpick" },
-            instance = { "gcolor3", "gcolor2", "gpick" },
-            name = { "Color Picker" },
-        },
-        properties = { floating = true, titlebars_enabled = false },
-    })
-    -- }}}
-
-    -- Dragon drag and drop utility {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = { "Dragon-drag-and-drop", "Dragon" },
+        rule_any = { 
+            class = { "mpv", "vlc" },
         },
         properties = {
             floating = true,
-            ontop = true,
-            sticky = true,
+            titlebars_enabled = true,
+            width = screen_width * 0.5,
+            height = screen_height * 0.5,
             placement = centered_client_placement,
+        },
+        callback = function (c)
+            -- Make it floating, ontop and move it out of the way if the current tag is maximized
+            if awful.layout.get(awful.screen.focused()) == awful.layout.suit.max then
+                c.floating = true
+                c.ontop = true
+                c.width = screen_width * 0.5
+                c.height = screen_height * 0.5
+                awful.placement.bottom_right(c, {
+                    honor_padding = true,
+                    honor_workarea = true,
+                    margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
+                })
+            end
+            c:connect_signal("property::fullscreen", function ()
+                if not c.fullscreen then
+                    c.ontop = true
+                end
+            end)
+        end
+    })
+    -- }}}
+
+    -- Image viewers {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "feh", "Sxiv", "Viewnior" },
+            name = { "Media viewer" },
+        },
+        properties = {
+            floating = true,
+            raise = true,
+            titlebars_enabled = true,
+            placement = centered_client_placement,
+            width = screen_width * 0.70,
+            height = screen_height * 0.60,
+        },
+    })
+    -- }}}
+
+    -- PDF viewers {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "Okular", "Zathura", "Evince" },
+        },
+        properties = {
+            floating = true,
+            titlebars_enabled = true,
+            placement = centered_client_placement,
+            width = screen_width * 0.40,
+            height = screen_height * 0.90,
         },
     })
     -- }}}
@@ -159,32 +216,52 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
-    -- Pavucontrol {{{
+    -- Steam guard {{{
     ruled.client.append_rule({
-        rule_any = { class = { "Pavucontrol" } },
-        properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.8 },
+        rule = { name = "Steam Guard - Computer Authorization Required" },
+        properties = { floating = true },
     })
     -- }}}
 
-    -- Scratchpad {{{
+    -- Color Picker {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = {
-                "scratchpad",
-                "markdown_input",
-            },
+            class = { "Gcolor3", "Gcolor2", "Gpick" },
+            instance = { "gcolor3", "gcolor2", "gpick" },
+            name = { "Color Picker" },
+        },
+        properties = { floating = true, titlebars_enabled = false },
+    })
+    -- }}}
+
+    -- Dragon drag and drop utility {{{
+    ruled.client.append_rule({
+        rule_any = {
             class = {
-                "scratchpad",
-                "markdown_input",
+                "Dragon-drag-and-drop",
+                "Dragon",
             },
         },
         properties = {
             floating = true,
-            minimized = true,
-            width = screen_width * 0.7,
-            height = screen_height * 0.75,
-            placement = centered_client_placement,
+            ontop = true,
+            sticky = true,
+            width = screen_width * 0.3,
         },
+        callback = function (c)
+            awful.placement.bottom_right(c, {
+                honor_padding = true,
+                honor_workarea = true,
+                margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
+            })
+        end
+    })
+    -- }}}
+
+    -- Pavucontrol {{{
+    ruled.client.append_rule({
+        rule_any = { class = { "Pavucontrol" } },
+        properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.8 },
     })
     -- }}}
 
@@ -195,9 +272,7 @@ ruled.client.connect_signal("request::rules", function()
             class = { "htop", "monitoring" },
         },
         properties = {
-            skip_taskbar = true,
             floating = true,
-            raise = true,
             width = screen_width * 0.8,
             height = screen_height * 0.85,
             placement = centered_client_placement,
@@ -273,10 +348,26 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
-    -- Steam guard {{{
+    -- Scratchpad {{{
     ruled.client.append_rule({
-        rule = { name = "Steam Guard - Computer Authorization Required" },
-        properties = { floating = true },
+        rule_any = {
+            instance = {
+                "scratchpad",
+                "markdown_input",
+            },
+            class = {
+                "scratchpad",
+                "markdown_input",
+            },
+        },
+        properties = {
+            skip_taskbar = true,
+            floating = true,
+            width = screen_width * 0.7,
+            height = screen_height * 0.75,
+            placement = centered_client_placement,
+        },
     })
     -- }}}
+
 end)

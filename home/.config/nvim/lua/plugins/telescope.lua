@@ -95,6 +95,8 @@ telescope.setup({
             file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
         },
         lsp_code_actions = no_preview(),
+        oldfiles = no_preview(),
+        frecency = no_preview(),
     },
     extensions = {
         fzf = {

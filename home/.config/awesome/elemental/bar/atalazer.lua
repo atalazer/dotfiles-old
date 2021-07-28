@@ -5,132 +5,124 @@ local beautiful = require("beautiful")
 
 local helpers = require("helpers")
 local keys = require("configs.keys")
+local apps = require("configs.apps")
 
 local dock_autohide_delay = 0.5 -- seconds
-
--- {{{ Widgets
-local update_taglist = function(item, tag, index)
-    if tag.selected then
-        item.bg = beautiful.taglist_text_color_focused[index]
-    elseif tag.urgent then
-        item.bg = beautiful.taglist_text_color_urgent[index]
-    elseif #tag:clients() > 0 then
-        item.bg = beautiful.taglist_text_color_occupied[index]
-    else
-        item.bg = beautiful.taglist_text_color_empty[index]
-    end
-end
 
 local dock = require("noodle.dock")
 local dock_placement = function(w)
     return awful.placement.bottom(w)
 end
 
-local tag_colors_empty = {
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-    "#00000000",
-}
+local clock_widget = wibox.widget.textclock("<span color='" .. x.foreground .. "'>%a, %I:%M %p</span>")
 
-local tag_colors_urgent = {
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-    x.foreground,
-}
+local calendar_popup = awful.widget.calendar_popup.month({
+    start_sunday = false,
+    spacing = dpi(3),
+    font = beautiful.font,
+    long_weekdays = false,
+    margin = dpi(2),
+    style_month = { border_width = 2, padding = 10, border_color = beautiful.bg_focus },
+    style_header = { border_width = 0, bg_color = beautiful.bg_normal },
+    style_weekday = { border_width = 0, bg_color = beautiful.bg_normal },
+    style_normal = { border_width = 0, bg_color = beautiful.bg_normal },
+    style_focus = { border_width = 0, bg_color = beautiful.bg_focus },
+})
 
-local tag_colors_focused = {
-    x.color1,
-    x.color5,
-    x.color4,
-    x.color6,
-    x.color2,
-    x.color3,
-    x.color1,
-    x.color5,
-    x.color4,
-    x.color6,
-}
-
-local tag_colors_occupied = {
-    x.color1 .. "45",
-    x.color5 .. "45",
-    x.color4 .. "45",
-    x.color6 .. "45",
-    x.color2 .. "45",
-    x.color3 .. "45",
-    x.color1 .. "45",
-    x.color5 .. "45",
-    x.color4 .. "45",
-    x.color6 .. "45",
-}
-
--- Helper function that updates a taglist item
-local update_taglist = function(item, tag, index)
-    if tag.selected then
-        item.bg = tag_colors_focused[index]
-    elseif tag.urgent then
-        item.bg = tag_colors_urgent[index]
-    elseif #tag:clients() > 0 then
-        item.bg = tag_colors_occupied[index]
-    else
-        item.bg = tag_colors_empty[index]
-    end
-end
+-- Attach calendar to clock_widget
+calendar_popup:attach(clock_widget, "tc", { on_pressed = true, on_hover = false })
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Create a taglist for every screen
+    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
+    -- We need one layoutbox per screen.
+    s.mylayoutbox = awful.widget.layoutbox({
+        screen = s,
+        buttons = {
+            awful.button({}, 1, function()
+                awful.layout.inc(1)
+            end),
+            awful.button({}, 3, function()
+                awful.layout.inc(-1)
+            end),
+            awful.button({}, 4, function()
+                awful.layout.inc(-1)
+            end),
+            awful.button({}, 5, function()
+                awful.layout.inc(1)
+            end),
+        },
+    })
+
+    -- Create a taglist widget
     s.mytaglist = awful.widget.taglist({
         screen = s,
         filter = awful.widget.taglist.filter.all,
         buttons = keys.taglist_buttons,
-        layout = {
-            spacing = 10,
-            spacing_widget = {
-                color = "#00ff00",
-                shape = gears.shape.circle,
-                widget = wibox.widget.separator,
-            },
-            layout = wibox.layout.flex.horizontal,
-        },
-        widget_template = {
-            widget = wibox.container.background,
-            create_callback = function(self, tag, index, _)
-                update_taglist(self, tag, index)
-            end,
-            update_callback = function(self, tag, index, _)
-                update_taglist(self, tag, index)
-            end,
+        style = {
+            bg_focus = "#00000000",
+            bg_urgent = "#00000000",
+            bg_occupied = "#00000000",
+            bg_empty = "#00000000",
+            bg_volatile = "#00000000",
+
+            fg_focus = x.color6,
+            fg_urgent = x.color3,
+            fg_occupied = x.color5,
+            fg_empty = x.color8,
+            fg_volatile = x.color9,
         },
     })
 
-    -- Create the taglist wibox
-    s.taglist_box = awful.wibar({
-        screen = s,
-        visible = true,
-        ontop = false,
-        type = "dock",
+    -- Create a system tray widget
+    s.systray = wibox.widget.systray()
+    s.separator = wibox.widget.textbox(" ")
+    -- s.screen_rec = require("noodle.screen-recorder")()
+
+    s.record_status = awful.widget.watch("bash -c 'cat /tmp/recordicon'", 1, function(widget, stdout)
+        if stdout:match("NOREC") then
+            widget:set_markup(helpers.colorize_text(stdout, x.foreground))
+        else
+            widget:set_markup(helpers.colorize_text(stdout, x.color1))
+        end
+    end)
+    s.record_status:buttons(gears.table.join(
+        awful.button({}, 1, apps.record)
+    ))
+
+    -- Create the wibox
+    s.mywibox = awful.wibar({
         position = "top",
-        height = dpi(5),
+        screen = s,
+        width = s.geometry.width,
+        height = dpi(20),
+        x = s.geometry.x,
+        y = s.geometry.y,
         bg = "#00000000",
+        fg = beautiful.fg_normal,
     })
 
-    s.taglist_box:setup({
-        widget = s.mytaglist,
-    })
+    -- Add widgets to the wibox
+    s.mywibox.widget = {
+        layout = wibox.layout.align.horizontal,
+        expand = "none",
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.mytaglist,
+        },
+        clock_widget,
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.record_status,
+            s.separator,
+            {
+                s.systray,
+                margins = dpi(2),
+                widget = wibox.container.margin,
+            },
+            s.separator,
+            s.mylayoutbox,
+        },
+    }
 
     -- Create the dock wibox
     s.dock = awful.popup({
@@ -157,7 +149,15 @@ awful.screen.connect_for_each_screen(function(s)
     end
 
     -- Initialize wibox activator
-    s.dock_activator = wibox({ screen = s, height = 1, bg = "#00000000", visible = true, ontop = true })
+    s.dock_activator = wibox({
+        screen = s,
+        height = dpi(3),
+        bg = x.color8,
+        shape = helpers.rrect(beautiful.border_radius),
+        opacity = 0.8,
+        visible = not s.dock.visible,
+        ontop = true,
+    })
     awful.placement.bottom(s.dock_activator)
     s.dock_activator:connect_signal("mouse::enter", function()
         s.dock.visible = true
@@ -222,37 +222,34 @@ awful.screen.connect_for_each_screen(function(s)
         autohide()
     end)
 
-    -- Create a system tray widget
-    s.systray = wibox.widget.systray()
-    -- Create the tray box
-    s.traybox = wibox({
-        screen = s,
-        width = dpi(150),
-        height = beautiful.wibar_height,
-        bg = "#00000000",
-        visible = false,
-        ontop = true,
-    })
-    s.traybox:setup({
-        {
-            {
-                nil,
-                s.systray,
-                expand = "none",
-                layout = wibox.layout.align.horizontal,
-            },
-            margins = dpi(10),
-            widget = wibox.container.margin,
-        },
-        bg = beautiful.bg_systray,
-        shape = helpers.rrect(beautiful.border_radius),
-        widget = wibox.container.background,
-    })
-    awful.placement.bottom_right(s.traybox, { margins = beautiful.useless_gap * 2 })
-    s.traybox:buttons(gears.table.join(awful.button({}, 2, function()
-        s.traybox.visible = false
-    end)))
-    
+    -- -- Create the tray box
+    -- s.traybox = wibox({
+    --     screen = s,
+    --     width = dpi(150),
+    --     height = beautiful.wibar_height,
+    --     bg = "#00000000",
+    --     visible = false,
+    --     ontop = true,
+    -- })
+    -- s.traybox:setup({
+    --     {
+    --         {
+    --             nil,
+    --             s.systray,
+    --             expand = "none",
+    --             layout = wibox.layout.align.horizontal,
+    --         },
+    --         margins = dpi(5),
+    --         widget = wibox.container.margin,
+    --     },
+    --     bg = beautiful.bg_systray,
+    --     shape = helpers.rrect(beautiful.border_radius),
+    --     widget = wibox.container.background,
+    -- })
+    -- awful.placement.bottom_right(s.traybox, { margins = beautiful.useless_gap * 2 })
+    -- s.traybox:buttons(gears.table.join(awful.button({}, 2, function()
+    --     s.traybox.visible = false
+    -- end)))
 end)
 
 awesome.connect_signal("elemental::dismiss", function()
@@ -263,9 +260,14 @@ end)
 -- Every bar theme should provide these fuctions
 function wibars_toggle()
     local s = awful.screen.focused()
-    s.dock.visible = not s.dock.visible
+    if s.dock then
+        s.dock.visible = not s.dock.visible
+    end
 end
+
 function tray_toggle()
     local s = awful.screen.focused()
-    s.traybox.visible = not s.traybox.visible
+    if s.traybox then
+        s.traybox.visible = not s.traybox.visible
+    end
 end

@@ -120,6 +120,15 @@ client.connect_signal("property::floating", function(c)
     end
 end)
 
+-- Titlebar only if floating
+client.connect_signal("property::floating", function(c) 
+    if c.floating then
+        awful.titlebar.show(c) 
+    else 
+        awful.titlebar.hide(c) 
+    end 
+end)
+
 -- Disconnect the client ability to request different size and position
 -- Breaks fullscreen and maximized
 -- client.disconnect_signal("request::geometry", awful.ewmh.client_geometry_requests)

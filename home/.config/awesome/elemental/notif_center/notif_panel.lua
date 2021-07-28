@@ -76,7 +76,7 @@ local right_panel = function(screen)
         local offset_x = dpi(20)
 
         local notif_activator = wibox({
-            bg = x.background,
+            bg = x.color8,
             shape = helpers.rrect(activator_width/2),
             x = screen.geometry.width - activator_width + offset_x,
             y = (screen.geometry.height - activator_height) / 2,
@@ -99,7 +99,7 @@ local right_panel = function(screen)
         expand = "none",
         layout = wibox.layout.fixed.vertical,
         {
-            require("elemental.notif_center.subwidgets.notif_center"),
+            require("elemental.notif_center.notif_center"),
             margins = dpi(15),
             widget = wibox.container.margin,
         },

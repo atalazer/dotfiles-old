@@ -7,7 +7,7 @@ local dpi = require("beautiful").xresources.apply_dpi
 
 local PATH_TO_ICONS = os.getenv("HOME") .. "/.config/awesome/elemental/notif_center/icons/"
 
-local clickable_container = require("elemental.notif_center.subwidgets.clickable_container")
+local clickable_container = require("noodle.clickable_container")
 
 -- Boolean variable to remove empty message
 local remove_notifbox_empty = true
@@ -237,7 +237,7 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
 
             -- If seconds is less than one minute
             if time_difference < 60 then
-                notifbox_timepop.text = "now"
+                notifbox_timepop.text = "Now"
 
                 -- If greater that one hour
             elseif time_difference >= 3600 then
@@ -248,9 +248,9 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
             else
                 local time_in_minutes = math.floor(time_difference / 60)
                 if tonumber(time_in_minutes) > 1 then
-                    notifbox_timepop.text = time_in_minutes .. " " .. "minutes ago"
+                    notifbox_timepop.text = time_in_minutes .. " " .. "Minutes ago"
                 else
-                    notifbox_timepop.text = time_in_minutes .. " " .. "minute ago"
+                    notifbox_timepop.text = time_in_minutes .. " " .. "Minute ago"
                 end
             end
 
@@ -343,8 +343,18 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
         notifbox_layout:remove_widgets(notifbox, true)
     end
 
-    -- Delete notifbox on LMB
-    notifbox:buttons(awful.util.table.join(awful.button({}, 1, function()
+    -- Delete notifbox on Righ-Click(RMB)
+    notifbox_dismiss:buttons(awful.util.table.join(awful.button({}, 1, function()
+        if #notifbox_layout.children == 1 then
+            reset_notifbox_layout()
+        else
+            notifbox_delete()
+        end
+        collectgarbage("collect")
+    end)))
+
+    -- Delete notifbox on Righ-Click(RMB)
+    notifbox:buttons(awful.util.table.join(awful.button({}, 3, function()
         if #notifbox_layout.children == 1 then
             reset_notifbox_layout()
         else
@@ -390,12 +400,6 @@ naughty.connect_signal("request::display", function(n)
     local appicon = n.icon
     if not appicon then
         appicon = PATH_TO_ICONS .. "new-notif" .. ".svg"
-    end
-
-    -- Check if app_name is notify-send
-    local appname = n.app_name
-    if appname:match("notify-send") then
-        appname = "System Notification"
     end
 
     -- Throw data from naughty to notifbox_layout

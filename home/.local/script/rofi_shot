@@ -36,8 +36,8 @@ check(){
         /bin/mkdir -p "$SCREENSHOT_DIR"
     fi
 
-    if [ -f "$TMP_IMG" ];then
-        /bin/rm "$TMP_IMG"
+    if [[ -f "$TMP_IMG" ]]; then
+        /usr/bin/rm "$TMP_IMG"
     fi
 }
 
@@ -145,7 +145,12 @@ notify() {
         }
 
         local open_folder = naughty.action {
-            name = 'Open Folder',
+            name = 'Folder',
+            icon_only = false,
+        }
+
+        local to_clipboard = naughty.action {
+            name = 'Clip',
             icon_only = false,
         }
 
@@ -163,6 +168,11 @@ notify() {
             awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
         end)
 
+        -- Execute the callback when 'Clipboard' is pressed
+        to_clipboard:connect_signal('invoked', function()
+            awful.spawn('xclip -selection clipboard -i '..'${_FILE}'..' -t image/png', false)
+        end)
+
         -- Execute the callback when 'Delete' is pressed
         delete_image:connect_signal('invoked', function()
             awful.spawn('gio trash ' .. '${_FILE}', false)
@@ -175,7 +185,7 @@ notify() {
             timeout = 5,
             title = '<b>Shot</b>',
             message = '${_MSG}',
-            actions = { open_image, open_folder, delete_image }
+            actions = { open_image, open_folder, to_clipboard, delete_image }
         })
         "
     elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
@@ -253,7 +263,7 @@ _parse(){
             _shot normal && \
             notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
-            notify-send "Shot" "Screenshot Saved to Clipboard" && \
+            notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard" && \
             to_clip
         ;;
         full)

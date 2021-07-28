@@ -6,7 +6,7 @@ local beautiful = require("beautiful")
 local dpi = require("beautiful").xresources.apply_dpi
 
 local HOME = os.getenv("HOME")
-local clickable_container = require("elemental.notif_center.subwidgets.clickable_container")
+local clickable_container = require("noodle.clickable_container")
 local PATH_TO_ICONS = HOME .. "/.config/awesome/elemental/notif_center/icons/"
 
 -- Configuration

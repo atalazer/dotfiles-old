@@ -68,15 +68,15 @@ local options = {
     laststatus = 2,
     pumheight = 10,
     re = 0,
-    scrolloff = 3,
-    sidescroll = 3,
+    scrolloff = 2,
+    sidescroll = 2,
     sidescrolloff = 15,
     shiftwidth = 4,
     softtabstop = 4,
     tabstop = 4,
     textwidth = 120,
-    timeoutlen = 300,
-    updatetime = 100,
+    timeoutlen = 400,
+    updatetime = 1000,
 }
 
 -- Function to apply options table

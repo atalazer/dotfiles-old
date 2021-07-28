@@ -442,7 +442,7 @@ if user.sidebar.show_on_mouse_screen_edge then
     local activator_height =  sidebar.height * 0.3
 
     local sidebar_activator = wibox({
-        bg = x.background,
+        bg = x.color8,
         shape = helpers.rrect(activator_width/2),
         width = activator_width,
         height = activator_height,

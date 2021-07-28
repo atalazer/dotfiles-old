@@ -50,6 +50,10 @@ apps.rofi = {
     youtube     = script_dir .. "rofi_youtube",
 }
 
+apps.record = function()
+    awful.spawn(apps.rofi.record)
+end
+
 apps.browser = function()
     awful.spawn(user.browser)
 end

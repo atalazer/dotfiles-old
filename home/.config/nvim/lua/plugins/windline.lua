@@ -12,6 +12,7 @@ local hl_list = {
     Inactive = { "InactiveFg", "InactiveBg" },
     Active = { "ActiveFg", "ActiveBg" },
 }
+
 local basic = {}
 
 basic.divider = { b_components.divider, "" }
