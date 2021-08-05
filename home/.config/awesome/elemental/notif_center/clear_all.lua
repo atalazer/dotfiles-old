@@ -15,6 +15,8 @@ local delete_imagebox = wibox.widget({
     {
         image = PATH_TO_ICONS .. "delete" .. ".svg",
         resize = true,
+        fg = x.foreground or beautiful.fg_normal,
+        bg = x.background or beautiful.bg_normal,
         forced_height = dpi(20),
         forced_width = dpi(20),
         widget = wibox.widget.imagebox,
@@ -30,7 +32,8 @@ end)))
 local delete_button_wrapped = wibox.widget({
     {
         delete_button,
-        bg = beautiful.bg_modal,
+        bg = x.background or beautiful.bg_normal,
+        fg = x.foreground or beautiful.fg_normal,
         shape = gears.shape.circle,
         widget = wibox.container.background,
     },

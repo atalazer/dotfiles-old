@@ -116,37 +116,52 @@ local keys = gears.table.join(
         { description = "Editor", group = "Apps: Terminal" }),
 
     -- Terminal file manager
-    awful.key({ superkey, shiftkey }, "f",
-        apps.file_manager,
-        { description = "File Manager", group = "Apps: Terminal" }),
+    -- awful.key({ superkey, shiftkey }, "f",
+    --     apps.file_manager,
+    --     { description = "File Manager", group = "Apps: Terminal" }),
 
     -- Terminal e-mail client
-    awful.key({ superkey, shiftkey }, "w",
-        apps.mail,
-        { description = "E-mail client", group = "Apps: Terminal" }),
+    -- awful.key({ superkey, shiftkey }, "w",
+    --     apps.mail,
+    --     { description = "E-mail client", group = "Apps: Terminal" }),
 
     -- Terminal music client
-    awful.key({ superkey, shiftkey }, "m",
-        apps.music,
-        { description = "Music client", group = "Apps: Terminal" }),
+    -- awful.key({ superkey, shiftkey }, "m",
+    --     apps.music,
+    --     { description = "Music client", group = "Apps: Terminal" }),
 
     -- }}}
 
     -- ===================================== Scratchpad {{{
 
-    -- scratchpad
-    awful.key({ superkey }, "\\", function()
-        apps.scratchpad()
-    end, { description = "Scratchpad", group = "Apps: Scratchpad" }),
+    -- Chatting Scratchpad
+    awful.key({ superkey, shiftkey }, "w",
+        function() awesome.emit_signal("scratch::chat") end,
+        { description = "Chatting Apps", group = "Apps: Scratchpad" }),
+
+    -- File manager Scratchpad
+    awful.key({ superkey, shiftkey }, "f",
+        function() awesome.emit_signal("scratch::file") end,
+        { description = "File Manager", group = "Apps: Scratchpad" }),
 
     -- Markdown input scratchpad (I for input)
     awful.key({ superkey }, "i",
-        apps.markdown_input,
-        { description = "Markdown Input", group = "Apps: Scratchpad" })
+        -- apps.markdown_input,
+        function() awesome.emit_signal("scratch::input") end,
+        { description = "Markdown Input", group = "Apps: Scratchpad" }),
 
+    -- Music Scratchpad
+    awful.key({ superkey, shiftkey }, "m",
+        function() awesome.emit_signal("scratch::music") end,
+        { description = "Music client", group = "Apps: Scratchpad" }),
+
+    -- scratchpad
+    awful.key({ superkey }, "\\", function()
+        -- apps.scratchpad()
+        awesome.emit_signal("scratch::term")
+    end, { description = "Scratchpad", group = "Apps: Scratchpad" })
 
 -- }}}
-
 )
 
 return keys

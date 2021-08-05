@@ -1,14 +1,12 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local helpers = require("helpers")
+local keys = require("configs.keys")
 local gears = require("gears")
 local capi = { screen = screen, client = client }
-
-local helpers = require("helpers")
 local icons = require("icons")
 local class_icons = icons.text.by_class
-
-local keys = require("configs.keys")
 
 -- TODO ability to switch to specific minimized clients without using the mouse:
 -- Might need to ditch the "easy" tasklist approach for something manual
@@ -42,6 +40,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
         widget_template = {
             {
+                -- Standard icon (from beautiful.icon_theme)
+                -- {
+                --     awful.widget.clienticon,
+                --     margins = 5,
+                --     widget  = wibox.container.margin
+                -- },
                 -- Text icon
                 {
                     id = "text_icon",
@@ -165,7 +169,7 @@ end
 
 local window_search = function()
     window_switcher_hide()
-    awful.spawn.with_shell("rofi_switcher")
+    awful.spawn.with_shell("rofi_awesome_window")
 end
 
 local unminimize = function()
@@ -188,9 +192,6 @@ local keybinds = {
     ["Escape"] = window_switcher_hide,
     ["Tab"] = function()
         awful.client.focus.byidx(1)
-    end,
-    ["`"] = function()
-        awful.client.focus.byidx(-1)
     end,
     -- (Un)Minimize
     ["n"] = function()

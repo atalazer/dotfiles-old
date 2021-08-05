@@ -2,6 +2,22 @@
 
 [ -f $HOME/.user ] && source $HOME/.user
 
+export GTK_IM_MODULE="fcitx"
+export QT_IM_MODULE="fcitx"
+export XMODIFIERS="@im=fcitx"
+export SDL_IM_MODULE="fcitx"
+export IBUS_USE_PORTAL=1
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+export MOZ_USE_XINPUT2=1
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+export CM_LAUNCHER="rofi"
+export CM_SELECTIONS="clipboard"
+
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --ignore-file ".gitignore"'
 export SKIM_DEFAULT_COMMAND='rg --files --no-ignore --ignore-file ".gitignore"'
 
@@ -15,7 +31,7 @@ export LESSKEY="${XDG_CONFIG_HOME}less/keys"
 export ICEAUTHORITY="${XDG_CACHE_HOME}ICEauthority"
 
 ### $PATH {{{
-TO_PATH(){
+TO_PATH() {
     if [[ -d $1 ]]; then
         if [[ -z $(printf $PATH | grep $1) ]]; then
             export PATH="$1:$PATH"

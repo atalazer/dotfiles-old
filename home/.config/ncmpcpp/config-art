@@ -1,6 +1,7 @@
 execute_on_song_change="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp_cover_art.sh"
 
 #### Files
+mpd_music_dir = ~/Music
 ncmpcpp_directory  = ~/.config/ncmpcpp
 lyrics_directory  = ~/.config/ncmpcpp/lyrics
 mpd_host = "localhost"
@@ -16,32 +17,31 @@ mpd_port = "6600"
 ## - 7 - cyan
 ## - 8 - white
 ## - 9 - end of current color
-## If you want to use 256 colors and/or background colors in formats
-## with the syntax $(COLOR), e.g. to set the artist tag to one of the
-## non-standard colors and make it have yellow background, you need to write
-## $(197_yellow)%a$(end).
 
-#### Playlist
-playlist_shorten_total_times = "yes"
+#### Display
 playlist_display_mode = "columns"
 browser_display_mode = "columns"
 search_engine_display_mode = "columns"
 playlist_editor_display_mode = "columns"
 
+#### Interface
+user_interface = "classic"      # alternative or classic
+alternative_header_first_line_format = "$7$b {%t}|{%f} $/b"
+alternative_header_second_line_format = "$5{%a}"
+
+current_item_prefix = "$5 $b"
+current_item_suffix = "$/b"
+
+now_playing_prefix = "$r"
+now_playing_suffix = "$/r$(end)"
+
+#### Playlist
 playlist_show_remaining_time = "yes"
-alternative_header_first_line_format = "$7$b» {%f} «$/b"
-alternative_header_second_line_format = "$5{%b}|{/%D/}"
-# user_interface = "alternative"
-user_interface = "classic"
+playlist_shorten_total_times = "yes"
 
 song_list_format = "{$7%n $9}{$5%a - $9}{$5%t$9}|{$8%f$9}$R{$5  %b$9}{$3 │ %l$9}"
-song_columns_list_format = "(50)[5]{t|f:Title} (50)[5]{ar:Artist} $b(5f)[7]{lr:Time}$/b"
+song_columns_list_format = "(20)[5]{a:Artist} (30)[5]{t|f:Title} "
 song_status_format = " $5%a $7- $5%t $5( $7%b $5) "
-
-current_item_prefix = "$7$r"
-current_item_suffix = "$/r$(end)"
-now_playing_prefix = "$b$2$7 "
-now_playing_suffix = "  $/b$7"
 
 #### Colors
 main_window_color =  "default"
@@ -55,7 +55,7 @@ color2 = "blue"
 #### can consider ─━⠤⠤
 progressbar_look = "━━━"
 progressbar_elapsed_color = "blue"
-progressbar_color = "cyan"
+progressbar_color = "default"
 connected_message_on_startup = no
 
 #### Visualizer stuff
@@ -93,5 +93,5 @@ visualizer_look = "  "
 startup_screen = visualizer
 startup_slave_screen_focus = yes
 startup_slave_screen = playlist
-locked_screen_width_part = 30
+locked_screen_width_part = 40
 

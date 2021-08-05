@@ -13,5 +13,5 @@ behind = "⇣${count}"
 [shell]
 fish_indicator = ""
 zsh_indicator = "_"
-disabled = false
+disabled = true
 

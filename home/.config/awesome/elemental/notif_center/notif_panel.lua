@@ -70,7 +70,7 @@ local right_panel = function(screen)
     end
 
     -- Activate sidebar by moving the mouse at the edge of the screen
-    if user.notif.show_on_mouse_screen_edge or true then
+    if user.notif.show_on_mouse_screen_edge then
         local activator_width = dpi(24)
         local activator_height = screen.geometry.height * 0.3
         local offset_x = dpi(20)
@@ -92,6 +92,19 @@ local right_panel = function(screen)
         notif_activator:connect_signal("mouse::enter", function()
             openPanel()
         end)
+
+        -- We have set the notif_activator to be ontop, but we do not want it to be
+        -- above fullscreen clients
+        local no_notif_activator_ontop = function(c)
+            if c.fullscreen then
+                notif_activator.ontop = false
+            else
+                notif_activator.ontop = true
+            end
+        end
+        client.connect_signal("focus", no_notif_activator_ontop)
+        client.connect_signal("unfocus", no_notif_activator_ontop)
+        client.connect_signal("property::fullscreen", no_notif_activator_ontop)
 
     end
 

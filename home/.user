@@ -4,7 +4,7 @@
 
 ## Apps
 export TERMINAL="kitty"
-export BROWSER="firefox"
+export BROWSER="qutebrowser"
 export FILEMAN="thunar"
 
 export EDITOR="nvim"
@@ -22,14 +22,13 @@ export APP_DIR="$HOME/Applications"
 export BIN_DIR="$HOME/.local/bin"
 export BACKUP_DIR="$HOME/Backups"
 export NOTE_DIR="$HOME/Documents/Notes"
-export SCHOOL_DIR="$HOME/School"
-export WORK_DIR="$HOME/Work"
-export PROGRAMMING_DIR="${WORK_DIR:-$HOME/Work}/Programming"
-export REPO_DIR="${WORK_DIR:-$HOME/Work}/Repos"
+export SCHOOL_DIR="$HOME/Documents/School"
+export PROGRAMMING_DIR="$HOME/Documents/Project"
+export REPO_DIR="$HOME/Documents/GitHub"
 
-export BLOG="${WORK_DIR:-$HOME/Work}/Blog"
+export BLOG="$HOME/Documents/Blog"
 export DOTS="$HOME/.dotfiles"
 
 # Misc
-export WAL_BACKEND=colorthief       # wal colorthief haishoku
+export WAL_BACKEND=colorthief       # wal colorthief
 

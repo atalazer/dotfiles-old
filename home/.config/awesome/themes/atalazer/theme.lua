@@ -12,7 +12,7 @@ local theme = {}
 
 -- Set theme wallpaper.
 -- It won't change anything if you are using feh to set the wallpaper like I do.
-theme.wallpaper = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/wallpaper.jpg"
+-- theme.wallpaper = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/wallpaper.jpg"
 
 -- Set the theme font. This is the font that will be used by default in menus, bars, titlebars etc.
 -- theme.font          = "sans 11"

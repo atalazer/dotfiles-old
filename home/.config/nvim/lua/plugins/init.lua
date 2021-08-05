@@ -28,7 +28,6 @@ if not packer_ok then
 end
 
 packer.init({
-    transitive_opt = false,
     git = {
         clone_timeout = 300, -- 5 minutes, I have horrible internet
     },
@@ -56,7 +55,7 @@ local plugins = {
     -- ======= User Interface =======
     -- Colorscheme
     {
-        "~/Work/Repos/xresources-nvim",
+        "~/Documents/GitHub/xresources-nvim",
         event = "VimEnter",
         config = function()
             require("xresources").colorscheme()
@@ -76,8 +75,9 @@ local plugins = {
     {
         "kyazdani42/nvim-web-devicons",
         module = "nvim-web-devicons",
+        wants = "nvim-nonicons",
         requires = {
-            { "yamatsum/nvim-nonicons", after = "nvim-web-devicons" },
+            { "yamatsum/nvim-nonicons", opt = true },
         },
         config = function()
             require("nvim-web-devicons").setup({ default = true })
@@ -99,14 +99,14 @@ local plugins = {
         "windwp/windline.nvim",
         event = "BufReadPre",
         config = function()
-            require("plugins.windline")
+            require("wlsample.evil_line")
         end,
     },
 
     -- Indenting
     {
         "lukas-reineke/indent-blankline.nvim",
-        event = "BufReadPre",
+        after = "xresources-nvim",
         config = function()
             require("plugins.indent-blankline")
         end,
@@ -125,7 +125,6 @@ local plugins = {
     -- Neovim Autopair Plugin
     {
         "windwp/nvim-autopairs",
-        after = "nvim-treesitter",
         event = "InsertEnter",
         config = function()
             require("plugins.autopairs")
@@ -138,6 +137,40 @@ local plugins = {
         cmd = { "HopWord", "HopPattern" },
         config = function()
             require("hop").setup({})
+        end,
+    },
+
+    {
+        "monaqa/dial.nvim",
+        keys = { 
+            "<Plug>(dial-increment)",
+            "<Plug>(dial-increment-additional)",
+            "<Plug>(dial-decrement)",
+            "<Plug>(dial-decrement-additiona)",
+        },
+        setup = function()
+            vim.cmd([[
+            nmap <C-a> <Plug>(dial-increment)
+            nmap <C-x> <Plug>(dial-decrement)
+            vmap <C-a> <Plug>(dial-increment)
+            vmap <C-x> <Plug>(dial-decrement)
+            vmap g<C-a> <Plug>(dial-increment-additional)
+            vmap g<C-x> <Plug>(dial-decrement-additional)
+            ]])
+        end,
+        config = function()
+            local dial = require("dial")
+            dial.config.searchlist.normal = {
+                "number#decimal",
+                "number#hex",
+                "number#binary",
+                "color#hex",
+                "date#[%H:%M]",
+                "date#[%Y-%m-%d]",
+                "char#alph#small#word",
+                "char#alph#capital#word",
+                "markup#markdown#header",
+            }
         end,
     },
 
@@ -165,7 +198,7 @@ local plugins = {
     -- Show Color
     {
         "norcalli/nvim-colorizer.lua",
-        event = "ColorScheme",
+        cmd = "ColorizerToggle",
         config = function()
             require("colorizer").setup({
                 "*", -- Highlight all files, but customize some others.
@@ -175,25 +208,11 @@ local plugins = {
         end,
     },
 
-    -- Sort html tailwind class
-    {
-        "steelsojka/headwind.nvim",
-        opt = true,
-        ft = "html",
-        config = function()
-            require("headwind").setup({
-                remove_duplicates = true,
-                run_on_save = true,
-                use_treesitter = true,
-            })
-        end,
-    },
-
     -- ======= Languange =======
     -- Semantic highlight
     {
         "nvim-treesitter/nvim-treesitter",
-        opt = true,
+        event = "BufRead",
         run = ":TSUpdate",
         requires = {
             {
@@ -207,11 +226,11 @@ local plugins = {
             },
             {
                 "JoosepAlviste/nvim-ts-context-commentstring",
-                after = "vim-commentary",
+                after = "nvim-treesitter",
             },
             {
                 "windwp/nvim-ts-autotag",
-                after = "nvim-autopairs",
+                after = {"nvim-treesitter", "nvim-autopairs" },
             },
         },
         config = function()
@@ -251,19 +270,6 @@ local plugins = {
         ft = "nim",
     },
 
-    -- Org.mode for nvim
-    {
-        "kristijanhusak/orgmode.nvim",
-        opt = true,
-        ft = "org",
-        config = function()
-            require("orgmode").setup({
-                org_agenda_files = { "~/Sync/Notes/Org/*", "~/Documents/Notes/Org/*" },
-                org_default_notes_file = "~/Sync/Notes/Org/Notes.org",
-            })
-        end,
-    },
-
     -- Markdown Support
     {
         "plasticboy/vim-markdown",
@@ -286,22 +292,59 @@ local plugins = {
     -- Terminal Markdown Previewer
     {
         "npxbr/glow.nvim",
-        ft = "markdown",
         cmd = "Glow",
+        ft = "markdown",
     },
 
     -- Markdown Previewer
     {
         "iamcco/markdown-preview.nvim",
+        cmd = "MarkdownPreview",
+        ft = "markdown",
         run = function()
             vim.fn["mkdp#util#install"]()
         end,
-        ft = "markdown",
         setup = function()
             vim.g.mkdp_auto_start = 0
             vim.g.mkdp_auto_close = 0
             vim.g.mkdp_refresh_slow = 0
             vim.g.mkdp_browser = "firefox"
+        end,
+    },
+
+    -- take your scientific notes in Neovim 
+    { 
+        "jbyuki/nabla.nvim",
+        setup = function()
+            vim.cmd([[
+                nnoremap <F5> :lua require("nabla").action()<CR>
+            ]])
+        end,
+    },
+    {
+        "oberblastmeister/neuron.nvim",
+        setup = function()
+            vim.cmd([[
+                nnoremap <buffer> <CR> <cmd>lua require'neuron'.enter_link()<CR>
+                nnoremap <buffer> gzn <cmd>lua require'neuron/cmd'.new_edit(require'neuron'.config.neuron_dir)<CR>
+                nnoremap <buffer> gzz <cmd>lua require'neuron/telescope'.find_zettels()<CR>
+                nnoremap <buffer> gzZ <cmd>lua require'neuron/telescope'.find_zettels {insert = true}<CR>
+                nnoremap <buffer> gzb <cmd>lua require'neuron/telescope'.find_backlinks()<CR>
+                nnoremap <buffer> gzB <cmd>lua require'neuron/telescope'.find_backlinks {insert = true}<CR>
+                nnoremap <buffer> gzt <cmd>lua require'neuron/telescope'.find_tags()<CR>
+                nnoremap <buffer> gzs <cmd>lua require'neuron'.rib {address = "127.0.0.1:8200", verbose = true}<CR>
+                nnoremap <buffer> gz] <cmd>lua require'neuron'.goto_next_extmark()<CR>
+                nnoremap <buffer> gz[ <cmd>lua require'neuron'.goto_prev_extmark()<CR>\]\]
+            ]])
+        end,
+        config = function()
+            require("neuron").setup({
+                virtual_titles = true,
+                mappings = true,
+                run = nil,
+                neuron_dir = "~/Documents/Notes/Zettelkasten",
+                leader = "gz",
+            })
         end,
     },
 
@@ -355,7 +398,7 @@ local plugins = {
     {
         "hrsh7th/nvim-compe",
         event = "InsertEnter",
-        wants = { "orgmode.nvim", "vim-vsnip" },
+        wants = { "vim-vsnip" },
         requires = {
             {
                 "hrsh7th/vim-vsnip",
@@ -394,9 +437,6 @@ local plugins = {
         "nvim-telescope/telescope.nvim",
         module = "telescope",
         cmd = "Telescope",
-        keys = {
-            "<Leader>f",
-        },
         wants = {
             "popup.nvim",
             "plenary.nvim",
@@ -447,7 +487,7 @@ local plugins = {
     -- show git stuff in signcolumn
     {
         "lewis6991/gitsigns.nvim",
-        event = "BufReadPre",
+        event = "BufRead",
         wants = "plenary.nvim",
         requires = {
             { "nvim-lua/plenary.nvim" },
@@ -506,13 +546,6 @@ local plugins = {
         },
         config = function()
             require("zen-mode").setup({
-                plugins = {
-                    gitsigns = { enabled = false },
-                    kitty = {
-                        enabled = true,
-                        font = "+2", -- font size increment
-                    },
-                },
                 on_open = function(win)
                     vim.cmd("TwilightEnable")
                     vim.cmd("IndentBlanklineDisable")

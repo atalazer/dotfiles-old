@@ -10,51 +10,50 @@
 -- >> The file that binds everything together.
 --]]
 
-
 local themes = {
-    "atalazer",      -- 1 --
+    "atalazer", -- 1 --
 }
 -- Change this number to use a different theme
 local theme = themes[1]
 -- ===================================================================
 -- Affects the window appearance: titlebar, titlebar buttons...
 local decoration_themes = {
-    "atalazer",      -- 1 -- Text-generated titlebar buttons
+    "atalazer", -- 1 -- Text-generated titlebar buttons
 }
 local decoration_theme = decoration_themes[1]
 -- ===================================================================
 -- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
-    "atalazer",     -- 1 -- Minimal taglist and dock with autohide
+    "atalazer", -- 1 -- Minimal taglist and dock with autohide
 }
 local bar_theme = bar_themes[1]
 
 -- ===================================================================
 -- Affects which icon theme will be used by widgets that display image icons.
 local icon_themes = {
-    "linebit",        -- 1 -- Neon + outline
-    "drops",          -- 2 -- Pastel + filled
+    "linebit", -- 1 -- Neon + outline
+    "drops", -- 2 -- Pastel + filled
 }
 local icon_theme = icon_themes[2]
 -- ===================================================================
 local notification_themes = {
-    "atalazer",       -- 1 -- Filled text icons on the right, text on the left
-    "lovelace",       -- 2 -- Plain with standard image icons
+    "atalazer", -- 1 -- Filled text icons on the right, text on the left
+    "lovelace", -- 2 -- Plain with standard image icons
 }
 local notification_theme = notification_themes[1]
 -- ===================================================================
 local sidebar_themes = {
-    "atalazer",        -- 1 -- Text-only (consumes less RAM)
+    "atalazer", -- 1 -- Text-only (consumes less RAM)
 }
 local sidebar_theme = sidebar_themes[1]
 -- ===================================================================
 local dashboard_themes = {
-    "atalazer",        -- 1 -- Displays coronavirus stats
+    "atalazer", -- 1 -- Displays coronavirus stats
 }
 local dashboard_theme = dashboard_themes[1]
 -- ===================================================================
 local exit_screen_themes = {
-    "atalazer",     -- 1 -- Uses text-generated icons (consumes less RAM)
+    "atalazer", -- 1 -- Uses text-generated icons (consumes less RAM)
 }
 local exit_screen_theme = exit_screen_themes[1]
 -- ===================================================================
@@ -75,7 +74,7 @@ user = {
     file_manager = "kitty --name file -e nnn_wrapper",
     editor = "kitty --name editor -e nvim",
     email_client = "kitty --name email -e neomutt",
-    music_client = "kitty -o font_size=12 --name music -e ncmpcpp",
+    music_client = "kitty -o font_size=12 --name music -e ncmpcpp-ueberzug",
 
     -- >> Web Search <<
     web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
@@ -95,7 +94,7 @@ user = {
     round_enabled = true,
 
     -- >> User profile <<
-    profile_picture = os.getenv("HOME").."/.face",
+    profile_picture = os.getenv("HOME") .. "/.face",
 
     -- Directories with fallback values
     dirs = {
@@ -148,7 +147,6 @@ user = {
     -- Country to check for corona statistics
     -- Uses the https://corona-stats.online API
     coronavirus_country = os.getenv("COUNTRY") or "indonesia",
-
 }
 -- ===================================================================
 
@@ -165,22 +163,22 @@ local xrdb = require("xcolors") or beautiful.xresources.get_current_theme()
 x = {
     background = xrdb.background,
     foreground = xrdb.foreground,
-    color0     = xrdb.color0,
-    color8     = xrdb.color8,
-    color1     = xrdb.color1,
-    color9     = xrdb.color9,
-    color2     = xrdb.color2,
-    color10    = xrdb.color10,
-    color3     = xrdb.color3,
-    color11    = xrdb.color11,
-    color4     = xrdb.color4,
-    color12    = xrdb.color12,
-    color5     = xrdb.color5,
-    color13    = xrdb.color13,
-    color6     = xrdb.color6,
-    color14    = xrdb.color14,
-    color7     = xrdb.color7,
-    color15    = xrdb.color15,
+    color0 = xrdb.color0,
+    color8 = xrdb.color8,
+    color1 = xrdb.color1,
+    color9 = xrdb.color9,
+    color2 = xrdb.color2,
+    color10 = xrdb.color10,
+    color3 = xrdb.color3,
+    color11 = xrdb.color11,
+    color4 = xrdb.color4,
+    color12 = xrdb.color12,
+    color5 = xrdb.color5,
+    color13 = xrdb.color13,
+    color6 = xrdb.color6,
+    color14 = xrdb.color14,
+    color7 = xrdb.color7,
+    color15 = xrdb.color15,
 }
 
 -- Load AwesomeWM libraries
@@ -200,11 +198,11 @@ beautiful.init(theme_dir .. "theme.lua")
 -- Error handling and Autostart
 -- ===================================================================
 naughty.connect_signal("request::display_error", function(message, startup)
-    naughty.notification {
+    naughty.notification({
         urgency = "critical",
-        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
-        message = message
-    }
+        title = "Oops, an error happened" .. (startup and " during startup!" or "!"),
+        message = message,
+    })
 end)
 require("configs.autostart")
 
@@ -228,16 +226,16 @@ decorations.init(decoration_theme)
 
 -- >> Elements - Desktop components
 -- Statusbar(s)
-require("elemental.bar."..bar_theme)
+require("elemental.bar." .. bar_theme)
 
 -- Exit screen
-require("elemental.exit_screen."..exit_screen_theme)
+require("elemental.exit_screen." .. exit_screen_theme)
 
 -- Sidebar
-require("elemental.sidebar."..sidebar_theme)
+require("elemental.sidebar." .. sidebar_theme)
 
 -- Dashboard (previously called: Start screen)
-require("elemental.dashboard."..dashboard_theme)
+require("elemental.dashboard." .. dashboard_theme)
 
 -- Notification Center
 require("elemental.notif_center")
@@ -254,6 +252,9 @@ require("elemental.app_drawer")
 -- Window switcher
 require("elemental.window_switcher")
 
+-- Scratchpad modules
+require("configs.scratchpad")
+
 -- >> Daemons
 -- Most widgets that display system/external info depend on evil.
 -- Make sure to initialize it last in order to allow all widgets to connect to
@@ -263,6 +264,12 @@ require("evil")
 -- >> Layout Machi
 local machi = require("layout-machi")
 beautiful.layout_machi = machi.get_icon()
+
+local revelation = require("revelation")
+revelation.init({
+    tag_name = "Q",
+    charorder = "qweasdzxciopjklbnm",
+})
 
 -- ===================================================================
 -- ===================================================================
@@ -274,10 +281,7 @@ screen_width = awful.screen.focused().geometry.width
 screen_height = awful.screen.focused().geometry.height
 
 floating_client_placement = function(c)
-    if
-        awful.layout.get(mouse.screen) ~= awful.layout.suit.floating
-        or #mouse.screen.clients == 1
-    then
+    if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating or #mouse.screen.clients == 1 then
         return awful.placement.centered(c, { honor_padding = true, honor_workarea = true })
     end
     local p = awful.placement.no_overlap + awful.placement.no_offscreen
@@ -322,7 +326,6 @@ awful.layout.layouts = {
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
-        -- local wallpaper = beautiful.wallpaper
         -- -- If wallpaper is a function, call it with the screen
         -- if type(wallpaper) == "function" then
         --     wallpaper = wallpaper(s)
@@ -333,11 +336,12 @@ local function set_wallpaper(s)
         -- gears.wallpaper.maximized(wallpaper, s, true)
 
         -- >> Method 2: Set theme's wallpaper with feh
-        awful.spawn.with_shell("feh --bg-fill " .. wallpaper or os.getenv("HOME") .. "/.fehbg" )
+        awful.spawn.with_shell("feh --bg-fill " .. beautiful.wallpaper)
 
         -- >> Method 3: Set last wallpaper with feh
         -- awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
-
+    else
+        awful.spawn.with_shell("feh --bg-fill " .. wallpaper or os.getenv("HOME") .. "/.fehbg")
     end
 end
 
@@ -366,7 +370,7 @@ awful.screen.connect_for_each_screen(function(s)
         l.floating,
         l.floating,
         l.floating,
-        l.floating
+        l.floating,
     }
 
     -- Tag names
@@ -398,21 +402,19 @@ require("configs.signals")
 -- Add `touch /tmp/awesomewm-show-dashboard` to your ~/.xprofile in order to make the dashboard appear on login
 local dashboard_flag_path = "/tmp/awesomewm-show-dashboard"
 -- Check if file exists
-awful.spawn.easy_async_with_shell("stat "..dashboard_flag_path.." >/dev/null 2>&1", function (_, __, ___, exitcode)
+awful.spawn.easy_async_with_shell("stat " .. dashboard_flag_path .. " >/dev/null 2>&1", function(_, __, ___, exitcode)
     if exitcode == 0 then
-      -- Show dashboard
-      if dashboard_show then dashboard_show() end
-      -- Delete the file
-      awful.spawn.with_shell("rm "..dashboard_flag_path)
+        -- Show dashboard
+        if dashboard_show then
+            dashboard_show()
+        end
+        -- Delete the file
+        awful.spawn.with_shell("rm " .. dashboard_flag_path)
     end
 end)
 
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
-
--- collectgarbage("setpause", 160)
--- collectgarbage("setstepmul", 400)
-
-collectgarbage("setpause", 200)
-collectgarbage("setstepmul", 800)
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)

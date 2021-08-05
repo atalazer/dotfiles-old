@@ -28,7 +28,7 @@ local send_mpd_notif = function (artist, song, paused)
             if artist ~= old_artist and song ~=old_song then
                 notif = notifications.notify_dwim(
                     {
-                        title = "Song",
+                        title = "Now Playing",
                         message = "<b>"..song.."</b> by <b>"..artist.."</b>",
                         icon = icons.image.music,
                         timeout = timeout,

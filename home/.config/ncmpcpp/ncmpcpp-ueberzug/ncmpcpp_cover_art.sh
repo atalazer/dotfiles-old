@@ -4,24 +4,24 @@
 # SETTINGS
 music_library=$HOME/Music
 fallback_image="$HOME/.config/ncmpcpp/ncmpcpp-ueberzug/img/fallback.png"
-padding_top=1
-padding_bottom=0
-padding_right=0
-max_width=30
-reserved_playlist_cols=30
-reserved_cols_in_percent="false"
-force_square="true"
 
+max_width=40
+reserved_playlist_cols=50
+reserved_cols_in_percent="false"
 square_alignment="top"
+force_square="false"
 
 left_aligned="true"
-padding_left=0
+padding_left=1
+padding_right=1
+padding_top=0
+padding_bottom=2
 
 # Only set this if the geometries are wrong or ncmpcpp shouts at you to do it.
 # Visually select/highlight a character on your terminal, zoom in an image 
 # editor and count how many pixels a character's width and height are.
-font_height=16
-font_width=8
+# font_height=20
+# font_width=8
 
 main() {
     kill_previous_instances >/dev/null 2>&1

@@ -114,7 +114,7 @@ end
 -- Notification app name container
 local notifbox_appname = function(app)
     return wibox.widget({
-        markup = app or "System Notification",
+        markup = app,
         font = "SFNS Display Bold 12",
         align = "left",
         valign = "center",
@@ -402,10 +402,6 @@ naughty.connect_signal("request::display", function(n)
         appicon = PATH_TO_ICONS .. "new-notif" .. ".svg"
     end
 
-    -- Throw data from naughty to notifbox_layout
-    -- Generates notifbox
-    notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, appname, notifbox_color))
-
     -- For Notification Center
     if panel_visible or dont_disturb then
         naughty.destroy_all_notifications(nil, 1)
@@ -416,6 +412,10 @@ naughty.connect_signal("request::display", function(n)
         -- Depends: canberra-gtk-play
         awful.spawn("canberra-gtk-play -i message", false)
     end
+    -- Throw data from naughty to notifbox_layout
+    -- Generates notifbox
+    notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, n.app_name, notifbox_color))
+
 end)
 
 return notifbox_layout

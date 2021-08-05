@@ -55,6 +55,21 @@ pinch:
       command: "xdotool keydown ctrl click 5 keyup ctrl" # Zoom out
 ---
 
+---
+context:
+  application:  kitty
+swipe:
+  3:
+    left:
+      sendkey: "LEFTCTRL+LEFTSHIFT+RIGHTBRACE"
+    right:
+      sendkey: "LEFTCTRL+LEFTSHIFT+LEFTBRACE"
+    # up:
+    #   sendkey: "LEFTCTRL+LEFTSHIFT+T"
+    # down:
+    #   sendkey: "LEFTCTRL+LEFTSHIFT+W"
+---
+
 plugin:
   executors:
     wmctrl_executor:
@@ -63,4 +78,4 @@ plugin:
     libinput_command_input:   # options for lib/plugin/inputs/libinput_command_input
       enable-tap: true        # click to tap
       enable-dwt: true        # disable tap while typing
-      show-keycodes: true     # https://github.com/iberianpig/fusuma-plugin-keypress#add-show-keycode-option
+show-keycodes: true     # https://github.com/iberianpig/fusuma-plugin-keypress#add-show-keycode-option

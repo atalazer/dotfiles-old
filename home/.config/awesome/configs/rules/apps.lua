@@ -38,6 +38,9 @@ ruled.client.connect_signal("request::rules", function()
                 "firefox",
                 "Nightly",
             },
+            instance = {
+                "qutebrowser",
+            }
         },
         properties = {
             floating = true,
@@ -47,7 +50,7 @@ ruled.client.connect_signal("request::rules", function()
         callback = function(c)
             if c.instance == "Navigator" then
                 c.maximized = true
-                c.titlebars_enabled = false
+                awful.titlebar.hide(c)
             end
         end
     })
@@ -59,6 +62,7 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "TelegramDesktop", 
                 "KotatogramDesktop",
+                "whatsdesk",
             },
         },
         properties = {

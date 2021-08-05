@@ -1,9 +1,3 @@
-" prevent typo when pressing `wq` or `q`
-cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
-cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
-cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
-cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
-
 " Set current working directory
 autocmd VimEnter * cd %:p:h
 
@@ -18,7 +12,7 @@ augroup Filetypes
     au!
     au BufNewFile,BufRead *.ejs,*.hbs set filetype=html
     au BufNewFile,BufRead .prettierrc,.eslintrc,tsconfig.json set filetype=jsonc
-    au BufNewFile,BufRead *.svx,*.mdx set ft=markdown
+    au BufNewFile,BufRead *.svx,*.mdx,*.md set ft=markdown
     au BufNewFile,BufRead *.svelte set ft=svelte
     au BufNewFile,BufRead *.nix set ft=nix
     au BufNewFile,BufRead *.nim set ft=nim
@@ -37,6 +31,7 @@ augroup END
 augroup Posts
     au!
     au BufRead */posts/**.md setlocal spell spelllang=id
+    au BufRead */School/**.md setlocal spell spelllang=id
     au BufRead */posts/**.en.md setlocal spell spelllang=en
 augroup END
 
@@ -47,6 +42,11 @@ augroup Term
     au BufEnter term://* set showtabline=0 laststatus=0 noruler nonumber norelativenumber nolist
     au BufLeave term://* set showtabline=2 laststatus=2 ruler number relativenumber list
 augroup END
+
+" augroup Capslock
+"     au!
+"     au InsertEnter 
+" augroup END
 
 " highlight yanked text for 250ms
 augroup Yank
@@ -63,7 +63,7 @@ augroup END
 
 augroup Dashboard
     au!
-    au FileType dashboard set showtabline=0 laststatus=0 signcolumn=no nolist noruler | au WinLeave <buffer> set showtabline=2 laststatus=2 signcolumn=yes list ruler
+    au FileType dashboard setlocal showtabline=0 laststatus=0 signcolumn=no nolist noruler | au WinLeave <buffer> setlocal showtabline=2 laststatus=2 signcolumn=yes list ruler
     au FileType dashboard map q :quit<CR> | au WinLeave <buffer> unmap q
 augroup END
 

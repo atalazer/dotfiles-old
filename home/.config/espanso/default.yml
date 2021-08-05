@@ -7,7 +7,32 @@
 # Matches are the substitution rules, when you type the "trigger" string
 # it gets replaced by the "replace" string.
 
+auto_restart: true
+undo_backspace: false
+fast_inject: true
+
+enable_active: true
+toggle_key: RIGHT_CTRL
+
+enable_passive: false
+passive_key: RIGHT_ALT
+
+show_icon: true
+show_notifications: true
+
 matches:
+  # Globals
+  - triggers: [":name", ":nama"]
+    replace: "Atalariq Barra Hadinugraha"
+    propagate_case: true
+
+  - triggers: [":user", ":pengguna"]
+    replace: "atalazer"
+    propagate_case: true
+
+  - trigger: ":email"
+    replace: "baraboyolali@gmail.com"
+
   # Dates
   - trigger: ":date"
     replace: "{{mydate}}"

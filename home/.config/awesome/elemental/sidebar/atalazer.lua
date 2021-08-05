@@ -463,6 +463,19 @@ if user.sidebar.show_on_mouse_screen_edge then
         awful.placement.left(sidebar_activator)
     end
 
+    -- We have set the sidebar_activator to be ontop, but we do not want it to be
+    -- above fullscreen clients
+    local no_sidebar_activator_ontop = function(c)
+        if c.fullscreen then
+            sidebar_activator.ontop = false
+        else
+            sidebar_activator.ontop = true
+        end
+    end
+    client.connect_signal("focus", no_sidebar_activator_ontop)
+    client.connect_signal("unfocus", no_sidebar_activator_ontop)
+    client.connect_signal("property::fullscreen", no_sidebar_activator_ontop)
+
     sidebar_activator:buttons(gears.table.join(
         awful.button({}, 4, function()
             awful.tag.viewprev()

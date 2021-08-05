@@ -21,6 +21,9 @@ ruled.client.connect_signal("request::rules", function()
                 "firefox",
                 "Nightly",
             },
+            instance = {
+                "qutebrowser",
+            }
         },
         except_any = {
             role = { "GtkFileChooserDialog" },
@@ -50,7 +53,11 @@ ruled.client.connect_signal("request::rules", function()
     -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "TelegramDesktop", "KotatogramDesktop" },
+            class = { 
+                "TelegramDesktop", 
+                "KotatogramDesktop", 
+                "whatsdesk",
+            },
         },
         properties = { 
             tag = awful.screen.focused().tags[3],

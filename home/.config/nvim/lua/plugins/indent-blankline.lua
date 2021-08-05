@@ -8,26 +8,24 @@ vim.g.indent_blankline_indent_level = 10
 vim.g.indent_blankline_char = "│"
 vim.g.indent_blankline_space_char_blankline = " "
 vim.g.indent_blankline_context_highlight = "Label"
-vim.g.indent_blankline_context_patterns = {
+  vim.g.indent_blankline_context_patterns = {
     "class",
     "function",
     "method",
-    "^if",
-    "while",
-    "for",
-    "with",
-    "func_literal",
     "block",
-    "try",
-    "except",
-    "argument_list",
-    "object",
-    "dictionary",
-}
+    "list_literal",
+    "selector",
+    "^if",
+    "^table",
+    "if_statement",
+    "while",
+    "for"
+  }
 
 vim.g.indent_blankline_buftype_exclude = {
     "terminal",
     "prompt",
+    "nofile",
 }
 
 vim.g.indent_blankline_filetype_exclude = {
@@ -38,5 +36,6 @@ vim.g.indent_blankline_filetype_exclude = {
     "Outline",
     "Trouble",
     "packer",
-    "dashboard"
+    "dashboard",
 }
+vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")

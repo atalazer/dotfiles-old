@@ -4,24 +4,12 @@ parent: default
 matches:
   - trigger: "yg"
     replace: "yang"
-
-  - trigger: "tdk"
-    replace: "tidak"
-
-  - trigger: "adl"
-    replace: "adalah"
-
-  - trigger: "sbg"
-    replace: "sebagai"
-
-  - trigger: "sdh"
-    replace: "sudah"
-
-  - trigger: "stlh"
-    replace: "setelah"
+    propagate_case: true
 
   - trigger: "dll"
     replace: "dan lain-lain"
+    propagate_case: true
 
   - trigger: "dsb"
     replace: "dan lain sebagainya"
+    propagate_case: true
