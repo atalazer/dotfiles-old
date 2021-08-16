@@ -2,13 +2,17 @@
 
 [ -f ~/.user.keys ] && source ~/.user.keys
 
+export LANG=en_US.UTF-8
+export MM_CHARSET=UTF-8
+
 ## Apps
 export TERMINAL="kitty"
-export BROWSER="qutebrowser"
+export BROWSER="firefox"
 export FILEMAN="thunar"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
+export PAGER="less"
 
 # CMD
 export PERMISSION="sudo"

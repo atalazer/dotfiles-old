@@ -3,16 +3,16 @@ set input-meta on
 set convert-meta off
 set output-meta on
 
-set echo-control-characters off
-set show-all-if-ambiguous on
-set show-all-if-unmodified on
+# set echo-control-characters off
+# set show-all-if-ambiguous on
+# set show-all-if-unmodified on
 
-set bell-style none
-set colored-stats On
-set visible-stats On
-set mark-symlinked-directories On
-set colored-completion-prefix On
-set menu-complete-display-prefix On
+# set bell-style none
+# set colored-stats On
+# set visible-stats On
+# set mark-symlinked-directories On
+# set colored-completion-prefix On
+# set menu-complete-display-prefix On
 
 $if mode=emacs
     "\e[1~": beginning-of-line

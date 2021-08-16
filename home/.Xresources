@@ -1,13 +1,25 @@
+!! ==============
+!! Xcursor theme
+!! ==============
+Xcursor.theme:Adwaita
+Xcursor.size:24
+
+!! ==============
+!! Fonts Settings
+!! ==============
+Xft.antialias: 1
+Xft.rgba:      rgb
+Xft.lcdfilter: lcddefault
+Xft.hinting:   1
+Xft.autohint:  1
+Xft.hintstyle: hintfull
+Xft.dpi:       96
+
 !! Apps
 #include "/home/atalariq/.Xresources.d/urxvt"
 #include "/home/atalariq/.Xresources.d/xterm"
 
 !! Colorscheme
-
 #include "/home/atalariq/.Xresources.d/color/wal"
-!#include "/home/atalariq/.Xresources.d/color/deep-ocean"
 
-!! Settings
-#include "/home/atalariq/.Xresources.d/cursor"
-#include "/home/atalariq/.Xresources.d/font"
-
+!vim:   ft=xdefaults

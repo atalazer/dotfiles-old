@@ -1,5 +1,20 @@
 #!/bin/sh
 
-# Load .xinitrc
-[ -f ~/.xinitrc ] && source ~/.xinitrc
+[[ -f ~/.profile ]] && source ~/.profile
+
+# For several script and if using awesomeWM
+export CHECK_AWESOME_CLIENT=true
+
+xset -b     # Disable terminal bell
+xset r rate 300 50      # Set repeat rate
+
+wal -n -R       # Restore wal
+light -S 20     # Set Brightness
+
+/lib/mate-polkit/polkit-mate-authentication-agent-1 &   # Polkit Agent
+clipmenud &                                             # Clipboard Manager
+mpd &                                                   # Music Player Daemon
+fcitx5 --replace -d &                                   # Input Method for Japanese(mozc) and Arabic(m17n)
+espanso daemon &                                        # System Wide Text Expander
+an2linuxserver.py &                                     # Send notification from android to linux
 

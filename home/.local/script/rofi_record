@@ -78,11 +78,11 @@ notify() {
             })
             "
         elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
-            notify-send --app-name=record "Shot" "${_MSG}"
+            notify-send --app-name=record "Record" "${_MSG}"
         fi
     ;;
     -2)
-        notify-send --app-name=record "Shot" "${_MSG}"
+        notify-send --app-name=record "Record" "${_MSG}"
     ;;
     esac
 }

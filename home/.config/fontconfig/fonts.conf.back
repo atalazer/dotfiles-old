@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+
+  <!--Disable antialias for specific fonts-->
+  <match target="font">
+    <test qual="any" name="family">
+      <string>unscii</string>
+    </test>
+    <edit name="antialias" mode="assign">
+      <bool>false</bool>
+    </edit>
+  </match>
+
+  <!--Disable bold for specific fonts-->
+  <match target="pattern">
+    <test qual="any" name="family">
+      <string>unscii</string>
+    </test>
+    <test name="weight" compare="more">
+      <const>medium</const>
+    </test>
+    <edit name="weight" mode="assign" binding="same">
+      <const>medium</const>
+    </edit>
+  </match>
+
+  <!--Global settings-->
+  <match target="font">
+    <edit name="antialias" mode="assign">
+      <bool>true</bool>
+    </edit>
+    <edit name="autohint" mode="assign">
+      <bool>true</bool>
+    </edit>
+    <edit name="hinting" mode="assign">
+      <bool>true</bool>
+    </edit>
+    <edit mode="assign" name="hintstyle">
+      <!--Values: hintnone, hintslight, hintmedium, hintfull-->
+      <const>hintfull</const>
+    </edit>
+    <edit mode="assign" name="lcdfilter">
+      <const>lcddefault</const>
+    </edit>
+    <edit name="rgba" mode="assign">
+      <const>rgb</const>
+    </edit>
+    <edit name="dpi" mode="assign">
+      <double>96</double>
+    </edit>
+    <edit name="fontfeatures" mode="append">
+      <string>liga off</string>
+      <string>dlig off</string>
+    </edit>
+  </match>
+
+  <!--Change monospace font globally-->
+  <alias>
+    <family>monospace</family>
+    <prefer>
+      <family>JetBrainsMono Nerd Font</family>
+      <family>Libreation Mono</family>
+      <family>Iosevka Custom</family>
+    </prefer>
+  </alias>
+
+  <!--Change sans font globally-->
+  <alias>
+    <family>sans</family>
+    <prefer>
+      <family>Libreation Sans</family>
+      <family>DejaVu Sans</family>
+      <family>Source Sans Pro</family>
+    </prefer>
+  </alias>
+
+  <!--Change serif font globally-->
+  <alias>
+    <family>serif</family>
+    <prefer>
+      <family>Libreation Serif</family>
+      <family>DejaVu Serif</family>
+      <family>Source Serif Pro</family>
+    </prefer>
+  </alias>
+
+  <!--Change sans-serif font globally-->
+  <alias>
+    <family>sans-serif</family>
+    <prefer>
+      <family>Libreation Sans</family>
+      <family>DejaVu Sans</family>
+      <family>Source Sans Pro</family>
+    </prefer>
+  </alias>
+
+</fontconfig>
