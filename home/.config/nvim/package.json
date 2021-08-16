@@ -1,0 +1,26 @@
+{
+  "name": "user-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": ["global", "all"],
+        "path": "./snippets/global.json"
+      },
+      {
+        "language": ["markdown"],
+        "path": "./snippets/markdown.json"
+      },
+      {
+        "language": ["lua"],
+        "path": "./snippets/lua.json"
+      },
+      {
+        "language": ["json", "jsonc"],
+        "path": "./snippets/json.json"
+      }
+    ]
+  }
+}

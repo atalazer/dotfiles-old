@@ -26,12 +26,5 @@
             "WARNING: ${1:Summary}"
         ],
         "description": "WARNING reminder"
-    },
-    "email": {
-        "prefix": ["email"],
-        "body": [
-            "E-Mail: baraboyolali@gmail.com"
-        ],
-        "description": "My E-Mail"
     }
 }

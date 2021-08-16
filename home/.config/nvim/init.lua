@@ -14,7 +14,14 @@ vim.g.loaded_spec = 1
 vim.g.mapleader = "."
 vim.g.maplocalleader = ","
 
+-- Lua
 pcall(require, "base.keymap")
 pcall(require, "base.settings")
 pcall(require, "base.util")
 pcall(require, "base.keys")
+
+-- Vimscript
+vim.cmd([[
+    runtime! lua/base/keys.vim
+    runtime! lua/base/event.vim
+]])

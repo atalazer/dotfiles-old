@@ -24,18 +24,18 @@ wk.register({
 -- Leader Key
 wk.register({
     [","] = "Curstr Toggle",
-    lg = "Lazygit",
     g = {
         name = "+Misc",
         g = "Glow",
-        f = "Format"
+        f = "Format",
+        t = "Lazygit",
     },
     c = {
         name = "+Colorizer",
-        c = "Toggle",
-        a = "Attach Buffer",
-        d = "Detach Buffer",
-        r = "Reload All Buffer",
+        c = "Colorizer Toggle",
+        -- a = "Attach Buffer",
+        -- d = "Detach Buffer",
+        -- r = "Reload All Buffer",
     },
     e = {
         name = "+Config",
@@ -49,25 +49,24 @@ wk.register({
         b = "Files Browser",
         l = "Live Grep",
         k = "Keybindings",
-        c = "Colorscheme"
+        c = "Colorscheme",
     },
     l = {
         name = "+LSP",
         ["["] = "Prev Diagnostic",
         ["]"] = "Next Diagnostic",
         a = "Code Action",
-        d = "Prefiew Definition",
-        D = "Definition",
+        c = "Code Lens",
+        d = "Definition",
         l = "Line Diagnostic",
         f = "Finder",
-        F = "LSP Reference",
-        ff = "Formatting",
-        k = "Hover Documentation",
-        r = "Rename",
-        T = "Toggle LSP Trouble",
-        S = "Toggle Symbols Outline",
+        r = "LSP Reference",
+        R = "Rename",
+        t = "LSP Trouble",
     },
-}, {prefix = "<leader>"})
+}, {
+    prefix = "<leader>",
+})
 
 -- Local Leader Key
 wk.register({
@@ -82,7 +81,9 @@ wk.register({
         l = "Lua File",
         p = "Python File",
     },
-}, {prefix = "<localleader>"})
+}, {
+    prefix = "<localleader>",
+})
 
 wk.setup({
     plugins = {
@@ -105,9 +106,9 @@ wk.setup({
         group = " +- ",
     },
     window = {
-        border = Util.border,
+        border = Util.borders,
         position = "bottom",
-        margin = { 2, 2, 2, 1 },
+        margin = { 1, 3, 1, 3 },
         padding = { 2, 2, 2, 2 },
     },
     layout = {
@@ -115,9 +116,15 @@ wk.setup({
         width = { min = 20, max = 50 },
         spacing = 8,
     },
+    key_labels = {
+        ["<space>"] = "SPC",
+        ["<cr>"] = "RET",
+        ["<tab>"] = "TAB",
+        ["<leader>"] = ".",
+        ["<localleader>"] = ",",
+    },
     ignore_missing = false,
     hidden = { "<silent>", "<cmd>", "<Cmd>", "<CMD>", "lua", "<CR>", "call", "lua", "^:", "^ " },
     show_help = true,
     triggers = "auto",
 })
-

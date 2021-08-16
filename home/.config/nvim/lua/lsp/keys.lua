@@ -1,31 +1,56 @@
 local k = vim.keymap
 local nnoremap = k.nnoremap
 local inoremap = k.inoremap
+local vnoremap = k.vnoremap
+local telescope = require("telescope.builtin")
 
 local M = {}
 
-local buf        = vim.lsp.buf
-local hover      = require("lspsaga.hover")
-local signature  = require("lspsaga.signaturehelp")
-local rename     = require("lspsaga.rename")
-local diagnostic = require("lspsaga.diagnostic")
-local provider   = require("lspsaga.provider")
-
 M.mappings = function()
-    inoremap({ "<C-l>", signature.signature_help, { silent = true } })
-    nnoremap({ "<leader>lk", hover.render_hover_doc, { silent = true } })
-    nnoremap({ "<leader>lr", rename.rename, { silent = true } })
-    nnoremap({ "<leader>lf", provider.lsp_finder, { silent = true } })
-    nnoremap({ "<leader>ld", provider.preview_definition, { silent = true } })
-    nnoremap({ "<leader>ll", diagnostic.show_line_diagnostics, { silent = true } })
-    nnoremap({ "<leader>l[", diagnostic.lsp_jump_diagnostic_prev, { silent = true } })
-    nnoremap({ "<leader>l]", diagnostic.lsp_jump_diagnostic_next, { silent = true } })
-    nnoremap({ "<leader>lD", buf.definition, { silent = true } })
-    nnoremap({ "<leader>gf", buf.formatting, { silent = true } })
-    nnoremap({ "<leader>la", "<Cmd>Telescope lsp_code_actions<CR>", { silent = true } })
-    nnoremap({ "<leader>lF", "<Cmd>Telescope lsp_references<CR>", { silent = true } })
-    nnoremap({ "<leader>lT", "<Cmd>TroubleToggle<CR>", { silent = true } })
-    nnoremap({ "<leader>lS", "<Cmd>SymbolsOutline<CR>", { silent = true } })
+    inoremap({ "<C-l>", vim.lsp.buf.signature_help, { silent = true } })
+    nnoremap({ "K", vim.lsp.buf.hover, { silent = true } })
+    nnoremap({ "<Leader>la", telescope.lsp_code_actions, { silent = true } })
+    nnoremap({ "<Leader>gf", vim.lsp.buf.formatting_seq_sync, { silent = true } })
+    vnoremap({ "<Leader>gf", vim.lsp.buf.range_formatting, { silent = true } })
+    nnoremap({ "<Leader>ld", vim.lsp.buf.definition, { silent = true } })
+    nnoremap({ "<Leader>lc", vim.lsp.codelens.run, { silent = true } })
+    nnoremap({ "<Leader>lr", telescope.lsp_references, { silent = true } })
+    nnoremap({ "<Leader>lR", vim.lsp.buf.rename, { silent = true } })
+    nnoremap({ "<Leader>lt", "<Cmd>TroubleToggle<CR>", { silent = true } })
+    nnoremap({
+        "<Leader>ll",
+        function()
+            vim.lsp.diagnostic.show_line_diagnostics({
+                show_header = false,
+                border = Util.borders,
+            })
+        end,
+        { silent = true },
+    })
+    nnoremap({
+        "<Leader>l]",
+        function()
+            vim.lsp.diagnostic.goto_next({
+                popup_opts = {
+                    show_header = false,
+                    border = Util.borders,
+                },
+            })
+        end,
+        { silent = true },
+    })
+    nnoremap({
+        "<Leader>l[",
+        function()
+            vim.lsp.diagnostic.goto_prev({
+                popup_opts = {
+                    show_header = false,
+                    border = Util.borders,
+                },
+            })
+        end,
+        { silent = true },
+    })
 end
 
 return M

@@ -1,22 +1,23 @@
-local nvim_lsp = require("lspconfig")
+local lspconfig = require("lspconfig")
 
-pcall(require, "lsp.diagnostic")
-pcall(require, "lsp.popup")
-pcall(require, "lsp.trouble")
+require("lsp.handlers")
 
-local capabilities = function()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport = {
-        properties = {
-            "documentation",
-            "detail",
-            "additionalTextEdits",
-        },
-    }
-
-    return capabilities
-end
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+        "documentation",
+        "detail",
+        "additionalTextEdits",
+    },
+}
 
 local servers = {
     sumneko_lua = require("lsp.server.lua").config,
@@ -26,7 +27,7 @@ local servers = {
     jsonls = require("lsp.server.json").config,
     html = { cmd = { "vscode-html-language-server", "--stdio" } },
     cssls = { cmd = { "vscode-css-language-server", "--stdio" } },
-    tailwindcss = {},
+    tailwindcss = { filetypes = { "html", "javascript", "typescript", "typescriptreact", "javascriptreact" }, },
     bashls = {},
     vimls = {},
     clangd = {},
@@ -47,21 +48,21 @@ local servers = {
             },
         },
     },
+    ["null-ls"] = {},
 }
 
+require("plugins.null-ls").setup()
+
 for name, opts in pairs(servers) do
-    local client = nvim_lsp[name]
-    if opts.extra_setup then
-        opts.extra_setup()
+    if type(opts) == "function" then
+        opts()
+    else
+        local client = lspconfig[name]
+        client.setup(vim.tbl_extend("force", {
+            flags = { debounce_text_changes = 150 },
+            on_attach = Util.lsp_on_attach,
+            on_init = Util.lsp_on_init,
+            capabilities = capabilities,
+        }, opts))
     end
-    client.setup({
-        cmd = opts.cmd or client.cmd,
-        filetypes = opts.filetypes or client.filetypes,
-        on_attach = opts.on_attach or Util.lsp_on_attach,
-        on_init = opts.on_init or Util.lsp_on_init,
-        handlers = opts.handlers or client.handlers,
-        root_dir = opts.root_dir or client.root_dir,
-        capabilities = opts.capabilities or capabilities(),
-        settings = opts.settings or {},
-    })
 end

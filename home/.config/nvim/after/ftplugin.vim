@@ -1,12 +1,3 @@
-" Set current working directory
-autocmd VimEnter * cd %:p:h
-
-" Move to last cursor
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-" Check if file changed when its window is focus, more eager than 'autoread'
-autocmd FocusGained * checktime
-
 " Set filetypes
 augroup Filetypes
     au!

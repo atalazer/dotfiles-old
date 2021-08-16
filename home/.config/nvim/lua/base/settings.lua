@@ -56,7 +56,6 @@ local options = {
         precedes = "❮",
     },
     mouse = "a",
-    shell = "/usr/bin/bash", -- use bash instead of zsh
     signcolumn = "yes",
     shortmess = "csa",
     showbreak = "↪",

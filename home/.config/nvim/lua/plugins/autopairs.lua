@@ -24,16 +24,37 @@ npairs.setup({
 
 -- Rule
 -- ==========
--- Latex
-npairs.add_rules({
-    Rule("$$$", "$", "tex"),
-})
+-- Endwise
+npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 
 -- add space paranthess
 npairs.add_rules({
-    Rule(" ", " ")
-    :with_pair(function(opts)
-        local pair = opts.line:sub(opts.col, opts.col + 1)
+    Rule(" ", " "):with_pair(function(opts)
+        local pair = opts.line:sub(opts.col - 1, opts.col)
         return vim.tbl_contains({ "()", "[]", "{}" }, pair)
-    end)
+    end),
+    Rule("( ", " )")
+        :with_pair(function()
+            return false
+        end)
+        :with_move(function(opts)
+            return opts.prev_char:match(".%)") ~= nil
+        end)
+        :use_key(")"),
+    Rule("{ ", " }")
+        :with_pair(function()
+            return false
+        end)
+        :with_move(function(opts)
+            return opts.prev_char:match(".%}") ~= nil
+        end)
+        :use_key("}"),
+    Rule("[ ", " ]")
+        :with_pair(function()
+            return false
+        end)
+        :with_move(function(opts)
+            return opts.prev_char:match(".%]") ~= nil
+        end)
+        :use_key("]"),
 })

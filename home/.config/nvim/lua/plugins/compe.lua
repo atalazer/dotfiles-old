@@ -1,32 +1,52 @@
 require("compe").setup({
     enabled = true,
-    allow_prefix_unmatch = false,
+    autocomplete = true,
+    debug = false,
+    min_length = 2,
     preselect = "disable",
-    min_lengt = 2,
+    allow_prefix_unmatch = true,
+    throttle_time = 80,
     source_timeout = 200,
     incomplete_delay = 400,
-    max_abbr_width = 30,
-    max_kind_width = 20,
-    max_menu_width = 50,
-
-    -- documentation = {
-    --     border = Util.borders,
-    --     winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    --     max_width = 120,
-    --     min_width = 60,
-    --     max_height = math.floor(vim.o.lines * 0.3),
-    --     min_height = 1,
-    -- },
+    max_abbr_width = 25,
+    max_menu_width = 15,
+    max_kind_width = 10,
+    documentation = {
+        border = Util.borders,
+    },
 
     source = {
-        buffer = true,
+        buffer = {
+            enable = true,
+            priority = 1,
+        },
+        calc = {
+            enable = true,
+            priority = 99999,
+            filetypes = { "tex", "markdown", "text" },
+        },
+        emoji = {
+            enable = true,
+            filetypes = { "markdown", "text" },
+            priority = 1,
+        },
+        path = {
+            enable = true,
+            priority = 99999,
+        },
         spell = {
             enable = true,
             filetypes = { "text", "markdown" },
+            priority = 99999,
         },
-        path = true,
-        vsnip = true,
-        nvim_lua = true,
+        treesitter = false,
+        nvim_lua = false,
+
+        -- Requires Plugin
+        luasnip = {
+            enable = true,
+            priority = 10002,
+        },
         nvim_lsp = {
             enable = true,
             priority = 10001,
@@ -38,10 +58,10 @@ local map = function(lhs, rhs)
     vim.api.nvim_set_keymap("i", lhs, rhs, { silent = true, noremap = true, expr = true })
 end
 
+map("<CR>", "v:lua.Util.trigger_completion()")
 map("<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"')
 map("<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"')
-map("<CR>", "v:lua.Util.trigger_completion()")
 map("<C-Space>", "compe#complete()")
 map("<C-e>", "compe#close('<C-e>')")
-map("<C-f>", "compe#scroll({ 'delta': +4 })")
-map("<C-d>", "compe#scroll({ 'delta': -4 })")
+
+-- vim.cmd([[autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()]])
