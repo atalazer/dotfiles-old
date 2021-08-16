@@ -457,15 +457,6 @@ local plugins = {
         },
     },
 
-    -- {
-    --     "hrsh7th/nvim-compe",
-    --     event = "InsertEnter",
-    --     wants = { "LuaSnip" },
-    --     config = function()
-    --         require("plugins.compe")
-    --     end,
-    -- },
-
     {
         "mattn/emmet-vim",
         cmd = "EmmetInstall",

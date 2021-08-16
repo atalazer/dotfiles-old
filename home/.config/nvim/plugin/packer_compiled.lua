@@ -137,7 +137,7 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/lazygit.nvim"
   },
   ["lightspeed.nvim"] = {
-    config = { "\27LJ\2\nÖ\2\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\a)jump_on_partial_input_safety_timeout\3ê\3\24jump_to_first_match\2\30full_inclusive_prefix_key\n<c-x>\21limit_ft_matches\3\5+match_only_the_start_of_same_char_seqs\2\25grey_out_search_area\2\27highlight_unique_chars\1\nsetup\15lightspeed\frequire\0" },
+    config = { "\27LJ\2\nÖ\2\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\a\24jump_to_first_match\2)jump_on_partial_input_safety_timeout\3ê\3\27highlight_unique_chars\1\25grey_out_search_area\2\30full_inclusive_prefix_key\n<c-x>+match_only_the_start_of_same_char_seqs\2\21limit_ft_matches\3\5\nsetup\15lightspeed\frequire\0" },
     keys = { { "", "<Plug>Lightspeed_f" }, { "", "<Plug>Lightspeed_F" }, { "", "<Plug>Lightspeed_t" }, { "", "<Plug>Lightspeed_T" } },
     loaded = false,
     needs_bufread = false,
@@ -224,7 +224,7 @@ _G.packer_plugins = {
     wants = { "nvim-web-devicons" }
   },
   ["nvim-treesitter"] = {
-    after = { "nvim-ts-autotag", "nvim-ts-context-commentstring", "vim-matchup", "nvim-treesitter-refactor" },
+    after = { "vim-matchup", "nvim-ts-autotag", "nvim-ts-context-commentstring", "nvim-treesitter-refactor" },
     config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0" },
     loaded = false,
     needs_bufread = true,
@@ -396,7 +396,7 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/windline.nvim"
   },
   ["xresources-nvim"] = {
-    after = { "indent-blankline.nvim", "nvim-nonicons", "nvim-notify" },
+    after = { "nvim-nonicons", "nvim-notify", "indent-blankline.nvim" },
     config = { "\27LJ\2\n>\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\16colorscheme\15xresources\frequire\0" },
     loaded = false,
     needs_bufread = false,
@@ -404,7 +404,7 @@ _G.packer_plugins = {
   },
   ["zen-mode.nvim"] = {
     commands = { "ZenMode" },
-    config = { "\27LJ\2\n∏\1\0\1\6\0\b\0\0236\1\0\0009\1\1\0019\1\2\1\18\3\0\0'\4\3\0+\5\2\0B\1\4\0016\1\0\0009\1\1\0019\1\2\1\18\3\0\0'\4\4\0+\5\2\0B\1\4\0016\1\0\0009\1\5\1'\3\6\0B\1\2\0016\1\0\0009\1\5\1'\3\a\0B\1\2\1K\0\1\0\27IndentBlanklineDisable\19TwilightEnable\bcmd\14linebreak\twrap\24nvim_win_set_option\bapi\bvimY\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0\26IndentBlanklineEnable\20TwilightDisable\bcmd\bvimî\2\1\0\5\0\18\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\a\0005\4\6\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\3=\3\r\0023\3\14\0=\3\15\0023\3\16\0=\3\17\2B\0\2\1K\0\1\0\ron_close\0\fon_open\0\fplugins\ttmux\1\0\1\fenabled\1\rgitsigns\1\0\1\fenabled\2\foptions\1\0\0\1\0\3\nruler\1\fenabled\2\fshowcmd\1\vwindow\1\0\0\1\0\5\twrap\2\14linebreak\2\vheight\3 \nwidth\3x\rbackdrop\3\1\nsetup\rzen-mode\frequire\0" },
+    config = { "\27LJ\2\n∏\1\0\1\6\0\b\0\0236\1\0\0009\1\1\0019\1\2\1\18\3\0\0'\4\3\0+\5\2\0B\1\4\0016\1\0\0009\1\1\0019\1\2\1\18\3\0\0'\4\4\0+\5\2\0B\1\4\0016\1\0\0009\1\5\1'\3\6\0B\1\2\0016\1\0\0009\1\5\1'\3\a\0B\1\2\1K\0\1\0\27IndentBlanklineDisable\19TwilightEnable\bcmd\14linebreak\twrap\24nvim_win_set_option\bapi\bvimY\0\0\3\0\4\0\t6\0\0\0009\0\1\0'\2\2\0B\0\2\0016\0\0\0009\0\1\0'\2\3\0B\0\2\1K\0\1\0\26IndentBlanklineEnable\20TwilightDisable\bcmd\bvimî\2\1\0\5\0\18\0\0216\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\a\0005\4\6\0=\4\b\0035\4\t\0=\4\n\0035\4\v\0=\4\f\3=\3\r\0023\3\14\0=\3\15\0023\3\16\0=\3\17\2B\0\2\1K\0\1\0\ron_close\0\fon_open\0\fplugins\ttmux\1\0\1\fenabled\1\rgitsigns\1\0\1\fenabled\2\foptions\1\0\0\1\0\3\fenabled\2\nruler\1\fshowcmd\1\vwindow\1\0\0\1\0\5\14linebreak\2\twrap\2\rbackdrop\3\1\nwidth\3x\vheight\3 \nsetup\rzen-mode\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/zen-mode.nvim"
@@ -446,26 +446,6 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
--- Setup for: vim-easy-align
-time([[Setup for vim-easy-align]], true)
-try_loadstring("\27LJ\2\n§\1\0\0\6\0\t\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\a\0'\3\4\0'\4\5\0005\5\b\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\1\6x\1\0\2\vsilent\2\fnoremap\1\22<Plug>(EasyAlign)\aga\6n\20nvim_set_keymap\bapi\bvim\0", "setup", "vim-easy-align")
-time([[Setup for vim-easy-align]], false)
--- Setup for: indent-blankline.nvim
-time([[Setup for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\2\n8\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\29plugins.indent-blankline\frequire\0", "setup", "indent-blankline.nvim")
-time([[Setup for indent-blankline.nvim]], false)
--- Setup for: vim-markdown
-time([[Setup for vim-markdown]], true)
-try_loadstring('\27LJ\2\nä\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\1\0=\1\3\0006\0\0\0009\0\1\0)\1\1\0=\1\4\0K\0\1\0\22vim_markdown_math\29vim_markdown_frontmatter"vim_markdown_folding_disabled\6g\bvim\0', "setup", "vim-markdown")
-time([[Setup for vim-markdown]], false)
--- Setup for: lazygit.nvim
-time([[Setup for lazygit.nvim]], true)
-try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim€\2\1\0\5\0\v\1\0266\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\0\0=\1\6\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0003\0\b\0\18\1\0\0'\3\t\0'\4\n\0B\1\3\1K\0\1\0\21<CMD>LazyGit<CR>\15<leader>gt\0\30lazygit_use_neovim_remote(lazygit_floating_window_use_plenary\1\5\0\0\b‚ï≠\b‚ïÆ\b‚ï∞\b‚ïØ)lazygit_floating_window_corner_chars+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvimµÊÃô\19ô≥¶ˇ\3\0", "setup", "lazygit.nvim")
-time([[Setup for lazygit.nvim]], false)
--- Setup for: nvim-colorizer.lua
-time([[Setup for nvim-colorizer.lua]], true)
-try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvimD\1\0\5\0\3\0\0063\0\0\0\18\1\0\0'\3\1\0'\4\2\0B\1\3\1K\0\1\0\29<CMD>ColorizerToggle<CR>\15<leader>cc\0\0", "setup", "nvim-colorizer.lua")
-time([[Setup for nvim-colorizer.lua]], false)
 -- Setup for: lightspeed.nvim
 time([[Setup for lightspeed.nvim]], true)
 try_loadstring("\27LJ\2\nΩ\3\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0ù\3                nmap <expr> f reg_recording() . reg_executing() == \"\" ? \"<Plug>Lightspeed_f\" : \"f\"\n                nmap <expr> F reg_recording() . reg_executing() == \"\" ? \"<Plug>Lightspeed_F\" : \"F\"\n                nmap <expr> t reg_recording() . reg_executing() == \"\" ? \"<Plug>Lightspeed_t\" : \"t\"\n                nmap <expr> T reg_recording() . reg_executing() == \"\" ? \"<Plug>Lightspeed_T\" : \"T\"\n            \bcmd\bvim\0", "setup", "lightspeed.nvim")
@@ -480,12 +460,8 @@ try_loadstring("\27LJ\2\nY\0\0\2\0\5\0\t6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\00
 time([[Setup for suda.vim]], false)
 -- Setup for: vim-silicon
 time([[Setup for vim-silicon]], true)
-try_loadstring("\27LJ\2\n˝\2\0\0\4\0\t\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\0\0009\0\1\0009\0\2\0006\1\5\0009\1\6\1'\3\a\0B\1\2\2'\2\b\0&\1\2\1=\1\4\0K\0\1\0=/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png\tHOME\vgetenv\aos\voutput\1\0\r\20window-controls\2\tfont\28JetBrainsMono Nerd Font\15background\f#a999ff\20shadow-offset-y\3\0\17shadow-color\f#434434\rline-pad\3\2\14pad-horiz\3(\rpad-vert\0032\23shadow-blur-radius\3\0\20shadow-offset-x\3\0\ntheme\fDracula\16line-number\2\17round-corner\2\fsilicon\6g\bvim\0", "setup", "vim-silicon")
+try_loadstring("\27LJ\2\n˝\2\0\0\4\0\t\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\0\0009\0\1\0009\0\2\0006\1\5\0009\1\6\1'\3\a\0B\1\2\2'\2\b\0&\1\2\1=\1\4\0K\0\1\0=/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png\tHOME\vgetenv\aos\voutput\1\0\r\15background\f#a999ff\20window-controls\2\17round-corner\2\16line-number\2\20shadow-offset-y\3\0\20shadow-offset-x\3\0\23shadow-blur-radius\3\0\rpad-vert\0032\14pad-horiz\3(\rline-pad\3\2\17shadow-color\f#434434\ntheme\fDracula\tfont\28JetBrainsMono Nerd Font\fsilicon\6g\bvim\0", "setup", "vim-silicon")
 time([[Setup for vim-silicon]], false)
--- Setup for: emmet-vim
-time([[Setup for emmet-vim]], true)
-try_loadstring("\27LJ\2\nÖ\1\0\0\2\0\a\0\r6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\6,\26user_emmet_leader_key\6a\20user_emmet_mode\30user_emmet_install_global\6g\bvim\0", "setup", "emmet-vim")
-time([[Setup for emmet-vim]], false)
 -- Setup for: vim-smoothie
 time([[Setup for vim-smoothie]], true)
 try_loadstring("\27LJ\2\nñ\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\30\0=\1\2\0006\0\0\0009\0\1\0)\1\n\0=\1\3\0006\0\0\0009\0\1\0)\1\n\0=\1\4\0K\0\1\0!smoothie_speed_linear_factor#smoothie_speed_constant_factor\29smoothie_update_interval\6g\bvim\0", "setup", "vim-smoothie")
@@ -494,34 +470,58 @@ time([[Setup for vim-smoothie]], false)
 time([[Setup for nvim-tree.lua]], true)
 try_loadstring("\27LJ\2\nk\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\1\fnoremap\2\28<CMD>NvimTreeToggle<CR>\6`\6n\20nvim_set_keymap\bapi\bvim\0", "setup", "nvim-tree.lua")
 time([[Setup for nvim-tree.lua]], false)
--- Setup for: zen-mode.nvim
-time([[Setup for zen-mode.nvim]], true)
-try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim<\1\0\5\0\3\0\0063\0\0\0\18\1\0\0'\3\1\0'\4\2\0B\1\3\1K\0\1\0\21<CMD>ZenMode<CR>\15<leader>gy\0\0", "setup", "zen-mode.nvim")
-time([[Setup for zen-mode.nvim]], false)
--- Setup for: markdown-preview.nvim
-time([[Setup for markdown-preview.nvim]], true)
-try_loadstring("\27LJ\2\nò\1\0\0\2\0\a\0\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0)\1\0\0=\1\3\0006\0\0\0009\0\1\0)\1\0\0=\1\4\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\ffirefox\17mkdp_browser\22mkdp_refresh_slow\20mkdp_auto_close\20mkdp_auto_start\6g\bvim\0", "setup", "markdown-preview.nvim")
-time([[Setup for markdown-preview.nvim]], false)
 -- Setup for: vim-matchup
 time([[Setup for vim-matchup]], true)
 try_loadstring("\27LJ\2\nj\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\0\3\14highlight\vNormal\vmethod\npopup\14fullwidth\2!matchup_matchparen_offscreen\6g\bvim\0", "setup", "vim-matchup")
 time([[Setup for vim-matchup]], false)
+-- Setup for: markdown-preview.nvim
+time([[Setup for markdown-preview.nvim]], true)
+try_loadstring("\27LJ\2\nò\1\0\0\2\0\a\0\0176\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0)\1\0\0=\1\3\0006\0\0\0009\0\1\0)\1\0\0=\1\4\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\ffirefox\17mkdp_browser\22mkdp_refresh_slow\20mkdp_auto_close\20mkdp_auto_start\6g\bvim\0", "setup", "markdown-preview.nvim")
+time([[Setup for markdown-preview.nvim]], false)
 -- Setup for: glow.nvim
 time([[Setup for glow.nvim]], true)
 try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim9\1\0\5\0\3\0\0063\0\0\0\18\1\0\0'\3\1\0'\4\2\0B\1\3\1K\0\1\0\18<CMD>Glow<CR>\15<leader>gg\0\0", "setup", "glow.nvim")
 time([[Setup for glow.nvim]], false)
--- Setup for: dial.nvim
-time([[Setup for dial.nvim]], true)
-try_loadstring("\27LJ\2\n›\2\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0Ω\2            nmap <C-a> <Plug>(dial-increment)\n            nmap <C-x> <Plug>(dial-decrement)\n            vmap <C-a> <Plug>(dial-increment)\n            vmap <C-x> <Plug>(dial-decrement)\n            vmap g<C-a> <Plug>(dial-increment-additional)\n            vmap g<C-x> <Plug>(dial-decrement-additional)\n            \bcmd\bvim\0", "setup", "dial.nvim")
-time([[Setup for dial.nvim]], false)
 -- Setup for: hop.nvim
 time([[Setup for hop.nvim]], true)
 try_loadstring("\27LJ\2\n™\1\0\0\6\0\n\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\1\fnoremap\2\21<CMD>HopWord<CR>\bghw\1\0\1\fnoremap\2\24<CMD>HopPattern<CR>\bghp\6n\20nvim_set_keymap\bapi\bvim\0", "setup", "hop.nvim")
 time([[Setup for hop.nvim]], false)
+-- Setup for: lazygit.nvim
+time([[Setup for lazygit.nvim]], true)
+try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim€\2\1\0\5\0\v\1\0266\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\0\0=\1\6\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0003\0\b\0\18\1\0\0'\3\t\0'\4\n\0B\1\3\1K\0\1\0\21<CMD>LazyGit<CR>\15<leader>gt\0\30lazygit_use_neovim_remote(lazygit_floating_window_use_plenary\1\5\0\0\b‚ï≠\b‚ïÆ\b‚ï∞\b‚ïØ)lazygit_floating_window_corner_chars+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvimµÊÃô\19ô≥¶ˇ\3\0", "setup", "lazygit.nvim")
+time([[Setup for lazygit.nvim]], false)
+-- Setup for: zen-mode.nvim
+time([[Setup for zen-mode.nvim]], true)
+try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim<\1\0\5\0\3\0\0063\0\0\0\18\1\0\0'\3\1\0'\4\2\0B\1\3\1K\0\1\0\21<CMD>ZenMode<CR>\15<leader>gy\0\0", "setup", "zen-mode.nvim")
+time([[Setup for zen-mode.nvim]], false)
+-- Setup for: vim-easy-align
+time([[Setup for vim-easy-align]], true)
+try_loadstring("\27LJ\2\n§\1\0\0\6\0\t\0\0176\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\0016\0\0\0009\0\1\0009\0\2\0'\2\a\0'\3\4\0'\4\5\0005\5\b\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\1\6x\1\0\2\vsilent\2\fnoremap\1\22<Plug>(EasyAlign)\aga\6n\20nvim_set_keymap\bapi\bvim\0", "setup", "vim-easy-align")
+time([[Setup for vim-easy-align]], false)
+-- Setup for: dial.nvim
+time([[Setup for dial.nvim]], true)
+try_loadstring("\27LJ\2\n›\2\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0Ω\2            nmap <C-a> <Plug>(dial-increment)\n            nmap <C-x> <Plug>(dial-decrement)\n            vmap <C-a> <Plug>(dial-increment)\n            vmap <C-x> <Plug>(dial-decrement)\n            vmap g<C-a> <Plug>(dial-increment-additional)\n            vmap g<C-x> <Plug>(dial-decrement-additional)\n            \bcmd\bvim\0", "setup", "dial.nvim")
+time([[Setup for dial.nvim]], false)
+-- Setup for: indent-blankline.nvim
+time([[Setup for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\29plugins.indent-blankline\frequire\0", "setup", "indent-blankline.nvim")
+time([[Setup for indent-blankline.nvim]], false)
+-- Setup for: vim-markdown
+time([[Setup for vim-markdown]], true)
+try_loadstring('\27LJ\2\nä\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\1\0=\1\3\0006\0\0\0009\0\1\0)\1\1\0=\1\4\0K\0\1\0\22vim_markdown_math\29vim_markdown_frontmatter"vim_markdown_folding_disabled\6g\bvim\0', "setup", "vim-markdown")
+time([[Setup for vim-markdown]], false)
 -- Setup for: dashboard-nvim
 time([[Setup for dashboard-nvim]], true)
 try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim \1\1\0\5\0\t\0\0216\0\0\0'\2\1\0B\0\2\0013\0\2\0\18\1\0\0'\3\3\0'\4\4\0B\1\3\1\18\1\0\0'\3\5\0'\4\6\0B\1\3\1\18\1\0\0'\3\a\0'\4\4\0B\1\3\1\18\1\0\0'\3\b\0'\4\6\0B\1\3\1K\0\1\0\15<leader>ss\15<leader>sl\30<CMD>SessionSave last<CR>\t<F2>\30<CMD>SessionLoad last<CR>\t<F1>\0\22plugins.dashboard\frequire\0", "setup", "dashboard-nvim")
 time([[Setup for dashboard-nvim]], false)
+-- Setup for: emmet-vim
+time([[Setup for emmet-vim]], true)
+try_loadstring("\27LJ\2\nÖ\1\0\0\2\0\a\0\r6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0'\1\4\0=\1\3\0006\0\0\0009\0\1\0'\1\6\0=\1\5\0K\0\1\0\6,\26user_emmet_leader_key\6a\20user_emmet_mode\30user_emmet_install_global\6g\bvim\0", "setup", "emmet-vim")
+time([[Setup for emmet-vim]], false)
+-- Setup for: nvim-colorizer.lua
+time([[Setup for nvim-colorizer.lua]], true)
+try_loadstring("\27LJ\2\nY\0\2\b\0\5\0\t6\2\0\0009\2\1\0029\2\2\2'\4\3\0\18\5\0\0\18\6\1\0005\a\4\0B\2\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvimD\1\0\5\0\3\0\0063\0\0\0\18\1\0\0'\3\1\0'\4\2\0B\1\3\1K\0\1\0\29<CMD>ColorizerToggle<CR>\15<leader>cc\0\0", "setup", "nvim-colorizer.lua")
+time([[Setup for nvim-colorizer.lua]], false)
 -- Config for: curstr.nvim
 time([[Config for curstr.nvim]], true)
 try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plugins.curstr\frequire\0", "config", "curstr.nvim")
@@ -529,11 +529,6 @@ time([[Config for curstr.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file HopPattern lua require("packer.load")({'hop.nvim'}, { cmd = "HopPattern", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Dashboard lua require("packer.load")({'dashboard-nvim'}, { cmd = "Dashboard", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file SessionLoad lua require("packer.load")({'dashboard-nvim'}, { cmd = "SessionLoad", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file SessionSave lua require("packer.load")({'dashboard-nvim'}, { cmd = "SessionSave", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file LazyGit lua require("packer.load")({'lazygit.nvim'}, { cmd = "LazyGit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file ColorizerToggle lua require("packer.load")({'nvim-colorizer.lua'}, { cmd = "ColorizerToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime.vim'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Sayonara lua require("packer.load")({'vim-sayonara'}, { cmd = "Sayonara", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
@@ -541,52 +536,57 @@ pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file SudaRead lua requ
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file SudaWrite lua require("packer.load")({'suda.vim'}, { cmd = "SudaWrite", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Silicon lua require("packer.load")({'vim-silicon'}, { cmd = "Silicon", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Trouble lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "Trouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file EmmetInstall lua require("packer.load")({'emmet-vim'}, { cmd = "EmmetInstall", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file MarkdownPreview lua require("packer.load")({'markdown-preview.nvim'}, { cmd = "MarkdownPreview", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Glow lua require("packer.load")({'glow.nvim'}, { cmd = "Glow", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Dashboard lua require("packer.load")({'dashboard-nvim'}, { cmd = "Dashboard", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file SessionLoad lua require("packer.load")({'dashboard-nvim'}, { cmd = "SessionLoad", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file HopWord lua require("packer.load")({'hop.nvim'}, { cmd = "HopWord", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file HopPattern lua require("packer.load")({'hop.nvim'}, { cmd = "HopPattern", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file LazyGit lua require("packer.load")({'lazygit.nvim'}, { cmd = "LazyGit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file ZenMode lua require("packer.load")({'zen-mode.nvim'}, { cmd = "ZenMode", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file TroubleToggle lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "TroubleToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Telescope lua require("packer.load")({'telescope-fzf-native.nvim', 'telescope.nvim'}, { cmd = "Telescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file NvimTreeToggle lua require("packer.load")({'nvim-tree.lua'}, { cmd = "NvimTreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file ZenMode lua require("packer.load")({'zen-mode.nvim'}, { cmd = "ZenMode", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file MarkdownPreview lua require("packer.load")({'markdown-preview.nvim'}, { cmd = "MarkdownPreview", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file Glow lua require("packer.load")({'glow.nvim'}, { cmd = "Glow", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file EmmetInstall lua require("packer.load")({'emmet-vim'}, { cmd = "EmmetInstall", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file HopWord lua require("packer.load")({'hop.nvim'}, { cmd = "HopWord", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command! -nargs=* -range -bang -complete=file SessionSave lua require("packer.load")({'dashboard-nvim'}, { cmd = "SessionSave", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'vim-commentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_f <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_f", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>(dial-decrement) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gh <cmd>lua require("packer.load")({'hop.nvim'}, { keys = "gh", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_t <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_t", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>(EasyAlign) <cmd>lua require("packer.load")({'vim-easy-align'}, { keys = "<lt>Plug>(EasyAlign)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>(dial-decrement-additiona) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement-additiona)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_F <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_F", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>(dial-increment) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-increment)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>(EasyAlign) <cmd>lua require("packer.load")({'vim-easy-align'}, { keys = "<lt>Plug>(EasyAlign)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_f <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_f", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>(dial-increment-additional) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-increment-additional)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>(dial-decrement-additiona) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement-additiona)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>(dial-decrement) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'vim-commentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>Lightspeed_T <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_T", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_F <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_F", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_t <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_t", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gh <cmd>lua require("packer.load")({'hop.nvim'}, { keys = "gh", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType bib ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "bib" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim', 'vim-markdown', 'glow.nvim', 'vim-table-mode'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode'}, { ft = "text" }, _G.packer_plugins)]]
 vim.cmd [[au FileType latex ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "latex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType bib ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "bib" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tex ++once lua require("packer.load")({'texmagic.nvim'}, { ft = "tex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim', 'vim-markdown', 'vim-table-mode', 'glow.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType text ++once lua require("packer.load")({'vim-table-mode'}, { ft = "text" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
 vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-autopairs'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au CursorMoved * ++once lua require("packer.load")({'vim-matchup'}, { event = "CursorMoved *" }, _G.packer_plugins)]]
-vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'which-key.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'nvim-lspconfig', 'nvim-bufferline.lua', 'windline.nvim'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
-vim.cmd [[au BufNewFile * ++once lua require("packer.load")({'nvim-lspconfig', 'nvim-bufferline.lua', 'gitsigns.nvim', 'nvim-treesitter', 'windline.nvim'}, { event = "BufNewFile *" }, _G.packer_plugins)]]
-vim.cmd [[au WinScrolled * ++once lua require("packer.load")({'vim-smoothie'}, { event = "WinScrolled *" }, _G.packer_plugins)]]
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'xresources-nvim', 'dashboard-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'gitsigns.nvim', 'nvim-treesitter'}, { event = "BufRead *" }, _G.packer_plugins)]]
 vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'lightspeed.nvim'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'nvim-lspconfig', 'windline.nvim', 'nvim-bufferline.lua'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au BufNewFile * ++once lua require("packer.load")({'nvim-lspconfig', 'gitsigns.nvim', 'nvim-treesitter', 'windline.nvim', 'nvim-bufferline.lua'}, { event = "BufNewFile *" }, _G.packer_plugins)]]
+vim.cmd [[au CursorMoved * ++once lua require("packer.load")({'vim-matchup'}, { event = "CursorMoved *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'gitsigns.nvim', 'nvim-treesitter'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'which-key.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au WinScrolled * ++once lua require("packer.load")({'vim-smoothie'}, { event = "WinScrolled *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'dashboard-nvim', 'xresources-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
