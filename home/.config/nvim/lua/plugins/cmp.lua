@@ -2,6 +2,7 @@ local cmp = require("cmp")
 
 cmp.setup({
     completion = {
+        -- autocomplete = true,
         completeopt = "menu,menuone,noselect,noinsert",
         keyword_length = 3,
     },
@@ -44,6 +45,7 @@ cmp.setup({
         { name = "nvim_lua" },
         { name = "nvim_lsp" },
         { name = "path" },
+        { name = "spell" },
     },
     mapping = {
         ["<S-Tab>"] = cmp.mapping.select_prev_item(),
@@ -59,4 +61,4 @@ cmp.setup({
     },
 })
 
-vim.api.nvim_set_keymap("i", "<CR>", "v:lua.Util.trigger_completion()", { noremap = true, expr = true })
+-- vim.api.nvim_set_keymap("i", "<CR>", "v:lua.Util.trigger_completion()", { noremap = true, expr = true })

@@ -29,7 +29,7 @@ end
 
 packer.init({
     git = {
-        clone_timeout = 300, -- 5 minutes, I have horrible internet
+        clone_timeout = 300,
     },
     display = {
         open_fn = function()
@@ -89,6 +89,13 @@ local plugins = {
                 end,
             },
         },
+        setup = function()
+            vim.g.xresources_italic_comments = false
+            vim.g.xresources_italic_keywords = true
+            vim.g.xresources_italic_functions = false
+            vim.g.xresources_italic_variables = false
+            vim.g.xresources_sidebars = { "qf", "vista_kind", "terminal", "packer", "NvimTree" }
+        end,
         config = function()
             local color_list = {
                 "xresources", -- 1
@@ -140,14 +147,14 @@ local plugins = {
         "windwp/windline.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
-            require("wlsample.evil_line")
+            require("plugins.windline")
         end,
     },
 
     -- Indenting
     {
         "lukas-reineke/indent-blankline.nvim",
-        after = "xresources-nvim",
+        event = { "BufReadPre", "BufNewFile" },
         setup = function()
             require("plugins.indent-blankline")
         end,
@@ -173,7 +180,7 @@ local plugins = {
     -- Sandwiched textobjects.
     {
         "machakann/vim-sandwich",
-        keys = "s",
+        after = "nvim-treesitter",
     },
 
     -- Neovim Autopair Plugin
@@ -478,6 +485,7 @@ local plugins = {
             { "hrsh7th/cmp-emoji" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/cmp-nvim-lua" },
+            { "f3fora/cmp-spell" },
         },
         config = function()
             require("plugins.cmp")
@@ -491,23 +499,6 @@ local plugins = {
             vim.g.user_emmet_install_global = 0
             vim.g.user_emmet_mode = "a"
             vim.g.user_emmet_leader_key = ","
-        end,
-    },
-
-    -- ======= Debug =======
-    {
-        "Pocco81/DAPInstall.nvim",
-        cmd = { "DIInstall", "DIUninstall", "DIList" },
-    },
-    {
-        "mfussenegger/nvim-dap",
-        requires = {
-            { "rcarriga/nvim-dap-ui" },
-            { "mfussenegger/nvim-dap-python" },
-            { "jbyuki/one-small-step-for-vimkind" },
-        },
-        config = function()
-            require("plugins.debug")
         end,
     },
 

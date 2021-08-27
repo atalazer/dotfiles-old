@@ -15,6 +15,15 @@ npairs.setup({
     check_ts = true,
     html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
     disable_filetype = { "TelescopePrompt", "vim" },
+    fast_wrap = {
+        map = "<M-e>",
+        chars = { "{", "[", "(", '"', "'" },
+        pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+        end_key = "$",
+        keys = "qwertyuiopzxcvbnmasdfghjkl",
+        check_comma = true,
+        hightlight = "Search",
+    },
 })
 
 -- Rule
@@ -52,4 +61,11 @@ npairs.add_rules({
             return opts.prev_char:match(".%]") ~= nil
         end)
         :use_key("]"),
+})
+
+-- Mappings
+require("nvim-autopairs.completion.cmp").setup({
+    map_cr = true, --  map <CR> on insert mode
+    map_complete = true, -- it will auto insert `(` after select function or method item
+    auto_select = true, -- automatically select the first item
 })

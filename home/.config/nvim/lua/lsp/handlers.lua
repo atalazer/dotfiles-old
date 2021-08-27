@@ -17,7 +17,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, _, params, cli
             severity_limit = "Warning",
         },
         signs = true,
-        update_in_insert = false,
+        update_in_insert = true,
     }
     local uri = params.uri
     local bufnr = vim.uri_to_bufnr(uri)
