@@ -1,35 +1,41 @@
 #!/usr/bin/env bash
 
 # Alias Finder
-fa(){
+fa() {
     alias | grep $1
 }
 
 # Weather Check
-weather(){
+weather() {
     curl wttr.in/${2:-Boyolali}\?${1:-1}
 }
 
 # clone subdirectory using subversion
 git-svn() {
-  if [[ ! -z "$1" && ! -z "$2" ]]; then
-    echo "Starting clone/copy..."
-    repo=$(echo $1 | sed 's/\/$\|.git$//')
-    svn export "$repo/trunk/$2"
-  else
-    echo "Use: git-svn <repository> <subdir>"
-  fi
+    if [[ ! -z $1 && -n $2 ]]; then
+        echo "Starting clone/copy..."
+        repo=$(echo $1 | sed 's/\/$\|.git$//')
+        svn export "$repo/trunk/$2"
+    else
+        echo "Use: git-svn <repository> <subdir>"
+    fi
 }
 
-stats(){
-  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n20
+stats() {
+    fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n20
 }
 
 take() {
-  mkdir -p $@ && cd ${@:$#}
+    if command -v "zoxide" > /dev/null 2>&1; then
+        CD="z"
+    else
+        CD="cd"
+    fi
+
+    mkdir -p $@ && $CD ${@:$#}
 }
 
-todo(){
+todo() {
     TODO=${TODO:-$HOME/TODO}
     if [ ! -f $TODO ]; then
         touch $TODO
@@ -37,21 +43,21 @@ todo(){
     else
         OPT=${1:---help}
         case $OPT in
-            -e|--edit) ${EDITOR:-nvim} $TODO;;
-            -s|--show)
-                if command -v "glow" &> /dev/null; then
-                    glow $TODO
-                elif command -v "bat" &> /dev/null; then
-                    bat --paging=never $TODO
-                else
-                    cat $TODO
-                fi
+        -e | --edit) ${EDITOR:-nvim} $TODO ;;
+        -s | --show)
+            if command -v "glow" &>/dev/null; then
+                glow $TODO
+            elif command -v "bat" &>/dev/null; then
+                bat --paging=never $TODO
+            else
+                cat $TODO
+            fi
             ;;
-            -h|--help)
-                echo "Command:"
-                echo "-e --edit Edit TODO file"
-                echo "-s --show Show TODO"
-                echo "-h --help Show available command"
+        -h | --help)
+            echo "Command:"
+            echo "-e --edit Edit TODO file"
+            echo "-s --show Show TODO"
+            echo "-h --help Show available command"
             ;;
         esac
     fi
@@ -60,7 +66,7 @@ alias td="todo"
 alias tds="todo -s"
 alias tde="todo -e"
 
-schedule(){
+schedule() {
     SCHEDULE=${SCHEDULE:-$HOME/SCHEDULE}
     if [ ! -f $SCHEDULE ]; then
         touch $SCHEDULE
@@ -68,21 +74,21 @@ schedule(){
     else
         OPT=${1:---help}
         case $OPT in
-            -e|--edit) ${EDITOR:-nvim} $SCHEDULE;;
-            -s|--show)
-                if command -v "glow" &> /dev/null; then
-                    glow $SCHEDULE
-                elif command -v "bat" &> /dev/null; then
-                    bat --paging=never $SCHEDULE
-                else
-                    cat $SCHEDULE
-                fi
+        -e | --edit) ${EDITOR:-nvim} $SCHEDULE ;;
+        -s | --show)
+            if command -v "glow" &>/dev/null; then
+                glow $SCHEDULE
+            elif command -v "bat" &>/dev/null; then
+                bat --paging=never $SCHEDULE
+            else
+                cat $SCHEDULE
+            fi
             ;;
-            -h|--help)
-                echo "Command:"
-                echo "-e --edit Edit SCHEDULE file"
-                echo "-s --show Show SCHEDULE"
-                echo "-h --help Show available command"
+        -h | --help)
+            echo "Command:"
+            echo "-e --edit Edit SCHEDULE file"
+            echo "-s --show Show SCHEDULE"
+            echo "-h --help Show available command"
             ;;
         esac
     fi

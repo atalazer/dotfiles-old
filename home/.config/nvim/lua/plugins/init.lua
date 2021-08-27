@@ -635,7 +635,7 @@ local plugins = {
             local map = function(lhs, rhs)
                 vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
             end
-            map("<leader>gy", "<CMD>ZenMode<CR>")
+            map("<leader>gz", ":ZenMode<CR>")
         end,
         requires = {
             "folke/twilight.nvim",
@@ -666,16 +666,15 @@ local plugins = {
                 window = {
                     backdrop = 0.975, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
                     width = 100, -- width of the Zen window
-                    height = 40, -- height of the Zen window
+                    height = 35, -- height of the Zen window
                 },
                 plugins = {
                     options = {
-                        enabled = true,
+                        enabled = false,
                         ruler = false,
                         showcmd = false,
                     },
-                    gitsigns = { enabled = true }, -- disables git signs
-                    tmux = { enabled = false }, -- disables the tmux statusline
+                    gitsigns = { enabled = false }, -- disables git signs
                 },
                 on_open = function(win)
                     vim.api.nvim_win_set_option(win, "wrap", true)

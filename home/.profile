@@ -49,7 +49,7 @@ TO_PATH() {
     fi
 }
 
-TO_PATH ${APP_DIR:-$HOME/Applications}
+TO_PATH ${APP_DIR:-$HOME/Applications}/bin
 TO_PATH ${BIN_DIR:-$HOME/.local/bin}
 TO_PATH $HOME/.local/script
 TO_PATH $HOME/.local/go/bin

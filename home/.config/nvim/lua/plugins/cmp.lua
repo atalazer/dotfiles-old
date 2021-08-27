@@ -4,7 +4,7 @@ cmp.setup({
     completion = {
         -- autocomplete = true,
         completeopt = "menu,menuone,noselect,noinsert",
-        keyword_length = 3,
+        keyword_length = 2,
     },
     snippet = {
         expand = function(args)
@@ -30,7 +30,8 @@ cmp.setup({
             vim_item.menu = ({
                 -- nvim_lsp = "[LSP]",
                 -- nvim_lua = "[LUA]",
-                -- buffer = "[BUF]",
+                buffer = "[BUF]",
+                spell = "[SPL]",
             })[entry.source.name] or vim_item.menu
             vim_item.kind = require("lsp.kind").presets[vim_item.kind] .. " (" .. vim_item.kind .. ")"
             return vim_item

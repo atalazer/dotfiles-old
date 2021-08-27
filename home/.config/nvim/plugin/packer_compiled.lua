@@ -474,7 +474,7 @@ _G.packer_plugins = {
   },
   ["zen-mode.nvim"] = {
     commands = { "ZenMode" },
-    config = { "\27LJ\1\2Ù\1\0\1\5\0\t\0\0304\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\3\0)\4\2\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\4\0)\4\2\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\5\0)\4\1\0>\1\4\0014\1\0\0007\1\6\1%\2\a\0>\1\2\0014\1\0\0007\1\6\1%\2\b\0>\1\2\1G\0\1\0\27IndentBlanklineDisable\19TwilightEnable\bcmd\tlist\14linebreak\twrap\24nvim_win_set_option\bapi\bvimÙ\1\0\1\5\0\t\0\0304\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\3\0)\4\1\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\4\0)\4\1\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\5\0)\4\2\0>\1\4\0014\1\0\0007\1\6\1%\2\a\0>\1\2\0014\1\0\0007\1\6\1%\2\b\0>\1\2\1G\0\1\0\26IndentBlanklineEnable\20TwilightDisable\bcmd\tlist\14linebreak\twrap\24nvim_win_set_option\bapi\bvimŒ\2\1\0\4\0\18\0\0214\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\4\0003\2\3\0:\2\5\0013\2\a\0003\3\6\0:\3\b\0023\3\t\0:\3\n\0023\3\v\0:\3\f\2:\2\r\0011\2\14\0:\2\15\0011\2\16\0:\2\17\1>\0\2\1G\0\1\0\ron_close\0\fon_open\0\fplugins\ttmux\1\0\1\fenabled\1\rgitsigns\1\0\1\fenabled\2\foptions\1\0\0\1\0\3\fenabled\2\nruler\1\fshowcmd\1\vwindow\1\0\0\1\0\3\rbackdrop\4³æÌ™\3³æ¼ÿ\3\vheight\3(\nwidth\3d\nsetup\rzen-mode\frequire\0" },
+    config = { "\27LJ\1\2Ù\1\0\1\5\0\t\0\0304\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\3\0)\4\2\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\4\0)\4\2\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\5\0)\4\1\0>\1\4\0014\1\0\0007\1\6\1%\2\a\0>\1\2\0014\1\0\0007\1\6\1%\2\b\0>\1\2\1G\0\1\0\27IndentBlanklineDisable\19TwilightEnable\bcmd\tlist\14linebreak\twrap\24nvim_win_set_option\bapi\bvimÙ\1\0\1\5\0\t\0\0304\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\3\0)\4\1\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\4\0)\4\1\0>\1\4\0014\1\0\0007\1\1\0017\1\2\1\16\2\0\0%\3\5\0)\4\2\0>\1\4\0014\1\0\0007\1\6\1%\2\a\0>\1\2\0014\1\0\0007\1\6\1%\2\b\0>\1\2\1G\0\1\0\26IndentBlanklineEnable\20TwilightDisable\bcmd\tlist\14linebreak\twrap\24nvim_win_set_option\bapi\bvimó\1\1\0\4\0\16\0\0194\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\4\0003\2\3\0:\2\5\0013\2\a\0003\3\6\0:\3\b\0023\3\t\0:\3\n\2:\2\v\0011\2\f\0:\2\r\0011\2\14\0:\2\15\1>\0\2\1G\0\1\0\ron_close\0\fon_open\0\fplugins\rgitsigns\1\0\1\fenabled\1\foptions\1\0\0\1\0\3\fenabled\1\nruler\1\fshowcmd\1\vwindow\1\0\0\1\0\3\rbackdrop\4³æÌ™\3³æ¼ÿ\3\vheight\3#\nwidth\3d\nsetup\rzen-mode\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/zen-mode.nvim"
@@ -595,7 +595,7 @@ try_loadstring("\27LJ\1\2X\0\2\a\0\5\0\t4\2\0\0007\2\1\0027\2\2\2%\3\3\0\16\4\0\
 time([[Setup for vim-sayonara]], false)
 -- Setup for: zen-mode.nvim
 time([[Setup for zen-mode.nvim]], true)
-try_loadstring("\27LJ\1\2Y\0\2\a\0\5\0\t4\2\0\0007\2\1\0027\2\2\2%\3\3\0\16\4\0\0\16\5\1\0003\6\4\0>\2\5\1G\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim<\1\0\4\0\3\0\0061\0\0\0\16\1\0\0%\2\1\0%\3\2\0>\1\3\1G\0\1\0\21<CMD>ZenMode<CR>\15<leader>gy\0\0", "setup", "zen-mode.nvim")
+try_loadstring("\27LJ\1\2Y\0\2\a\0\5\0\t4\2\0\0007\2\1\0027\2\2\2%\3\3\0\16\4\0\0\16\5\1\0003\6\4\0>\2\5\1G\0\1\0\1\0\2\vsilent\2\fnoremap\2\6n\20nvim_set_keymap\bapi\bvim8\1\0\4\0\3\0\0061\0\0\0\16\1\0\0%\2\1\0%\3\2\0>\1\3\1G\0\1\0\17:ZenMode<CR>\15<leader>gz\0\0", "setup", "zen-mode.nvim")
 time([[Setup for zen-mode.nvim]], false)
 -- Setup for: xresources-nvim
 time([[Setup for xresources-nvim]], true)
@@ -660,17 +660,17 @@ time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[noremap <silent> <Plug>(dial-increment-additional) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-increment-additional)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_f <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_f", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_T <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_T", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>(dial-decrement-additiona) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement-additiona)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>(dial-increment) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-increment)", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>(dial-decrement) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_t <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_t", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>(dial-increment-additional) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-increment-additional)", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> <Leader>f <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>Leader>f", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'vim-commentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_F <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_F", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>(dial-decrement-additiona) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-decrement-additiona)", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_f <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_f", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>(EasyAlign) <cmd>lua require("packer.load")({'vim-easy-align'}, { keys = "<lt>Plug>(EasyAlign)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>(dial-increment) <cmd>lua require("packer.load")({'dial.nvim'}, { keys = "<lt>Plug>(dial-increment)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>Lightspeed_t <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_t", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_T <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_T", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <Plug>Lightspeed_F <cmd>lua require("packer.load")({'lightspeed.nvim'}, { keys = "<lt>Plug>Lightspeed_F", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]

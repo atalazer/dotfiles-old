@@ -58,7 +58,7 @@ local options = {
     signcolumn = "yes",
     shortmess = "csa",
     showbreak = "↪",
-    undodir = "~/.local/share/nvim/undo",
+    undodir = vim.fn.stdpath("data") .. "/undo",
 
     -- Number
     colorcolumn = { "120" },

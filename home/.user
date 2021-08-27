@@ -21,6 +21,8 @@ export REBOOT_CMD="reboot"
 export SUSPEND_CMD="suspend"
 export LOCK_CMD=""
 
+export TRASH_CMD="gio"
+
 # Dirs
 export APP_DIR="$HOME/Applications"
 export BIN_DIR="$HOME/.local/bin"

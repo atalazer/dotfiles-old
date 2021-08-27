@@ -20,17 +20,10 @@ local basic = {}
 
 local breakpoint_width = 80
 
-local luffy_text = ""
+local luffy_text = "" -- For Animations
+
 basic.divider = { b_components.divider, "" }
 basic.bg = { " ", "StatusLine" }
-
-local colors_mode = {
-    Normal = { "red", "black" },
-    Insert = { "green", "black" },
-    Visual = { "yellow", "black" },
-    Replace = { "blue_light", "black" },
-    Command = { "magenta", "black" },
-}
 
 basic.vi_mode = {
     name = "vi_mode",
@@ -60,55 +53,15 @@ basic.vi_mode = {
         end
 
         return {
-            { sep.left_rounded, state.mode[2] .. "Before" },
+            { " ", state.mode[2] },
             { luffy_text .. state.mode[1], state.mode[2] },
-            { sep.right_rounded, state.mode[2] .. "Before" },
+            { " ", state.mode[2] },
+            { sep.slant_right, state.mode[2].."Before" },
             { " ", "default" },
         }
     end,
 }
 
-basic.lsp_diagnos = {
-    name = "diagnostic",
-    hl_colors = {
-        red = { "red", "black" },
-        yellow = { "yellow", "black" },
-        blue = { "blue", "black" },
-    },
-    width = breakpoint_width,
-    text = function()
-        if lsp_comps.check_lsp() then
-            return {
-                { " ", "red" },
-                { lsp_comps.lsp_error({ format = " %s", show_zero = true }), "red" },
-                { lsp_comps.lsp_warning({ format = "  %s", show_zero = true }), "yellow" },
-                { lsp_comps.lsp_hint({ format = "  %s", show_zero = true }), "blue" },
-            }
-        end
-        return ""
-    end,
-}
-
-basic.file_info = {
-    hl_colors = {
-        default = hl_list.Black,
-        Normal = { "cyan", "black" },
-        Inverse = { "black", "cyan" },
-    },
-    text = function(_, winnr)
-        if vim.api.nvim_win_get_width(winnr) > breakpoint_width then
-            return {
-                { " ", "default" },
-                { sep.left_rounded, "Normal" },
-                { "", "Inverse" },
-                { b_components.progress, "Inverse" },
-                { " ", "Inverse" },
-                { b_components.line_col, "Inverse" },
-                { sep.right_rounded, "Normal" },
-            }
-        end
-    end,
-}
 basic.file = {
     name = "file",
     hl_colors = {
@@ -119,10 +72,10 @@ basic.file = {
     text = function(_, winnr)
         if vim.api.nvim_win_get_width(winnr) > breakpoint_width then
             return {
-                { b_components.cache_file_icon({ default = "" }), "default" },
+                { b_components.cache_file_icon({ default = "" }), "magenta" },
                 { " ", "" },
                 { b_components.cache_file_name("[No Name]", ""), "magenta" },
-                { b_components.cache_file_size(), "default" },
+                { b_components.cache_file_size(), "magenta" },
                 { " ", "" },
                 { b_components.file_modified(" "), "magenta" },
             }
@@ -133,6 +86,22 @@ basic.file = {
                 { b_components.cache_file_name("[No Name]", ""), "magenta" },
                 { " ", "" },
                 { b_components.file_modified(" "), "magenta" },
+            }
+        end
+    end,
+}
+
+basic.info = {
+    hl_colors = basic.vi_mode.hl_colors,
+    text = function(_, winnr)
+        if vim.api.nvim_win_get_width(winnr) > breakpoint_width then
+            return {
+                { sep.slant_left, state.mode[2].."Before" },
+                { " ", state.mode[2] },
+                { b_components.line_col, state.mode[2] },
+                { " ", state.mode[2] },
+                { b_components.progress, state.mode[2] },
+                { " ", "default" },
             }
         end
     end,
@@ -159,11 +128,35 @@ basic.git = {
     end,
 }
 
+basic.lsp = {
+    name = "diagnostic",
+    hl_colors = {
+        red = { "red", "black" },
+        green = { "green", "black" },
+        blue = { "blue", "black" },
+        yellow = { "yellow", "black" },
+    },
+    width = breakpoint_width,
+    text = function(_, winnr)
+        if vim.api.nvim_win_get_width(winnr) > breakpoint_width then
+            if lsp_comps.check_lsp() then
+                return {
+                    { lsp_comps.lsp_error({ format = " %s", show_zero = true }), "red" },
+                    { lsp_comps.lsp_warning({ format = "  %s", show_zero = true }), "yellow" },
+                    { lsp_comps.lsp_info({ format = "  %s", show_zero = true }), "blue" },
+                    { lsp_comps.lsp_hint({ format = "  %s", show_zero = true }), "green" },
+                }
+            end
+        end
+        return ""
+    end,
+}
+
 local quickfix = {
     filetypes = { "qf", "Trouble" },
     active = {
         { "🚦 Quickfix ", { "white", "black" } },
-        { helper.separators.slant_right, { "black", "black_light" } },
+        { sep.slant_right, { "black", "black_light" } },
         {
             function()
                 return vim.fn.getqflist({ title = 0 }).title
@@ -171,10 +164,10 @@ local quickfix = {
             { "cyan", "black_light" },
         },
         { " Total : %L ", { "cyan", "black_light" } },
-        { helper.separators.slant_right, { "black_light", "InactiveBg" } },
+        { sep.slant_right, { "black_light", "InactiveBg" } },
         { " ", { "InactiveFg", "InactiveBg" } },
         basic.divider,
-        { helper.separators.slant_right, { "InactiveBg", "black" } },
+        { sep.slant_right, { "InactiveBg", "black" } },
         { "🧛 ", { "white", "black" } },
     },
 
@@ -185,13 +178,24 @@ local explorer = {
     filetypes = { "fern", "NvimTree", "lir" },
     active = {
         { "  ", { "white", "black" } },
-        { sep.right_rounded, { "black", "black_light" } },
+        { sep.slant_right, { "black", "black_light" } },
         { b_components.divider, "" },
-        { sep.left_rounded, { "black", "black_light" } },
+        { sep.slant_left, { "black", "black_light" } },
         { b_components.file_name(""), { "white", "black_light" } },
     },
     show_in_active = true,
     show_last_status = true,
+}
+
+local in_active = {
+    { " ", hl_list.Black },
+    { b_components.line_col, hl_list.Inactive },
+    basic.divider,
+    { b_components.full_file_name, hl_list.Inactive },
+    { " ", hl_list.Black },
+    basic.divider,
+    { b_components.progress, hl_list.Inactive },
+    { " ", hl_list.Black },
 }
 
 local default = {
@@ -202,50 +206,45 @@ local default = {
         { git_comps.git_branch(), { "yellow", "black" }, breakpoint_width },
         basic.git,
         basic.divider,
-        basic.lsp_diagnos,
-        { " ", hl_list.Black },
         { lsp_comps.lsp_name(), { "green", "black" }, breakpoint_width },
-        basic.file_info,
-    },
-    in_active = {
-        { " ", hl_list.Black },
-        { b_components.line_col, hl_list.Inactive },
         basic.divider,
-        { b_components.full_file_name, hl_list.Inactive },
+        basic.lsp,
         { " ", hl_list.Black },
-        basic.divider,
-        { b_components.progress, hl_list.Inactive },
-        { " ", hl_list.Black },
+        basic.info,
     },
+    in_active = in_active,
 }
 
 local writing = {
-    filetypes = { "markdown", "text", "help" },
+    filetypes = { "markdown", "text" },
     active = {
         basic.vi_mode,
         basic.file,
         basic.divider,
-        basic.file_info,
-        basic.divider,
         basic.git,
         { git_comps.git_branch(), { "yellow", "black" }, breakpoint_width },
+        basic.info,
     },
-    in_active = {
+    in_active = in_active,
+}
+
+local minimalist = {
+    filetypes = { "help" },
+    active = {
         { " ", hl_list.Black },
-        { b_components.line_col, hl_list.Inactive },
         basic.divider,
-        { b_components.full_file_name, hl_list.Inactive },
-        { " ", hl_list.Black },
+        { b_components.file_name(""), { "blue", "black" } },
         basic.divider,
-        { b_components.progress, hl_list.Inactive },
         { " ", hl_list.Black },
     },
+    in_active = in_active,
 }
 
 windline.setup({
     statuslines = {
         default,
         writing,
+        minimalist,
         quickfix,
         explorer,
     },

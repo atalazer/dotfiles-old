@@ -1,10 +1,10 @@
 #export LC_COLLATE="C"
 #export NNN_OPTS="cEnrx"
 
-if command -v "trash" > /dev/null 2>&1; then
-    export NNN_TRASH=1
-elif command -v "gio" > /dev/null 2>&1; then
+if command -v "gio" > /dev/null 2>&1; then
     export NNN_TRASH=2
+elif command -v "trash" > /dev/null 2>&1; then
+    export NNN_TRASH=1
 else
     export NNN_TRASH=0
 fi

@@ -30,21 +30,16 @@ if command -v "exa" > /dev/null 2>&1; then
 fi
 
 # Use Trash Instead of rm
-if command -v "trash" > /dev/null 2>&1; then
-    alias rm="trash"
-    alias tr="trash"
-    alias tl="trash-list"
-    alias trs="trash-restore"
-elif command -v "gio" > /dev/null 2>&1; then
+if [[ $TRASH_CMD == "gio" && $(command -v "gio" > /dev/null 2>&1) ]]; then
     alias rm="gio trash"
     alias tr="gio trash"
     alias tl="gio trash --list"
     alias trs="gio trash --restore"
-elif command -v "rip" > /dev/null 2>&1; then
-    alias rm="rip"
-    alias tr="rip"
-    alias tl="rip -s"
-    alias trs="rip -u"
+elif [[ $TRASH_CMD == "trash" && $(command -v "gio" > /dev/null 2>&1) ]]; then
+    alias rm="trash"
+    alias tr="trash"
+    alias tl="trash-list"
+    alias trs="trash-restore"
 fi
 
 # Editor Alias
