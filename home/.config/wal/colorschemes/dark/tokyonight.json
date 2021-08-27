@@ -2,6 +2,19 @@
   "special": {
     "background": "#1a1b26",
     "foreground": "#d5dcf7",
+ 
+    "active_border": "#1a1b26",
+    "inactive_border": "#d5dcf7",
+
+    "active_tab_fg": "#1f2335",
+    "active_tab_bg": "#7aa2f7",
+    "inactive_tab_fg": "#545c7e",
+    "inactive_tab_bg": "#292e42",
+    
+    "selection_fg": "#c0caf5",
+    "selection_bg": "#33467c",
+    
+    "url_color": "#73daca",
     "cursor": "#c0caf5"
   },
   "colors": {
@@ -15,12 +28,15 @@
     "color7": "#a9b1d6",
 
     "color8": "#414868",
-    "color9": "#f8879f",
-    "color10": "#bdee6a",
-    "color11": "#f0af69",
-    "color12": "#7bb9f7",
-    "color13": "#cc8bf8",
-    "color14": "#5ddeff",
-    "color15": "#b3caf5"
+    "color9": "#f7768e",
+    "color10": "#9ece6a",
+    "color11": "#e0af68",
+    "color12": "#7aa2f7",
+    "color13": "#bb9af7",
+    "color14": "#7dcfff",
+    "color15": "#c0caf5",
+
+    "color16": "#ff9e64",
+    "color17": "#db4b4b"
   }
 }

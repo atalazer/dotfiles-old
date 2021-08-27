@@ -300,6 +300,7 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
                         spacing = dpi(5),
                         notifbox_icon(icon),
                         notifbox_appname(app),
+                        -- notifbox_title(title),
                     },
                     nil,
                     {
@@ -391,7 +392,7 @@ naughty.connect_signal("request::display", function(n)
     end
 
     -- Set background color based on urgency level
-    local notifbox_color = beautiful.bg_normal
+    local notifbox_color = beautiful.notifbox_bg
     if n.urgency == "critical" then
         notifbox_color = n.bg .. "66"
     end
@@ -405,13 +406,12 @@ naughty.connect_signal("request::display", function(n)
     -- For Notification Center
     if panel_visible or dont_disturb then
         naughty.destroy_all_notifications(nil, 1)
-    end
-
-    if not dont_disturb then
+        
         -- Add Sound fx to notif
         -- Depends: canberra-gtk-play
         awful.spawn("canberra-gtk-play -i message", false)
     end
+
     -- Throw data from naughty to notifbox_layout
     -- Generates notifbox
     notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, n.app_name, notifbox_color))

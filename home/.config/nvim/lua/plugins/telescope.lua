@@ -1,10 +1,14 @@
-local telescope = require("telescope")
+local _, telescope = pcall(require, "telescope")
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 
+local k = vim.keymap
+local nnoremap = k.nnoremap
+
+local HOME = os.getenv("HOME")
 local M = {}
 
-local no_preview = function()
+M.no_preview = function()
     return require("telescope.themes").get_dropdown({
         borderchars = {
             { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -29,7 +33,7 @@ telescope.setup({
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         color_devicons = true,
         use_less = true,
-        set_env = {["COLORTERM"] = "truecolor"},
+        set_env = { ["COLORTERM"] = "truecolor" },
         layout_strategy = "flex",
         layout_config = {
             width = 0.8,
@@ -54,7 +58,7 @@ telescope.setup({
             "--with-filename",
             "--line-number",
             "--column",
-            "--smart-case"
+            "--smart-case",
         },
         mappings = {
             i = {
@@ -66,7 +70,6 @@ telescope.setup({
                 ["<C-t>"] = actions.select_tab,
 
                 ["<C-c>"] = actions.close,
-                -- ["<Esc>"] = actions.close,
 
                 ["<C-u>"] = actions.preview_scrolling_up,
                 ["<C-d>"] = actions.preview_scrolling_down,
@@ -92,11 +95,18 @@ telescope.setup({
     },
     pickers = {
         find_files = {
-            file_ignore_patterns = { "%.png", "%.jpg", "%.webp" },
+            file_ignore_patterns = {
+                "%.svg",
+                "%.png",
+                "%.jpg",
+                "%.webp",
+                "%.mp3",
+                "%.mp4",
+                "%.mkv",
+            },
         },
-        lsp_code_actions = no_preview(),
-        oldfiles = no_preview(),
-        frecency = no_preview(),
+        lsp_code_actions = M.no_preview(),
+        oldfiles = M.no_preview(),
     },
     extensions = {
         fzf = {
@@ -113,20 +123,52 @@ telescope.setup({
             show_unindexed = true,
             ignore_patterns = { "*.git/*", "*/tmp/*", "**.cache**" },
             workspaces = {
-                ["dotfiles"] = os.getenv("DOTS"),
+                ["dot"] = os.getenv("DOTS"),
                 ["blog"] = os.getenv("BLOG"),
-                ["repos"] = os.getenv("REPO_DIR"),
-                ["nvim"] = "/home/atalariq/.config/nvim",
-                ["awesome"] = "/home/atalariq/.config/awesome",
-                ["kitty"] = "/home/atalariq/.config/kitty",
-                ["zsh"] = "/home/atalariq/.zsh",
+                ["repo"] = HOME .. "/Documents/GitHub",
+                ["project"] = HOME .. "/Documents/Project",
+                ["school"] = HOME .. "/Documents/School",
+                ["scratch"] = HOME .. "/Documents/.Scratch",
+                ["nvim"] = HOME .. "/.config/nvim",
+                ["awesome"] = HOME .. "/.config/awesome",
+                ["kitty"] = HOME .. "/.config/kitty",
+                ["zsh"] = HOME .. "/.zsh",
+                ["firefox"] = HOME .. "/.mozilla/firefox/",
+                ["backup"] = HOME .. "/Backups",
             },
         },
     },
 })
 
+-- Load Extensions {{{
 require("telescope").load_extension("fzf")
-require("telescope").load_extension("media_files")
 require("telescope").load_extension("frecency")
+require("telescope").load_extension("media_files")
+-- }}}
+
+-- Set Keymap {{{
+local builtin = require("telescope.builtin")
+M.builtins = function()
+    builtin.builtin(M.no_preview())
+end
+
+M.frecency = function()
+    telescope.extensions.frecency.frecency(M.no_preview())
+end
+
+-- Telescope
+nnoremap({ "<C-p>", ":Telescope find_files<CR>", { silent = true } })
+nnoremap({ "<leader>fl", ":Telescope live_grep<CR>", { silent = true } })
+nnoremap({ "<leader>fo", ":Telescope oldfiles<CR>", { silent = true } })
+nnoremap({ "<leader>fd", ":Telescope marks<CR>", { silent = true } })
+nnoremap({ "<leader>fb", ":Telescope file_browser<CR>", { silent = true } })
+nnoremap({ "<leader>fk", ":Telescope keymaps<CR>", { silent = true } })
+nnoremap({ "<leader>fc", ":Telescope colorscheme<CR>", { silent = true } })
+nnoremap({ "<Leader>ft", M.builtins, { silent = true } })
+
+-- :Telescope Extensions
+nnoremap({ "<leader>ff", M.frecency, { silent = true } })
+nnoremap({ "<leader>fm", ":Telescope media_files<CR>", { silent = true } })
+-- }}}
 
 return M

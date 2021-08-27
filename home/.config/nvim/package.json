@@ -14,6 +14,10 @@
         "path": "./snippets/markdown.json"
       },
       {
+        "language": ["sh", "bash", "zsh"],
+        "path": "./snippets/sh.json"
+      },
+      {
         "language": ["lua"],
         "path": "./snippets/lua.json"
       },

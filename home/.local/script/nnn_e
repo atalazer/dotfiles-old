@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
-editor=${EDITOR:-nvim}
-TERMINAL="$TERMINAL"  # same goes for the terminal
+editor=${VISUAL:-vim}
+_TERMINAL="$_TERMINAL"  # same goes for the terminal
 
 if [ -e "${TMUX%%,*}" ] && tmux -V | grep -q '[ -][3456789]\.'; then
-    TERMINAL=tmux
+    _TERMINAL=tmux
 elif [ -n "$KITTY_WINDOW_ID" ] && kitty @ ls >/dev/null 2>&1; then
-    TERMINAL=kitty
+    _TERMINAL=kitty
 else
-    TERMINAL="${TERMINAL:-xterm}"
+    _TERMINAL="${_TERMINAL:-xterm}"
 fi
 
-if [ "$TERMINAL" = "tmux" ]; then
+if [ "$_TERMINAL" = "tmux" ]; then
     tmux split-window -h "$editor \"$*\""
-elif [ "$TERMINAL" = "kitty" ]; then
+elif [ "$_TERMINAL" = "kitty" ]; then
     kitty @ goto-layout splits >/dev/null
     kitty @ launch --no-response --title "nnn editor" --keep-focus \
           --cwd "$PWD" --env "PATH=$PATH" --env "NNN_FIFO=$NNN_FIFO" \

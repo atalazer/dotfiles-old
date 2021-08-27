@@ -15,13 +15,13 @@ client.connect_signal("manage", function(c)
         awful.client.setslave(c)
     end
 
-    -- if awesome.startup
-    -- and not c.size_hints.user_position
-    -- and not c.size_hints.program_position then
-    --     -- Prevent clients from being unreachable after screen count changes.
-    --     awful.placement.no_offscreen(c)
-    --     awful.placement.no_overlap(c)
-    -- end
+    if awesome.startup
+    and not c.size_hints.user_position
+    and not c.size_hints.program_position then
+        -- Prevent clients from being unreachable after screen count changes.
+        awful.placement.no_offscreen(c)
+        awful.placement.no_overlap(c)
+    end
 end)
 
 -- When a client starts up in fullscreen, resize it to cover the fullscreen a short moment later
@@ -121,13 +121,13 @@ client.connect_signal("property::floating", function(c)
 end)
 
 -- Titlebar only if floating
-client.connect_signal("property::floating", function(c) 
-    if c.floating then
-        awful.titlebar.show(c) 
-    else 
-        awful.titlebar.hide(c) 
-    end 
-end)
+-- client.connect_signal("property::floating", function(c)
+--     if c.floating then
+--         awful.titlebar.show(c)
+--     else
+--         awful.titlebar.hide(c)
+--     end
+-- end)
 
 -- Disconnect the client ability to request different size and position
 -- Breaks fullscreen and maximized

@@ -1,4 +1,5 @@
 #!/bin/bash
 [ -f ~/.zsh/plug-conf/nnn.zsh ] && source ~/.zsh/plug-conf/nnn.zsh
-env EDITOR=nnn_e VISUAL=nnn_e nnn -er
+
+VISUAL=nnn_e nnn -er
 

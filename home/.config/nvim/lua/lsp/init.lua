@@ -1,9 +1,9 @@
 local lspconfig = require("lspconfig")
 
 require("lsp.handlers")
+require("lsp.kind").init()
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
@@ -58,11 +58,13 @@ for name, opts in pairs(servers) do
         opts()
     else
         local client = lspconfig[name]
-        client.setup(vim.tbl_extend("force", {
-            flags = { debounce_text_changes = 150 },
-            on_attach = Util.lsp_on_attach,
-            on_init = Util.lsp_on_init,
-            capabilities = capabilities,
-        }, opts))
+        client.setup(
+            vim.tbl_extend("force", {
+                flags = { debounce_text_changes = 150 },
+                on_attach = Util.lsp_on_attach,
+                on_init = Util.lsp_on_init,
+                capabilities = capabilities,
+            }, opts)
+        )
     end
 end

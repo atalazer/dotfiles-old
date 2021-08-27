@@ -48,9 +48,11 @@ elif command -v "rip" > /dev/null 2>&1; then
 fi
 
 # Editor Alias
-alias {e,vi}="$editor"
+alias {e,vi,vim}="$editor"
 alias se="sudoedit"
-alias el="$editor -S ~/.cache/nvim/sessions/last.vim"
+# alias el="$editor -S ~/.cache/nvim/sessions/last.vim"
+alias el="nvim -c 'SessionLoad last'"
+alias ep="$editor ~/.config/nvim/lua/plugins/init.lua"
 alias {envim,ev}="$editor ~/.config/nvim/init.lua"
 alias {zshrc,ez}="$editor ~/.zshrc"
 alias {xrc,ex}="$editor ~/.Xresources"
@@ -132,6 +134,7 @@ fi
 
 # youtube-dl
 if command -v "youtube-dl" > /dev/null 2>&1; then
+    alias yt="youtube-dl"
     alias yt720p="youtube-dl -f 'best[height<=720][ext=mp4]' --embed-thumbnail"
     alias yt480p="youtube-dl -f 'best[height<=480][ext=mp4]' --embed-thumbnail"
     alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"

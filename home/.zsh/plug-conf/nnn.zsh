@@ -18,10 +18,12 @@ a:${APP_DIR:-$HOME/Applications};\
 b:${BACKUP_DIR:-$HOME/Backups};\
 c:${XDG_CONFIG_HOME:-$HOME/.config};\
 d:${DOTS:-$HOME/.dotfiles};\
+k:$HOME/Documents/KSN-MTK-SMP/;\
 m:${XDG_MUSIC_DIR:-$HOME/Music};\
 p:${XDG_PICTURES_DIR:-$HOME/Pictures};\
-P:${PROGRAMMING_DIR:-$HOME/Work/Programming};\
-r:${REPO_DIR:-$HOME/Work/Repos};\
+P:${PROGRAMMING_DIR:-$HOME/Documents/Project};\
+r:${REPO_DIR:-$HOME/Documents/GitHub};\
+s:$HOME/Documents/School;\
 v:${XDG_VIDEOS_DIR:-$HOME/Videos};\
 z:${ZDIR:-$HOME/.zsh};\
 "
@@ -116,7 +118,7 @@ pnnn () {
 # -------------------------------------
 # Alias NNN File Manager
 # -------------------------------------
-alias fm="env VISUAL=nnn_e nnn -er"
+alias fm="VISUAL=nnn_e nnn -er"
 alias fmp="pnnn"
 alias {fmcd,fmq}="qnnn"
 alias {FM,sfm}='sudo -E nnn -dH'

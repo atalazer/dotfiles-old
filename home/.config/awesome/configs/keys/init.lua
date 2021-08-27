@@ -3,8 +3,6 @@ local gears = require("gears")
 
 local keys = {}
 
-local revelation = require("revelation")
-
 -- Mod keys
 superkey = "Mod4"
 altkey = "Mod1"
@@ -24,9 +22,6 @@ keys.client = require("configs.keys.client")
 keys.desktopbuttons = require("configs.keys.desktop")
 
 keys.globalkeys = gears.table.join(
-    awful.key({ superkey }, ".", 
-        revelation, 
-    { description = "Revelation", group = "Tag: Move"}),
     keys.global,
     keys.apps,
     keys.controller,

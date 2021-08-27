@@ -1,31 +1,32 @@
 set shell sh
 
 set previewer ~/.config/lf/preview
+set cleaner ~/.config/lf/cleaner
 set preview true
 set ratios 1:2:3
-# set color256 true
 set ignorecase true
 set icons
+# set drawbox
 
 # Custom Functions
 cmd open ${{
     case $(file --mime-type "$f" -bL) in
         text/*|application/json) $EDITOR "$f";;
         video/*) mpv "$f";;
-        image/*) sxiv "$f";;
+        image/*) feh "$f";;
         application/pdf) zathura "$f";;
         *) xdg-open "$f" ;;
     esac
 }}
 
 cmd mkdir ${{
-  directory=$1
-  if test -e "$directory"; then
-    lf -remote "send $id echo Directory exists: $directory"
-    exit 1
-  fi
-  mkdir -p "$directory"
-  lf -remote "send $id select $directory"
+    directory=$1
+    if test -e "$directory"; then
+        lf -remote "send $id echo Directory exists: $directory"
+        exit 1
+    fi
+    mkdir -p "$directory"
+    lf -remote "send $id select $directory"
 }}
 
 cmd bulkrename ${{

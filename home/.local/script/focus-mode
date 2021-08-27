@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+# State
+status_file="/tmp/focus.state"
+if [[ ! -f $status_file ]]; then
+    touch $status_file && \
+        echo "unfocus" > $status_file
+fi
+status=$(cat $status_file)
+
+focus(){
+    # Set mpd volume
+    mpc volume 25 &>/dev/null
+
+    # Change host file
+    hostsman default
+
+    echo "focus" > $status_file
+}
+
+unfocus(){
+    # Set mpd volume
+    mpc volume 50 &>/dev/null
+    
+    # Change host file
+    hostsman focus
+
+    echo "unfocus" > $status_file
+}
+
+toggle(){
+    if [[ $status == "unfocus" ]]; then
+        focus
+    else
+        unfocus
+    fi
+}
+
+# Show help menù
+usage() {
+cat << EOF
+Options:
+-h, --help              Show this help menu
+-m, --mode              Show mode
+-f, --focus             Focus mode
+-u, --unfocus           Unfocus mode
+-t, --toggle            Toggle focus and unfocus mode
+EOF
+}
+
+OPT=${1:-"--help"}
+case $OPT in
+    "--help"|"-h")
+        usage
+        ;;
+    "--mode"|"-m") 
+        echo "$status"
+        ;;
+    "--focus"|"-f")
+        focus
+        ;;
+    "--unfocus"|"-u")
+        unfocus
+        ;;
+    "--toggle"|"-t")
+        toggle
+        ;;
+esac

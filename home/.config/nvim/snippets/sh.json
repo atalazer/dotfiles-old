@@ -1,0 +1,7 @@
+{
+    "check": {
+        "prefix": "check",
+        "body": "command -v \"${1:which_cmd}\" > /dev/null 2>&1",
+        "description": "Check if Command is Exist"
+    }
+}

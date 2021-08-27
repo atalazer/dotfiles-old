@@ -64,21 +64,21 @@ local wallpaper = os.getenv("HOME") .. "/.wallpaper/tokyonight-minimal.jpg"
 user = {
     font = "JetBrainsMono Nerd Font",
     fsize = "11",
-    icon = "Adwaita",
+    icon = "Papirus",
 
     -- >> Default applications <<
     -- Check apps.lua for more
     terminal = os.getenv("TERMINAL") or "kitty",
     floating_terminal = "kitty --name floating_terminal",
-    browser = "firefox",
+    browser = os.getenv("BROWSER") or "firefox",
     file_manager = "kitty --name file -e nnn_wrapper",
     editor = "kitty --name editor -e nvim",
     email_client = "kitty --name email -e neomutt",
     music_client = "kitty -o font_size=12 --name music -e ncmpcpp-ueberzug",
 
     -- >> Web Search <<
-    web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
-    -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
+    -- web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
+    web_search_cmd = "xdg-open https://www.google.com/search?q=",
 
     -- Autostart apps
     autostart_debug = false,
@@ -87,7 +87,7 @@ user = {
         "picom --experimental-backends --config ~/.config/picom/picom-blur.conf",
         "fusuma -c ~/.config/fusuma/config.yml",
         "xrdb -load ~/.Xresources",
-        "xautolock -time 15 -locker \"awesome-client 'lock_screen_show()'\" -detectsleep -resetsaver -notify 5 -notifier \"notify-send 'Lockscreen' 'System will be suspended in 5s From now'\"",
+        "xautolock -time 15 -locker \"systemctl suspend && awesome-client 'lock_screen_show()'\" -detectsleep -resetsaver -notify 5 -notifier \"notify-send 'Lockscreen' 'System will be suspended in 5s From now'\"",
     },
 
     -- Enable rounded
@@ -185,7 +185,6 @@ x = {
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-
 awful.util.shell = "sh"
 
 -- Default notification library
@@ -261,16 +260,6 @@ require("configs.scratchpad")
 -- their needed evil signals.
 require("evil")
 
--- >> Layout Machi
-local machi = require("layout-machi")
-beautiful.layout_machi = machi.get_icon()
-
-local revelation = require("revelation")
-revelation.init({
-    tag_name = "Q",
-    charorder = "qweasdzxciopjklbnm",
-})
-
 -- ===================================================================
 -- ===================================================================
 
@@ -300,26 +289,7 @@ end
 
 -- Layouts
 -- ===================================================================
--- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
-    machi.default_layout,
-    awful.layout.suit.tile,
-    awful.layout.suit.floating,
-    awful.layout.suit.max,
-    --awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.tile.left,
-    --awful.layout.suit.tile.bottom,
-    --awful.layout.suit.max.fullscreen,
-    --awful.layout.suit.corner.nw,
-    --awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.ne,
-    --awful.layout.suit.corner.sw,
-    --awful.layout.suit.corner.se,
-}
+require("configs.layouts")
 
 -- Wallpaper
 -- ===================================================================
@@ -336,12 +306,14 @@ local function set_wallpaper(s)
         -- gears.wallpaper.maximized(wallpaper, s, true)
 
         -- >> Method 2: Set theme's wallpaper with feh
-        awful.spawn.with_shell("feh --bg-fill " .. beautiful.wallpaper)
+        -- awful.spawn.with_shell("feh --bg-fill " .. beautiful.wallpaper)
 
         -- >> Method 3: Set last wallpaper with feh
-        -- awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
+        awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
     else
-        awful.spawn.with_shell("feh --bg-fill " .. wallpaper or os.getenv("HOME") .. "/.fehbg")
+        -- awful.spawn.with_shell("feh --bg-fill " .. wallpaper or os.getenv("HOME") .. "/.fehbg")
+        -- >> Method 3: Set last wallpaper with feh
+        awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
     end
 end
 
@@ -356,38 +328,8 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 -- Tags
 -- ===================================================================
-awful.screen.connect_for_each_screen(function(s)
-    -- Each screen has its own tag table.
-    local l = awful.layout.suit -- Alias to save time :)
-    -- Tag layouts
-    local layouts = {
-        l.tile,
-        l.max,
-        l.max,
-        l.max,
-        l.floating,
-        l.floating,
-        l.floating,
-        l.floating,
-        l.floating,
-        l.floating,
-    }
-
-    -- Tag names
-    local tagnames = beautiful.tagnames or { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
-
-    -- Create all tags at once (without seperate configuration for each tag)
-    awful.tag(tagnames, s, layouts)
-
-    -- Create tags with seperate configuration for each tag
-    -- awful.tag.add(tagnames[1], {
-    --     layout = layouts[1],
-    --     screen = s,
-    --     master_width_factor = 0.6,
-    --     selected = true,
-    -- })
-    -- ...
-end)
+-- Tags Configs
+require("configs.tags")
 
 -- Rules
 -- ===================================================================
@@ -396,6 +338,11 @@ require("configs.rules")
 
 -- Signals
 -- ===================================================================
+require("configs.window")
+
+-- Scratchpad modules
+require("configs.scratchpad")
+
 require("configs.signals")
 
 -- Show the dashboard on login
@@ -416,5 +363,9 @@ end)
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
+
+-- collectgarbage("setpause", 160)
+-- collectgarbage("setstepmul", 400)
+
 collectgarbage("setpause", 110)
 collectgarbage("setstepmul", 1000)

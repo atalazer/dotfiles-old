@@ -114,17 +114,3 @@ nnoremap({
     { silent = true },
 })
 
--- ===================================== Plugins
--- Telescope
-nnoremap({ "<C-p>", ":Telescope find_files<CR>", { silent = true } })
-nnoremap({ "<leader>fl", ":Telescope live_grep<CR>", { silent = true } })
-nnoremap({ "<leader>fg", ":Telescope git_commits<CR>", { silent = true } })
-nnoremap({ "<leader>fo", ":Telescope oldfiles<CR>", { silent = true } })
-nnoremap({ "<leader>fd", ":Telescope marks<CR>", { silent = true } })
-nnoremap({ "<leader>fb", ":Telescope file_browser<CR>", { silent = true } })
-nnoremap({ "<leader>fk", ":Telescope keymaps<CR>", { silent = true } })
-nnoremap({ "<leader>fc", ":Telescope colorscheme<CR>", { silent = true } })
-
--- :Telescope Extensions
-nnoremap({ "<leader>ff", ":Telescope frecency<CR>", { silent = true } })
-nnoremap({ "<leader>fm", ":Telescope media_files<CR>", { silent = true } })

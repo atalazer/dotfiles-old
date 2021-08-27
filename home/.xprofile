@@ -1,20 +1,31 @@
 #!/bin/sh
 
-[[ -f ~/.profile ]] && source ~/.profile
+[ -f $HOME/.profile ] && . $HOME/.profile
+
+# Lunch dbus-launch, this is important for some app
+if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+    eval $(dbus-launch --sh-syntax --exit-with-session)
+fi
 
 # For several script and if using awesomeWM
 export CHECK_AWESOME_CLIENT=true
 
-xset -b     # Disable terminal bell
+# Initialization
+
+# Themes
+[ -f ~/Documents/Project/theme-changer/theme-changer.sh ] && \
+    ~/Documents/Project/theme-changer/theme-changer.sh --toggle auto
+
+xset -b                 # Disable terminal bell
 xset r rate 300 50      # Set repeat rate
 
-wal -n -R       # Restore wal
-light -S 20     # Set Brightness
+light -S 20             # Set Brightness
+wal -n -t -R            # Restore wal
 
+# Autostart Apps
 /lib/mate-polkit/polkit-mate-authentication-agent-1 &   # Polkit Agent
 clipmenud &                                             # Clipboard Manager
 mpd &                                                   # Music Player Daemon
-fcitx5 --replace -d &                                   # Input Method for Japanese(mozc) and Arabic(m17n)
-espanso daemon &                                        # System Wide Text Expander
-an2linuxserver.py &                                     # Send notification from android to linux
+# fcitx5 --replace -d &                                 # Input Method for Japanese(mozc) and Arabic(m17n)
+an2linuxserver.py &                                   # Send notification from android to linux
 

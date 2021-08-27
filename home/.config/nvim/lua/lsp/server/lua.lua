@@ -1,33 +1,27 @@
-local sumneko_cmd = "lua-language-server"
 local M = {}
-local library = {}
 
+local library = {}
 local add = function(lib)
     for _, p in pairs(vim.fn.expand(lib, false, true)) do
         p = vim.loop.fs_realpath(p)
         library[p] = true
     end
 end
-
--- Neovim
 add("$VIMRUNTIME")
 add("~/.config/nvim")
 
--- AwesomeWM
-add("/usr/share/awesome/lib")
-
 M.config = {
-    cmd = { sumneko_cmd },
+    cmd = { "lua-language-server" },
     on_attach = Util.lsp_on_attach,
     on_init = Util.lsp_on_init,
-    on_new_config = function(config, root)
-        local libs = vim.tbl_deep_extend("force", {}, library)
-        libs[root] = nil
-        config.settings.Lua.workspace.library = libs
-        return config
-    end,
     settings = {
         Lua = {
+            telemetry = { enable = false },
+            completion = {
+                enable = true,
+                keywordSnippet = "Disable",
+                callSnippet = "Replace",
+            },
             runtime = {
                 version = "LuaJIT",
                 path = (function()
@@ -37,11 +31,6 @@ M.config = {
                     return path
                 end)(),
             },
-            completion = {
-                keywordSnippet = "Disable",
-                callSnippet = "Disable",
-            },
-            telemetry = { enable = false },
             diagnostics = {
                 enable = true,
                 disable = {
@@ -49,12 +38,15 @@ M.config = {
                     "lowercase-global", "undefined-global"
                 },
                 globals = {
-                    -- VIM
                     "vim",
-                    -- AwesomeWM
+                    "describe",
+                    "it",
+                    "before_each",
+                    "after_each",
                     "awesome",
-                    "root",
+                    "theme",
                     "client",
+                    "P",
                 },
             },
             workspace = {

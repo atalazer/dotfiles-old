@@ -8,7 +8,7 @@ vim.g.indent_blankline_indent_level = 10
 vim.g.indent_blankline_char = "│"
 vim.g.indent_blankline_space_char_blankline = " "
 vim.g.indent_blankline_context_highlight = "Label"
-  vim.g.indent_blankline_context_patterns = {
+vim.g.indent_blankline_context_patterns = {
     "class",
     "function",
     "method",
@@ -19,8 +19,8 @@ vim.g.indent_blankline_context_highlight = "Label"
     "^table",
     "if_statement",
     "while",
-    "for"
-  }
+    "for",
+}
 
 vim.g.indent_blankline_buftype_exclude = {
     "terminal",

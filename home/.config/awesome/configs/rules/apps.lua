@@ -2,11 +2,13 @@ local awful = require("awful")
 local ruled = require("ruled")
 
 ruled.client.connect_signal("request::rules", function()
-
     -- Terminal {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = { "Alacritty", "kitty" },
+            instance = {
+                "Alacritty",
+                "kitty",
+            },
         },
         properties = {
             floating = false,
@@ -40,7 +42,12 @@ ruled.client.connect_signal("request::rules", function()
             },
             instance = {
                 "qutebrowser",
-            }
+            },
+        },
+        except_any = {
+            role = { "GtkFileChooserDialog" },
+            instance = { "Toolkit" },
+            type = { "dialog" },
         },
         properties = {
             floating = true,
@@ -48,11 +55,11 @@ ruled.client.connect_signal("request::rules", function()
             placement = centered_client_placement,
         },
         callback = function(c)
-            if c.instance == "Navigator" then
-                c.maximized = true
+            if c.instance == "Navigator" or c.instance == "qutebrowser" then
+                awful.placement.maximize(c)
                 awful.titlebar.hide(c)
             end
-        end
+        end,
     })
     -- }}}
 
@@ -60,7 +67,7 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "TelegramDesktop", 
+                "TelegramDesktop",
                 "KotatogramDesktop",
                 "whatsdesk",
             },
@@ -69,7 +76,7 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             titlebars_enabled = true,
             placement = centered_client_placement,
-        }
+        },
     })
     -- }}}
 
@@ -77,7 +84,7 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "TelegramDesktop", 
+                "TelegramDesktop",
                 "KotatogramDesktop",
                 "firefox",
                 "Nightly",
@@ -86,13 +93,13 @@ ruled.client.connect_signal("request::rules", function()
                 "dialog",
             },
         },
-        callback = function (c)
-            c:connect_signal("property::urgent", function ()
+        callback = function(c)
+            c:connect_signal("property::urgent", function()
                 if c.urgent then
                     c:jump_to()
                 end
             end)
-        end
+        end,
     })
     -- }}}
 
@@ -122,7 +129,10 @@ ruled.client.connect_signal("request::rules", function()
     -- File Archive {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "Engrampa", "File-roller" },
+            class = {
+                "Engrampa",
+                "File-roller",
+            },
         },
         properties = {
             titlebars_enabled = true,
@@ -144,8 +154,12 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Video Player {{{
     ruled.client.append_rule({
-        rule_any = { 
-            class = { "mpv", "vlc" },
+        rule_any = {
+            class = {
+                "mpv",
+                "vlc",
+                "MPlayer",
+            },
         },
         properties = {
             floating = true,
@@ -154,7 +168,7 @@ ruled.client.connect_signal("request::rules", function()
             height = screen_height * 0.5,
             placement = centered_client_placement,
         },
-        callback = function (c)
+        callback = function(c)
             -- Make it floating, ontop and move it out of the way if the current tag is maximized
             if awful.layout.get(awful.screen.focused()) == awful.layout.suit.max then
                 c.floating = true
@@ -164,22 +178,26 @@ ruled.client.connect_signal("request::rules", function()
                 awful.placement.bottom_right(c, {
                     honor_padding = true,
                     honor_workarea = true,
-                    margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
+                    margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2 },
                 })
             end
-            c:connect_signal("property::fullscreen", function ()
+            c:connect_signal("property::fullscreen", function()
                 if not c.fullscreen then
                     c.ontop = true
                 end
             end)
-        end
+        end,
     })
     -- }}}
 
     -- Image viewers {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "feh", "Sxiv", "Viewnior" },
+            class = {
+                "feh",
+                "Sxiv",
+                "Viewnior",
+            },
             name = { "Media viewer" },
         },
         properties = {
@@ -196,7 +214,11 @@ ruled.client.connect_signal("request::rules", function()
     -- PDF viewers {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "Okular", "Zathura", "Evince" },
+            class = {
+                "Okular",
+                "Zathura",
+                "Evince",
+            },
         },
         properties = {
             floating = true,
@@ -210,7 +232,11 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Password Manager {{{
     ruled.client.append_rule({
-        rule_any = { class = { "KeePassXC" } },
+        rule_any = {
+            class = {
+                "KeePassXC",
+            },
+        },
         properties = {
             floating = true,
             width = screen_width * 0.8,
@@ -230,8 +256,16 @@ ruled.client.connect_signal("request::rules", function()
     -- Color Picker {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "Gcolor3", "Gcolor2", "Gpick" },
-            instance = { "gcolor3", "gcolor2", "gpick" },
+            class = {
+                "Gcolor3",
+                "Gcolor2",
+                "Gpick",
+            },
+            instance = {
+                "gcolor3",
+                "gcolor2",
+                "gpick",
+            },
             name = { "Color Picker" },
         },
         properties = { floating = true, titlebars_enabled = false },
@@ -252,28 +286,65 @@ ruled.client.connect_signal("request::rules", function()
             sticky = true,
             width = screen_width * 0.3,
         },
-        callback = function (c)
+        callback = function(c)
             awful.placement.bottom_right(c, {
                 honor_padding = true,
                 honor_workarea = true,
-                margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2}
+                margins = { bottom = beautiful.useless_gap * 2, right = beautiful.useless_gap * 2 },
             })
-        end
+        end,
     })
     -- }}}
 
     -- Pavucontrol {{{
     ruled.client.append_rule({
         rule_any = { class = { "Pavucontrol" } },
-        properties = { floating = true, width = screen_width * 0.45, height = screen_height * 0.8 },
+        properties = {
+            floating = true,
+            width = screen_width * 0.45,
+            height = screen_height * 0.8,
+        },
+    })
+    -- }}}
+
+    -- Screen Mirroring (scrcpy) {{{
+    ruled.client.append_rule({
+        rule_any = { 
+            class = { 
+                "QtScrcpy", "scrcpy",
+            } 
+        },
+        properties = {
+            titlebars_enabled = true,
+            floating = true,
+            ontop = true,
+        },
+    })
+
+    -- }}}
+    -- Oomox {{{
+    ruled.client.append_rule({
+        rule_any = { class = { "Oomox" } },
+        properties = {
+            titlebars_enabled = false,
+            floating = true,
+            width = screen_width * 0.45,
+            height = screen_height * 0.8,
+        },
     })
     -- }}}
 
     -- System Monitoring {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = { "htop", "monitoring" },
-            class = { "htop", "monitoring" },
+            instance = {
+                "htop",
+                "monitoring",
+            },
+            class = {
+                "htop",
+                "monitoring",
+            },
         },
         properties = {
             floating = true,
@@ -287,8 +358,14 @@ ruled.client.connect_signal("request::rules", function()
     -- Editor {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = { "emacs", "editor" },
-            class = { "Emacs", "editor" },
+            instance = {
+                "emacs",
+                "editor",
+            },
+            class = {
+                "Emacs",
+                "editor",
+            },
         },
         properties = {
             titlebars_enabled = true,
@@ -373,5 +450,4 @@ ruled.client.connect_signal("request::rules", function()
         },
     })
     -- }}}
-
 end)

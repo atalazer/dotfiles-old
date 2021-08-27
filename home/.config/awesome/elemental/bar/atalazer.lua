@@ -8,29 +8,10 @@ local keys = require("configs.keys")
 local apps = require("configs.apps")
 
 local dock_autohide_delay = 0.5 -- seconds
-
 local dock = require("noodle.dock")
 local dock_placement = function(w)
     return awful.placement.bottom(w)
 end
-
-local clock_widget = wibox.widget.textclock("<span color='" .. x.foreground .. "'>%a, %I:%M %p</span>")
-
-local calendar_popup = awful.widget.calendar_popup.month({
-    start_sunday = false,
-    spacing = dpi(3),
-    font = beautiful.font,
-    long_weekdays = false,
-    margin = dpi(2),
-    style_month = { border_width = 2, padding = 10, border_color = beautiful.bg_focus },
-    style_header = { border_width = 0, bg_color = beautiful.bg_normal },
-    style_weekday = { border_width = 0, bg_color = beautiful.bg_normal },
-    style_normal = { border_width = 0, bg_color = beautiful.bg_normal },
-    style_focus = { border_width = 0, bg_color = beautiful.bg_focus },
-})
-
--- Attach calendar to clock_widget
-calendar_popup:attach(clock_widget, "tc", { on_pressed = true, on_hover = false })
 
 awful.screen.connect_for_each_screen(function(s)
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -74,20 +55,34 @@ awful.screen.connect_for_each_screen(function(s)
     })
 
     -- Create a system tray widget
-    s.systray = wibox.widget.systray()
-    s.separator = wibox.widget.textbox(" ")
-    -- s.screen_rec = require("noodle.screen-recorder")()
+    s.systray = wibox.widget({
+        visible = false,
+        base_size = dpi(16),
+        horizontal = true,
+        screen = "primary",
+        widget = wibox.widget.systray,
+    })
+    s.tray_toggler = require("noodle.tray_toggle")
 
-    s.record_status = awful.widget.watch("bash -c 'cat /tmp/recordicon'", 1, function(widget, stdout)
-        if stdout:match("NOREC") then
-            widget:set_markup(helpers.colorize_text(stdout, x.foreground))
-        else
-            widget:set_markup(helpers.colorize_text(stdout, x.color1))
+    local clock = require("noodle.clock")(s)
+    s.battery = require("noodle.battery")()
+    s.network = require("noodle.network")()
+
+    -- s.separator = wibox.widget.separator
+    -- s.separator = wibox.widget.textbox(" ")
+
+    s.record_status = awful.widget.watch(
+        "bash -c 'file=/tmp/recordicon; if [[ ! -f $file ]]; then touch $file && echo \"NOREC\" > $file; fi; cat $file'",
+        1,
+        function(widget, stdout)
+            if stdout:match("NOREC") then
+                widget:set_markup(helpers.colorize_text(" ", beautiful.foreground))
+            else
+                widget:set_markup(helpers.colorize_text(" ", beautiful.red))
+            end
         end
-    end)
-    s.record_status:buttons(gears.table.join(
-        awful.button({}, 1, apps.record)
-    ))
+    )
+    s.record_status:buttons(gears.table.join(awful.button({}, 1, apps.record)))
 
     -- Create the wibox
     s.mywibox = awful.wibar({
@@ -97,29 +92,40 @@ awful.screen.connect_for_each_screen(function(s)
         height = dpi(20),
         x = s.geometry.x,
         y = s.geometry.y,
-        bg = "#00000000",
+        -- bg = "#00000000",
+        bg = beautiful.bg_normal,
         fg = beautiful.fg_normal,
     })
+
+    s.mywibox:connect_signal("mouse::enter", function()
+        local w = mouse.current_wibox
+        if w then
+            w.cursor = "left_ptr"
+        end
+    end)
 
     -- Add widgets to the wibox
     s.mywibox.widget = {
         layout = wibox.layout.align.horizontal,
         expand = "none",
-        { -- Left widgets
+        {
             layout = wibox.layout.fixed.horizontal,
+            spacing = dpi(5),
             s.mytaglist,
-        },
-        clock_widget,
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
             s.record_status,
-            s.separator,
+        },
+        clock,
+        {
+            layout = wibox.layout.fixed.horizontal,
+            spacing = dpi(5),
             {
                 s.systray,
                 margins = dpi(2),
                 widget = wibox.container.margin,
             },
-            s.separator,
+            s.tray_toggler,
+            s.network,
+            s.battery,
             s.mylayoutbox,
         },
     }
@@ -179,12 +185,6 @@ awful.screen.connect_for_each_screen(function(s)
     client.connect_signal("focus", no_dock_activator_ontop)
     client.connect_signal("unfocus", no_dock_activator_ontop)
     client.connect_signal("property::fullscreen", no_dock_activator_ontop)
-
-    s:connect_signal("removed", function(s)
-        client.disconnect_signal("focus", no_dock_activator_ontop)
-        client.disconnect_signal("unfocus", no_dock_activator_ontop)
-        client.disconnect_signal("property::fullscreen", no_dock_activator_ontop)
-    end)
 
     s.dock_activator:buttons(gears.table.join(
         awful.button({}, 4, function()
@@ -267,7 +267,10 @@ end
 
 function tray_toggle()
     local s = awful.screen.focused()
-    if s.traybox then
+    if s.systray then
+        -- s.systray.visible = not s.systray.visible
+        awesome.emit_signal("widget::systray:toggle")
+    elseif s.traybox then
         s.traybox.visible = not s.traybox.visible
     end
 end

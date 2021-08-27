@@ -11,14 +11,14 @@ vim.g.loaded_matchparen = 1
 vim.g.loaded_spec = 1
 
 -- Set leader and localleader
-vim.g.mapleader = "."
+vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
 -- Lua
-pcall(require, "base.keymap")
-pcall(require, "base.settings")
-pcall(require, "base.util")
-pcall(require, "base.keys")
+require("base.keymap")
+require("base.settings")
+require("base.util")
+require("base.keys")
 
 -- Vimscript
 vim.cmd([[

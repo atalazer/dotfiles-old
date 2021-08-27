@@ -23,7 +23,7 @@ ruled.client.connect_signal("request::rules", function()
             },
             instance = {
                 "qutebrowser",
-            }
+            },
         },
         except_any = {
             role = { "GtkFileChooserDialog" },
@@ -43,7 +43,7 @@ ruled.client.connect_signal("request::rules", function()
             class = { "mail" },
             instance = { "mail" },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[3],
             switch_to_tags = true,
         },
@@ -53,15 +53,18 @@ ruled.client.connect_signal("request::rules", function()
     -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { 
-                "TelegramDesktop", 
-                "KotatogramDesktop", 
+            class = {
+                "TelegramDesktop",
+                "KotatogramDesktop",
                 "whatsdesk",
             },
+            name = {
+                "Mozilla Firefox (Private Browsing)",
+            },
         },
-        properties = { 
+        properties = {
             tag = awful.screen.focused().tags[3],
-            switch_to_tags = true
+            switch_to_tags = true,
         },
     })
     -- }}}
@@ -110,10 +113,14 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "osu!", "opsu", "opsu!"
+                "osu!",
+                "opsu",
+                "opsu!",
             },
             instance = {
-                "osu!", "opsu", "opsu!"
+                "osu!",
+                "opsu",
+                "opsu!",
             },
         },
         properties = {
@@ -139,8 +146,14 @@ ruled.client.connect_signal("request::rules", function()
     -- Miscellaneous {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "htop", "monitoring" },
-            instance = { "htop", "monitoring" },
+            class = {
+                "htop",
+                "monitoring",
+            },
+            instance = {
+                "htop",
+                "monitoring",
+            },
         },
         except_any = {
             type = { "dialog" },

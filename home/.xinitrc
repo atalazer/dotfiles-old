@@ -1,11 +1,25 @@
 #!/bin/sh
 
-[[ -f ~/.xprofile ]] && source ~/.xprofile
+[ -f $HOME/.xprofile ] && . $HOME/.xprofile
 
-# Lunch dbus-launch, this is important for some app
-if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-    eval $(dbus-launch --sh-syntax --exit-with-session)
+USER_XRESOURCES=$HOME/.Xresources
+USER_XMODMAP=$HOME/.Xmodmap
+SYS_XRESOURCES=/etc/X11/xinit/.Xresources
+SYS_XMODMAP=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+[ -f $SYS_XRESOURCES ] && xrdb -merge $SYS_XRESOURCES
+[ -f $SYS_XMODMAP ] && xmodmap $SYS_XMODMAP
+[ -f "$USER_XRESOURCES" ] && xrdb -merge "$USER_XRESOURCES"
+[ -f "$USER_XMODMAP" ] && xmodmap "$USER_XMODMAP"
+
+# start some nice programs
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+    for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+        [ -x "$f" ] && . "$f"
+    done
+    unset f
 fi
 
-exec dbus-launch --sh-syntax --exit-with-session awesome
+exec awesome
 

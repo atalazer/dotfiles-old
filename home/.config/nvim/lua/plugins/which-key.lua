@@ -25,34 +25,46 @@ wk.register({
 wk.register({
     [","] = "Curstr Toggle",
     g = {
-        name = "+Misc",
+        name = "Misc",
         g = "Glow",
         f = "Format",
         t = "Lazygit",
     },
     c = {
-        name = "+Colorizer",
+        name = "Colorizer",
         c = "Colorizer Toggle",
         -- a = "Attach Buffer",
         -- d = "Detach Buffer",
         -- r = "Reload All Buffer",
     },
+    d = {
+        name = "DAP",
+        b = "Toggle Breakpoint",
+        c = "Continue",
+        o = "Step Over",
+        r = "Open REPL",
+        [">"] = "Step Into",
+        ["<"] = "Step Out",
+    },
     e = {
-        name = "+Config",
+        name = "Config",
         c = "Open Config File",
         r = "Reload Config",
     },
     f = {
-        name = "+Telescope",
-        f = "Frecency",
-        m = "Media Files",
+        name = "Telescope",
         b = "Files Browser",
-        l = "Live Grep",
-        k = "Keybindings",
         c = "Colorscheme",
+        d = "(Book)Marks",
+        f = "Frecency",
+        k = "Keybindings",
+        l = "Live Grep",
+        m = "Media Files",
+        o = "Oldfiles",
+        t = "Builtins",
     },
     l = {
-        name = "+LSP",
+        name = "LSP",
         ["["] = "Prev Diagnostic",
         ["]"] = "Next Diagnostic",
         a = "Code Action",
@@ -71,13 +83,13 @@ wk.register({
 -- Local Leader Key
 wk.register({
     s = {
-        name = "+Source",
+        name = "Source",
         s = "Current",
         l = "Lua File",
         v = "Vim File",
     },
     r = {
-        name = "+Run",
+        name = "Run",
         l = "Lua File",
         p = "Python File",
     },
@@ -101,9 +113,9 @@ wk.setup({
     },
     operators = { gc = "Comments" },
     icons = {
-        breadcrumb = "»",
+        breadcrumb = "→",
         separator = "➜",
-        group = " +- ",
+        group = "±",
     },
     window = {
         border = Util.borders,

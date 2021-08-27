@@ -22,3 +22,9 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " Quickly edit your macros
 nnoremap <leader>em  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 
+" Venn
+command! -nargs=0 -range=% VennStart :setlocal cursorcolumn virtualedit=all
+command! -nargs=0 -range=% VennStop :setlocal nocursorcolumn virtualedit=
+
+nnoremap <leader>vr :VennStart<CR>
+nnoremap <leader>vs :VennStop<CR>

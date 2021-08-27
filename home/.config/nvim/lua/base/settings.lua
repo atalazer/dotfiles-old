@@ -12,7 +12,7 @@ local options = {
     hidden = true,
     ignorecase = true,
     joinspaces = false,
-    lazyredraw = false,
+    lazyredraw = true,
     list = true,
     number = true,
     relativenumber = true,
@@ -27,11 +27,10 @@ local options = {
     termguicolors = true,
     ttyfast = true,
     undofile = false,
-    wrap = true,
+    wrap = false,
     writebackup = false,
 
     -- String
-    background = "dark",
     backspace = "eol,start,indent",
     backupcopy = "yes",
     clipboard = "unnamedplus",
@@ -74,7 +73,7 @@ local options = {
     softtabstop = 4,
     tabstop = 4,
     textwidth = 120,
-    timeoutlen = 400,
+    timeoutlen = 300,
     updatetime = 1000,
 }
 

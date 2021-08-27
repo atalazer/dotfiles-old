@@ -10,14 +10,9 @@ npairs.setup({
         ["{"] = "}",
         ["`"] = "`",
     },
-    fast_wrap = {},
-    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
+    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.%#] ]], "%s+", ""),
     check_line_pair = true,
     check_ts = true,
-    ts_config = {
-        lua = { "string" }, -- it will not add pair on that treesitter node
-    },
-    break_line_filetype = nil,
     html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
     disable_filetype = { "TelescopePrompt", "vim" },
 })
