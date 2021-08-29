@@ -79,8 +79,9 @@ local plugins = {
         requires = {
             {
                 "folke/tokyonight.nvim",
+                after = "xresources-nvim",
                 setup = function()
-                    vim.g.tokyonight_style = "day"
+                    vim.g.tokyonight_style = "storm"
                     vim.g.tokyonight_terminal_colors = true
                     vim.g.tokyonight_italic_comments = true
                     vim.g.tokyonight_italic_keywords = true
@@ -98,25 +99,28 @@ local plugins = {
         end,
         config = function()
             local color_list = {
-                "xresources", -- 1
-                "tokyonight", -- 2
+                "xresources", -- 1  - Based on Xresources Config (e.g: ~/.Xresources)
+                "tokyonight", -- 2  - Tokyonight Colorscheme
             }
             local color = color_list[1]
             vim.cmd("colorscheme " .. color)
+            -- require(color).colorscheme()
+            -- require("xresources").colorscheme()
         end,
     },
     -- Dashboard
     {
         "glepnir/dashboard-nvim",
-        event = "VimEnter",
         cmd = { "Dashboard", "SessionLoad", "SessionSave" },
         setup = function()
-            require("plugins.dashboard")
             local map = function(lhs, rhs)
                 vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
             end
             map("<F1>", "<CMD>SessionLoad last<CR>")
             map("<F2>", "<CMD>SessionSave last<CR>")
+        end,
+        config = function()
+            require("plugins.dashboard")
         end,
     },
 
@@ -124,8 +128,9 @@ local plugins = {
     {
         "kyazdani42/nvim-web-devicons",
         module = "nvim-web-devicons",
+        wants = "nvim-nonicons",
         requires = {
-            { "yamatsum/nvim-nonicons", after = "xresources-nvim" },
+            { "yamatsum/nvim-nonicons", opt = true },
         },
         config = function()
             require("nvim-web-devicons").setup({ default = true })
@@ -136,7 +141,6 @@ local plugins = {
     {
         "akinsho/nvim-bufferline.lua",
         event = { "BufReadPre", "BufNewFile" },
-        wants = "nvim-web-devicons",
         config = function()
             require("plugins.bufferline")
         end,
@@ -186,7 +190,7 @@ local plugins = {
     -- Neovim Autopair Plugin
     {
         "windwp/nvim-autopairs",
-        event = "InsertEnter",
+        after = "nvim-cmp",
         config = function()
             require("plugins.autopairs")
         end,
@@ -207,7 +211,6 @@ local plugins = {
 
     {
         "ggandor/lightspeed.nvim",
-        event = "BufReadPost",
         keys = {
             "<Plug>Lightspeed_f",
             "<Plug>Lightspeed_F",
@@ -289,6 +292,20 @@ local plugins = {
     -- gf like plugins
     {
         "notomo/curstr.nvim",
+        event = { "BufRead" },
+        setup = function()
+            local nnoremap = vim.keymap.nnoremap
+            nnoremap({
+                "gf",
+                '<Cmd>lua require("curstr").execute("openable", { action = "open" })<CR>',
+                { silent = true },
+            })
+            nnoremap({
+                ".,",
+                '<Cmd>lua require("curstr").execute("togglable")<CR>',
+                { silent = true },
+            })
+        end,
         config = function()
             require("plugins.curstr")
         end,
@@ -454,7 +471,6 @@ local plugins = {
 
     {
         "folke/lsp-trouble.nvim",
-        wants = "nvim-web-devicons",
         cmd = { "Trouble", "TroubleToggle" },
         config = function()
             require("plugins.trouble")
@@ -462,30 +478,30 @@ local plugins = {
     },
 
     {
-        "L3MON4D3/LuaSnip",
-        opt = true,
-        module_pattern = { "luasnip", "luasnip.*" },
-        wants = "friendly-snippets",
-        requires = {
-            "rafamadriz/friendly-snippets",
-            opt = true,
-        },
-        config = function()
-            require("plugins.luasnip")
-        end,
-    },
-
-    {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         requires = {
-            { "saadparwaiz1/cmp_luasnip" },
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-calc" },
-            { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-emoji" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "hrsh7th/cmp-nvim-lua" },
-            { "f3fora/cmp-spell" },
+            {
+                "L3MON4D3/LuaSnip",
+                after = "nvim-cmp",
+                wants = "friendly-snippets",
+                requires = {
+                    "rafamadriz/friendly-snippets",
+                    opt = true,
+                },
+                config = function()
+                    require("plugins.luasnip")
+                end,
+            },
+
+            { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
+            { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
+            { "hrsh7th/cmp-calc", after = "cmp-buffer" },
+            { "hrsh7th/cmp-path", after = "cmp-nvim-lua" },
+            { "hrsh7th/cmp-emoji", after = "cmp-calc" },
+            { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
+            { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+            { "f3fora/cmp-spell", after = "cmp-buffer" },
         },
         config = function()
             require("plugins.cmp")
@@ -549,7 +565,6 @@ local plugins = {
         setup = function()
             vim.api.nvim_set_keymap("n", "`", "<CMD>NvimTreeToggle<CR>", { noremap = true })
         end,
-        wants = "nvim-web-devicons",
         config = function()
             require("plugins.nvim-tree")
         end,
@@ -570,7 +585,6 @@ local plugins = {
     {
         "lewis6991/gitsigns.nvim",
         event = { "BufRead", "BufNewFile" },
-        wants = "plenary.nvim",
         config = function()
             require("plugins.gitsigns")
         end,
@@ -580,7 +594,7 @@ local plugins = {
         "kdheepak/lazygit.nvim",
         cmd = { "LazyGit" },
         setup = function()
-            vim.g.lazygit_floating_window_winblend = 10
+            vim.g.lazygit_floating_window_winblend = 0
             vim.g.lazygit_floating_window_scaling_factor = 0.85
             vim.g.lazygit_floating_window_corner_chars = { "╭", "╮", "╰", "╯" }
             vim.g.lazygit_floating_window_use_plenary = 0
@@ -608,6 +622,7 @@ local plugins = {
     -- better window and buffer management
     {
         "mhinz/vim-sayonara",
+        opt = true,
         cmd = "Sayonara",
         setup = function()
             local map = function(lhs, rhs)
@@ -630,6 +645,7 @@ local plugins = {
 
     {
         "folke/zen-mode.nvim",
+        opt = true,
         cmd = "ZenMode",
         setup = function()
             local map = function(lhs, rhs)
@@ -639,64 +655,37 @@ local plugins = {
         end,
         requires = {
             "folke/twilight.nvim",
+            opt = true,
             cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
             config = function()
                 require("twilight").setup({
                     dimming = {
-                        alpha = 0.45, -- amount of dimming
+                        alpha = 0.30, -- amount of dimming
                         color = { "Normal", "#ffffff" }, -- we try to get the foreground from the highlight groups or fallback color
                         inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
                     },
                     context = 5, -- amount of lines we will try to show around the current line
                     treesitter = true, -- use treesitter when available for the filetype
-                    -- treesitter is used to automatically expand the visible text,
-                    -- but you can further control the types of nodes that should always be fully expanded
-                    expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-                        "function",
-                        "method",
+                    -- for treesitter, we we always try to expand to the top-most ancestor with these types
+                    expand = {
+                        -- "function",
+                        -- "method",
                         "if_statement",
-                        "table",
+                        -- "table",
                     },
                     exclude = {},
                 })
             end,
         },
         config = function()
-            require("zen-mode").setup({
-                window = {
-                    backdrop = 0.975, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
-                    width = 100, -- width of the Zen window
-                    height = 35, -- height of the Zen window
-                },
-                plugins = {
-                    options = {
-                        enabled = false,
-                        ruler = false,
-                        showcmd = false,
-                    },
-                    gitsigns = { enabled = false }, -- disables git signs
-                },
-                on_open = function(win)
-                    vim.api.nvim_win_set_option(win, "wrap", true)
-                    vim.api.nvim_win_set_option(win, "linebreak", true)
-                    vim.api.nvim_win_set_option(win, "list", false)
-                    vim.cmd("TwilightEnable")
-                    vim.cmd("IndentBlanklineDisable")
-                end,
-                on_close = function(win)
-                    vim.api.nvim_win_set_option(win, "wrap", false)
-                    vim.api.nvim_win_set_option(win, "linebreak", false)
-                    vim.api.nvim_win_set_option(win, "list", true)
-                    vim.cmd("TwilightDisable")
-                    vim.cmd("IndentBlanklineEnable")
-                end,
-            })
+            require("plugins.zen-mode")
         end,
     },
 
     -- Vim Silicon, Generate Image Source Code
     {
         "segeljakt/vim-silicon",
+        opt = true,
         cmd = "Silicon",
         setup = function()
             vim.g.silicon = {
@@ -718,28 +707,10 @@ local plugins = {
         end,
     },
 
-    {
-        "subnut/nvim-ghost.nvim",
-        run = function()
-            vim.fn["nvim_ghost#installer#install"]()
-        end,
-        setup = function()
-            vim.g.nvim_ghost_python_executable = "/usr/bin/python"
-            vim.g.nvim_ghost_use_script = 1
-            vim.g.nvim_ghost_super_quiet = 1
-            vim.cmd("let $GHOSTTEXT_SERVER_PORT = 4001")
-            vim.cmd([[
-                augroup nvim_ghost_user_autocommands
-                    au User www.reddit.com,www.stackoverflow.com set filetype=markdown
-                    au User www.reddit.com,www.github.com set filetype=markdown
-                    au User *github.com set filetype=markdown
-                augroup END
-            ]])
-        end,
-    },
     -- Startuptime
     {
         "tweekmonster/startuptime.vim",
+        opt = true,
         cmd = "StartupTime",
     },
 }

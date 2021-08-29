@@ -2,10 +2,16 @@
 nnoremap <expr> n  'Nn'[v:searchforward]
 xnoremap <expr> n  'Nn'[v:searchforward]
 onoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> <C-g>  'Nn'[v:searchforward]
+xnoremap <expr> <C-g>  'Nn'[v:searchforward]
+onoremap <expr> <C-g>  'Nn'[v:searchforward]
 
 nnoremap <expr> N  'nN'[v:searchforward]
 xnoremap <expr> N  'nN'[v:searchforward]
 onoremap <expr> N  'nN'[v:searchforward]
+nnoremap <expr> <C-G>  'nN'[v:searchforward]
+xnoremap <expr> <C-G>  'nN'[v:searchforward]
+onoremap <expr> <C-G>  'nN'[v:searchforward]
 
 " Saner command-line history
 cnoremap <expr> <c-n> wildmenumode() ? "\<c-n>" : "\<down>"
@@ -22,9 +28,3 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " Quickly edit your macros
 nnoremap <leader>em  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 
-" Venn
-command! -nargs=0 -range=% VennStart :setlocal cursorcolumn virtualedit=all
-command! -nargs=0 -range=% VennStop :setlocal nocursorcolumn virtualedit=
-
-nnoremap <leader>vr :VennStart<CR>
-nnoremap <leader>vs :VennStop<CR>

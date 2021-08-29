@@ -1,0 +1,165 @@
+wtf:
+  term: "xterm-256color"
+  openFileUtil: "xdg-open"
+  openUrlUtil: "xdg-open"
+  navigation:
+    shortcuts: true
+  exitMessage:
+    display: false
+  colors:
+    background: "default"
+    text: "white"
+    title: "white"
+    checked: "gray"
+    border:
+      focusable: lightgray
+      focused: white
+      normal: gray
+    highlight:
+      fore: "black"
+      back: "green"
+  sigils:
+    checkbox:
+      checked: "x"
+      unchecked: " "
+    paging:
+      normal: "*"
+      selected: "_"
+  grid:
+    columns: [35, 33, 33, 33]
+    rows: [10, 10, 15]
+  refreshInterval: 1
+  mods:
+    digitalclock:
+      enabled: true
+      title: "Clock"
+      type: "digitalclock"
+      refreshInterval: 1
+      hourFormat: 24
+      font: bigfont
+      color: magenta
+      position:
+        top: 0
+        left: 0
+        height: 1
+        width: 1
+    clocks:
+      enabled: true
+      title: "Clocks"
+      type: "clocks"
+      refreshInterval: 15
+      sort: "natural"                 # alphabetical, chronological, natural
+      locations:
+        - WIB: "Asia/Jakarta"
+        - WITA: "Asia/Makassar"
+        - WIT: "Asia/Jayapura"
+        - GMT: "Etc/GMT"
+        - UTC: "Etc/UTC"
+      colors:
+        rows:
+          even: "lightblue"
+          odd: "white"
+      position:
+        top: 0
+        left: 1
+        height: 1
+        width: 1
+    ipinfo:
+      enabled: true
+      title: "IP"
+      type: "ipinfo"
+      refreshInterval: 150
+      colors:
+        name: red
+        value: white
+      position:
+        top: 0
+        left: 2
+        height: 1
+        width: 1
+    power:
+      enabled: true
+      title: "Power"
+      type: "power"
+      refreshInterval: 15
+      position:
+        top: 1
+        left: 2
+        height: 1
+        width: 1
+    weather:
+      enabled: true
+      title: "Weather"
+      type: "weather"
+      refreshInterval: 900
+      language: "EN"
+      tempUnit: "C"
+      apiKey: "8f867e7b117a4eb09af8a54b0be530c2"
+      cityids:
+      - 1648084
+      useEmoji: true
+      colors:
+        current: "lightblue"
+      position:
+        top: 0
+        left: 3
+        height: 2
+        width: 1
+    resourceusage:
+      enabled: true
+      title: "Resource"
+      type: "resourceusage"
+      refreshInterval: 1
+      cpuCombined: false
+      showCPU: true
+      showMem: true
+      showSwp: true
+      position:
+        top: 1
+        left: 0
+        height: 1
+        width: 2
+    todo:
+      enabled: true
+      refreshInterval: 3600
+      filename: "todo.yml"
+      checkedIcon: "X"
+      colors:
+        checked: gray
+        highlight:
+          fore: "black"
+          back: "orange"
+      position:
+        top: 2
+        left: 0
+        height: 1
+        width: 1
+    schedule_file:
+      enabled: true
+      title: "Schedule"
+      type: "textfile"
+      refreshInterval: 60
+      wrapText: false
+      format: true
+      formatStyle: "dracula"
+      filePaths:
+        - "~/Documents/Notes/SCHEDULE.md"
+        - "~/Documents/Notes/JADWAL_SEKOLAH.md"
+      position:
+        top: 2
+        left: 1
+        height: 1
+        width: 2
+    feedreader:
+      enabled: true
+      refreshInterval: 21600
+      feedLimit: 10
+      feeds:
+        - https://www.englishclub.com/ref/phrasal-verb-of-the-day.xml
+        - https://www.englishclub.com/ref/idiom-of-the-day.xml
+        - https://www.englishclub.com/ref/slang-of-the-day.xml
+      position:
+        top: 2
+        left: 3
+        height: 1
+        width: 1

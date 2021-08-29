@@ -95,6 +95,16 @@ local notifbox_layout = wibox.widget({
 })
 scroller(notifbox_layout)
 
+awesome.connect_signal("notifbox::deleted", function ()
+    if #notifbox_layout.children == 1 and remove_notifbox_empty then
+        -- Reset layout
+        notifbox_layout:reset(notifbox_layout)
+        remove_notifbox_empty = false
+    end
+    -- notifbox_layout:insert(1, notifbox_layout.children[#notifbox_layout.children])
+    notifbox_layout:remove(1)
+end)
+
 -- Notification icon container
 local notifbox_icon = function(ico_image)
     local noti_icon = wibox.widget({
@@ -146,7 +156,7 @@ end
 
 -- Notification actions container
 local notifbox_actions = function(notif)
-    actions_template = wibox.widget({
+    local actions_template = wibox.widget({
         notification = notif,
         base_layout = wibox.widget({
             spacing = dpi(0),
@@ -345,16 +355,6 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
     end
 
     -- Delete notifbox on Righ-Click(RMB)
-    notifbox_dismiss:buttons(awful.util.table.join(awful.button({}, 1, function()
-        if #notifbox_layout.children == 1 then
-            reset_notifbox_layout()
-        else
-            notifbox_delete()
-        end
-        collectgarbage("collect")
-    end)))
-
-    -- Delete notifbox on Righ-Click(RMB)
     notifbox:buttons(awful.util.table.join(awful.button({}, 3, function()
         if #notifbox_layout.children == 1 then
             reset_notifbox_layout()
@@ -363,6 +363,15 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
         end
         collectgarbage("collect")
     end)))
+
+    -- awesome.connect_signal("notifbox::deleted", function ()
+    --     if #notifbox_layout.children == 1 then
+    --         reset_notifbox_layout()
+    --     else
+    --         notifbox_delete()
+    --     end
+    --     collectgarbage("collect")
+    -- end)
 
     -- Add hover, and mouse leave events
     notifbox_template:connect_signal("mouse::enter", function()

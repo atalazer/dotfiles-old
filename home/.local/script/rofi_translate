@@ -6,6 +6,11 @@
 
 DMENU="rofi -dmenu -i -l 5"
 ICON="$HOME/.config/awesome/icons/linebit/keyboard.png"
+HISTFILE="/tmp/rofi_translate"
+
+if [[ ! -f $HISTFILE ]]; then
+    touch $HISTFILE
+fi
 
 COUNTRY='''
 [
@@ -22,7 +27,7 @@ translateText() {
     if [ -z "$text" ]; then
         exit
     fi
-    name=$(echo $COUNTRY | jq -r ".[].name" | $DMENU -p "Translate ")
+    name=$(echo $COUNTRY | jq -r ".[].name" | $DMENU -p "Target Language")
     if [ ! -z "$name" ]; then
         code=$(echo $COUNTRY | jq -r ".[] | select(.name == \"$name\") | .code")
         result=$(trans -b --download-audio-as /tmp/trans.ts :$code "$text")
@@ -31,13 +36,18 @@ translateText() {
         # notify-send -i $ICON "Translate" "Result of '$text' in $name is '$result'"
 
         # notify-send -u low -i $ICON "Translate" "Result saved to clipboard"
-        echo -n "$result" | xclip
+        echo "$text" >> $HISTFILE
+        echo "$result" | xclip
 
         while $again; do
-            menu=$(echo -e "Repeat\nPlay Audio\nExit" | $DMENU -lines 2 -p "Menu" -mesg "Result: $result")
-            if [[ $menu == "Repeat" ]]; then
-                text=$($DMENU -p "Translate")
+            menu=$(echo -e "Retry\nCopy To Clipboard\nPlay Audio\nExit" | \
+                $DMENU -lines 2 -p "Translate Menu" -mesg "Result: $result" -select "Copy To Clipboard")
+            if [[ $menu == "Retry" ]]; then
+                text=$($DMENU -p "Translate" -mesg "Previous: $text" -input $HISTFILE)
                 translateText "$text"
+            elif [[ $menu == "Copy To Clipboard" ]]; then
+                echo -n "$result" | xclip -selection clipboard
+                again=false
             elif [[ $menu == "Play Audio" ]]; then
                 mpv /tmp/trans.ts
             else
@@ -53,7 +63,7 @@ case "$1" in
     translateText "$text"
     ;;
 "-i" | "--input")
-    text=$($DMENU -p "Translate")
+    text=$($DMENU -p "Translate" -input $HISTFILE)
     translateText "$text"
     ;;
 *)

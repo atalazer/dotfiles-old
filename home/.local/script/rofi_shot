@@ -128,68 +128,104 @@ parse(){
 }
 
 notify() {
-    _MSG=$1
-    _FILE=$SAVED_NAME
+    MSG=$1
+    FILE=$SAVED_NAME
 
     if [[ "$(check_wm)" == "AWESOME" ]]; then
         awesome-client "
         -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
-        naughty = require('naughty')
-        awful = require('awful')
-        beautiful = require('beautiful')
-        dpi = beautiful.xresources.apply_dpi
+        local naughty = require('naughty')
+        local awful = require('awful')
+        local beautiful = require('beautiful')
+        local dpi = beautiful.xresources.apply_dpi
 
+        local file = '${FILE}'
+        local message = '${MSG}'
+
+        local notify_send = function(msg, action)
+            if type(action) ~= 'table' then
+                action = {}
+            end
+            naughty.notification ({
+                app_name = 'screenshot',
+                icon = file,
+                timeout = 5,
+                title = '<b>Shot</b>',
+                message = msg,
+                actions = action or nil,
+            })
+        end
+
+        local rename_image = naughty.action {
+            name = 'Rename',
+            icon_only = false,
+        }
+        
         local open_image = naughty.action {
             name = 'Open',
             icon_only = false,
         }
 
+        open_image:connect_signal('invoked', function()
+            awful.spawn('xdg-open ' .. file, false)
+        end)
+
         local open_folder = naughty.action {
             name = 'Folder',
             icon_only = false,
         }
+        open_folder:connect_signal('invoked', function()
+            awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
+        end)
 
-        local to_clipboard = naughty.action {
-            name = 'Clip',
-            icon_only = false,
-        }
 
         local delete_image = naughty.action {
             name = 'Delete',
             icon_only = false,
         }
-
-        -- Execute the callback when 'Open' is pressed
-        open_image:connect_signal('invoked', function()
-            awful.spawn('xdg-open ' .. '${_FILE}', false)
-        end)
-
-        open_folder:connect_signal('invoked', function()
-            awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
-        end)
-
-        -- Execute the callback when 'Clipboard' is pressed
-        to_clipboard:connect_signal('invoked', function()
-            awful.spawn('xclip -selection clipboard -i '..'${_FILE}'..' -t image/png', false)
-        end)
-
-        -- Execute the callback when 'Delete' is pressed
         delete_image:connect_signal('invoked', function()
-            awful.spawn('gio trash ' .. '${_FILE}', false)
+            awful.spawn('gio trash '..file, false)
+            awesome.emit_signal('notifbox::deleted')
+            notify_send(file..' Image Deleted',{})
         end)
 
-        -- Show notification
-        naughty.notification ({
-            app_name = 'screenshot',
-            icon = '${_FILE}',
-            timeout = 5,
-            title = '<b>Shot</b>',
-            message = '${_MSG}',
-            actions = { open_image, open_folder, to_clipboard, delete_image }
-        })
+
+        local to_clipboard = naughty.action {
+            name = 'Clip',
+            icon_only = false,
+        }
+        to_clipboard:connect_signal('invoked', function()
+            awful.spawn('xclip -selection clipboard -i '..file..' -t image/png', false)
+        end)
+
+        local prompt_rename_image = function()
+            awful.prompt.run {
+                prompt       = 'New File Name: ',
+                textbox      = awful.screen.focused().mypromptbox.widget,
+                history_path = awful.util.get_cache_dir() .. '/history',
+                exe_callback = function(new_name)
+                    if not new_name or #new_name == 0 then return end
+                    local old_file_name = file
+                    local new_file_name = '${SCREENSHOT_DIR}/'..new_name..'.png'
+                    awful.spawn('mv '..file..' '..new_file_name, false)
+                    file = new_file_name
+
+                    awesome.emit_signal('notifbox::deleted')
+
+                    -- notify_send('Image Renamed From <b>'..old_file_name..'</b> To <b>'..file..'</b>', {})
+                    notify_send('Image Renamed To <b>'..file..'</b>',{ open_image, open_folder, to_clipboard, rename_image, delete_image })
+                end
+            }
+        end
+
+        rename_image:connect_signal('invoked', function()
+            prompt_rename_image()
+        end)
+
+        notify_send(message, { open_image, open_folder, to_clipboard, rename_image, delete_image })
         "
     elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
-        notify-send --app-name=screenshot "Shot" "${_MSG}"
+        notify-send --app-name=screenshot "Shot" "${MSG}"
     fi
 }
 

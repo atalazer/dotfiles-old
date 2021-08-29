@@ -14,6 +14,9 @@ local dock_placement = function(w)
 end
 
 awful.screen.connect_for_each_screen(function(s)
+    -- Create a promptbox for each screen
+    s.mypromptbox = awful.widget.prompt()
+
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox({
@@ -113,6 +116,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = dpi(5),
             s.mytaglist,
             s.record_status,
+            s.mypromptbox,
         },
         clock,
         {

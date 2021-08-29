@@ -11,7 +11,7 @@ local HOME = os.getenv("HOME")
 local PATH_TO_ICONS = HOME .. "/.config/awesome/elemental/notif_center/icons/"
 local PATH_TO_WIDGET = HOME .. "/.config/awesome/elemental/notif_center/"
 
-dont_disturb = false
+_G.dont_disturb = false
 
 -- Delete button imagebox
 local dont_disturb_imagebox = wibox.widget({

@@ -51,7 +51,6 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             floating = true,
-            titlebars_enabled = true,
             placement = centered_client_placement,
         },
         callback = function(c)

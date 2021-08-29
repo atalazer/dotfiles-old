@@ -61,18 +61,3 @@ require("curstr").setup({
     },
 })
 
--- Keymap
-local k = vim.keymap
-local nnoremap = k.nnoremap
-
--- # Mappings
-nnoremap({
-    "gf",
-    '<Cmd>lua require("curstr").execute("openable", { action = "open" })<CR>',
-    { silent = true },
-})
-nnoremap({
-    ".,",
-    '<Cmd>lua require("curstr").execute("togglable")<CR>',
-    { silent = true },
-})

@@ -47,9 +47,9 @@ if command -v "pacman" &> /dev/null; then
     $AUR_HELPER -S --needed --noconfirm \
         xorg xorg-server \
         xorg-xinit xorg-xprop xorg-xrdb \
-        xsettingsd \
         xcb-util-errors \
         xf86-input-libinput $DRI \
+        xsettingsd \
         xdg-user-dirs \
         thunar thunar-archive-plugin thunar-volman \
         maim xdotool feh inotify-tools \
@@ -58,9 +58,9 @@ if command -v "pacman" &> /dev/null; then
         python-pywal python-colorthief \
         htop neofetch ueberzug w3m \
         pulseaudio playerctl pamixer \
-        mpd mpc ncmpcpp mpdris2 \
+        mpd mpc ncmpcpp \
         lm_sensors acpid jq fortune-mod redshift \
-        awesome-luajit-git picom-jonaburg-git light-git \
+        awesome-git picom-jonaburg-git light-git \
         ruby-fusuma ruby-fusuma-plugin-keypress ruby-fusuma-plugin-wmctrl \
         ruby-fusuma-plugin-sendkeys ruby-fusuma-appmatcher
 
@@ -74,19 +74,22 @@ if command -v "pacman" &> /dev/null; then
 
             echo "Install Package with $AUR_HELPER"
             $AUR_HELPER -S --noconfirm \
-                neovim-nightly-bin \
-                python python-pip tree-sitter\
-                lua-language-server efm-langserver \
-                jedi-language-server clang \
-                stylua-bin python-black shfmt
+                neovim \
+                python \
+                python-pip \
+                lua-language-server \
+                jedi-language-server \
+                clang \
+                stylua-bin \
+                python-black \
+                shfmt
 
             echo "Install Package with npm"
             if command -v "npm" &> /dev/null; then
-                npm install -g neovim \
-                    vscode-css-languageserver-bin \
-                    vscode-html-languageserver-bin \
-                    vscode-json-languageserver \
-                    rome bash-language-server \
+                npm install -g \
+                    neovim \
+                    vscode-langservers-extracted \
+                    bash-language-server \
                     vim-language-server \
                     yaml-language-server \
                     prettier

@@ -15,9 +15,7 @@ client.connect_signal("manage", function(c)
         awful.client.setslave(c)
     end
 
-    if awesome.startup
-    and not c.size_hints.user_position
-    and not c.size_hints.program_position then
+    if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
         awful.placement.no_overlap(c)
@@ -52,7 +50,7 @@ awful.mouse.resize.set_mode("live")
 -- (for example after swapping from tiling mode to floating mode)
 -- ==============================================================
 tag.connect_signal("property::layout", function(t)
-    for k, c in ipairs(t:clients()) do
+    for _, c in ipairs(t:clients()) do
         if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
             local cgeo = awful.client.property.get(c, "floating_geometry")
             if cgeo then

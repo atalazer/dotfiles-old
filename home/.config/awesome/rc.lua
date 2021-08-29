@@ -59,8 +59,6 @@ local exit_screen_theme = exit_screen_themes[1]
 -- ===================================================================
 -- User variables and preferences
 
-local wallpaper = os.getenv("HOME") .. "/.wallpaper/tokyonight-minimal.jpg"
-
 user = {
     font = "JetBrainsMono Nerd Font",
     fsize = "11",
@@ -293,7 +291,7 @@ require("configs.layouts")
 
 -- Wallpaper
 -- ===================================================================
-local function set_wallpaper(s)
+local set_wallpaper = function(s)
     -- Wallpaper
     if beautiful.wallpaper then
         -- -- If wallpaper is a function, call it with the screen

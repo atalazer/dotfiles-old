@@ -45,6 +45,10 @@ augroup Yank
     au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 250, higroup = "Visual" }
 augroup END
 
+
+" Set github text field to markdown (firenvim stuff)
+au BufEnter github.com_*.txt set filetype=markdown
+
 " Remove trailing whitespace on save
 let g:strip_whitespace = v:false
 augroup Whitespace

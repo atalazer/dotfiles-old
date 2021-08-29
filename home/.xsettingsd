@@ -1,5 +1,5 @@
-Net/IconThemeName   "Papirus-Dark"
-Net/ThemeName       "Sweet-Dark"
+Net/IconThemeName "Dracula"
+Net/ThemeName "Dracula"
 
 Xft/Hinting     1
 Xft/HintStyle   "hintfull"

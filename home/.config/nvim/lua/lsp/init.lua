@@ -1,4 +1,4 @@
-local lspconfig = require("lspconfig")
+local lsp_installer = require("nvim-lsp-installer")
 
 require("lsp.handlers")
 require("lsp.kind").init()
@@ -19,52 +19,54 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     },
 }
 
-local servers = {
-    sumneko_lua = require("lsp.server.lua").config,
-    jedi_language_server = require("lsp.server.python").config,
-    texlab = require("lsp.server.tex").config,
-    tsserver = require("lsp.server.javascript").config,
-    jsonls = require("lsp.server.json").config,
-    html = { cmd = { "vscode-html-language-server", "--stdio" } },
-    cssls = { cmd = { "vscode-css-language-server", "--stdio" } },
-    tailwindcss = { filetypes = { "html", "javascript", "typescript", "typescriptreact", "javascriptreact" }, },
-    bashls = {},
-    vimls = {},
-    clangd = {},
-    gopls = {},
-    nimls = {},
-    yamlls = {
-        settings = {
-            redhat = { telemetry = { enabled = false } },
-            yaml = {
-                format = {
-                    enable = true,
-                    singleQuote = false,
-                    bracketSpacing = true,
-                },
-                editor = {
-                    tabSize = 2,
-                },
-            },
-        },
-    },
-    ["null-ls"] = {},
+local required_servers = {
+    "bashls",
+    "cssls",
+    "clangd",
+    "html",
+    "jedi_language_server",
+    "jsonls",
+    "sumneko_lua",
+    "tailwindcss",
+    "tsserver",
+    "texlab",
+    "vimls",
+    "yamlls",
 }
 
-require("plugins.null-ls").setup()
-
-for name, opts in pairs(servers) do
-    if type(opts) == "function" then
-        opts()
-    else
-        local client = lspconfig[name]
-        client.setup(
-            vim.tbl_extend("force", {
-                flags = { debounce_text_changes = 150 },
-                on_attach = Util.lsp_on_attach,
-                on_init = Util.lsp_on_init,
-                capabilities = capabilities,
-            }, opts)
-        )
+for _, server_name in ipairs(required_servers) do
+    local exist, server = lsp_installer.get_server(server_name)
+    if exist then
+        if not server:is_installed() then
+            server:install()
+        end
     end
 end
+
+lsp_installer.on_server_ready(function(server)
+    local default_opts = {
+        flags = { debounce_text_changes = 150 },
+        on_attach = Util.lsp_on_attach,
+        on_init = Util.lsp_on_init,
+        capabilities = capabilities,
+    }
+
+    local custom_server_settings = {
+        jedi_language_server = require("lsp.server.python").config,
+        jsonls = require("lsp.server.json").config,
+        sumneko_lua = require("lsp.server.lua").config,
+        texlab = require("lsp.server.tex").config,
+        tsserver = require("lsp.server.javascript").config,
+        ["null-ls"] = default_opts,
+    }
+
+    for server_name, custom_opts in pairs(custom_server_settings) do
+        if server.name == server_name then
+            server:setup(custom_opts)
+        end
+    end
+
+    server:setup(default_opts)
+    require("plugins.null-ls").setup()
+    vim.cmd([[ do User LspAttachBuffers ]])
+end)

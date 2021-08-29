@@ -38,7 +38,6 @@ awesome.connect_signal("scratch::term", function()
     term_scratch:toggle()
 end)
 
-
 local music_scratch = bling.module.scratchpad:new({
     command = user.music_client or "kitty --name music -e ncmpcpp",
     rule = { instance = "music" },
