@@ -57,11 +57,29 @@ local plugins = {
         end,
     },
 
-    { "nvim-lua/popup.nvim", module = "popup" },
-    { "nvim-lua/plenary.nvim", module = "plenary" },
+    {
+        "lewis6991/impatient.nvim",
+        rocks = "mpack",
+        event = "VimEnter",
+        config = function()
+            require("impatient")
+        end,
+    },
+
+    {
+        "nvim-lua/popup.nvim",
+        module = "popup",
+        after = "impatient.nvim",
+    },
+    {
+        "nvim-lua/plenary.nvim",
+        module = "plenary",
+        after = "impatient.nvim",
+    },
 
     {
         "rcarriga/nvim-notify",
+        after = "impatient.nvim",
         config = function()
             vim.notify = function(msg, kind, opts)
                 opts = vim.tbl_deep_extend("keep", opts, { timeout = 3000 })
@@ -75,7 +93,8 @@ local plugins = {
     {
         -- "nekonako/xresources-nvim",
         "~/Documents/GitHub/xresources-nvim",
-        event = "VimEnter",
+        after = "impatient.nvim",
+        -- event = "VimEnter",
         requires = {
             {
                 "folke/tokyonight.nvim",
@@ -111,6 +130,7 @@ local plugins = {
     -- Dashboard
     {
         "glepnir/dashboard-nvim",
+        after = "impatient.nvim",
         cmd = { "Dashboard", "SessionLoad", "SessionSave" },
         setup = function()
             local map = function(lhs, rhs)
@@ -127,6 +147,7 @@ local plugins = {
     -- vim-devicons written in lua
     {
         "kyazdani42/nvim-web-devicons",
+        after = "impatient.nvim",
         module = "nvim-web-devicons",
         wants = "nvim-nonicons",
         requires = {
@@ -140,6 +161,7 @@ local plugins = {
     -- Snazzy bufferline
     {
         "akinsho/nvim-bufferline.lua",
+        after = "impatient.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("plugins.bufferline")
@@ -149,6 +171,7 @@ local plugins = {
     -- Beautiful Statusline with Animation
     {
         "windwp/windline.nvim",
+        after = "impatient.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("plugins.windline")
@@ -158,6 +181,7 @@ local plugins = {
     -- Indenting
     {
         "lukas-reineke/indent-blankline.nvim",
+        after = "impatient.nvim",
         event = { "BufReadPre", "BufNewFile" },
         setup = function()
             require("plugins.indent-blankline")
@@ -168,12 +192,14 @@ local plugins = {
     -- Easy Commenting
     {
         "tpope/vim-commentary",
+        after = "impatient.nvim",
         keys = "gc",
     },
 
     -- Align
     {
         "junegunn/vim-easy-align",
+        after = "impatient.nvim",
         keys = "<Plug>(EasyAlign)",
         setup = function()
             vim.api.nvim_set_keymap("n", "ga", "<Plug>(EasyAlign)", { noremap = false, silent = true })
@@ -184,7 +210,7 @@ local plugins = {
     -- Sandwiched textobjects.
     {
         "machakann/vim-sandwich",
-        after = "nvim-treesitter",
+        after = "impatient.nvim",
     },
 
     -- Neovim Autopair Plugin
@@ -211,6 +237,7 @@ local plugins = {
 
     {
         "ggandor/lightspeed.nvim",
+        after = "impatient.nvim",
         keys = {
             "<Plug>Lightspeed_f",
             "<Plug>Lightspeed_F",
@@ -243,6 +270,7 @@ local plugins = {
 
     {
         "monaqa/dial.nvim",
+        after = "impatient.nvim",
         keys = {
             "<Plug>(dial-increment)",
             "<Plug>(dial-increment-additional)",
@@ -292,6 +320,7 @@ local plugins = {
     -- gf like plugins
     {
         "notomo/curstr.nvim",
+        after = "impatient.nvim",
         event = { "BufRead" },
         setup = function()
             local nnoremap = vim.keymap.nnoremap
@@ -314,6 +343,7 @@ local plugins = {
     -- Show Color
     {
         "norcalli/nvim-colorizer.lua",
+        after = "impatient.nvim",
         cmd = "ColorizerToggle",
         setup = function()
             local map = function(lhs, rhs)
@@ -334,6 +364,7 @@ local plugins = {
     -- Semantic highlight
     {
         "nvim-treesitter/nvim-treesitter",
+        after = "impatient.nvim",
         event = { "BufRead", "BufNewFile" },
         run = ":TSUpdate",
         requires = {
@@ -414,13 +445,13 @@ local plugins = {
     {
         "npxbr/glow.nvim",
         cmd = "Glow",
+        ft = "markdown",
         setup = function()
             local map = function(lhs, rhs)
                 vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
             end
             map("<leader>gg", "<CMD>Glow<CR>")
         end,
-        ft = "markdown",
     },
 
     -- Markdown Previewer
@@ -442,6 +473,7 @@ local plugins = {
     -- ======= LSP, Completion and Snippet =======
     {
         "neovim/nvim-lspconfig",
+        after = "impatient.nvim",
         event = { "BufReadPre", "BufNewFile" },
         requires = {
             {
@@ -471,6 +503,7 @@ local plugins = {
 
     {
         "folke/lsp-trouble.nvim",
+        after = "impatient.nvim",
         cmd = { "Trouble", "TroubleToggle" },
         config = function()
             require("plugins.trouble")
@@ -479,6 +512,7 @@ local plugins = {
 
     {
         "hrsh7th/nvim-cmp",
+        after = "impatient.nvim",
         event = "InsertEnter",
         requires = {
             {
@@ -510,6 +544,7 @@ local plugins = {
 
     {
         "mattn/emmet-vim",
+        after = "impatient.nvim",
         cmd = "EmmetInstall",
         setup = function()
             vim.g.user_emmet_install_global = 0
@@ -522,6 +557,7 @@ local plugins = {
     -- Fuzzy Finder
     {
         "nvim-telescope/telescope.nvim",
+        after = "impatient.nvim",
         module_pattern = { "telescope", "telescope.*" },
         cmd = "Telescope",
         keys = {
@@ -561,6 +597,7 @@ local plugins = {
     -- Superfast Tree File
     {
         "kyazdani42/nvim-tree.lua",
+        after = "impatient.nvim",
         cmd = "NvimTreeToggle",
         setup = function()
             vim.api.nvim_set_keymap("n", "`", "<CMD>NvimTreeToggle<CR>", { noremap = true })
@@ -573,6 +610,7 @@ local plugins = {
     -- Open root previllage files
     {
         "lambdalisue/suda.vim",
+        after = "impatient.nvim",
         cmd = { "SudaRead", "SudaWrite" },
         setup = function()
             vim.g.suda_smart_edit = 1
@@ -584,6 +622,7 @@ local plugins = {
     -- show git stuff in signcolumn
     {
         "lewis6991/gitsigns.nvim",
+        after = "impatient.nvim",
         event = { "BufRead", "BufNewFile" },
         config = function()
             require("plugins.gitsigns")
@@ -592,6 +631,7 @@ local plugins = {
 
     {
         "kdheepak/lazygit.nvim",
+        after = "impatient.nvim",
         cmd = { "LazyGit" },
         setup = function()
             vim.g.lazygit_floating_window_winblend = 0
@@ -611,6 +651,7 @@ local plugins = {
     -- Smooth Scrolling
     {
         "psliwka/vim-smoothie",
+        after = "impatient.nvim",
         event = "WinScrolled",
         setup = function()
             vim.g.smoothie_update_interval = 30
@@ -622,6 +663,7 @@ local plugins = {
     -- better window and buffer management
     {
         "mhinz/vim-sayonara",
+        after = "impatient.nvim",
         opt = true,
         cmd = "Sayonara",
         setup = function()
@@ -637,6 +679,7 @@ local plugins = {
     -- vim which key
     {
         "folke/which-key.nvim",
+        after = "impatient.nvim",
         event = "BufWinEnter",
         config = function()
             require("plugins.which-key")
@@ -685,6 +728,7 @@ local plugins = {
     -- Vim Silicon, Generate Image Source Code
     {
         "segeljakt/vim-silicon",
+        after = "impatient.nvim",
         opt = true,
         cmd = "Silicon",
         setup = function()
@@ -710,6 +754,7 @@ local plugins = {
     -- Startuptime
     {
         "tweekmonster/startuptime.vim",
+        after = "impatient.nvim",
         opt = true,
         cmd = "StartupTime",
     },

@@ -1,5 +1,13 @@
 local cmp = require("cmp")
 
+local check_back_space = function()
+    local col = vim.fn.col(".") - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+end
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 vim.o.completeopt = "menu,menuone,noselect,noinsert"
 cmp.setup({
     completion = {
@@ -15,25 +23,13 @@ cmp.setup({
     documentation = {
         border = Util.borders,
     },
-    item = {
-        custom = function(completion_item)
-            if completion_item.kind == cmp.lsp.CompletionItemKind.Method or Function then
-                completion_item.insertText = completion_item.insertText + "($0)"
-                completion_item.insertTextFormat = cmp.lsp.InsertTextFormat.Snippet
-            end
-            return completion_item
-        end,
-    },
+
     formatting = {
         format = function(entry, vim_item)
-            vim_item.kind = string.format(
-                "%s (%s)",
-                require("lsp.kind").presets[vim_item.kind],
-                vim_item.kind
-            )
+            vim_item.kind = string.format("%s (%s)", require("lsp.kind").presets[vim_item.kind], vim_item.kind)
             vim_item.menu = ({
-                -- nvim_lsp = "[LSP]",
-                -- nvim_lua = "[LUA]",
+                nvim_lsp = "[LSP]",
+                nvim_lua = "[LUA]",
                 buffer = "[BUF]",
                 spell = "[SPL]",
             })[entry.source.name] or vim_item.menu
@@ -63,25 +59,31 @@ cmp.setup({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         }),
-        ["<Tab>"] = function(fallback)
+        ["<Tab>"] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, true, true), "n")
+                vim.fn.feedkeys(t("<C-n>"), "n")
             elseif require("luasnip").expand_or_jumpable() then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+                vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+            elseif check_back_space() then
+                vim.fn.feedkeys(t("<Tab>"), "n")
             else
                 fallback()
             end
-        end,
-        ["<S-Tab>"] = function(fallback)
+        end, {
+            "i",
+            "s",
+        }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
             if vim.fn.pumvisible() == 1 then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, true, true), "n")
+                vim.fn.feedkeys(t("<C-p>"), "n")
             elseif require("luasnip").jumpable(-1) then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+                vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
             else
                 fallback()
             end
-        end,
+        end, {
+            "i",
+            "s",
+        }),
     },
 })
-
--- vim.api.nvim_set_keymap("i", "<CR>", "v:lua.Util.trigger_completion()", { noremap = true, expr = true })

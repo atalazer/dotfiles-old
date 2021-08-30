@@ -1,6 +1,5 @@
 local M = {}
 M.config = {
-    cmd = { "texlab" },
     filetypes = { "tex", "bib" },
     on_attach = function()
         local k = vim.keymap

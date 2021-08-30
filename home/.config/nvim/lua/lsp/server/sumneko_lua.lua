@@ -1,5 +1,9 @@
 local M = {}
 
+local path = vim.split(package.path, ";")
+table.insert(path, "lua/?.lua")
+table.insert(path, "lua/?/init.lua")
+
 local library = {}
 local add = function(lib)
     for _, p in pairs(vim.fn.expand(lib, false, true)) do
@@ -11,40 +15,29 @@ add("$VIMRUNTIME")
 add("~/.config/nvim")
 
 M.config = {
-    cmd = { "lua-language-server" },
     on_attach = Util.lsp_on_attach,
     on_init = Util.lsp_on_init,
     settings = {
         Lua = {
-            telemetry = { enable = false },
-            completion = {
-                enable = true,
-                keywordSnippet = "Disable",
-                callSnippet = "Replace",
-            },
             runtime = {
                 version = "LuaJIT",
-                path = (function()
-                    local path = vim.split(package.path, ";")
-                    table.insert(path, "lua/?.lua")
-                    table.insert(path, "lua/?/init.lua")
-                    return path
-                end)(),
+                path = path,
+            },
+            completion = {
+                enable = true,
+                callSnippet = "Both",
             },
             diagnostics = {
                 enable = true,
-                disable = {
-                    "trailing-space", "unused-local",
-                    "lowercase-global", "undefined-global"
-                },
                 globals = {
                     "vim",
                     "describe",
                     "it",
                     "before_each",
                     "after_each",
-                    "awesome",
                     "theme",
+                    "awesome",
+                    "screen",
                     "client",
                     "mouse",
                     "root",
@@ -53,8 +46,12 @@ M.config = {
                 },
             },
             workspace = {
-                preloadFileSize = 400,
+                maxPreload = 100000,
+                preloadFileSize = 10000,
                 library = library,
+            },
+            telemetry = {
+                enable = false,
             },
         },
     },

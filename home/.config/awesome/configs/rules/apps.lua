@@ -1,5 +1,6 @@
 local awful = require("awful")
 local ruled = require("ruled")
+local beautiful = require("beautiful")
 
 ruled.client.connect_signal("request::rules", function()
     -- Terminal {{{
@@ -204,8 +205,8 @@ ruled.client.connect_signal("request::rules", function()
             raise = true,
             titlebars_enabled = true,
             placement = centered_client_placement,
-            width = screen_width * 0.70,
-            height = screen_height * 0.60,
+            width = screen_width * 0.75,
+            height = screen_height * 0.80,
         },
     })
     -- }}}
@@ -308,10 +309,10 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Screen Mirroring (scrcpy) {{{
     ruled.client.append_rule({
-        rule_any = { 
-            class = { 
+        rule_any = {
+            class = {
                 "QtScrcpy", "scrcpy",
-            } 
+            }
         },
         properties = {
             titlebars_enabled = true,

@@ -9,7 +9,6 @@ application/x-extension-shtml=firefox.desktop
 application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
-x-scheme-handler/ferdi=ferdi.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;
@@ -23,5 +22,5 @@ application/xhtml+xml=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
 application/pdf=org.pwmt.zathura-pdf-poppler.desktop;
-image/jpeg=gimp.desktop;
+image/jpeg=feh.desktop;
 application/octetstream=nvim.desktop;

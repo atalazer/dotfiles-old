@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+DMENU="rofi -dmenu -i -p Screenshot -lines 10 -width 30"
 _XDG_=$(xdg-user-dir PICTURES)/Screenshots
 SCREENSHOT_DIR=${_XDG_:-$HOME/Pictures/Screenshots}
 SAVED_NAME=$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S)-maim.png
@@ -52,32 +53,34 @@ check_wm() {
 }
 
 parse(){
+    notify-send -t $((1000*3)) --app-name=screenshot "Shot" "Parsing Image"
+    
     IMG=$TMP_IMG
     DIR=/tmp
 
-    if [[ $border_size -ge 3 ]]; then
+    if [[ $add_mac_titlebar == true ]]; then
+        if [[ $add_text == true ]]; then
+            width=$(identify -format "%w" $IMG)
+            text="$long_text"
+            if (($width <= 200)); then
+                text="$shor_ttext"
+            fi
+        else
+            text=""
+        fi
 
-        # Generate image info
-        convert "$IMG" \
-            -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] '"${rounded_corner}"','"${rounded_corner}"''\
-        info: > $DIR/_rounded_.mvg
+        convert $IMG \
+            -font $font -gravity north \
+            -background ${color_bg} -fill ${color_fg} \
+            -splice 0x28 -annotate +0+7 "${text}" \
+            $IMG
 
-        # Generate rounding masked
-        convert "$IMG" -border ${border_size} -alpha transparent \
-            -background none -fill white -stroke none -strokewidth 0 \
-            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_mask_.png
-
-        # Generate rounding overlay
-        convert "$IMG" -border ${border_size} -alpha transparent \
-            -background none -fill none -stroke $_FG_COLOR_ -strokewidth ${border_size} \
-            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_overlay_.png
-
-        # Set rounded corner & border
-        convert "$IMG" -alpha set -bordercolor none -border ${border_size}  \
-            $DIR/_rounded_mask_.png -compose DstIn -composite \
-            $DIR/_rounded_overlay_.png -compose Over -composite \
-            "$IMG"
-    else
+        convert $IMG \
+            -gravity NorthWest -draw "image Over 13,7 0,0 '${close_icon}'" \
+            -gravity NorthWest -draw "image Over 33,7 0,0 '${min_icon}'" \
+            -gravity NorthWest -draw "image Over 53,7 0,0 '${max_icon}'" \
+            $IMG
+            
         # Set rounded corner
         convert "$IMG" \( +clone  -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
         \( +clone -flip \) -compose Multiply -composite \
@@ -86,26 +89,16 @@ parse(){
     fi
 
     # Set image shadow
-    convert $IMG \( +clone -background black \
-    -shadow ${shadow_size} \) +swap -background none \
-    -layers merge +repage $IMG
+    convert $IMG \
+        \( +clone -background black \
+        -shadow ${shadow_size} \) +swap -background none \
+        -layers merge +repage $IMG
 
     # Set image border
-    convert "$IMG" -bordercolor ${background_color} \
-        -border ${background_size} "$IMG"
-
-    # Set annotate if enabled
-    if [[ $add_annotate == true ]]; then
-        width=$(identify -format "%w" $IMG)
-        text="$long_text"
-        if (($width <= 200)); then
-            text="$shor_ttext"
-        fi
-
-        convert $IMG -font $font -gravity north \
-            -background ${background_color} -fill ${color_fg} \
-            -splice 0x18 -annotate +0+1 "$text" $IMG
-    fi
+    convert "$IMG" \
+        -bordercolor ${background_color} \
+        -border ${background_size} \
+        "$IMG"
 
     # Set image author if enabled
     if [[ $add_author == true ]]; then
@@ -127,17 +120,44 @@ parse(){
 }
 
 notify() {
-    _MSG=$1
-    _FILE=$SAVED_NAME
+    MSG=$1
+    FILE=$TMP_IMG
 
     if [[ "$(check_wm)" == "AWESOME" ]]; then
         awesome-client "
         -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
-        naughty = require('naughty')
-        awful = require('awful')
-        beautiful = require('beautiful')
-        dpi = beautiful.xresources.apply_dpi
+        local naughty = require('naughty')
+        local awful = require('awful')
+        local beautiful = require('beautiful')
+        local dpi = beautiful.xresources.apply_dpi
 
+        local file = '${FILE}'
+        local message = '${MSG}'
+
+        local notify_send = function(msg, action)
+            if type(action) ~= 'table' then
+                action = {}
+            end
+            naughty.notification ({
+                app_name = 'screenshot',
+                icon = file,
+                timeout = 5,
+                title = '<b>Shot</b>',
+                message = msg,
+                actions = action or nil,
+            })
+        end
+
+        local save_image = naughty.action {
+            name = 'Save',
+            icon_only = false,
+        }
+
+        local rename_image = naughty.action {
+            name = 'Rename',
+            icon_only = false,
+        }
+        
         local open_image = naughty.action {
             name = 'Open',
             icon_only = false,
@@ -148,51 +168,75 @@ notify() {
             icon_only = false,
         }
 
-        local to_clipboard = naughty.action {
-            name = 'Clip',
-            icon_only = false,
-        }
-
         local delete_image = naughty.action {
             name = 'Delete',
             icon_only = false,
         }
 
-        -- Execute the callback when 'Open' is pressed
+        local to_clipboard = naughty.action {
+            name = 'Clip',
+            icon_only = false,
+        }
+
+        local prompt_rename_image = function()
+            awful.prompt.run {
+                prompt       = 'New File Name: ',
+                textbox      = awful.screen.focused().mypromptbox.widget,
+                history_path = awful.util.get_cache_dir() .. '/history',
+                exe_callback = function(new_name)
+                    if not new_name or #new_name == 0 then return end
+                    local old_file_name = file
+                    local new_file_name = '${SCREENSHOT_DIR}/'..new_name..'.png'
+                    awful.spawn('mv '..file..' '..new_file_name, false)
+                    file = new_file_name
+
+                    awesome.emit_signal('notifbox::deleted')
+
+                    -- notify_send('Image Renamed From <b>'..old_file_name..'</b> To <b>'..file..'</b>', {})
+                    notify_send('Image Renamed To <b>'..file..'</b>',{ open_image, open_folder, to_clipboard, rename_image, delete_image })
+                end
+            }
+        end
+
+        delete_image:connect_signal('invoked', function()
+            awesome.emit_signal('notifbox::deleted')
+            awful.spawn('rm '..file, false)
+            notify_send(file..' Deleted', {})
+        end)
+
+        save_image:connect_signal('invoked', function()
+            awesome.emit_signal('notifbox::deleted')
+            oldfile = file
+            file = '${SAVED_NAME}'
+            awful.spawn('cp '..oldfile..' '..file, false)
+            notify_send(message, { open_image, open_folder, to_clipboard, rename_image, delete_image })
+        end)
+
         open_image:connect_signal('invoked', function()
-            awful.spawn('xdg-open ' .. '${_FILE}', false)
+            awful.spawn('feh ' .. file, false)
         end)
 
         open_folder:connect_signal('invoked', function()
             awful.spawn('xdg-open ' .. '${SCREENSHOT_DIR}', false)
         end)
 
-        -- Execute the callback when 'Clipboard' is pressed
         to_clipboard:connect_signal('invoked', function()
-            awful.spawn('xclip -selection clipboard -i '..'${_FILE}'..' -t image/png', false)
+            awful.spawn('xclip -selection clipboard -i '..file..' -t image/png', false)
         end)
 
-        -- Execute the callback when 'Delete' is pressed
-        delete_image:connect_signal('invoked', function()
-            awful.spawn('gio trash ' .. '${_FILE}', false)
+        rename_image:connect_signal('invoked', function()
+            prompt_rename_image()
         end)
 
-        -- Show notification
-        naughty.notification ({
-            app_name = 'screenshot',
-            icon = '${_FILE}',
-            timeout = 5,
-            title = '<b>Shot</b>',
-            message = '${_MSG}',
-            actions = { open_image, open_folder, to_clipboard, delete_image }
-        })
+        notify_send(message, { open_image, to_clipboard, save_image, delete_image })
         "
     elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
-        notify-send --app-name=screenshot "Shot" "${_MSG}"
+        notify-send --app-name=screenshot "Shot" "${MSG}"
     fi
 }
 
 to_clip(){
+    notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard"
     if [ $XDG_SESSION_TYPE == "wayland" ]; then
         wl-copy < $TMP_IMG
     else
@@ -202,54 +246,45 @@ to_clip(){
 }
 
 _shot(){
+    check
     if [ $XDG_SESSION_TYPE == "wayland" ]; then
         case $1 in
             normal) grimshot output $TMP_IMG ;;
             active) grimshot active $TMP_IMG ;;
             select) grimshot area $TMP_IMG ;;
-            delay) sleep $sleep && grimshot output $TMP_IMG  ;;
+            delay) 
+                notify-send -t $((1000*1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
+                sleep $sleep && \
+                    grimshot output $TMP_IMG  ;;
         esac
     else
         case $1 in
             normal) maim -m 1 $TMP_IMG ;;
             active) maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG ;;
             select) maim -u -m 1 -s $TMP_IMG ;;
-            delay) maim -m 1 -d $sleep $TMP_IMG ;;
+            delay)
+                notify-send -t $((1000*1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
+                maim -m 1 -d $sleep $TMP_IMG ;;
         esac
     fi
 }
 
 _noparse(){
     case $1 in
-        clipboard)
-            check && \
-            _shot normal && \
-            notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard" && \
-            to_clip
-        ;;
         full)
-            check && \
             _shot normal && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"
         ;;
         active)
-            check && \
             _shot active && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot from Active Windows Saved"
         ;;
         select)
-            check && \
             _shot select && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Selected Has been Saved"
         ;;
         delay)
-            check && \
-            notify-send --app-name=screenshot "Shot" "Shot After ${sleep} Sec" && \
             _shot delay && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"
         ;;
     esac
@@ -257,60 +292,59 @@ _noparse(){
 
 _parse(){
     case $1 in
-        clipboard)
-            check && \
-            _shot normal && \
-            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
-            parse && \
-            notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard" && \
-            to_clip
-        ;;
         full)
-            check && \
             _shot normal && \
-            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"
         ;;
         active)
-            check && \
             _shot active && \
-            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot from Active Windows Saved"
         ;;
         select)
-            check && \
             _shot select && \
-            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Selected Has been Saved"
         ;;
         delay)
-            check && \
-            notify-send --app-name=screenshot "Shot" "Shot After ${sleep} Sec" && \
             _shot delay && \
-            notify-send --app-name=screenshot "Shot" "Parsing Image ..." && \
             parse && \
-            cp $TMP_IMG $SAVED_NAME && \
             notify "Screenshot Saved"
         ;;
     esac
 }
 
-OPT=${1:-save_noparse}
+interactive(){
+    OPTIONS='''
+    [
+        ["Active",                  "_parse active"],
+        ["Clipboard",               "_parse clipboard"],
+        ["Delay",                   "_parse delay"],
+        ["Fullscreen",              "_parse full"],
+        ["Select",                  "_parse select"],
+        ["Active (Noparse)",        "_noparse active"],
+        ["Clipboard (Noparse)",     "_noparse clipboard"],
+        ["Fullscreen (Noparse)",    "_noparse full"],
+        ["Delay (Noparse)",         "_noparse delay"],
+        ["Select (Noparse)",        "_noparse select"]
+    ]
+    '''
+    menu=$(echo $OPTIONS | jq -r ".[][0]" | $DMENU)
+    $(echo $OPTIONS | jq -r ".[] | select(.[0] == \"$menu\") | .[1]")
+}
+
+OPT=${1:-interactive}
 case $OPT in
-    active)             _parse active ;;
-    clipboard)          _parse clipboard ;;
-    delay)              _parse delay;;
-    full)               _parse full ;;
-    select)             _parse select ;;
-    active_noparse)     _noparse active ;;
-    clipboard_noparse)  _noparse clipboard ;;
-    delay_noparse)      _noparse delay ;;
-    full_noparse)       _noparse full ;;
-    select_noparse)     _noparse select ;;
+    -a|active)             _parse active ;;
+    -c|clipboard)          _parse clipboard ;;
+    -d|delay)              _parse delay;;
+    -f|full)               _parse full ;;
+    -s|select)             _parse select ;;
+    -A|active_noparse)     _noparse active ;;
+    -C|clipboard_noparse)  _noparse clipboard ;;
+    -D|delay_noparse)      _noparse delay ;;
+    -F|full_noparse)       _noparse full ;;
+    -S|select_noparse)     _noparse select ;;
+    -i|interactive)        interactive;;
 esac

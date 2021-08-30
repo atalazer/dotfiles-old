@@ -1,7 +1,6 @@
 local M = {}
 
 M.config = {
-    cmd = {"typescript-language-server", "--stdio"},
     filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" },
     init_options = {
         documentFormatting = false,
