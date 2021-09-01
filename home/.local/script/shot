@@ -1,43 +1,70 @@
 #!/usr/bin/env bash
 
-DMENU="rofi -dmenu -i -p Screenshot -lines 10 -width 30"
-_XDG_=$(xdg-user-dir PICTURES)/Screenshots
-SCREENSHOT_DIR=${_XDG_:-$HOME/Pictures/Screenshots}
-SAVED_NAME=$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S)-maim.png
-TMP_IMG=/tmp/image.png
+#vim: ft=sh: sw=2: ts=2:
 
-sleep=3
+CONF=~/.config/script/shot.conf
 
-border_size=1
-rounded_corner=3
-shadow_size="50x10+0+10"
+default_config(){
+    _XDG_="$(xdg-user-dir PICTURES)/Screenshots"
+    ASSET_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/script/shot"
+    SCREENSHOT_DIR="${_XDG_:-$HOME/Pictures/Screenshots}"
+    SAVED_NAME="$SCREENSHOT_DIR/$(date +%Y%m%d-%H%M%S)-shot.png"
+    TMP_DIR="/tmp"
+    TMP_FILE="$TMP_DIR/image"
+    IMG_EXT="png"
+    TMP_IMG="$TMP_FILE.$IMG_EXT"
 
-background_size=3
-background_color="#ffffff"
-color_fg="#ffffff"
-color_bg="#1F2233"
-color_profile="/usr/share/color/icc/colord/sRGB.icc"
+    DMENU="rofi -dmenu -i -p Screenshot -lines 6 -width 20"
+    
+    sleep=3
+    max_history=5
 
-font_size=11
-font='JetBrains-Mono-Bold-Nerd-Font-Complete'
+    border_size=0
+    rounded_corner=0
+    shadow_size="80x5+0+0"
 
-add_annotate=false
-long_text="$(date '+%A, %d/%m/%Y') $(date '+%H:%M:%S')"
-short_text="$(date '+%d/%m/%Y')"
+    background_size=3
+    background_color="#ffffff"
+    color_fg="#ffffff"
+    color_bg="#1F2233"
+    color_profile="/usr/share/color/icc/colord/sRGB.icc"
 
-add_author=false
-author_position=("South" "+0+26")
-author="By: Atalariq Barra H."
+    font_size=12
+    font='Fura-Code-Regular-Nerd-Font-Complete'
 
-[[ -f ~/.config/script/shot.conf ]] && source ~/.config/script/shot.conf
+    add_author=false
+    author_position=("SouthEast" "+10+10")
+    author="@${USER}"
 
-check(){
-    if [ ! -d "$SCREENSHOT_DIR" ];then
-        /bin/mkdir -p "$SCREENSHOT_DIR"
-    fi
+    add_text=false
+    long_text="$(date '+%A, %d/%m/%Y')"
+    short_text="$(date '+%d/%m/%Y')"
 
-    if [[ -f "$TMP_IMG" ]]; then
-        /usr/bin/rm "$TMP_IMG"
+    add_titlebar=false
+    use_custom_titlebar=false
+    titlebar_only_active=true
+
+    close_icon="$ASSET_DIR/close.png"
+    min_icon="$ASSET_DIR/minimize.png"
+    max_icon="$ASSET_DIR/maximize.png"
+}
+
+[[ -f $CONF ]] && source $CONF || default_config
+
+if [ ! -d "$SCREENSHOT_DIR" ]; then
+    /bin/mkdir -p "$SCREENSHOT_DIR"
+fi
+
+clean() {
+    if [[ -f $TMP_IMG ]]; then
+        # /usr/bin/rm "$TMP_IMG"
+        /usr/bin/mv $TMP_IMG "${TMP_FILE}-$(date '+%H%M%S').${IMG_EXT}"
+
+        if [[ $(ls $TMP_DIR | grep ".${IMG_EXT}" > $TMP_DIR/total-image && \
+            wc -l < $TMP_DIR/total-image) == $max_history ]]; then
+            /usr/bin/rm "${TMP_DIR}/*.${IMG_EXT}"
+            /usr/bin/rm $TMP_DIR/total-image
+        fi
     fi
 }
 
@@ -45,30 +72,35 @@ check(){
 check_wm() {
     # Identify environment
     DE="${DESKTOP_STARTUP_ID}"
-    if [[ ! -z "$DE" && "$DE" == *"awesome"* ]] || [[ ! -z "$CHECK_AWESOME_CLIENT" ]]; then
+    if [[ ! -z $DE && $DE == *"awesome"* ]] || [[ -n $CHECK_AWESOME_CLIENT ]]; then
         echo "AWESOME"
         return
     fi
     echo "NOT_AWESOME"
 }
 
-parse(){
-    notify-send -t $((1000*3)) --app-name=screenshot "Shot" "Parsing Image"
-    
+parse() {
+    notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Parsing Image"
+
     IMG=$TMP_IMG
     DIR=/tmp
 
-    if [[ $add_mac_titlebar == true ]]; then
-        if [[ $add_text == true ]]; then
-            width=$(identify -format "%w" $IMG)
-            text="$long_text"
-            if (($width <= 200)); then
-                text="$shor_ttext"
-            fi
+    width=$(identify -format "%w" $IMG)
+    height=$(identify -format "%h" $IMG)
+    if [[ $add_text == true ]]; then
+        if [[ -n $text ]]; then
+            text=$text
         else
-            text=""
+            text="$long_text"
+            if ((width <= 200)); then
+                text="$shor_text"
+            fi
         fi
+    else
+        text=""
+    fi
 
+    if [[ $use_custom_titlebar == true ]]; then
         convert $IMG \
             -font $font -gravity north \
             -background ${color_bg} -fill ${color_fg} \
@@ -80,13 +112,43 @@ parse(){
             -gravity NorthWest -draw "image Over 33,7 0,0 '${min_icon}'" \
             -gravity NorthWest -draw "image Over 53,7 0,0 '${max_icon}'" \
             $IMG
-            
+
         # Set rounded corner
-        convert "$IMG" \( +clone  -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
-        \( +clone -flip \) -compose Multiply -composite \
-        \( +clone -flop \) -compose Multiply -composite \
-        \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
+        convert "$IMG" \( +clone -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
+            \( +clone -flip \) -compose Multiply -composite \
+            \( +clone -flop \) -compose Multiply -composite \
+            \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
     fi
+
+    if [[ $border_size -ge 3 ]]; then
+        # Generate image info
+        convert "$IMG" \
+            -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] '"${rounded_corner}"','"${rounded_corner}"'' \
+            info: >$DIR/_rounded_.mvg
+
+        # Generate rounding masked
+        convert "$IMG" -border ${border_size} -alpha transparent \
+            -background none -fill white -stroke none -strokewidth 0 \
+            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_mask_.png
+
+        # Generate rounding overlay
+        convert "$IMG" -border ${border_size} -alpha transparent \
+            -background none -fill none -stroke ${color_fg} -strokewidth ${border_size} \
+            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_overlay_.png
+
+        # Set rounded corner & border
+        convert "$IMG" -alpha set -bordercolor none -border ${border_size} \
+            $DIR/_rounded_mask_.png -compose DstIn -composite \
+            $DIR/_rounded_overlay_.png -compose Over -composite \
+            "$IMG"
+    else
+        # Set rounded corner
+        convert "$IMG" \( +clone -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
+            \( +clone -flip \) -compose Multiply -composite \
+            \( +clone -flop \) -compose Multiply -composite \
+            \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
+    fi
+
 
     # Set image shadow
     convert $IMG \
@@ -103,14 +165,14 @@ parse(){
     # Set image author if enabled
     if [[ $add_author == true ]]; then
         echo -n " ${author} " | convert $IMG \
-        -gravity ${author_position[0]} -pointsize ${font_size} -fill ${color_fg} \
-        -undercolor ${color_bg} -font ${font} \
-        -annotate ${author_position[1]} @- $IMG && \
-        convert $IMG -gravity South -chop 0x$(( $background_size / 2)) $IMG
-    
+            -gravity ${author_position[0]} -pointsize ${font_size} -fill ${color_fg} \
+            -undercolor ${color_bg} -font ${font} \
+            -annotate ${author_position[1]} @- $IMG &&
+            convert $IMG -gravity South -chop 0x$((background_size / 2)) $IMG
+
         # Add top bg
         convert $IMG -gravity North -background ${background_color} \
-            -splice 0x$(( $background_size / 2)) $IMG
+            -splice 0x$((background_size / 2)) $IMG
 
     fi
 
@@ -235,99 +297,195 @@ notify() {
     fi
 }
 
-to_clip(){
+to_clip() {
     notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard"
     if [ $XDG_SESSION_TYPE == "wayland" ]; then
-        wl-copy < $TMP_IMG
+        wl-copy <$TMP_IMG
     else
         xclip -selection clipboard -i $TMP_IMG -t image/png
     fi
 
 }
 
-_shot(){
-    check
+_shot() {
+    clean
     if [ $XDG_SESSION_TYPE == "wayland" ]; then
         case $1 in
-            normal) grimshot output $TMP_IMG ;;
-            active) grimshot active $TMP_IMG ;;
-            select) grimshot area $TMP_IMG ;;
-            delay) 
-                notify-send -t $((1000*1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
-                sleep $sleep && \
-                    grimshot output $TMP_IMG  ;;
+        normal)
+            grimshot output $TMP_IMG
+            ;;
+        select)
+            grimshot area $TMP_IMG
+            ;;
+        active)
+            grimshot active $TMP_IMG
+            ;;
+        delay)
+            notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
+            sleep $sleep &&
+                grimshot output $TMP_IMG
+            ;;
         esac
     else
         case $1 in
-            normal) maim -m 1 $TMP_IMG ;;
-            active) maim -u -m 1 -i $(xdotool getactivewindow) $TMP_IMG ;;
-            select) maim -u -m 1 -s $TMP_IMG ;;
-            delay)
-                notify-send -t $((1000*1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
-                maim -m 1 -d $sleep $TMP_IMG ;;
+        normal)
+            maim -m 10 $TMP_IMG
+            ;;
+        select)
+            if [[ $use_custom_titlebar == true ]]; then
+                maim -u -m 10 -s $TMP_IMG
+            else
+                maim -u -m 10 -n 0 -s $TMP_IMG
+            fi
+            ;;
+        active)
+            if [[ $use_custom_titlebar == true ]]; then
+                maim -u -m 10 -i $(xdotool getactivewindow) $TMP_IMG
+            else
+                maim -u -m 10 -n 0 -i $(xdotool getactivewindow) $TMP_IMG
+            fi
+            ;;
+        delay)
+            notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
+            maim -m 10 -d $sleep $TMP_IMG
+            ;;
         esac
+    fi
+
+    if [[ $titlebar_only_active == true ]]; then
+        if [[ $1 == "active" ]]; then
+            # add_titlebar=true
+            text="$(xdotool getwindowname $(xdotool getactivewindow))"
+        else
+            add_titlebar=false
+        fi
     fi
 }
 
-_noparse(){
+_noparse() {
     case $1 in
-        full)
-            _shot normal && \
+    full)
+        _shot normal &&
             notify "Screenshot Saved"
         ;;
-        active)
-            _shot active && \
+    active)
+        _shot active &&
             notify "Screenshot from Active Windows Saved"
         ;;
-        select)
-            _shot select && \
+    select)
+        _shot select &&
             notify "Screenshot Selected Has been Saved"
         ;;
-        delay)
-            _shot delay && \
+    delay)
+        _shot delay &&
             notify "Screenshot Saved"
         ;;
     esac
 }
 
-_parse(){
+_parse() {
     case $1 in
-        full)
-            _shot normal && \
-            parse && \
+    full)
+        _shot normal &&
+            parse &&
             notify "Screenshot Saved"
         ;;
-        active)
-            _shot active && \
-            parse && \
+    active)
+        _shot active &&
+            parse &&
             notify "Screenshot from Active Windows Saved"
         ;;
-        select)
-            _shot select && \
-            parse && \
+    select)
+        _shot select &&
+            parse &&
             notify "Screenshot Selected Has been Saved"
         ;;
-        delay)
-            _shot delay && \
-            parse && \
+    delay)
+        _shot delay &&
+            parse &&
             notify "Screenshot Saved"
         ;;
     esac
 }
 
-interactive(){
+image-to-text() {
+    IMG=/tmp/image-ocr.png
+    TXT=/tmp/shot-ocr
+
+    # Get with `tesseract --list-langs`
+    LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Target Language") &&
+        notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Select Region To Scan" &&
+        _shot select
+
+    if [[ -n $LANG ]]; then
+
+        notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Parse Image to Text"
+
+        # https://tesseract-ocr.github.io/tessdoc/ImproveQuality
+        # https://stackoverflow.com/questions/9480013/image-processing-to-improve-tesseract-ocr-accuracy/10034214#10034214
+        # https://legacy.imagemagick.org/Usage/transform/#vision
+        #
+        # --- Improve Quality
+        # - Add white border
+        # - Remove Transparancy
+        # -
+        # - Monochrome
+        convert $TMP_IMG \
+            -bordercolor White -border 10x10 \
+            -alpha off \
+            -units pixelsperinch -density 300x300 -colorspace Gray -depth 8 \
+            +dither -monochrome -normalize \
+            $IMG
+
+        # Textcleaner: http://www.fmwconcepts.com/imagemagick/textcleaner/index.php
+        # if command -v "textcleaner" > /dev/null 2>&1; then
+        #    textcleaner \
+        #       -g -e none \
+        #       -s 1 \
+        #       $IMG $IMG
+        # fi
+
+        # Compressing
+        # https://stackoverflow.com/questions/7261855/recommendation-for-compressing-jpg-files-with-imagemagick
+        # convert $IMG \
+        #    -strip \
+        #    -interlace Plane \
+        #    -gaussian-blur 0.05 \
+        #    -quality 85% \
+        #    $IMG
+
+        tesseract \
+            -l $LANG \
+            --dpi 300 \
+            $IMG \
+            $TXT
+
+        result=$(cat $TXT.txt)
+        countword=$(wc -w <$TXT.txt)
+
+        echo -n "$result" | xclip -selection clipboard
+        if [[ $countword -le 30 ]]; then
+            notify-send -t $((1000 * 5)) --app-name=screenshot \
+                "Shot" "<b>Text Copied to Clipboard</b>:\n$result"
+        else
+            notify-send -t $((1000 * 3)) --app-name=screenshot \
+                "Shot" "<b>Text Copied to Clipboard</b>"
+        fi
+    fi
+}
+
+interactive() {
     OPTIONS='''
     [
         ["Active",                  "_parse active"],
-        ["Clipboard",               "_parse clipboard"],
         ["Delay",                   "_parse delay"],
         ["Fullscreen",              "_parse full"],
         ["Select",                  "_parse select"],
         ["Active (Noparse)",        "_noparse active"],
-        ["Clipboard (Noparse)",     "_noparse clipboard"],
         ["Fullscreen (Noparse)",    "_noparse full"],
         ["Delay (Noparse)",         "_noparse delay"],
-        ["Select (Noparse)",        "_noparse select"]
+        ["Select (Noparse)",        "_noparse select"],
+        ["Image to Text",           "image-to-text"]
     ]
     '''
     menu=$(echo $OPTIONS | jq -r ".[][0]" | $DMENU)
@@ -336,15 +494,49 @@ interactive(){
 
 OPT=${1:-interactive}
 case $OPT in
-    -a|active)             _parse active ;;
-    -c|clipboard)          _parse clipboard ;;
-    -d|delay)              _parse delay;;
-    -f|full)               _parse full ;;
-    -s|select)             _parse select ;;
-    -A|active_noparse)     _noparse active ;;
-    -C|clipboard_noparse)  _noparse clipboard ;;
-    -D|delay_noparse)      _noparse delay ;;
-    -F|full_noparse)       _noparse full ;;
-    -S|select_noparse)     _noparse select ;;
-    -i|interactive)        interactive;;
+-a | active) _parse active ;;
+-d | delay) _parse delay ;;
+-f | full) _parse full ;;
+-s | select) _parse select ;;
+-A | active_noparse) _noparse active ;;
+-D | delay_noparse) _noparse delay ;;
+-F | full_noparse) _noparse full ;;
+-S | select_noparse) _noparse select ;;
+-i | interactive) interactive ;;
+-o | ocr | image-to-text) image-to-text ;;
+dump)
+    echo "$_XDG_"
+    echo "$ASSET_DIR"
+    echo "$SCREENSHOT_DIR"
+    echo "$SAVED_NAME"
+    echo "$TMP_DIR"
+    echo "$TMP_FILE"
+    echo "$IMG_EXT"
+    echo "$TMP_IMG"
+    echo "$DMENU"
+    echo "$sleep"
+    echo "$max_history"
+    echo "$border_size"
+    echo "$rounded_corner"
+    echo "$shadow_size"
+    echo "$background_size"
+    echo "$background_color"
+    echo "$color_fg"
+    echo "$color_bg"
+    echo "$color_profile"
+    echo "$font_size"
+    echo "$font"
+    echo "$add_author"
+    echo "$author_position"
+    echo "$author"
+    echo "$add_text"
+    echo "$long_text"
+    echo "$short_text"
+    echo "$add_titlebar"
+    echo "$use_custom_titlebar"
+    echo "$titlebar_only_active"
+    echo "$close_icon"
+    echo "$min_icon"
+    echo "$max_icon"
+;;
 esac

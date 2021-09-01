@@ -18,11 +18,12 @@ local keys = gears.table.join(
         t = { "rofi_translate -i", "Translate" },
         F12 = { apps.record, "Record Menu" },
         Insert = { apps.clipboard, "Clipboard Manager" },
-        Print = { "shot -i", "Screenshot Menu" },
+        Print = { "shot -i", "Shot Menu" },
     }),
 
     l.keys("Apps: Prompt", { superkey, shiftkey }, {
         t = { "rofi_translate -c", "Translate From Clipboard" },
+        Print = { "shot -o", "Shot Image to Text" },
     }),
 
     -- }}}

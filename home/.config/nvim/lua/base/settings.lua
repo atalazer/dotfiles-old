@@ -34,7 +34,7 @@ local options = {
     backspace = "eol,start,indent",
     backupcopy = "yes",
     clipboard = "unnamedplus",
-    completeopt = { "menu", "menuone", "noselect", "noinsert" },
+    -- completeopt = { "menu", "menuone", "noselect", "noinsert" },
     encoding = "UTF-8",
     fillchars = { vert = "│", eob = " ", fold = " ", diff = " " },
     formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2",
@@ -46,7 +46,7 @@ local options = {
     -- foldnestmax    = 1,
     inccommand = "split",
     listchars = {
-        tab = "→ ",
+        tab = "  ",
         eol = "↴",
         nbsp = "_",
         trail = "·",

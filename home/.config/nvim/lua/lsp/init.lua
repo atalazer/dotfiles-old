@@ -28,57 +28,47 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
     },
 }
 
-local required_servers = {
-    "bashls",
-    "cssls",
-    "clangd",
-    "html",
-    "jedi_language_server",
-    "jsonls",
-    "sumneko_lua",
-    "tailwindcss",
-    "tsserver",
-    "texlab",
-    "vimls",
-    "yamlls",
+local servers = {
+    bashls = {
+        filetypes = { "bash", "sh", "zsh" },
+    },
+    cssls = {},
+    clangd = {},
+    html = {},
+    jedi_language_server = require("lsp.server.jedi").config,
+    jsonls = require("lsp.server.json").config,
+    sumneko_lua = require("lsp.server.sumneko_lua").config,
+    texlab = require("lsp.server.texlab").config,
+    tailwindcss = {
+        filetypes = { "html", "css", "javascriptreact", "typescriptreact" }
+    },
+    tsserver = require("lsp.server.tsserver").config,
+    vimls = {},
+    yamlls = {},
+    ["null-ls"] = {},
 }
 
-for _, server_name in ipairs(required_servers) do
-    local exist, server = lsp_installer.get_server(server_name)
+require("plugins.null-ls").setup()
+
+for name,opts in pairs(servers) do
+    local exist, server = lsp_installer.get_server(name)
     if exist then
         if not server:is_installed() then
             server:install()
         end
+        server:setup(vim.tbl_extend("force", {
+            flags = { debounce_text_changes = 150 },
+            on_attach = Util.lsp_on_attach,
+            on_init = Util.lsp_on_init,
+            capabilities = capabilities,
+        }, opts))
+    else
+        lspconfig[name].setup(vim.tbl_extend("force", {
+            flags = { debounce_text_changes = 150 },
+            on_attach = Util.lsp_on_attach,
+            on_init = Util.lsp_on_init,
+            capabilities = capabilities,
+        }, opts))
     end
 end
 
-lsp_installer.on_server_ready(function(server)
-    local opts = {
-        on_attach = Util.lsp_on_attach,
-        on_init = Util.lsp_on_init,
-        capabilities = capabilities,
-        flags = { debounce_text_changes = 500 },
-    }
-
-    local custom_settings = {
-        jedi_language_server = require("lsp.server.jedi").config,
-        jsonls = require("lsp.server.json").config,
-        sumneko_lua = require("lsp.server.sumneko_lua").config,
-        texlab = require("lsp.server.texlab").config,
-        tsserver = require("lsp.server.tsserver").config,
-        ["null-ls"] = {},
-    }
-
-    for name, custom_opts in pairs(custom_settings) do
-        if server.name == name then
-            -- server:setup(vim.tbl_deep_extend("force", opts, custom_opts))
-            server:setup(custom_opts)
-        else
-            server:setup(opts)
-        end
-    end
-
-    require("plugins.null-ls").setup()
-    -- vim.cmd("bufdo e")
-    -- vim.cmd("do User LspAttachBuffers")
-end)

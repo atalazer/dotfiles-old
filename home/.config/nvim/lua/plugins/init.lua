@@ -8,7 +8,7 @@ local ensure = function(user, repo)
             [[
             !git clone https://github.com/%s/%s %s
             packadd %s
-        ]],
+            ]],
             user,
             repo,
             install_path,
@@ -59,8 +59,8 @@ local plugins = {
 
     {
         "lewis6991/impatient.nvim",
-        rocks = "mpack",
         event = "VimEnter",
+        rocks = "mpack",
         config = function()
             require("impatient")
         end,
@@ -69,12 +69,10 @@ local plugins = {
     {
         "nvim-lua/popup.nvim",
         module = "popup",
-        after = "impatient.nvim",
     },
     {
         "nvim-lua/plenary.nvim",
         module = "plenary",
-        after = "impatient.nvim",
     },
 
     {
@@ -82,6 +80,7 @@ local plugins = {
         after = "impatient.nvim",
         config = function()
             vim.notify = function(msg, kind, opts)
+                kind = kind or "info"
                 opts = vim.tbl_deep_extend("keep", opts, { timeout = 3000 })
                 require("notify")(msg, kind, opts)
             end
@@ -123,14 +122,11 @@ local plugins = {
             }
             local color = color_list[1]
             vim.cmd("colorscheme " .. color)
-            -- require(color).colorscheme()
-            -- require("xresources").colorscheme()
         end,
     },
     -- Dashboard
     {
         "glepnir/dashboard-nvim",
-        after = "impatient.nvim",
         cmd = { "Dashboard", "SessionLoad", "SessionSave" },
         setup = function()
             local map = function(lhs, rhs)
@@ -147,7 +143,6 @@ local plugins = {
     -- vim-devicons written in lua
     {
         "kyazdani42/nvim-web-devicons",
-        after = "impatient.nvim",
         module = "nvim-web-devicons",
         wants = "nvim-nonicons",
         requires = {
@@ -158,59 +153,234 @@ local plugins = {
         end,
     },
 
-    -- Snazzy bufferline
-    {
-        "akinsho/nvim-bufferline.lua",
-        after = "impatient.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        config = function()
-            require("plugins.bufferline")
-        end,
-    },
-
     -- Beautiful Statusline with Animation
     {
         "windwp/windline.nvim",
-        after = "impatient.nvim",
         event = { "BufReadPre", "BufNewFile" },
         config = function()
             require("plugins.windline")
         end,
     },
 
+    -- Snazzy bufferline
+    {
+        "akinsho/nvim-bufferline.lua",
+        event = { "BufReadPre", "BufNewFile" },
+        config = function()
+            require("plugins.bufferline")
+        end,
+    },
+
     -- Indenting
     {
         "lukas-reineke/indent-blankline.nvim",
-        after = "impatient.nvim",
         event = { "BufReadPre", "BufNewFile" },
+        cmd = {
+            "IndentBlanklineEnable",
+            "IndentBlanklineDisable",
+            "IndentBlanklineRefresh",
+        },
         setup = function()
             require("plugins.indent-blankline")
         end,
     },
 
+    -- vim which key
+    {
+        "folke/which-key.nvim",
+        event = "BufWinEnter",
+        config = function()
+            require("plugins.which-key")
+        end,
+    },
+
+    -- ======= LSP, Completion and Snippet =======
+    {
+        "neovim/nvim-lspconfig",
+        event = { "BufReadPre", "BufNewFile" },
+        requires = {
+            {
+                "williamboman/nvim-lsp-installer",
+                module = "nvim-lsp-installer",
+                cmd = {
+                    "LspInstall",
+                    "LspUninstall",
+                    "LspUninstallAll",
+                    "LspPrintInstalled",
+                },
+            },
+            {
+                "jose-elias-alvarez/null-ls.nvim",
+                module = "null-ls",
+            },
+            {
+                "ray-x/lsp_signature.nvim",
+                module = "lsp_signature",
+            },
+            {
+                "folke/lsp-trouble.nvim",
+                cmd = { "Trouble", "TroubleToggle" },
+                config = function()
+                    require("plugins.trouble")
+                end,
+            },
+        },
+        config = function()
+            require("lsp")
+        end,
+    },
+
+    {
+        "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
+        requires = {
+            {
+                "L3MON4D3/LuaSnip",
+                after = "nvim-cmp",
+                config = function()
+                    require("plugins.luasnip")
+                end,
+            },
+            {
+                "rafamadriz/friendly-snippets",
+                after = "LuaSnip",
+            },
+
+            { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
+            { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
+            { "hrsh7th/cmp-calc", after = "cmp-buffer" },
+            { "hrsh7th/cmp-path", after = "cmp-nvim-lua" },
+            { "hrsh7th/cmp-emoji", after = "cmp-calc" },
+            { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
+            { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+            { "f3fora/cmp-spell", after = "cmp-buffer" },
+        },
+        config = function()
+            require("plugins.cmp")
+        end,
+    },
+
+    {
+        "mattn/emmet-vim",
+        cmd = "EmmetInstall",
+        setup = function()
+            vim.g.user_emmet_install_global = 0
+            vim.g.user_emmet_mode = "a"
+            vim.g.user_emmet_leader_key = ","
+        end,
+    },
+
+    -- ======= Languange =======
+    -- EditorConfig for vim
+    {
+        "editorconfig/editorconfig-vim",
+        event = { "BufReadPre", "BufNewFile" },
+        setup = function()
+            vim.g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*", "term://.*" }
+            vim.g.EditorConfig_disable_rules = { "trim_trailing_whitespace" }
+            vim.cmd([[
+                au FileType gitcommit let b:EditorConfig_disable = 1
+            ]])
+        end,
+    },
+
+    -- Semantic highlight
+    {
+        "nvim-treesitter/nvim-treesitter",
+        event = { "BufRead", "BufNewFile" },
+        run = ":TSUpdate",
+        requires = {
+            {
+                "nvim-treesitter/nvim-treesitter-textobjects",
+                after = "nvim-treesitter",
+            },
+            {
+                "nvim-treesitter/nvim-treesitter-refactor",
+                after = "nvim-treesitter",
+            },
+            {
+                "JoosepAlviste/nvim-ts-context-commentstring",
+                after = "nvim-treesitter",
+            },
+            {
+                "windwp/nvim-ts-autotag",
+                after = { "nvim-treesitter", "nvim-autopairs" },
+            },
+        },
+        config = function()
+            require("plugins.treesitter")
+        end,
+    },
+
+    -- LaTeX Support with Texlab LSP
+    {
+        "jakewvincent/texmagic.nvim",
+        ft = { "tex", "bib", "latex" },
+        config = function()
+            vim.g["tex_flavor"] = "latex"
+            require("texmagic").setup({
+                engines = {
+                    pdflatex = {
+                        executable = "latexmk",
+                        args = {
+                            "-pdflatex",
+                            "-interaction=nonstopmode",
+                            "-synctex=1",
+                            "-pv",
+                            "%f",
+                        },
+                        isContinuous = false,
+                    },
+                },
+            })
+        end,
+    },
+
+    -- nim Support
+    {
+        "alaviss/nim.nvim",
+        ft = "nim",
+    },
+
+    -- Markdown Support
+    {
+        "plasticboy/vim-markdown",
+        ft = "markdown",
+        setup = function()
+            vim.g.vim_markdown_folding_disabled = 1
+            vim.g.vim_markdown_frontmatter = 1
+            vim.g.vim_markdown_math = 1
+        end,
+    },
+
+    -- Vim Table mode
+    {
+        "dhruvasagar/vim-table-mode",
+        ft = { "text", "markdown" },
+    },
+
     -- ======= Experience =======
+    -- Sandwiched textobjects.
+    {
+        "machakann/vim-sandwich",
+        -- event = "CursorMoved",
+        keys = "s",
+    },
+
     -- Easy Commenting
     {
         "tpope/vim-commentary",
-        after = "impatient.nvim",
         keys = "gc",
     },
 
     -- Align
     {
         "junegunn/vim-easy-align",
-        after = "impatient.nvim",
         keys = "<Plug>(EasyAlign)",
         setup = function()
             vim.api.nvim_set_keymap("n", "ga", "<Plug>(EasyAlign)", { noremap = false, silent = true })
             vim.api.nvim_set_keymap("x", "ga", "<Plug>(EasyAlign)", { noremap = false, silent = true })
         end,
-    },
-
-    -- Sandwiched textobjects.
-    {
-        "machakann/vim-sandwich",
-        after = "impatient.nvim",
     },
 
     -- Neovim Autopair Plugin
@@ -237,7 +407,6 @@ local plugins = {
 
     {
         "ggandor/lightspeed.nvim",
-        after = "impatient.nvim",
         keys = {
             "<Plug>Lightspeed_f",
             "<Plug>Lightspeed_F",
@@ -270,7 +439,6 @@ local plugins = {
 
     {
         "monaqa/dial.nvim",
-        after = "impatient.nvim",
         keys = {
             "<Plug>(dial-increment)",
             "<Plug>(dial-increment-additional)",
@@ -320,8 +488,7 @@ local plugins = {
     -- gf like plugins
     {
         "notomo/curstr.nvim",
-        after = "impatient.nvim",
-        event = { "BufRead" },
+        event = "CursorMoved",
         setup = function()
             local nnoremap = vim.keymap.nnoremap
             nnoremap({
@@ -343,7 +510,6 @@ local plugins = {
     -- Show Color
     {
         "norcalli/nvim-colorizer.lua",
-        after = "impatient.nvim",
         cmd = "ColorizerToggle",
         setup = function()
             local map = function(lhs, rhs)
@@ -360,204 +526,10 @@ local plugins = {
         end,
     },
 
-    -- ======= Languange =======
-    -- Semantic highlight
-    {
-        "nvim-treesitter/nvim-treesitter",
-        after = "impatient.nvim",
-        event = { "BufRead", "BufNewFile" },
-        run = ":TSUpdate",
-        requires = {
-            {
-                "nvim-treesitter/nvim-treesitter-textobjects",
-                after = "nvim-treesitter",
-            },
-            {
-                "nvim-treesitter/nvim-treesitter-refactor",
-                after = "nvim-treesitter",
-            },
-            {
-                "JoosepAlviste/nvim-ts-context-commentstring",
-                after = "nvim-treesitter",
-            },
-            {
-                "windwp/nvim-ts-autotag",
-                after = { "nvim-treesitter", "nvim-autopairs" },
-            },
-        },
-        config = function()
-            require("plugins.treesitter")
-        end,
-    },
-
-    -- LaTeX Support with Texlab LSP
-    {
-        "jakewvincent/texmagic.nvim",
-        opt = true,
-        ft = { "tex", "bib", "latex" },
-        config = function()
-            vim.g["tex_flavor"] = "latex"
-            require("texmagic").setup({
-                engines = {
-                    pdflatex = {
-                        executable = "latexmk",
-                        args = {
-                            "-pdflatex",
-                            "-interaction=nonstopmode",
-                            "-synctex=1",
-                            "-pv",
-                            "%f",
-                        },
-                        isContinuous = false,
-                    },
-                },
-            })
-        end,
-    },
-
-    -- nim Support
-    {
-        "alaviss/nim.nvim",
-        opt = true,
-        ft = "nim",
-    },
-
-    -- Markdown Support
-    {
-        "plasticboy/vim-markdown",
-        opt = true,
-        ft = "markdown",
-        setup = function()
-            vim.g.vim_markdown_folding_disabled = 1
-            vim.g.vim_markdown_frontmatter = 1
-            vim.g.vim_markdown_math = 1
-        end,
-    },
-
-    -- Vim Table mode
-    {
-        "dhruvasagar/vim-table-mode",
-        opt = true,
-        ft = { "text", "markdown" },
-    },
-
-    -- Terminal Markdown Previewer
-    {
-        "npxbr/glow.nvim",
-        cmd = "Glow",
-        ft = "markdown",
-        setup = function()
-            local map = function(lhs, rhs)
-                vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
-            end
-            map("<leader>gg", "<CMD>Glow<CR>")
-        end,
-    },
-
-    -- Markdown Previewer
-    {
-        "iamcco/markdown-preview.nvim",
-        cmd = "MarkdownPreview",
-        ft = "markdown",
-        run = function()
-            vim.fn["mkdp#util#install"]()
-        end,
-        setup = function()
-            vim.g.mkdp_auto_start = 0
-            vim.g.mkdp_auto_close = 0
-            vim.g.mkdp_refresh_slow = 0
-            vim.g.mkdp_browser = "firefox"
-        end,
-    },
-
-    -- ======= LSP, Completion and Snippet =======
-    {
-        "neovim/nvim-lspconfig",
-        after = "impatient.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        requires = {
-            {
-                "williamboman/nvim-lsp-installer",
-                module = "nvim-lsp-installer",
-                cmd = {
-                    "LspInstall",
-                    "LspUninstall",
-                    "LspUninstallAll",
-                    "LspPrintInstalled",
-                },
-            },
-            {
-                "jose-elias-alvarez/null-ls.nvim",
-                module = "null-ls",
-                after = "nvim-lspconfig",
-            },
-            {
-                "ray-x/lsp_signature.nvim",
-                module = "lsp_signature",
-            },
-        },
-        config = function()
-            require("lsp")
-        end,
-    },
-
-    {
-        "folke/lsp-trouble.nvim",
-        after = "impatient.nvim",
-        cmd = { "Trouble", "TroubleToggle" },
-        config = function()
-            require("plugins.trouble")
-        end,
-    },
-
-    {
-        "hrsh7th/nvim-cmp",
-        after = "impatient.nvim",
-        event = "InsertEnter",
-        requires = {
-            {
-                "L3MON4D3/LuaSnip",
-                after = "nvim-cmp",
-                wants = "friendly-snippets",
-                requires = {
-                    "rafamadriz/friendly-snippets",
-                    opt = true,
-                },
-                config = function()
-                    require("plugins.luasnip")
-                end,
-            },
-
-            { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
-            { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
-            { "hrsh7th/cmp-calc", after = "cmp-buffer" },
-            { "hrsh7th/cmp-path", after = "cmp-nvim-lua" },
-            { "hrsh7th/cmp-emoji", after = "cmp-calc" },
-            { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
-            { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-            { "f3fora/cmp-spell", after = "cmp-buffer" },
-        },
-        config = function()
-            require("plugins.cmp")
-        end,
-    },
-
-    {
-        "mattn/emmet-vim",
-        after = "impatient.nvim",
-        cmd = "EmmetInstall",
-        setup = function()
-            vim.g.user_emmet_install_global = 0
-            vim.g.user_emmet_mode = "a"
-            vim.g.user_emmet_leader_key = ","
-        end,
-    },
-
     -- ======= Files =======
     -- Fuzzy Finder
     {
         "nvim-telescope/telescope.nvim",
-        after = "impatient.nvim",
         module_pattern = { "telescope", "telescope.*" },
         cmd = "Telescope",
         keys = {
@@ -597,7 +569,6 @@ local plugins = {
     -- Superfast Tree File
     {
         "kyazdani42/nvim-tree.lua",
-        after = "impatient.nvim",
         cmd = "NvimTreeToggle",
         setup = function()
             vim.api.nvim_set_keymap("n", "`", "<CMD>NvimTreeToggle<CR>", { noremap = true })
@@ -610,7 +581,6 @@ local plugins = {
     -- Open root previllage files
     {
         "lambdalisue/suda.vim",
-        after = "impatient.nvim",
         cmd = { "SudaRead", "SudaWrite" },
         setup = function()
             vim.g.suda_smart_edit = 1
@@ -622,7 +592,6 @@ local plugins = {
     -- show git stuff in signcolumn
     {
         "lewis6991/gitsigns.nvim",
-        after = "impatient.nvim",
         event = { "BufRead", "BufNewFile" },
         config = function()
             require("plugins.gitsigns")
@@ -631,7 +600,6 @@ local plugins = {
 
     {
         "kdheepak/lazygit.nvim",
-        after = "impatient.nvim",
         cmd = { "LazyGit" },
         setup = function()
             vim.g.lazygit_floating_window_winblend = 0
@@ -651,7 +619,6 @@ local plugins = {
     -- Smooth Scrolling
     {
         "psliwka/vim-smoothie",
-        after = "impatient.nvim",
         event = "WinScrolled",
         setup = function()
             vim.g.smoothie_update_interval = 30
@@ -663,8 +630,6 @@ local plugins = {
     -- better window and buffer management
     {
         "mhinz/vim-sayonara",
-        after = "impatient.nvim",
-        opt = true,
         cmd = "Sayonara",
         setup = function()
             local map = function(lhs, rhs)
@@ -676,19 +641,9 @@ local plugins = {
         end,
     },
 
-    -- vim which key
-    {
-        "folke/which-key.nvim",
-        after = "impatient.nvim",
-        event = "BufWinEnter",
-        config = function()
-            require("plugins.which-key")
-        end,
-    },
-
+    -- goyo.vim in lua
     {
         "folke/zen-mode.nvim",
-        opt = true,
         cmd = "ZenMode",
         setup = function()
             local map = function(lhs, rhs)
@@ -696,40 +651,68 @@ local plugins = {
             end
             map("<leader>gz", ":ZenMode<CR>")
         end,
-        requires = {
-            "folke/twilight.nvim",
-            opt = true,
-            cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
-            config = function()
-                require("twilight").setup({
-                    dimming = {
-                        alpha = 0.30, -- amount of dimming
-                        color = { "Normal", "#ffffff" }, -- we try to get the foreground from the highlight groups or fallback color
-                        inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-                    },
-                    context = 5, -- amount of lines we will try to show around the current line
-                    treesitter = true, -- use treesitter when available for the filetype
-                    -- for treesitter, we we always try to expand to the top-most ancestor with these types
-                    expand = {
-                        -- "function",
-                        -- "method",
-                        "if_statement",
-                        -- "table",
-                    },
-                    exclude = {},
-                })
-            end,
-        },
         config = function()
             require("plugins.zen-mode")
+        end,
+    },
+
+    -- limelight.vim in lua
+    {
+        "folke/twilight.nvim",
+        cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
+        config = function()
+            require("twilight").setup({
+                dimming = {
+                    alpha = 0.30, -- amount of dimming
+                    color = { "Normal", "#ffffff" }, -- we try to get the foreground from the highlight groups or fallback color
+                    inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+                },
+                context = 5, -- amount of lines we will try to show around the current line
+                treesitter = true, -- use treesitter when available for the filetype
+                -- for treesitter, we we always try to expand to the top-most ancestor with these types
+                expand = {
+                    -- "function",
+                    -- "method",
+                    "if_statement",
+                    -- "table",
+                },
+                -- exclude = {},
+            })
+        end,
+    },
+
+    -- Terminal Markdown Previewer
+    {
+        "npxbr/glow.nvim",
+        cmd = "Glow",
+        ft = "markdown",
+        setup = function()
+            local map = function(lhs, rhs)
+                vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
+            end
+            map("<leader>gg", "<CMD>Glow<CR>")
+        end,
+    },
+
+    -- Markdown Previewer
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = "MarkdownPreview",
+        ft = "markdown",
+        run = function()
+            vim.fn["mkdp#util#install"]()
+        end,
+        setup = function()
+            vim.g.mkdp_auto_start = 0
+            vim.g.mkdp_auto_close = 0
+            vim.g.mkdp_refresh_slow = 0
+            vim.g.mkdp_browser = "firefox"
         end,
     },
 
     -- Vim Silicon, Generate Image Source Code
     {
         "segeljakt/vim-silicon",
-        after = "impatient.nvim",
-        opt = true,
         cmd = "Silicon",
         setup = function()
             vim.g.silicon = {
@@ -754,8 +737,6 @@ local plugins = {
     -- Startuptime
     {
         "tweekmonster/startuptime.vim",
-        after = "impatient.nvim",
-        opt = true,
         cmd = "StartupTime",
     },
 }

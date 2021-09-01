@@ -43,7 +43,10 @@ translateText() {
             menu=$(echo -e "Retry\nCopy To Clipboard\nPlay Audio\nExit" | \
                 $DMENU -lines 2 -p "Translate Menu" -mesg "Result: $result" -select "Copy To Clipboard")
             if [[ $menu == "Retry" ]]; then
-                text=$($DMENU -p "Translate" -mesg "Previous: $text" -input $HISTFILE)
+                text=$(echo "$text" | cut -c 1-20)
+                result=$(echo "$result" | cut -c 1-20)
+                previous_text="$text -> $result"
+                text=$($DMENU -p "Translate" -mesg "Previous: $previous_text" -input $HISTFILE)
                 translateText "$text"
             elif [[ $menu == "Copy To Clipboard" ]]; then
                 echo -n "$result" | xclip -selection clipboard

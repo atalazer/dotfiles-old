@@ -3,8 +3,6 @@ configuration {
 	show-icons: true;
     icon-theme: "Papirus";
 	drun-display-format: "{name}";
-	fullscreen: false;
-	threads: 0;
 	matching: "fuzzy";
 	scroll-method: 0;
 	disable-history: false;

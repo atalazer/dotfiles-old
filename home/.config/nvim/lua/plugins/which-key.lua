@@ -12,9 +12,9 @@ wk.register({
     [";u"] = "Undo Stage Hunk",
 
     -- vim-sandwich
-    sa = "Add Surrounding Character",
-    sd = "Remove Surrounding Character",
-    sr = "Replace Surrounding Character",
+    -- sa = "Add Surrounding Character",
+    -- sd = "Remove Surrounding Character",
+    -- sr = "Replace Surrounding Character",
 
     -- User Custom
     csu = "Lowercase First Letter",
@@ -103,15 +103,22 @@ wk.setup({
         registers = true,
         spelling = { enabled = true },
         presets = {
-            operators = true,
-            motions = true,
-            text_objects = true,
+            operators = false,
+            motions = false,
+            text_objects = false,
             windows = true,
             z = true,
             g = true,
         },
     },
     operators = { gc = "Comments" },
+    key_labels = {
+        ["<space>"] = "SPC",
+        ["<cr>"] = "RET",
+        ["<tab>"] = "TAB",
+        ["<leader>"] = ".",
+        ["<localleader>"] = ",",
+    },
     icons = {
         breadcrumb = "→",
         separator = "➜",
@@ -128,15 +135,11 @@ wk.setup({
         width = { min = 20, max = 50 },
         spacing = 8,
     },
-    key_labels = {
-        ["<space>"] = "SPC",
-        ["<cr>"] = "RET",
-        ["<tab>"] = "TAB",
-        ["<leader>"] = ".",
-        ["<localleader>"] = ",",
-    },
     ignore_missing = false,
     hidden = { "<silent>", "<cmd>", "<Cmd>", "<CMD>", "lua", "<CR>", "call", "lua", "^:", "^ " },
     show_help = true,
     triggers = "auto",
+    triggers_blacklist = {
+        i = { "," },
+    },
 })

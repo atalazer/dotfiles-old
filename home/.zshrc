@@ -42,6 +42,9 @@ source $ZDIR/modules/compe.zsh
 source $ZDIR/modules/dir.zsh
 source $ZDIR/modules/keys.zsh
 
+# Allow Comment in Interactive Shell
+setopt interactive_comments
+
 #}}}
 
 # ===== User ===== {{{

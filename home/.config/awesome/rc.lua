@@ -78,13 +78,10 @@ user = {
     -- web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
     web_search_cmd = "xdg-open https://www.google.com/search?q=",
 
-    -- Autostart apps
+    -- Autostart apps ( Lets ~/.xinitrc or ~/.xprofile handle this )
     autostart_debug = false,
     autostart = {
         "pkill dunst",
-        "picom --experimental-backends --config ~/.config/picom/picom-blur.conf",
-        "fusuma -c ~/.config/fusuma/config.yml",
-        "xrdb -load ~/.Xresources",
         "xautolock -time 15 -locker \"systemctl suspend && awesome-client 'lock_screen_show()'\" -detectsleep -resetsaver -notify 5 -notifier \"notify-send 'Lockscreen' 'System will be suspended in 5s From now'\"",
     },
 
