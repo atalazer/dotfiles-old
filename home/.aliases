@@ -96,6 +96,10 @@ if command -v "pacman" > /dev/null 2>&1; then
     alias pacupg="$PERMISSION pacman -Syu"
     alias pacrem="$PERMISSION pacman -Rns"
     alias pacrmorp="pacman Qtdq | $PERMISSION pacman -Rns -"
+    
+    pacsize(){
+        LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h | grep $1
+    }
 fi
 
 if command -v "paru" > /dev/null 2>&1; then

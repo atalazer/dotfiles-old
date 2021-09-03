@@ -34,9 +34,7 @@ ts_configs.setup({
     },
     context_commentstring = {
         enable = true,
-        config = {
-            lua = "-- %s",
-        },
+        enable_autocmd = false,
     },
     highlight = {
         enable = true,

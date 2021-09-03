@@ -36,4 +36,4 @@ configuration {
     line-margin:               2;
     line-padding:              1;
 }
-@import "~/.cache/wal/colors-rofi-dark"
+@import "~/.cache/wal/colors-rofi"

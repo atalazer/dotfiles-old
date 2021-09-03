@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#vim: ft=sh: sw=2: ts=2:
+
 # File              : dmenu_translate (rofi_translate)
 # License           : MIT License
 # Author            : M. Nabil Adani <nblid48@gmail.com>
@@ -22,12 +24,12 @@ COUNTRY='''
 ]
 '''
 
-translateText() {
+translate-text() {
     text="$1"
     if [ -z "$text" ]; then
         exit
     fi
-    name=$(echo $COUNTRY | jq -r ".[].name" | $DMENU -p "Target Language")
+    name=$(echo $COUNTRY | jq -r ".[].name" | $DMENU -p "Target Language"  -mesg "Text: $text" )
     if [ ! -z "$name" ]; then
         code=$(echo $COUNTRY | jq -r ".[] | select(.name == \"$name\") | .code")
         result=$(trans -b --download-audio-as /tmp/trans.ts :$code "$text")
@@ -35,7 +37,6 @@ translateText() {
 
         # notify-send -i $ICON "Translate" "Result of '$text' in $name is '$result'"
 
-        # notify-send -u low -i $ICON "Translate" "Result saved to clipboard"
         echo "$text" >> $HISTFILE
         echo "$result" | xclip
 
@@ -47,9 +48,10 @@ translateText() {
                 result=$(echo "$result" | cut -c 1-20)
                 previous_text="$text -> $result"
                 text=$($DMENU -p "Translate" -mesg "Previous: $previous_text" -input $HISTFILE)
-                translateText "$text"
+                translate-text "$text"
             elif [[ $menu == "Copy To Clipboard" ]]; then
                 echo -n "$result" | xclip -selection clipboard
+                notify-send -u low -i $ICON "Translate" "Result saved to clipboard"
                 again=false
             elif [[ $menu == "Play Audio" ]]; then
                 mpv /tmp/trans.ts
@@ -60,14 +62,49 @@ translateText() {
     fi
 }
 
+translate-image() {
+    IMG=/tmp/translate-image.png
+    TXT=/tmp/translate-ocr
+
+    # Get with `tesseract --list-langs`
+    notify-send -t $((1000 * 3)) --app-name=translate "Translate" "Select Region To Scan"
+    maim -m 10 -s $IMG || exit 1
+
+    LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Select Language for Image")
+
+    if [[ -n $LANG ]]; then
+        notify-send -t $((1000 * 3)) --app-name=screenshot "Translate" "Parse Image to Text"
+        convert $IMG \
+            -alpha off \
+            $IMG
+        # convert $IMG \
+        #     -bordercolor White -border 10x10 \
+        #     $IMG
+        tesseract \
+            -l $LANG \
+            --dpi 300 \
+            $IMG \
+            $TXT &> /dev/null
+
+        # https://unix.stackexchange.com/questions/587616/how-to-remove-the-empty-lines-in-a-file-in-linux
+        # Delete blankline
+        sed -i '/^[[:space:]]*$/d' $TXT.txt
+        cat $TXT.txt | tr -d '\n'
+    fi
+}
+
 case "$1" in
 "-c" | "--clipboard")
     text=$(xclip -selection clipboard -o | tr --delete '\n')
-    translateText "$text"
+    translate-text "$text"
     ;;
 "-i" | "--input")
     text=$($DMENU -p "Translate" -input $HISTFILE)
-    translateText "$text"
+    translate-text "$text"
+    ;;
+"-m" | "--image")
+    text=$(translate-image)
+    translate-text "$text"
     ;;
 *)
     echo "Usage dmenu_translate [options]"

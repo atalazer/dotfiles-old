@@ -1,10 +1,26 @@
 #!/usr/bin/env bash
-
 #vim: ft=sh: sw=2: ts=2:
+LC_ALL=C
+LANG=C
+
+DEPEND_LIST="scrot maim magick tesseract"
+for DEPEND in $DEPEND_LIST; do
+    if [[ -z $_DEP ]]; then
+        DEPEND="$DEPEND"
+    else
+        DEPEND="$_DEP $DEPEND"
+    fi
+    _DEP="$DEPEND"
+done
+
+miss_dep() {
+    notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Install <b>$DEPEND</b> First!"
+    exit 1
+}
+type -p $DEPEND &>/dev/null || miss_dep
 
 CONF=~/.config/script/shot.conf
-
-default_config(){
+default_config() {
     _XDG_="$(xdg-user-dir PICTURES)/Screenshots"
     ASSET_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/script/shot"
     SCREENSHOT_DIR="${_XDG_:-$HOME/Pictures/Screenshots}"
@@ -15,8 +31,9 @@ default_config(){
     TMP_IMG="$TMP_FILE.$IMG_EXT"
 
     DMENU="rofi -dmenu -i -p Screenshot -lines 6 -width 20"
-    
+
     sleep=3
+    quality=9
     max_history=5
 
     border_size=0
@@ -60,8 +77,8 @@ clean() {
         # /usr/bin/rm "$TMP_IMG"
         /usr/bin/mv $TMP_IMG "${TMP_FILE}-$(date '+%H%M%S').${IMG_EXT}"
 
-        if [[ $(ls $TMP_DIR | grep ".${IMG_EXT}" > $TMP_DIR/total-image && \
-            wc -l < $TMP_DIR/total-image) == $max_history ]]; then
+        if [[ $(ls $TMP_DIR | grep ".${IMG_EXT}" >$TMP_DIR/total-image &&
+            wc -l <$TMP_DIR/total-image) == $max_history ]]; then
             /usr/bin/rm "${TMP_DIR}/*.${IMG_EXT}"
             /usr/bin/rm $TMP_DIR/total-image
         fi
@@ -89,22 +106,25 @@ parse() {
     height=$(identify -format "%h" $IMG)
     if [[ $add_text == true ]]; then
         if [[ -n $text ]]; then
-            text=$text
-        else
-            text="$long_text"
+            _text=$text
             if ((width <= 200)); then
-                text="$shor_text"
+                _text="~"
+            fi
+        else
+            _text="$long_text"
+            if ((width <= 200)); then
+                _text="$shor_text"
             fi
         fi
     else
-        text=""
+        _text=""
     fi
 
-    if [[ $use_custom_titlebar == true ]]; then
+    if [[ $add_titlebar -eq "true" && $use_custom_titlebar -eq "true" && $width -ge 500 && $height -ge 150 ]]; then
         convert $IMG \
-            -font $font -gravity north \
+            -font ${font} -pointsize 14 -gravity north \
             -background ${color_bg} -fill ${color_fg} \
-            -splice 0x28 -annotate +0+7 "${text}" \
+            -splice 0x28 -annotate +0+7 "${_text}" \
             $IMG
 
         convert $IMG \
@@ -143,12 +163,15 @@ parse() {
             "$IMG"
     else
         # Set rounded corner
-        convert "$IMG" \( +clone -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
+        convert "$IMG" \
+            \( +clone -alpha extract -draw 'fill black polygon 0,0 0,'"${rounded_corner}"' '"${rounded_corner}"',0 fill white circle '"${rounded_corner}"','"${rounded_corner}"' '"${rounded_corner}"',0' \
             \( +clone -flip \) -compose Multiply -composite \
             \( +clone -flop \) -compose Multiply -composite \
-            \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
+            \) \
+            -alpha off \
+            -compose CopyOpacity -composite -compose over \
+            "$IMG"
     fi
-
 
     # Set image shadow
     convert $IMG \
@@ -321,7 +344,7 @@ _shot() {
             grimshot active $TMP_IMG
             ;;
         delay)
-            notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
+            notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Screenshot Taken in ${sleep}s ..."
             sleep $sleep &&
                 grimshot output $TMP_IMG
             ;;
@@ -329,32 +352,41 @@ _shot() {
     else
         case $1 in
         normal)
-            maim -m 10 $TMP_IMG
+            maim -m $quality $TMP_IMG
+            # scrot -o -q $((10*$quality)) -p $TMP_FILE
             ;;
         select)
             if [[ $use_custom_titlebar == true ]]; then
-                maim -u -m 10 -s $TMP_IMG
+                maim -u -m $quality -s $TMP_IMG
+                # scrot -o -q $((10*$quality)) -s $TMP_FILE
             else
-                maim -u -m 10 -n 0 -s $TMP_IMG
+                maim -u -m $quality -n 0 -s $TMP_IMG
+                # scrot -o -q $((10*$quality)) -b -s $TMP_FILE
             fi
             ;;
         active)
             if [[ $use_custom_titlebar == true ]]; then
-                maim -u -m 10 -i $(xdotool getactivewindow) $TMP_IMG
+                # maim -u -m $quality -i $(xdotool getactivewindow) $TMP_IMG
+                scrot -o -q $((10 * quality)) -u $TMP_IMG
             else
-                maim -u -m 10 -n 0 -i $(xdotool getactivewindow) $TMP_IMG
+                # maim -u -m $quality -n 0 -i $(xdotool getactivewindow) $TMP_IMG
+                scrot -o -q $((10 * quality)) -u -b $TMP_IMG
             fi
             ;;
         delay)
-            notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Shot After ${sleep} Sec"
-            maim -m 10 -d $sleep $TMP_IMG
+            notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Screenshot Taken in ${sleep}s ..."
+            maim -m $quality -d $sleep $TMP_IMG
+            # scrot -o -q $((10*$quality)) -d $sleep $TMP_IMG
             ;;
         esac
     fi
 
-    if [[ $titlebar_only_active == true ]]; then
+    if [[ $titlebar_only_active -eq true || $use_custom_titlebar -eq true ]]; then
         if [[ $1 == "active" ]]; then
-            # add_titlebar=true
+            add_titlebar=true
+            text="$(xdotool getwindowname $(xdotool getactivewindow))"
+        elif [[ $1 == "select" ]]; then
+            add_titlebar=true
             text="$(xdotool getwindowname $(xdotool getactivewindow))"
         else
             add_titlebar=false
@@ -362,82 +394,36 @@ _shot() {
     fi
 }
 
-_noparse() {
-    case $1 in
-    full)
-        _shot normal &&
-            notify "Screenshot Saved"
-        ;;
-    active)
-        _shot active &&
-            notify "Screenshot from Active Windows Saved"
-        ;;
-    select)
-        _shot select &&
-            notify "Screenshot Selected Has been Saved"
-        ;;
-    delay)
-        _shot delay &&
-            notify "Screenshot Saved"
-        ;;
-    esac
-}
-
-_parse() {
-    case $1 in
-    full)
-        _shot normal &&
-            parse &&
-            notify "Screenshot Saved"
-        ;;
-    active)
-        _shot active &&
-            parse &&
-            notify "Screenshot from Active Windows Saved"
-        ;;
-    select)
-        _shot select &&
-            parse &&
-            notify "Screenshot Selected Has been Saved"
-        ;;
-    delay)
-        _shot delay &&
-            parse &&
-            notify "Screenshot Saved"
-        ;;
-    esac
-}
-
 image-to-text() {
     IMG=/tmp/image-ocr.png
     TXT=/tmp/shot-ocr
 
     # Get with `tesseract --list-langs`
-    LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Target Language") &&
-        notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Select Region To Scan" &&
-        _shot select
+    notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Select Region To Scan"
+    # _shot select
+    maim -m 10 -s $IMG || exit 1
+
+    LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Target Language")
 
     if [[ -n $LANG ]]; then
 
         notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Parse Image to Text"
 
+        # --- Improve Quality
         # https://tesseract-ocr.github.io/tessdoc/ImproveQuality
         # https://stackoverflow.com/questions/9480013/image-processing-to-improve-tesseract-ocr-accuracy/10034214#10034214
-        # https://legacy.imagemagick.org/Usage/transform/#vision
-        #
-        # --- Improve Quality
+
         # - Add white border
+        # convert $TMP_IMG \
+        #     -bordercolor White -border 10x10 \
+        #     $IMG
+
         # - Remove Transparancy
-        # -
-        # - Monochrome
         convert $TMP_IMG \
-            -bordercolor White -border 10x10 \
             -alpha off \
-            -units pixelsperinch -density 300x300 -colorspace Gray -depth 8 \
-            +dither -monochrome -normalize \
             $IMG
 
-        # Textcleaner: http://www.fmwconcepts.com/imagemagick/textcleaner/index.php
+        # - Textcleaner: http://www.fmwconcepts.com/imagemagick/textcleaner/index.php
         # if command -v "textcleaner" > /dev/null 2>&1; then
         #    textcleaner \
         #       -g -e none \
@@ -445,22 +431,17 @@ image-to-text() {
         #       $IMG $IMG
         # fi
 
-        # Compressing
-        # https://stackoverflow.com/questions/7261855/recommendation-for-compressing-jpg-files-with-imagemagick
-        # convert $IMG \
-        #    -strip \
-        #    -interlace Plane \
-        #    -gaussian-blur 0.05 \
-        #    -quality 85% \
-        #    $IMG
-
         tesseract \
             -l $LANG \
             --dpi 300 \
             $IMG \
-            $TXT
+            $TXT &>/dev/null
 
-        result=$(cat $TXT.txt)
+        # https://unix.stackexchange.com/questions/587616/how-to-remove-the-empty-lines-in-a-file-in-linux
+        # Delete blankline
+        sed -i '/^[[:space:]]*$/d' $TXT.txt
+
+        result=$(cat $TXT.txt | tr --delete '^L')
         countword=$(wc -w <$TXT.txt)
 
         echo -n "$result" | xclip -selection clipboard
@@ -474,6 +455,52 @@ image-to-text() {
     fi
 }
 
+_noparse() {
+    case $1 in
+    full)
+        _shot normal &&
+            notify "Screenshot Acquired"
+        ;;
+    active)
+        _shot active &&
+            notify "Screenshot Acquired"
+        ;;
+    select)
+        _shot select &&
+            notify "Screenshot Acquired"
+        ;;
+    delay)
+        _shot delay &&
+            notify "Screenshot Acquired"
+        ;;
+    esac
+}
+
+_parse() {
+    case $1 in
+    full)
+        _shot normal &&
+            parse &&
+            notify "Screenshot Acquired"
+        ;;
+    active)
+        _shot active &&
+            parse &&
+            notify "Screenshot Acquired"
+        ;;
+    select)
+        _shot select &&
+            parse &&
+            notify "Screenshot Acquired"
+        ;;
+    delay)
+        _shot delay &&
+            parse &&
+            notify "Screenshot Acquired"
+        ;;
+    esac
+}
+
 interactive() {
     OPTIONS='''
     [
@@ -481,11 +508,11 @@ interactive() {
         ["Delay",                   "_parse delay"],
         ["Fullscreen",              "_parse full"],
         ["Select",                  "_parse select"],
-        ["Active (Noparse)",        "_noparse active"],
-        ["Fullscreen (Noparse)",    "_noparse full"],
-        ["Delay (Noparse)",         "_noparse delay"],
-        ["Select (Noparse)",        "_noparse select"],
-        ["Image to Text",           "image-to-text"]
+        ["Image to Text",           "image-to-text"],
+        ["Active(N)",               "_noparse active"],
+        ["Fullscreen(N)",           "_noparse full"],
+        ["Delay(N)",                "_noparse delay"],
+        ["Select(N)",               "_noparse select"]
     ]
     '''
     menu=$(echo $OPTIONS | jq -r ".[][0]" | $DMENU)
@@ -504,39 +531,4 @@ case $OPT in
 -S | select_noparse) _noparse select ;;
 -i | interactive) interactive ;;
 -o | ocr | image-to-text) image-to-text ;;
-dump)
-    echo "$_XDG_"
-    echo "$ASSET_DIR"
-    echo "$SCREENSHOT_DIR"
-    echo "$SAVED_NAME"
-    echo "$TMP_DIR"
-    echo "$TMP_FILE"
-    echo "$IMG_EXT"
-    echo "$TMP_IMG"
-    echo "$DMENU"
-    echo "$sleep"
-    echo "$max_history"
-    echo "$border_size"
-    echo "$rounded_corner"
-    echo "$shadow_size"
-    echo "$background_size"
-    echo "$background_color"
-    echo "$color_fg"
-    echo "$color_bg"
-    echo "$color_profile"
-    echo "$font_size"
-    echo "$font"
-    echo "$add_author"
-    echo "$author_position"
-    echo "$author"
-    echo "$add_text"
-    echo "$long_text"
-    echo "$short_text"
-    echo "$add_titlebar"
-    echo "$use_custom_titlebar"
-    echo "$titlebar_only_active"
-    echo "$close_icon"
-    echo "$min_icon"
-    echo "$max_icon"
-;;
 esac

@@ -56,12 +56,13 @@ for name,opts in pairs(servers) do
         if not server:is_installed() then
             server:install()
         end
-        server:setup(vim.tbl_extend("force", {
-            flags = { debounce_text_changes = 150 },
-            on_attach = Util.lsp_on_attach,
-            on_init = Util.lsp_on_init,
-            capabilities = capabilities,
-        }, opts))
+        server:setup(opts)
+        -- server:setup(vim.tbl_extend("force", {
+        --     flags = { debounce_text_changes = 150 },
+        --     on_attach = Util.lsp_on_attach,
+        --     on_init = Util.lsp_on_init,
+        --     capabilities = capabilities,
+        -- }, opts))
     else
         lspconfig[name].setup(vim.tbl_extend("force", {
             flags = { debounce_text_changes = 150 },

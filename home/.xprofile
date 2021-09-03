@@ -15,8 +15,10 @@ xset -b                 # Disable terminal bell
 xset r rate 300 50      # Set repeat rate
 
 # Themes
-[ -f ~/Documents/Project/theme-changer/theme-changer.sh ] && \
-    ~/Documents/Project/theme-changer/theme-changer.sh --toggle auto
+# [ -f ~/Documents/Project/theme-changer/theme-changer.sh ] && \
+#     ~/Documents/Project/theme-changer/theme-changer.sh --toggle auto
+
+theme-changer --toggle auto                                         # Change Theme based on Time
 
 # wal -n -t -R            # Restore wal
 light -S 20             # Set Brightness
@@ -27,7 +29,7 @@ clipmenud &>/dev/null &                                             # Clipboard 
 mpd &>/dev/null &                                                   # Music Player Daemon
 # fcitx5 --replace -d &>/dev/null &                                   # Input Method for Japanese(mozc) and Arabic(m17n)
 # an2linuxserver.py &>/dev/null &                                     # Send notification from android to linux
-fusuma -c ~/.config/fusuma/config.yml -d &>/dev/null &              # Libinput Touchpad Gestur
+# fusuma -c ~/.config/fusuma/config.yml -d &>/dev/null &              # Libinput Touchpad Gestur
 picom --config ~/.config/picom/picom.conf \
     --experimental-backends  --daemon &>/dev/null &
 

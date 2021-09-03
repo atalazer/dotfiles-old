@@ -63,6 +63,24 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- Picture in Picture {{{
+    ruled.client.append_rule({
+        rule_any = {
+            name = {
+                "Picture-in-Picture"
+            }
+        },
+        properties = {
+            titlebars_enabled = false,
+            floating = true,
+            above = true,
+            sticky = true,
+            skip_decoration = true,
+            placement = awful.placement.top_right,
+        }
+    })
+    -- }}}
+
     -- Chatting {{{
     ruled.client.append_rule({
         rule_any = {

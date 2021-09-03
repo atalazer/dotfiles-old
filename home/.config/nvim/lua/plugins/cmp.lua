@@ -3,6 +3,7 @@ local cmp = require("cmp")
 cmp.setup({
     completion = {
         completeopt = "menuone,noselect",
+        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)\k\+]],
         keyword_length = 2,
     },
     snippet = {
@@ -46,6 +47,7 @@ cmp.setup({
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
+        ["<M-e>"] = cmp.mapping.close(),
         ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,

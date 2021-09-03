@@ -1,30 +1,30 @@
 {
-    "note": {
-        "prefix": "note",
-        "body": [
-            "NOTE: ${1:Summary}"
-        ],
-        "description": "NOTE reminder"
-    },
-    "todo": {
-        "prefix": "todo",
-        "body": [
-            "TODO: ${1:Summary}"
-        ],
-        "description": "TODO reminder"
-    },
-    "fix": {
-        "prefix": "fix",
-        "body": [
-            "FIX: ${1:Summary}"
-        ],
-        "description": "FIX reminder"
-    },
-    "warning": {
-        "prefix": "warning",
-        "body": [
-            "WARNING: ${1:Summary}"
-        ],
-        "description": "WARNING reminder"
-    }
+ "note": {
+    "prefix": "note",
+    "body": [
+      "NOTE: ${1:Summary}"
+    ],
+    "description": "NOTE reminder"
+  },
+  "todo": {
+    "prefix": "todo",
+    "body": [
+      "TODO: ${1:Summary}"
+    ],
+    "description": "TODO reminder"
+  },
+  "fix": {
+    "prefix": "fix",
+    "body": [
+      "FIX: ${1:Summary}"
+    ],
+    "description": "FIX reminder"
+  },
+  "warning": {
+    "prefix": "warning",
+    "body": [
+      "WARNING: ${1:Summary}"
+    ],
+    "description": "WARNING reminder"
+  }
 }

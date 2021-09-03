@@ -1,4 +1,5 @@
 local M = {}
+
 M.config = {
     filetypes = { "tex", "bib" },
     on_attach = function()
@@ -6,9 +7,11 @@ M.config = {
         local nnoremap = k.nnoremap
         local inoremap = k.inoremap
 
-        print("Texlab Attached!")
-        require("lsp.keys").mappings()
+        vim.notify("Texlab Attached", "info", {
+            title = "Texlab"
+        })
 
+        require("lsp.keys").mappings()
         nnoremap({"<F10>", ":TexlabBuild<CR>", { silent = true }})
         inoremap({"<F10>", "<Esc>:TexlabBuild<CR>a", { silent = true }})
         nnoremap({"<F12>", ":TexlabForward<CR>", { silent = true }})
@@ -25,4 +28,5 @@ M.config = {
         }
     }
 }
+
 return M

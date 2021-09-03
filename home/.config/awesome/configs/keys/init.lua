@@ -1,5 +1,4 @@
 local awful = require("awful")
-local gears = require("gears")
 
 local keys = {}
 
@@ -8,8 +7,6 @@ superkey = "Mod4"
 altkey = "Mod1"
 ctrlkey = "Control"
 shiftkey = "Shift"
-
-require("configs.keys.hotkeys_popup")
 
 keys.global = require("configs.keys.global")
 keys.apps = require("configs.keys.apps")
@@ -21,23 +18,36 @@ keys.button = require("configs.keys.button")
 keys.client = require("configs.keys.client")
 keys.desktopbuttons = require("configs.keys.desktop")
 
-keys.globalkeys = gears.table.join(
-    keys.global,
-    keys.apps,
-    keys.controller,
-    keys.layout,
-    keys.tags,
-    keys.client.globals
-)
+keys.init = function()
+    awful.mouse.append_global_mousebindings({
+        keys.desktopbuttons
+    })
 
-keys.clientkeys = keys.client.clientkeys
-keys.clientbuttons = keys.button.client
+    awful.keyboard.append_global_keybindings({
+        keys.global,
+        keys.apps,
+        keys.controller,
+        keys.layout,
+        keys.tags,
+        keys.client.globals
+    })
+
+    client.connect_signal("request::default_keybindings", function()
+        awful.keyboard.append_client_keybindings({
+            keys.client.clientkeys
+        })
+    end)
+
+    client.connect_signal("request::default_mousebindings", function()
+        awful.mouse.append_client_mousebindings(
+            {
+                keys.button.client
+            })
+    end)
+end
+
 keys.tasklist_buttons = keys.button.tasklist
 keys.taglist_buttons = keys.button.taglist
 keys.titlebar_buttons = keys.button.titlebar
-
--- Set root (desktop) keys
-root.keys(keys.globalkeys)
-root.buttons(keys.desktopbuttons)
 
 return keys

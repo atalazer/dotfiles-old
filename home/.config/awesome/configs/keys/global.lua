@@ -1,7 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 
-local hotkeys_popup = require("configs.keys.hotkeys_popup")
+local hotkeys_popup = require("awful.hotkeys_popup")
 
 local keys = gears.table.join(
     -- Reload Awesome
@@ -22,9 +22,8 @@ local keys = gears.table.join(
         end,
         {description = "Quit awesome", group = "Awesome"}),
 
-    awful.key({ superkey }, "F1", function()
-        hotkeys_popup.popup:show_help()
-    end, { description = "Help for Keybindings", group = "Awesome"}),
+    awful.key({ superkey }, "F1", hotkeys_popup.show_help,
+        { description = "Help for Keybindings", group = "Awesome"}),
 
     -- Dashboard
     awful.key({ superkey }, "F2", function()

@@ -37,4 +37,4 @@ vim.g.indent_blankline_filetype_exclude = {
     "packer",
     "dashboard",
 }
-vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")
+-- vim.cmd("autocmd CursorMoved * IndentBlanklineRefresh")

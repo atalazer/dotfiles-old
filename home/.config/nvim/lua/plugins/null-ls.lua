@@ -11,10 +11,10 @@ M.setup = function()
     null_ls.setup({
         debounce = 150,
         sources = {
+            b.code_actions.gitsigns,
             b.diagnostics.eslint.with {
                 command = "eslint_d",
             },
-            b.code_actions.gitsigns,
             b.formatting.trim_whitespace.with({ 
                 filetypes = { "sh", "bash", "zsh" } 
             }),

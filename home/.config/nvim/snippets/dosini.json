@@ -1,0 +1,32 @@
+{
+  "editorconfig": {
+    "prefix": "editor",
+    "body": [
+      "# EditorConfig is awesome: https://EditorConfig.org",
+      "",
+      "# top-most EditorConfig file",
+      "root = true",
+      "",
+      "# Unix-style newlines with a newline ending every file",
+      "[*]",
+      " # lf|cr|crlf ",
+      "end_of_line = lf",
+      "# true|false",
+      "insert_final_newline = true",
+      "# true|false",
+      "trim_trailing_whitespace = true",
+      "",
+      "# Filetype specific",
+      "[*.{lua,cpp,c}]",
+      "# latin1|utf-8|utf-8-bom|utf-16be|utf-16le",
+      "charset = utf-8",
+      "# tab|space",
+      "indent_style = space",
+      "# integer",
+      "indent_size = 4",
+      "# integer (default value is indent_size value)",
+      "# tab_width = 4"
+    ],
+    "description": "Editor Config Snippet"
+  }
+}

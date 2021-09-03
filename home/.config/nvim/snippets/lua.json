@@ -9,16 +9,6 @@
     "body": ["return $0"],
     "description": "return value"
   },
-  "assigment": {
-    "prefix": "ll",
-    "body": ["local ${1:varName} = ${0:value}"],
-    "description": "create a variable"
-  },
-  "local": {
-    "prefix": "l",
-    "body": ["local ${0}"],
-    "description": "create a variable"
-  },
   "locreq": {
     "prefix": "lreq",
     "body": ["local ${1:var} = require(\"${2:module}\")"],

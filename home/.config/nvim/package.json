@@ -18,6 +18,10 @@
         "path": "./snippets/sh.json"
       },
       {
+        "language": [ "dosini" ],
+        "path": "./snippets/dosini.json"
+      },
+      {
         "language": ["lua"],
         "path": "./snippets/lua.json"
       },

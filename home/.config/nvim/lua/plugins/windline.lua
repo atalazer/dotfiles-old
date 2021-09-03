@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-field
+
 local windline = require("windline")
 local helper = require("windline.helpers")
 local b_components = require("windline.components.basic")
@@ -9,7 +11,6 @@ local git_comps = require("windline.components.git")
 
 local animation = require("wlanimation")
 local efffects = require("wlanimation.effects")
-local HSL = require("wlanimation.hsl")
 
 local hl_list = {
     Black = { "white", "black" },
@@ -90,11 +91,13 @@ basic.file = {
             }
         end
         return {
+            { " ", "default" },
             { b_components.cache_file_icon({ default = "" }), "default" },
             { " ", "default" },
             { b_components.cache_file_name("[No Name]", "unique"), "" },
             { " ", "" },
             { b_components.file_modified(" "), "" },
+            { " ", "default" },
             { sep.slant_left_2, "" },
         }
     end,
@@ -106,8 +109,6 @@ basic.info = {
         if vim.api.nvim_win_get_width(winnr) > breakpoint_width then
             local _file_type = function()
                 return function(bufnr)
-                    local file_name = vim.fn.fnamemodify(vim.fn.bufname(bufnr), ":t")
-                    local file_ext = vim.fn.fnamemodify(file_name, ":e")
                     local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
                     if filetype == "" then
                         return "  "
@@ -298,6 +299,7 @@ local writing = {
     filetypes = {
         "markdown",
         "adoc",
+        "tex",
     },
     active = {
         basic.vi_mode,
@@ -316,6 +318,7 @@ local minimalist = {
     filetypes = {
         "help",
         "text",
+        "",
     },
     active = {
         basic.divider,

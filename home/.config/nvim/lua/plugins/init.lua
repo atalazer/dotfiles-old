@@ -19,7 +19,6 @@ end
 
 -- Bootstrap essential plugins required for installing and loading the rest.
 ensure("wbthomason", "packer.nvim")
-
 vim.cmd("packadd packer.nvim")
 
 local packer_ok, packer = pcall(require, "packer")
@@ -62,7 +61,7 @@ local plugins = {
         event = "VimEnter",
         rocks = "mpack",
         config = function()
-            require("impatient")
+            require("impatient").enable_profile()
         end,
     },
 
@@ -353,6 +352,22 @@ local plugins = {
         end,
     },
 
+    -- Markdown Notebook Navigation And Management
+    {
+        "jakewvincent/mkdnflow.nvim",
+        ft = "markdown",
+        config = function()
+            require("mkdnflow").setup({
+                default_mappings = true,
+                create_dirs = true,
+                links_relative_to = "current",
+                filetypes = { md = true, rmd = true, markdown = true },
+                evaluate_prefix = true,
+                new_file_prefix = [[os.date('%Y-%m-%d_')]],
+            })
+        end,
+    },
+
     -- Vim Table mode
     {
         "dhruvasagar/vim-table-mode",
@@ -363,14 +378,25 @@ local plugins = {
     -- Sandwiched textobjects.
     {
         "machakann/vim-sandwich",
-        -- event = "CursorMoved",
-        keys = "s",
+        event = "CursorHold",
     },
 
     -- Easy Commenting
     {
-        "tpope/vim-commentary",
+        "terrortylor/nvim-comment",
         keys = "gc",
+        config = function()
+            require("nvim_comment").setup({
+                marker_padding = true,
+                comment_empty = true,
+                create_mappings = true,
+                line_mapping = "gcc",
+                operator_mapping = "gc",
+                hook = function()
+                    require("ts_context_commentstring.internal").update_commentstring()
+                end,
+            })
+        end,
     },
 
     -- Align
@@ -428,11 +454,8 @@ local plugins = {
                 highlight_unique_chars = false,
                 grey_out_search_area = true,
                 match_only_the_start_of_same_char_seqs = true,
-                limit_ft_matches = 5,
+                limit_ft_matches = 8,
                 full_inclusive_prefix_key = "<c-x>",
-                labels = nil,
-                cycle_group_fwd_key = nil,
-                cycle_group_bwd_key = nil,
             })
         end,
     },
@@ -522,6 +545,32 @@ local plugins = {
                 "*", -- Highlight all files, but customize some others.
                 css = { rgb_fn = true }, -- Enable parsing rgb(...) functions in css.
                 html = { names = false }, -- Disable parsing "names" like Blue or Gray
+            })
+        end,
+    },
+
+    {
+        "michaelb/sniprun",
+        run = "bash install.sh",
+        keys = { "<Plug>SnipRun", "<Plug>SnupClose" },
+        cmd = "SnipRun",
+        setup = function()
+            vim.cmd([[
+            nmap <leader>sr <Plug>SnipRun
+            vmap sr <Plug>SnipRun
+            nmap <leader>sc <Plug>SnipClose
+            ]])
+        end,
+        config = function()
+            require("sniprun").setup({
+                inline_messages = 2,
+                borders = Util.borders,
+                display = {
+                    "Classic",
+                    "VirtualTextOk",
+                    "VirtualTextErr",
+                    "LongTempFloatingWindow",
+                },
             })
         end,
     },
@@ -716,21 +765,21 @@ local plugins = {
         cmd = "Silicon",
         setup = function()
             vim.g.silicon = {
-                theme = "Dracula",
-                font = "JetBrainsMono Nerd Font",
-                background = "#a999ff",
                 ["shadow-color"] = "#434434",
-                ["line-pad"] = 2,
-                ["pad-horiz"] = 40,
-                ["pad-vert"] = 50,
-                ["shadow-blur-radius"] = 0,
-                ["shadow-offset-x"] = 0,
-                ["shadow-offset-y"] = 0,
+                ["line-pad"] = 3,
+                ["pad-horiz"] = 30,
+                ["pad-vert"] = 30,
+                ["shadow-blur-radius"] = 5,
+                ["shadow-offset-x"] = 8,
+                ["shadow-offset-y"] = 8,
                 ["line-number"] = true,
                 ["round-corner"] = true,
                 ["window-controls"] = true,
             }
-            vim.g.silicon["output"] = os.getenv("HOME") .. "/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
+            vim.g.silicon.theme = "Dracula"
+            vim.g.silicon.font = "JetBrainsMono Nerd Font"
+            vim.g.silicon.background = "#f8f8f2"
+            vim.g.silicon.output = os.getenv("HOME") .. "/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
         end,
     },
 
