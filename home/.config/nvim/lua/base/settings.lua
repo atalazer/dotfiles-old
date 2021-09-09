@@ -34,11 +34,11 @@ local options = {
     backspace = "eol,start,indent",
     backupcopy = "yes",
     clipboard = "unnamedplus",
-    -- completeopt = { "menu", "menuone", "noselect", "noinsert" },
+    -- completeopt = { "menu", "menuone", "noselect", "noinsert" },         -- Handle by nvim-cmp
     encoding = "UTF-8",
     fillchars = { vert = "│", eob = " ", fold = " ", diff = " " },
     formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2",
-    foldmethod = "marker",
+    -- foldmethod = "marker",
     foldopen = { "percent", "search" },
     -- foldcolumn     = "1",
     -- foldexpr       = "nvim_treesitter#foldexpr()",

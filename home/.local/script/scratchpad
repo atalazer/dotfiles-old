@@ -6,12 +6,14 @@ SCRATCHPAD_WINDOW="$(xdotool search --name scratchpad)"
 # If there is no such window
 # (Checking for the window should not be necessary if AwesomeWM does it already)
 if [ ${#SCRATCHPAD_WINDOW} -eq "0" ]; then
-    kitty --name scratchpad
-    # # If the session does not exist, create a new one
-    # if [ ${#SCRATCHPAD_SESSION} -eq "0" ]; then 
-    #     kitty --name scratchpad -e tmux new-session -s scratchpad &
-    # # Else attach to the session
-    # else
-    #     kitty --name scratchpad -e tmux attach -t scratchpad &
-    # fi
+    # If the session does not exist, create a new one
+    if [ ${#SCRATCHPAD_SESSION} -eq "0" ]; then 
+        kitty --name scratchpad -e tmux new-session -s scratchpad &
+    # Else attach to the session
+    else
+        kitty --name scratchpad -e tmux attach -t scratchpad &
+    fi
+
+    ## Kitty Without tmux
+    # kitty --name scratchpad
 fi

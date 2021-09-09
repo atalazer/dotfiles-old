@@ -2,7 +2,6 @@ local awful = require("awful")
 local gears = require("gears")
 
 local keys = gears.table.join(
-    
     -- Tag: Gaps
     awful.key({ superkey, shiftkey }, "minus", function()
         awful.tag.incgap(5, nil)
@@ -26,20 +25,59 @@ local keys = gears.table.join(
 
     -- ================= Tag Moves {{{
 
-    awful.key({ superkey }, "[",
-        --awful.key({ W }, "Left",
-        awful.tag.viewprev,
-        { description = "Previous", group = "Tag: Move" }),
+    awful.key({ superkey }, "[", awful.tag.viewprev, { description = "Go To Previous Tag", group = "Tag: Move" }),
 
-    awful.key({ superkey }, "]",
-        --awful.key({ W }, "Right",
-        awful.tag.viewnext,
-        { description = "Next", group = "Tag: Move" }),
-    
+    awful.key({ superkey }, "]", awful.tag.viewnext, { description = "Go To Next Tag", group = "Tag: Move" }),
+
+    awful.key({ superkey, shiftkey }, "[", function()
+        local screen = awful.screen.focused()
+        local ctag = screen.selected_tag
+        local tag = screen.tags[ctag.index - 1]
+
+        local c = client.focus
+        if not c then
+            return
+        end
+
+        if tag then
+            if c then
+                c:move_to_tag(tag)
+                tag:view_only()
+            end
+        end
+    end, {
+        description = "Move Focused Client To Previous Tag",
+        group = "Tag: Move",
+    }),
+
+    awful.key({ superkey, shiftkey }, "]", function()
+        local screen = awful.screen.focused()
+        local ctag = screen.selected_tag
+        local tag = screen.tags[ctag.index + 1]
+
+        local c = client.focus
+        if not c then
+            return
+        end
+
+        if tag then
+            if c then
+                c:move_to_tag(tag)
+                tag:view_only()
+            end
+        end
+    end, {
+        description = "Move Focused Client To Next Tag",
+        group = "Tag: Move",
+    }),
+
     awful.key({ superkey }, "x", function()
         awful.tag.history.restore()
-    end, { description = "Back", group = "Tag: Move" }),
-    
+    end, {
+        description = "Back",
+        group = "Tag: Move",
+    }),
+
     --}}}
 
     -- ================= Tag Moves {{{
@@ -87,7 +125,6 @@ local keys = gears.table.join(
     })
 
     -- }}}
-
 )
 
 return keys

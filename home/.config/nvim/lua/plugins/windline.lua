@@ -262,7 +262,7 @@ local quickfix = {
         { "🧛 ", { "white", "black" } },
     },
 
-    show_in_active = true,
+    show_inactive = true,
 }
 
 local explorer = {
@@ -274,7 +274,7 @@ local explorer = {
         { sep.slant_right_2, { "black", "black_light" } },
         { b_components.file_name(""), { "white", "black_light" } },
     },
-    show_in_active = true,
+    show_inactive = true,
     show_last_status = false,
 }
 
@@ -292,7 +292,7 @@ local default = {
         { " ", hl_list.Black },
         basic.info,
     },
-    in_active = { basic.inactive },
+    inactive = { basic.inactive },
 }
 
 local writing = {
@@ -309,7 +309,7 @@ local writing = {
         { git_comps.git_branch(), { "yellow", "black" }, breakpoint_width },
         basic.info,
     },
-    in_active = {
+    inactive = {
         basic.inactive,
     },
 }
@@ -325,7 +325,7 @@ local minimalist = {
         { b_components.file_name(""), { "green", "black" } },
         basic.divider,
     },
-    in_active = {
+    inactive = {
         basic.divider,
         { b_components.file_name(""), { "white", "black" } },
         basic.divider,

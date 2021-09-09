@@ -9,7 +9,7 @@ export XMODIFIERS="@im=fcitx"
 export SDL_IM_MODULE="fcitx"
 export IBUS_USE_PORTAL=1
 
-# export XDG_CURRENT_DESKTOP=gnome
+export XDG_CURRENT_DESKTOP=gnome
 # export DESKTOP_SESSION=gnome
 
 # export GTK_OVERLAY_SCROLLING=1
@@ -223,4 +223,9 @@ ex= :\
 "
 
 # include Mycroft commands
-source ~/.profile_mycroft
+[[ -f $HOME/.profile_mycroft ]] && source $HOME/.profile_mycroft
+
+# added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then 
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
+fi

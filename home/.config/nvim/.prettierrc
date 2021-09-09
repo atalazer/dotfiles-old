@@ -2,8 +2,8 @@
     "bracketSpacing": true,
     "semi": true,
     "useTabs": false,
-    "tabWidth": 4,
-    "printWidth": 120,
+    "tabWidth": 2,
+    "printWidth":80,
     "arrowParents": "avoid",
     "trailingComma": "es5"
 }

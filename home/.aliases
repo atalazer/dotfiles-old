@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
-editor="${EDITOR:-nvim}"
+EDITOR="${EDITOR:-nvim}"
+TRASH_CMD=${TRASH_CMD:-"gio"}
 
 # Basic
 alias c="clear"
@@ -30,28 +31,28 @@ if command -v "exa" > /dev/null 2>&1; then
 fi
 
 # Use Trash Instead of rm
-if [[ $TRASH_CMD == "gio" && $(command -v "gio" > /dev/null 2>&1) ]]; then
+if [[ $TRASH_CMD == "gio" ]]; then
     alias rm="gio trash"
     alias tr="gio trash"
     alias tl="gio trash --list"
     alias trs="gio trash --restore"
-elif [[ $TRASH_CMD == "trash" && $(command -v "gio" > /dev/null 2>&1) ]]; then
+elif [[ $TRASH_CMD == "trash" ]]; then
     alias rm="trash"
     alias tr="trash"
     alias tl="trash-list"
     alias trs="trash-restore"
 fi
 
-# Editor Alias
-alias {e,vi,vim}="$editor"
+# EDITOR Alias
+alias {e,vi,vim}="$EDITOR"
 alias se="sudoedit"
-# alias el="$editor -S ~/.cache/nvim/sessions/last.vim"
+# alias el="$EDITOR -S ~/.cache/nvim/sessions/last.vim"
 alias el="nvim -c 'SessionLoad last'"
-alias ep="$editor ~/.config/nvim/lua/plugins/init.lua"
-alias {envim,ev}="$editor ~/.config/nvim/init.lua"
-alias {zshrc,ez}="$editor ~/.zshrc"
-alias {xrc,ex}="$editor ~/.Xresources"
-alias {awc,ea}="$editor ~/.config/awesome/rc.lua"
+alias ep="$EDITOR ~/.config/nvim/lua/plugins/init.lua"
+alias {envim,ev}="$EDITOR ~/.config/nvim/init.vim"
+alias {zshrc,ez}="$EDITOR ~/.zshrc"
+alias {xrc,ex}="$EDITOR ~/.Xresources"
+alias {awc,ea}="$EDITOR ~/.config/awesome/rc.lua"
 
 # Xresources Alias
 alias xload="xrdb -load ~/.Xresources"

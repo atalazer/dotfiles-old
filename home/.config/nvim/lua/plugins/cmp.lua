@@ -30,12 +30,12 @@ cmp.setup({
     formatting = {
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s (%s)", require("lsp.kind").presets[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
-                nvim_lsp = "[LSP]",
-                nvim_lua = "[LUA]",
-                buffer = "[BUF]",
-                spell = "[SPL]",
-            })[entry.source.name] or vim_item.menu
+            -- vim_item.menu = ({
+            --     nvim_lsp = "[LSP]",
+            --     nvim_lua = "[LUA]",
+            --     buffer = "[BUF]",
+            --     spell = "[SPL]",
+            -- })[entry.source.name] or vim_item.menu
             return vim_item
         end,
     },
@@ -48,11 +48,11 @@ cmp.setup({
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
         ["<M-e>"] = cmp.mapping.close(),
+        ["<Tab>"] = cmp.mapping(function(fallback) _G.Util.tab_complete(fallback) end, {"i","s",}),
+        ["<S-Tab>"] = cmp.mapping(function(fallback) _G.Util.s_tab_complete(fallback) end, {"i","s",}),
         ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         }),
-        ["<Tab>"] = cmp.mapping(function(fallback) _G.Util.tab_complete(fallback) end, {"i","s",}),
-        ["<S-Tab>"] = cmp.mapping(function(fallback) _G.Util.s_tab_complete(fallback) end, {"i","s",}),
     },
 })

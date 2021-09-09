@@ -3,8 +3,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 
 local filesystem = gears.filesystem
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
+local theme_assets = beautiful.theme_assets
+-- local xresources = beautiful.xresources
 -- local gtk_variable = beautiful.gtk.get_theme_variables
 
 local theme_dir = filesystem.get_configuration_dir() .. "/themes/"
@@ -56,7 +56,7 @@ theme.fg_urgent = x.color9
 theme.fg_minimize = x.color8
 
 -- Gaps
-theme.useless_gap   = dpi(3)
+theme.useless_gap = dpi(3)
 theme.screen_margin = dpi(2)
 
 -- Borders
@@ -149,20 +149,6 @@ theme.snap_border_width = dpi(2)
 -- Others
 -- ===================================================
 
--- Tag names
-theme.tagnames = {
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
-}
-
 -- Widget separator
 theme.separator_text = "|"
 theme.separator_fg = x.color8
@@ -197,26 +183,27 @@ theme.tasklist_fg_urgent = x.color3
 theme.tasklist_align = "center"
 theme.tasklist_spacing = dpi(0)
 
--- Sidebar
-theme.sidebar_bg = x.background
-theme.sidebar_fg = x.color7
-theme.sidebar_opacity = 0.95
-theme.sidebar_position = "left" -- left or right
-theme.sidebar_width = dpi(300)
-theme.sidebar_x = 0
-theme.sidebar_y = 0
-theme.sidebar_border_radius = dpi(30)
-
 -- Dashboard
 theme.dashboard_bg = x.color0 .. "CC"
 theme.dashboard_fg = x.color7
 
+-- Sidebar
+theme.sidebar_bg = x.background
+theme.sidebar_fg = x.color7
+theme.sidebar_opacity = 0.98
+theme.sidebar_position = "left" -- left or right
+theme.sidebar_width = dpi(300)
+theme.sidebar_border_radius = dpi(30)
+
 -- Notif Center
 theme.notif_center_bg = x.background
 theme.notif_center_fg = x.color7
-theme.notif_center_opacity = 0.95
-theme.notif_center_width = dpi(350)
+theme.notif_center_opacity = 0.98
+theme.notif_center_width = dpi(360)
 theme.notif_center_border_radius = dpi(30)
+
+-- Sidebar and Notif Center activator
+theme.activator_opacity = 0.2
 
 theme.notifbox_bg = x.color0
 

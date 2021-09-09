@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+DMENU="rofi -dmenu -i -p Action Center"
+# OPTIONS = [[label, command]]
+OPTIONS='''
+[
+  [ "Apps Menu",        "rofi-app"],
+  [ "Calculator",       "rofi-calc"],
+  [ "Clipboard",        "env CM_HISTLENGTH=20 CM_LAUNCHER=rofi clipmenu"],
+  [ "Cheatsheets",      "rofi-cheatsheets"],
+  [ "Dotfiles",         "rofi-edit"],
+  [ "Global Menu",      "rofi-spotlight"],
+  [ "Kill",             "rofi-kill" ],
+  [ "MPD",              "rofi-mpd" ],
+  [ "Network Manager",  "rofi-network" ],
+  [ "Password Manager", "rofi-pass"],
+  [ "Record",           "rofi-record"],
+  [ "Screenshot",       "shot"],
+  [ "Switcher",         "rofi-switcher"],
+  [ "Todo",             "rofi-todo"],
+  [ "Translate",        "rofi-translate -i" ],
+  [ "Youtube",          "rofi-youtube" ]
+]
+'''
+
+label=$(echo $OPTIONS | jq -r "sort | .[][0]" | $DMENU)
+exec $(echo $OPTIONS | jq -r ".[] | select(.[0] == \"$label\") | .[1]")

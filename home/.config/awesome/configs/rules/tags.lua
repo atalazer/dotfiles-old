@@ -84,8 +84,16 @@ ruled.client.connect_signal("request::rules", function()
     -- Office {{{
     ruled.client.append_rule({
         rule_any = {
-            class = { "libreoffice", "DesktopEditors", "Wps" },
-            instance = { "libreoffice", "DesktopEditors", "wps" },
+            class = {
+                "libreoffice",
+                "DesktopEditors",
+                "Wps",
+            },
+            instance = {
+                "libreoffice",
+                "DesktopEditors",
+                "wps",
+            },
         },
         properties = {
             tag = awful.screen.focused().tags[3].name,
@@ -139,28 +147,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             tag = awful.screen.focused().tags[5].name,
             switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Miscellaneous {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "htop",
-                "monitoring",
-            },
-            instance = {
-                "htop",
-                "monitoring",
-            },
-        },
-        except_any = {
-            type = { "dialog" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[10].name,
-            switch_to_tags = false,
         },
     })
     -- }}}

@@ -164,7 +164,7 @@ awful.screen.connect_for_each_screen(function(s)
         height = dpi(3),
         bg = x.color8,
         shape = helpers.rrect(beautiful.border_radius),
-        opacity = 0.8,
+        opacity = beautiful.activator_opacity or 0.3,
         visible = not s.dock.visible,
         ontop = true,
     })

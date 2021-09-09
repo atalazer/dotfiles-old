@@ -56,7 +56,7 @@ Util.borders = {
     { "│", "FloatBorder" },
 }
 
-Util.lsp_on_attach = function(client)
+Util.lsp_on_attach = function(client, bufnr)
     if client.resolved_capabilities.code_lens then
         vim.cmd([[
             augroup CodeLens
@@ -74,7 +74,7 @@ Util.lsp_on_attach = function(client)
         handler_opts = {
             border = Util.borders, -- double, single, shadow, none
         },
-    })
+    }, bufnr)
     require("lsp.keys").mappings()
 end
 

@@ -349,7 +349,7 @@ require("configs.signals")
 -- Add `touch /tmp/awesomewm-show-dashboard` to your ~/.xprofile in order to make the dashboard appear on login
 local dashboard_flag_path = "/tmp/awesomewm-show-dashboard"
 -- Check if file exists
-awful.spawn.easy_async_with_shell("stat " .. dashboard_flag_path .. " >/dev/null 2>&1", function(_, __, ___, exitcode)
+awful.spawn.easy_async_with_shell("stat " .. dashboard_flag_path .. " >/dev/null 2>&1", function(_, _, _, exitcode)
     if exitcode == 0 then
         -- Show dashboard
         if dashboard_show then

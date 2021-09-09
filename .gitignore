@@ -18,11 +18,13 @@
 **/*.zip
 **/*.rar
 **/*.so
+**/history.*
+**/state.*
 **/*__
-home/.user.keys
-home/.config/rofi/rofi-spotlight/history.txt
+**/watch_later/*
 
-home/.config/lazygit/state.yml
+result
+home/.user.keys
 home/.config/hosts/.mode
 home/.config/ncmpcpp/patterns.list
 home/.config/gtk-3.0/settings.ini

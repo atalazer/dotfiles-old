@@ -1,4 +1,4 @@
-#!/bin/sh
+# #!/bin/sh
 
 # Setup Script by Atalazer
 # Supported distro:
@@ -84,6 +84,10 @@ function root(){
 
 OPT=${1:-help}
 case $OPT in
+    nix)
+    	ARG=${2:-linux}
+        nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#${ARG}'"
+        ;;
     install|-i) 
         [[ -f $DIR/pkginstall ]] && sh -c "$DIR/pkginstall"
         ;;

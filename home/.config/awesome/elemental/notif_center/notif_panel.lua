@@ -84,7 +84,7 @@ local right_panel = function(screen)
             height = activator_height,
             visible = true,
             ontop = true,
-            opacity = 0.8,
+            opacity = beautiful.activator_opacity or 0.3,
             below = true,
             screen = screen,
         })

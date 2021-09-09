@@ -1,3 +1,4 @@
+-- vim: foldenable foldmethod=marker:
 local awful = require("awful")
 local ruled = require("ruled")
 local beautiful = require("beautiful")
@@ -67,8 +68,8 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             name = {
-                "Picture-in-Picture"
-            }
+                "Picture-in-Picture",
+            },
         },
         properties = {
             titlebars_enabled = false,
@@ -77,7 +78,7 @@ ruled.client.connect_signal("request::rules", function()
             sticky = true,
             skip_decoration = true,
             placement = awful.placement.top_right,
-        }
+        },
     })
     -- }}}
 
@@ -229,6 +230,28 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- Office {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = {
+                "libreoffice",
+                "DesktopEditors",
+                "Wps",
+            },
+            instance = {
+                "libreoffice",
+                "DesktopEditors",
+                "wps",
+            },
+        },
+        properties = {
+            titlebars_enabled = false,
+            raise = true,
+            placement = centered_client_placement,
+        },
+    })
+    -- }}}
+
     -- PDF viewers {{{
     ruled.client.append_rule({
         rule_any = {
@@ -286,7 +309,10 @@ ruled.client.connect_signal("request::rules", function()
             },
             name = { "Color Picker" },
         },
-        properties = { floating = true, titlebars_enabled = false },
+        properties = {
+            floating = true,
+            titlebars_enabled = false,
+        },
     })
     -- }}}
 
@@ -329,8 +355,9 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "QtScrcpy", "scrcpy",
-            }
+                "QtScrcpy",
+                "scrcpy",
+            },
         },
         properties = {
             titlebars_enabled = true,
@@ -340,6 +367,7 @@ ruled.client.connect_signal("request::rules", function()
     })
 
     -- }}}
+
     -- Oomox {{{
     ruled.client.append_rule({
         rule_any = { class = { "Oomox" } },

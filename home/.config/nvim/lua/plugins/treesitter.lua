@@ -1,9 +1,10 @@
-local ts_configs = require("nvim-treesitter.configs")
+local tsc = require("nvim-treesitter.configs")
 
-ts_configs.setup({
+tsc.setup({
     ensure_installed = {
         "javascript",
         "typescript",
+        "svelte",
         "tsx",
         "html",
         "css",
@@ -18,29 +19,20 @@ ts_configs.setup({
         "toml",
         "yaml",
         "latex",
+        "nix",
         "json",
         "jsonc",
         "query",
         "comment",
     },
-    matchup = {
-        enable = true,
-    },
-    autopairs = {
-        enable = true,
-    },
-    autotag = {
-        enable = true,
-    },
+    matchup = { enable = true },
+    autopairs = { enable = true },
+    autotag = { enable = true },
+    highlight = { enable = true },
+    indent = { enable = true },
     context_commentstring = {
         enable = true,
         enable_autocmd = false,
-    },
-    highlight = {
-        enable = true,
-    },
-    indent = {
-        enable = true,
     },
     incremental_selection = {
         enable = true,
@@ -57,11 +49,11 @@ ts_configs.setup({
         smart_rename = {
             enable = true,
             keymaps = {
-                smart_rename = "grr",
+                smart_rename = "gR",
             },
         },
         navigation = {
-            enable = true,
+            enable = false,
             keymaps = {
                 goto_definition = "gnd",
                 list_definitions = "gnD",
@@ -133,3 +125,10 @@ ts_configs.setup({
         },
     },
 })
+
+require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
+
+vim.cmd([[
+  omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
+  vnoremap <silent> m :lua require('tsht').nodes()<CR>
+]])

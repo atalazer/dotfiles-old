@@ -41,11 +41,11 @@ telescope.setup({
             horizontal = {
                 prompt_position = "bottom",
                 preview_cutoff = 120,
-                preview_width = 0.65,
+                preview_width = 0.70,
             },
             vertical = {
-                preview_cutoff = 40,
-                preview_height = 0.60,
+                preview_cutoff = 30,
+                preview_height = 0.70,
             },
             center = {
                 preview_cutoff = 40,
@@ -103,6 +103,7 @@ telescope.setup({
                 "%.mp3",
                 "%.mp4",
                 "%.mkv",
+                "node_modules",
             },
         },
         lsp_code_actions = M.no_preview(),
@@ -127,32 +128,24 @@ telescope.setup({
                 ["dots"] = os.getenv("DOTS"),
                 ["blog"] = os.getenv("BLOG"),
                 ["repo"] = HOME .. "/Documents/GitHub",
-                ["project"] = HOME .. "/Documents/Project",
                 ["pro"] = HOME .. "/Documents/Project",
-                ["school"] = HOME .. "/Documents/School",
                 ["sch"] = HOME .. "/Documents/School",
-                ["scratch"] = HOME .. "/Documents/.Scratch",
                 ["scr"] = HOME .. "/Documents/.Scratch",
                 ["ksn"] = HOME .. "/Documents/KSN-MTK-SMP",
                 ["nvim"] = HOME .. "/.config/nvim",
-                ["awesome"] = HOME .. "/.config/awesome",
                 ["awm"] = HOME .. "/.config/awesome",
                 ["kitty"] = HOME .. "/.config/kitty",
                 ["zsh"] = HOME .. "/.zsh",
-                ["firefox"] = HOME .. "/.mozilla/firefox/",
-                ["backup"] = HOME .. "/Backups",
             },
         },
     },
 })
 
--- Load Extensions {{{
+-- Load Extensions
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("frecency")
 require("telescope").load_extension("media_files")
--- }}}
 
--- Set Keymap {{{
 local builtin = require("telescope.builtin")
 M.builtins = function()
     builtin.builtin(M.no_preview())
@@ -161,11 +154,20 @@ end
 M.frecency = function()
     telescope.extensions.frecency.frecency(M.no_preview())
 end
+M.glow_previewer = function()
+    return require("telescope.builtin").fd({
+        previewer = previewers.new_termopen_previewer({
+            get_command = function(selection)
+                return { "glow", selection.value }
+            end,
+        }),
+    })
+end
 
 -- Telescope
 nnoremap({ "<C-p>", ":Telescope find_files<CR>", { silent = true } })
-nnoremap({ "<leader>fl", ":Telescope live_grep<CR>", { silent = true } })
 nnoremap({ "<leader>fo", ":Telescope oldfiles<CR>", { silent = true } })
+nnoremap({ "<leader>fl", ":Telescope live_grep<CR>", { silent = true } })
 nnoremap({ "<leader>fd", ":Telescope marks<CR>", { silent = true } })
 nnoremap({ "<leader>fb", ":Telescope file_browser<CR>", { silent = true } })
 nnoremap({ "<leader>fk", ":Telescope keymaps<CR>", { silent = true } })
@@ -174,7 +176,7 @@ nnoremap({ "<Leader>ft", M.builtins, { silent = true } })
 
 -- :Telescope Extensions
 nnoremap({ "<leader>ff", M.frecency, { silent = true } })
+nnoremap({ "<leader>fg", M.glow_previewer, { silent = true } })
 nnoremap({ "<leader>fm", ":Telescope media_files<CR>", { silent = true } })
--- }}}
 
 return M

@@ -395,7 +395,7 @@ sidebar.fg = beautiful.sidebar_fg or beautiful.wibar_fg or "#FFFFFF"
 sidebar.opacity = beautiful.sidebar_opacity or 1
 sidebar.height = screen.primary.geometry.height
 sidebar.width = beautiful.sidebar_width or dpi(300)
-sidebar.y = beautiful.sidebar_y or 0
+sidebar.y = 0
 local radius = beautiful.sidebar_border_radius or 0
 if beautiful.sidebar_position == "right" then
     awful.placement.top_right(sidebar)
@@ -448,7 +448,7 @@ if user.sidebar.show_on_mouse_screen_edge then
         height = activator_height,
         visible = true,
         ontop = true,
-        opacity = 0.8,
+        opacity = beautiful.activator_opacity or 0.3,
         below = true,
         screen = screen.primary,
     })

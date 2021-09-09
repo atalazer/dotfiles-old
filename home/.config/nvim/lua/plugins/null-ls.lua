@@ -2,8 +2,8 @@ local M = {}
 
 M.setup = function()
     local null_ls = require("null-ls")
-    local h = require("null-ls.helpers")
-    local m = null_ls.methods
+    -- local h = require("null-ls.helpers")
+    -- local m = null_ls.methods
     local b = null_ls.builtins
 
     vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc"
@@ -12,19 +12,30 @@ M.setup = function()
         debounce = 150,
         sources = {
             b.code_actions.gitsigns,
-            b.diagnostics.eslint.with {
+            b.diagnostics.eslint.with({
                 command = "eslint_d",
-            },
-            b.formatting.trim_whitespace.with({ 
-                filetypes = { "sh", "bash", "zsh" } 
+            }),
+            b.formatting.trim_whitespace.with({
+                filetypes = { "sh", "bash", "zsh" },
             }),
             b.formatting.shfmt.with({
                 filetypes = { "sh", "bash", "zsh" },
                 args = { "-i", vim.bo.shiftwidth or 4, "-s", "$FILENAME" },
             }),
             b.formatting.black,
-            -- b.formatting.prettierd,
-            b.formatting.prettier_d_slim,
+            b.formatting.prettierd.with({
+                filetypes = {
+                    "typescriptreact",
+                    "typescript",
+                    "javascriptreact",
+                    "javascript",
+                    "svelte",
+                    "json",
+                    "jsonc",
+                    "css",
+                    "html",
+                },
+            }),
             b.formatting.stylua.with({
                 args = {
                     "--config-path",
@@ -32,7 +43,7 @@ M.setup = function()
                     "-",
                 },
             }),
-        }
+        },
     })
 end
 

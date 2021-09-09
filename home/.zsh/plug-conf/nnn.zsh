@@ -1,16 +1,22 @@
 #export LC_COLLATE="C"
 #export NNN_OPTS="cEnrx"
 
-if command -v "gio" > /dev/null 2>&1; then
-    export NNN_TRASH=2
-elif command -v "trash" > /dev/null 2>&1; then
+if command -v "trash" > /dev/null 2>&1; then
     export NNN_TRASH=1
+elif command -v "gio" > /dev/null 2>&1; then
+    export NNN_TRASH=2
 else
     export NNN_TRASH=0
 fi
 
-export NNN_OPENER="/usr/bin/xdg-open"
-export NNN_SEL='/tmp/.sel'
+if command -v "opener" > /dev/null 2>&1; then
+    OPENER="opener"
+else
+    OPENER="xdg-open"
+fi
+
+export NNN_OPENER=${OPENER}
+export NNN_SEL=/tmp/.sel
 export NNN_FIFO=/tmp/nnn.fifo
 
 NNN_BMS="\

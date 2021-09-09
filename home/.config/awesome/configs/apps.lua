@@ -10,7 +10,7 @@ local notifications = require("notifications")
 local apps = {}
 
 apps.record = function()
-    awful.spawn.with_shell("rofi_record")
+    awful.spawn.with_shell("rofi-record")
 end
 
 apps.clipboard = function()
@@ -30,7 +30,7 @@ apps.file_manager = function()
 end
 
 apps.office = function()
-    helpers.run_or_raise({ instance = "libreoffice" }, false, "env GTK_THEME=Adwaita:light libreoffice")
+    helpers.run_or_raise({ instance = "DesktopEditors" }, false, "XDG_CURRENT_DESKTOP=gnome onlyoffice")
 end
 
 apps.mail = function()

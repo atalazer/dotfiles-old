@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # User Configuration
-RESTART_WM="true"
-WM="awesome"
+RESTART_WM=${RESTART_WM:-"true"}
+WM=${WM:-"awesome"}
 
-WALLPAPER_CHANGER="feh --bg-fill "
+WALLPAPER_CHANGER=${WALLPAPER_CHANGER:-"feh --bg-fill "}
 
 # Config FIles
 GTK2_CONFIG="$HOME/.gtkrc-2.0"
@@ -70,16 +70,16 @@ AFTER() {
     }
 
     # Reload Kitty
-    check_app kitty && \
-        pt info "Reloading Kitty" && \
-        kitty @ set-colors --all --configured ~/.config/kitty/kitty.conf &> /dev/null
+    check_app kitty &&
+        pt info "Reloading Kitty" &&
+        kitty @ set-colors --all --configured ~/.config/kitty/kitty.conf &>/dev/null
 
     # Reload WM
     if [[ $RESTART_WM == true ]]; then
         pt info "Restarting WM"
         if [[ $WM == "awesome" ]]; then
-            check_app awesome && \
-                awesome-client 'awesome.restart()' &> /dev/null
+            check_app awesome &&
+                awesome-client 'awesome.restart()' &>/dev/null
         fi
     fi
 
@@ -338,7 +338,7 @@ APPLY() {
 
     xsettingsd &>/dev/null &
     read -rt "3" <> <(:) || killall xsettingsd &
-    
+
     if command -v "gsettings" >/dev/null 2>&1; then
         gsettings set org.gnome.desktop.interface gtk-theme $GTK_THEME &>/dev/null
         gsettings set org.gnome.desktop.wm.preferences theme $GTK_THEME &>/dev/null

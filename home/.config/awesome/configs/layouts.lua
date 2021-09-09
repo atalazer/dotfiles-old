@@ -20,7 +20,7 @@ local equal = bling.layout.equalarea
 -- Set the layouts
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
+local layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
     centered,
@@ -43,6 +43,14 @@ awful.layout.layouts = {
     --awful.layout.suit.corner.sw,
     --awful.layout.suit.corner.se,
 }
+
+
+-- Set tags layout
+tag.connect_signal("request::default_layouts", function()
+    awful.layout.append_default_layouts(layouts)
+end)
+
+awful.layout.layouts = layouts
 
 -- Layout List Widget ---------------------------------------------------------
 
@@ -141,4 +149,3 @@ awful.keygrabber({
         },
     },
 })
-

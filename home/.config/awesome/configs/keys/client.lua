@@ -306,7 +306,7 @@ keys.clientkeys = gears.table.join(
     }),
 
     -- Toggle floating
-    awful.key({ superkey, ctrlkey }, "space", function(c)
+    awful.key({ superkey, ctrlkey }, "space", function()
         local layout_is_floating = (awful.layout.get(mouse.screen) == awful.layout.suit.floating)
         if not layout_is_floating then
             awful.client.floating.toggle()

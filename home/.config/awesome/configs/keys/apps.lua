@@ -7,23 +7,24 @@ local l = require("configs.keys.lib")
 local keys = gears.table.join(
     -- ===================================== Prompt {{{
     l.keys("Apps: Prompt", { superkey }, {
-        a = { "rofi_center", "Rofi Center" },
-        c = { "rofi_calc", "Calculator" },
+        a = { "rofi-center", "Rofi Center" },
+        c = { "rofi-calc", "Calculator" },
         d = { "rofi -show", "Rofi" },
-        e = { "rofi_edit", "Edit Config" },
-        g = { "rofi_global_menu", "Global Menu" },
+        e = { "rofi-edit", "Edit Config" },
+        g = { "rofi-spotlight", "Global Menu" },
         n = { apps.network, "Network Prompt" },
         p = { apps.password, "Password Prompt" },
-        r = { "rofi_app_menu", "App Launcher" },
-        t = { "rofi_translate -i", "Translate" },
+        r = { "rofi-app", "App Launcher" },
+        t = { "rofi-translate -i", "Translate" },
         F12 = { apps.record, "Record Menu" },
         Insert = { apps.clipboard, "Clipboard Manager" },
         Print = { "shot -i", "Shot Menu" },
     }),
 
     l.keys("Apps: Prompt", { superkey, shiftkey }, {
-        t = { "rofi_translate -c", "Translate From Clipboard" },
+        t = { "rofi-translate -c", "Translate From Clipboard" },
         Print = { "shot -o", "Shot Image to Text" },
+        Insert = { "rofi-translate -m", "Translate from Image" }
     }),
 
     -- }}}
