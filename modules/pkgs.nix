@@ -1,24 +1,24 @@
-{ config, pkgs, home-manager, ... }:
-{
+{ config, pkgs, home-manager, ... }: {
   home.packages = with pkgs; [
     ## Desktop Environment(DE)/Window Manger(WM)
     my.awesome-git
+    my.picom-git
     pywal
-    picom
-    fusuma
     rofi
     rofi-calc
 
     ## Utils
+    handlr
     maim
     scrot
-    tesseract         # OCR
+    tesseract
 
     ## Services
-    mpd
     espanso
-    xclip
+    fusuma
     gcr # for pinentry-gnome3
+    mpd
+    xclip
 
     ## GUI Apps
     feh

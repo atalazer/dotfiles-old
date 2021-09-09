@@ -1,18 +1,14 @@
 # Dotfiles ~/
->   Place to backup my configuration files
+> Place to backup my configuration files.
+>
+> Currently available for Linux.
 
 # Table of Content
 <!-- TOC depthFrom:2 -->
 - [Screenshot](#screenshot)
 - [Configuration List](#configuration-list)
-  - [WM Related](#wm-related)
-  - [Terminal Related](#terminal-related)
-  - [CLI Tools](#cli-tools)
-  - [Others](#others)
 - [Installation](#installation)
-  - [Updating](#updating)
 - [Reference](#reference)
-- [Todo](#todo)
 
 <!-- /TOC -->
 
@@ -25,6 +21,7 @@
 [arch-link]: https://archlinux.org/
 [pacman-link]: https://wiki.archlinux.org/index.php/pacman
 [paru-link]: https://github.com/Morganamilo/paru
+[nix-link]: https://nixos.org/
 
 [awesome-link]: https://github.com/awesomewm/awesome
 [picom-link]: https://github.com/yshui/picom
@@ -42,63 +39,71 @@
 [mpd-link]: https://www.musicpd.org/
 [ncmpcpp-link]: https://rybczak.net/ncmpcpp/
 [nnn-link]: https://github.com/jarun/nnn
+[lf-link]: https://github.com/gokcehan/lf
 
 [mpv-link]: https://mpv.io/
 [nemo-link]: https://github.com/linuxmint/nemo
+[thunar-link]: https://docs.xfce.org/xfce/thunar/start
 
 [nerd-font-link]: https://www.nerdfonts.com/
 [system-font]: https://github.com/rsms/inter/
 [stow-link]: https://www.gnu.org/software/stow/manual/stow.html
 [dotbare-link]: https://github.com//kazhala/dotbare
+[home-manager-link]: https://github.com/nix-community/home-manager
 
 # Configuration List
-| Name                 | Details                                                                           |
-| :---:                | :-----:                                                                           |
-| **Operating System** | [Archlinux][arch-link]                                                            |
-| **Package Manager**  | [pacman][pacman-link] and [paru][paru-link]                                       |
-| **WM**               | [AwesomeWM][awesome-link]                                                         |
-| **Compositor**       | [Picom Jonaburg Fork][picom-link]                                                 |
-| **Fonts**            | [JetBrains Nerd Fonts][nerd-font-link] and [Inter Fonts][system-font]             |
-| **Terminal**         | [Kitty][kitty-link]                                                               |
-| **Shell**            | [fish][fish-link] with [fisher][fisher-link] and [starship Prompt][starship-link] |
-| **Music**            | [mpd][mpd-link] and [ncmpcpp][ncmpcpp-link]                                       |
-| **Editor**           | [Neovim 0.5][neovim-link]                                                         |
-| **File Manager**     | [Nemo][nemo-link] and [nnn][nnn-link]                                             |
-| **Dotfiles Manager** | [Stow][stow-link] and [Dotbare][dotbare-link]                                     |
+| Name                 | Details                                                                            |
+| :---:                | :-----:                                                                            |
+| **Operating System** | [Archlinux][arch-link]                                                             |
+| **Package Manager**  | [Pacman][pacman-link], [Paru][paru-link], and [Nix][nix-link]                      |
+| **WM**               | [AwesomeWM][awesome-link]                                                          |
+| **Compositor**       | [Picom ][picom-link]                                                               |
+| **Fonts**            | [Inter Fonts][system-font] and [FiraCode Nerd Fonts][nerd-font-link]               |
+| **Terminal**         | [Kitty][kitty-link]                                                                |
+| **Shell**            | [ZSH][zsh-link] with [Zinit][zinit-link] and [Starship Prompt][starship-link]      |
+| **Music**            | [MPD][mpd-link] and [ncmpcpp][ncmpcpp-link]                                        |
+| **Editor**           | [Neovim][neovim-link]                                                              |
+| **File Manager**     | [Thunar][thunar-link], [nnn][nnn-link], [lf][lf-link]                              |
+| **Dotfiles Manager** | ~~[Stow][stow-link] and [Dotbare][dotbare-link]~~ [Home Manager][home-manager-link]|
 
 # Installation
 
+## Automatically with Nix home-manager
+> NOTE: You need to install nix to use home-manager
+
+To Install Nix:
+```bash
+curl -L https://nixos.org/nix/install | sh
+```
+
+Install and Use This Dotfiles:
 ```bash
 export DOTS="$HOME/.dotfiles"
 git clone https://github.com/atalazer/dotfiles.git $DOTS
 cd $DOTS
-./setup install         # Install required dependencies and packages
-./setup home apply      # Apply home dir
 
-# Show help for details ./setup script
-./setup help
+./setup linux
+# or
+nix-shell -p nixUnstable --command \
+   "nix build --experimental-features 'nix-command flakes' '.#linux'" --show-trace
 ```
 
-## Updating
-```bash
-cd ${DOTS:-$HOME/.dotfiles}
-git pull
-./setup install         # Install required dependencies and packages
-./setup home apply      # Apply home dir
-```
+## Manually
+Just copy and paste the files from this dotfiles.
 
 # Reference
+**Dotfiles:**
 - [Dotfiles Archwiki](https://wiki.archlinux.org/index.php/Dotfiles)
 - [dotfiles github.io](https://dotfiles.github.io/)
 
-**Post/manual about GNU stow:**
+**GNU Stow:**
 - [GNU Stow Manual](https://www.gnu.org/software/stow/manual/stow.html)
 - [Managing Dotfiles with GNU Stow](http://blog.xero.nu/managing_dotfiles_with_gnu_stow)
 - [Dotfile Management with GNU Stow](https://jonleopard.com/blog/dotfile-management-with-gnu-stow)
 
-### Todo
-- [ ] Add Screenshot
-- [x] Add another config files
-- [ ] Add Wiki for details
-- [ ] Improve `setup` Script
+**Home Manager:**
+- [Nixos - Home Manager](https://nixos.wiki/wiki/Home_Manager)
+- [Home Manager Repository](https://github.com/nix-community/home-manager)
+- [Example: mjlbach/nix-dotfiles](https://github.com/mjlbach/nix-dotfiles/tree/flakes_home_manager_template)
+- [Example: elianiva/dotfiles](https://github.com/elianiva/dotfiles)
 

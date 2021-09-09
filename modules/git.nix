@@ -1,9 +1,3 @@
-{ config, pkgs, home-manager, ... }:
-{
-  home.packages = with pkgs; [
-    delta
-    gh
-    git
-    lazygit
-  ];
+{ config, pkgs, home-manager, ... }: {
+  home.packages = with pkgs; [ delta gh git lazygit ];
 }

@@ -1,5 +1,7 @@
 local tsc = require("nvim-treesitter.configs")
 
+require("nvim-treesitter.install").compilers = { vim.fn.getenv("CC"), "cc", "gcc", "clang", "cl" }
+
 tsc.setup({
     ensure_installed = {
         "javascript",

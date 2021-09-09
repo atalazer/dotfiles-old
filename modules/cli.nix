@@ -1,5 +1,4 @@
-{ config, pkgs, libs, ... }:
-{
+{ config, pkgs, libs, ... }: {
   home.packages = with pkgs; [
     # Base
     nixUnstable
@@ -14,6 +13,7 @@
     exa
     fd
     fzf
+    glow
     htop
     lf
     neofetch
@@ -43,7 +43,6 @@
     light
     lm_sensors
     slop
-    handlr              # xdg-open alternative
     xorg.xset
   ];
 

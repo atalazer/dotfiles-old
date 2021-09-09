@@ -38,6 +38,7 @@ local servers = {
     -- jedi_language_server = require("lsp.server.jedi").config,
     jsonls = require("lsp.server.json").config,
     pyright = {},
+    rnix = {},
     sumneko_lua = require("lsp.server.sumneko_lua").config,
     svelte = require("lsp.server.svelte").config,
     texlab = require("lsp.server.texlab").config,

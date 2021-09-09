@@ -245,9 +245,13 @@ return packer.startup({
         -- Semantic highlight
         {
             "nvim-treesitter/nvim-treesitter",
-            event = { "BufRead", "BufNewFile" },
-            run = ":TSUpdate",
+            event = "BufRead",
             requires = {
+                {
+                    "nvim-treesitter/playground",
+                    cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" },
+
+                },
                 {
                     "nvim-treesitter/nvim-treesitter-textobjects",
                     after = "nvim-treesitter",
@@ -565,10 +569,13 @@ return packer.startup({
                 {
                     "nvim-telescope/telescope-frecency.nvim",
                     opt = true,
-                    requires = {
-                        "tami5/sql.nvim",
-                        module_pattern = { "sql", "sql.*" },
-                    },
+                },
+                {
+                    "tami5/sql.nvim",
+                    module_pattern = { "sql", "sql.*" },
+                    setup = function()
+                        vim.g.sqlite_clib_path = "/lib64/libsqlite3.so"
+                    end,
                 },
                 {
                     "nvim-telescope/telescope-media-files.nvim",
@@ -674,6 +681,7 @@ return packer.startup({
         -- limelight.vim in lua
         {
             "folke/twilight.nvim",
+            after = "nvim-treesitter",
             cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
             config = function()
                 require("twilight").setup({

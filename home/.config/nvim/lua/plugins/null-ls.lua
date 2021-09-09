@@ -12,6 +12,7 @@ M.setup = function()
         debounce = 150,
         sources = {
             b.code_actions.gitsigns,
+            b.diagnostics.shellcheck,
             b.diagnostics.eslint.with({
                 command = "eslint_d",
             }),
@@ -23,6 +24,7 @@ M.setup = function()
                 args = { "-i", vim.bo.shiftwidth or 4, "-s", "$FILENAME" },
             }),
             b.formatting.black,
+            b.formatting.nixfmt,
             b.formatting.prettierd.with({
                 filetypes = {
                     "typescriptreact",

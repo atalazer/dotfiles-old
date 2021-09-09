@@ -316,9 +316,10 @@ local writing = {
 
 local minimalist = {
     filetypes = {
+        "",
         "help",
         "text",
-        "",
+        "tsplayground",
     },
     active = {
         basic.divider,
