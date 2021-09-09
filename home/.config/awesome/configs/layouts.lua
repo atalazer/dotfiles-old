@@ -4,10 +4,9 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local dpi = require("beautiful.xresources").apply_dpi
 local helpers = require("helpers")
-local awestore = require("awestore")
 
 -- Bling Module
-local bling = require("bling")
+local bling = require("lib.bling")
 
 -- Custom Layouts -------------------------------------------------------------
 

@@ -31,7 +31,7 @@
                   ];
                 };
                 imports = [
-                  ./modules/gui.nix
+                  ./modules/pkgs.nix
                   ./modules/fonts.nix
                   ./modules/cli.nix
                   ./modules/editor.nix

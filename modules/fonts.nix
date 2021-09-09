@@ -1,6 +1,7 @@
 { config, pkgs, home-manager, ... }:
 {
   home.packages = with pkgs; [
+    fontconfig
     inter
     # mplus-outline-fonts
     # open-sans

@@ -1,22 +1,29 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
-local dpi = beautiful.xresources.apply_dpi
-local bling = require("bling")
-local awestore = require("awestore") -- Totally optional, only required if you are using animations.
+-- local dpi = beautiful.xresources.apply_dpi
+local bling = require("lib.bling")
+local rubato = require("lib.rubato") -- Totally optional, only required if you are using animations.
 
 local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
 
-local anim_plus = awestore.tweened(1300, {
-    duration = 300,
-    easing = awestore.easing.cubic_in_out,
-})
+local anim_plus = rubato.timed {
+    pos = 1300,
+    rate = 60,
+    easing = rubato.quadratic,
+    intro = 0.1,
+    duration = 0.3,
+    awestore_compat = true       -- This option must be set to true.
+}
 
-local anim_min = awestore.tweened(-1300, {
-    duration = 300,
-    easing = awestore.easing.cubic_in_out,
-})
-
+local anim_min = rubato.timed {
+    pos = -1300,
+    rate = 60,
+    easing = rubato.quadratic,
+    intro = 0.1,
+    duration = 0.3,
+    awestore_compat = true       -- This option must be set to true.
+}
 local term_scratch = bling.module.scratchpad:new({
     command = "scratchpad" or "kitty --name scracthpad",
     rule = { instance = "scratchpad" },
@@ -30,7 +37,7 @@ local term_scratch = bling.module.scratchpad:new({
         height = screen_height * .65,
     },
     reapply = true,
-    awestore = {
+    rubato = {
         y = anim_min
     },
 })
@@ -44,14 +51,15 @@ local music_scratch = bling.module.scratchpad:new({
     sticky = true,
     autoclose = false,
     floating = true,
+    dont_focus_before_close  = false,
+    reapply = true,
     geometry = {
         x = screen_width * .075,
         y = screen_height * .15,
         width = screen_width * .85,
         height = screen_height * .7,
     },
-    reapply = true,
-    awestore = {
+    rubato = {
         y = anim_plus
     },
 })
@@ -66,13 +74,14 @@ local input_scratch = bling.module.scratchpad:new({
     autoclose = false,
     floating = true,
     reapply = true,
+    dont_focus_before_close  = false,
     geometry = {
         x = screen_width * .125,
         y = screen_height * .15,
         width = screen_width * .75,
         height = screen_height * 0.7,
     },
-    awestore = {
+    rubato = {
         x = anim_min
     },
 })
@@ -87,13 +96,14 @@ local file_scratch = bling.module.scratchpad:new({
     autoclose = false,
     floating = true,
     reapply = true,
+    dont_focus_before_close  = false,
     geometry = {
         x = screen_width * .15,
         y = screen_height * .15,
         width = screen_width * .7,
         height = screen_height * 0.7,
     },
-    awestore = {
+    rubato = {
         x = anim_plus
     },
 })
@@ -108,13 +118,14 @@ local chat_scratch = bling.module.scratchpad:new({
     autoclose = false,
     floating = true,
     reapply = true,
+    dont_focus_before_close  = false,
     geometry = {
         x = screen_width * .05,
         y = screen_height * .05,
         width = screen_width * .9,
         height = screen_height * .9,
     },
-    awestore = {
+    rubato = {
         x = anim_plus,
         y = anim_min
     },

@@ -1,39 +1,50 @@
 { config, pkgs, libs, ... }:
 {
   home.packages = with pkgs; [
+    # Base
     nixUnstable
 
-    # acpi
-    # light
-    # lm_sensors
+    # Shell
+    zsh
+    tmux
+    starship
 
-    wget
-    # curl
-    aria
-    # ffmpeg
-    # imagemagick
-    
+    # CLI Apps
     bat
     exa
     fd
-    ripgrep
-    
+    fzf
     htop
-    jq
+    lf
     neofetch
-    
-    # mpd
-    # playerctl
-    # pulsemixer
+    nnn
+    translate-shell
+    trash-cli
+    ripgrep
+    zoxide
 
+    # Download
+    wget
+    curl
+    aria
+
+    # Multimedia
+    ffmpeg
+    imagemagick
+    mpc_cli
+    mpvc
+    ncmpcpp
+    playerctl
+    pulsemixer
+
+    # Misc
+    acpi
+    jq
+    light
+    lm_sensors
     slop
-    # maim
-
-    # zsh
-    # tmux
-    # starship
-
-    # xorg.xset
+    handlr              # xdg-open alternative
+    xorg.xset
   ];
 
   programs.bat = {
