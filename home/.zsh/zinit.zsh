@@ -29,18 +29,13 @@ autoload -Uz _zinit
 # Users Plugins
 # =================================================
 
-# ===== Basic =====
-zinit wait lucid light-mode for \
-    atinit"zicompinit; zicdreplay" \
-        zdharma/fast-syntax-highlighting \
+zinit light-mode for \
+    zdharma/fast-syntax-highlighting \
+    hlissner/zsh-autopair
+
+zinit wait lucid for \
     atload"_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
-    blockf atpull'zinit creinstall -q .' \
+    atpull'zinit creinstall -q .' atinit"zicompinit; zicdreplay" blockf \
         zsh-users/zsh-completions
-
-# ===== Script =====
-zinit wait lucid light-mode for \
-        kazhala/dotbare \
-    atload'ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(autopair-insert)' \
-        hlissner/zsh-autopair
 

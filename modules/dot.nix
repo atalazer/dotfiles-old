@@ -12,7 +12,7 @@ in
     # ".config/mako".source               = link "home/.config/mako";
     # ".config/dunst".source              = link "home/.config/dunst";
     # ".config/waybar".source             = link "home/.config/waybar";
-    ".config/fusuma".source = link "home/.config/fusuma";
+    # ".config/fusuma".source = link "home/.config/fusuma";
     ".config/picom".source = link "home/.config/picom";
 
     ### GUI-Apps Stuff
@@ -44,20 +44,20 @@ in
     ".tmux.conf".source = link "home/.tmux.conf";
 
     ### Shell Stuff
-    ".profile".source = link "home/.profile";
-    ".pam_environment".source = link "home/.pam_environment";
-    ".user".source = link "home/.user";
-    ".user.keys".source = link "home/.user.keys";
-    # ".config/fish".source               = link "home/.config/fish";
+    ".config/shell/aliases".source = link "home/.config/aliases";
+    ".config/shell/functions".source = link "home/.config/shell/functions";
     ".config/starship.toml".source = link "home/.config/starship.toml";
+    # ".config/fish".source               = link "home/.config/fish";
     ".zsh".source = link "home/.zsh";
     ".zshrc".source = link "home/.zshrc";
     ".zshenv".source = link "home/.zshenv";
     ".zprofile".source = link "home/.zprofile";
-    ".bashrc".source = link "home/.bashrc";
+    # ".bashrc".source = link "home/.bashrc";
     ".inputrc".source = link "home/.inputrc";
-    ".aliases".source = link "home/.aliases";
-    ".function".source = link "home/.function";
+    ".profile".source = link "home/.profile";
+    ".pam_environment".source = link "home/.pam_environment";
+    ".user".source = link "home/.user";
+    ".user.keys".source = link "home/.user.keys";
 
     ### Git Stuff
     ".gitconfig".source = link "home/.gitconfig";

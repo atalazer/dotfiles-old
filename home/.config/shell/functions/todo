@@ -1,0 +1,34 @@
+#!/bin/sh
+
+todo() {
+    TODO=${TODO:-$HOME/TODO}
+    if [ ! -f $TODO ]; then
+        touch $TODO
+        echo "$TODO Created"
+    else
+        OPT=${1:---help}
+        case $OPT in
+        -e | --edit) ${EDITOR:-nvim} $TODO ;;
+        -s | --show)
+            if command -v "glow" &>/dev/null; then
+                glow $TODO
+            elif command -v "bat" &>/dev/null; then
+                bat --paging=never $TODO
+            else
+                cat $TODO
+            fi
+            ;;
+        -h | --help)
+            echo "Command:"
+            echo "-e --edit Edit TODO file"
+            echo "-s --show Show TODO"
+            echo "-h --help Show available command"
+            ;;
+        esac
+    fi
+}
+
+alias td="todo"
+alias tds="todo -s"
+alias tde="todo -e"
+

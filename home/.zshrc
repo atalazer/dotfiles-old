@@ -11,20 +11,6 @@ setopt promptsubst
 
 [[ -f $ZDIR/zinit.zsh ]] && source $ZDIR/zinit.zsh
 
-source $ZDIR/plug-conf/nnn.zsh
-source $ZDIR/plug-conf/dotbare.zsh
-
-# }}}
-
-# ===== Prompt ===== {{{
-function set_win_title(){
-    print -Pn "\e]0;%~\a"
-}
-precmd_functions+=(set_win_title)
-
-export STARSHIP_CONFIG=$HOME/.config/starship.toml
-eval "$(starship init zsh)"
-
 # }}}
 
 # ===== Zsh ===== {{{
@@ -49,14 +35,28 @@ setopt interactive_comments
 
 # ===== User ===== {{{
 
-source ~/.aliases           # User alias definition
-source ~/.function          # User function definition
+# User alias definition
+source $HOME/.config/shell/aliases
+
+# User function definition
+source $HOME/.config/shell/functions/dict
+source $HOME/.config/shell/functions/git
+source $HOME/.config/shell/functions/schedule
+source $HOME/.config/shell/functions/todo
+source $HOME/.config/shell/functions/weather
+source $HOME/.config/shell/functions/others
 
 export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
 
 eval "$(zoxide init zsh)"
 eval "$(fnm env)"
+
+# }}}
+
+# ===== Prompt ===== {{{
+export STARSHIP_CONFIG=$HOME/.config/starship.toml
+eval "$(starship init zsh)"
 
 # }}}
 

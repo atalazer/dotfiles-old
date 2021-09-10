@@ -1,7 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 [[ -f $HOME/.user ]] && source $HOME/.user
 
+# Source config
+source $HOME/.config/nnn/nnn.conf
+
+# fcitx
 export GLFW_IM_MODULE="ibus"
 export GTK_IM_MODULE="fcitx"
 export QT_IM_MODULE="fcitx"
@@ -9,6 +13,7 @@ export XMODIFIERS="@im=fcitx"
 export SDL_IM_MODULE="fcitx"
 export IBUS_USE_PORTAL=1
 
+# Themes
 export XDG_CURRENT_DESKTOP=gnome
 # export DESKTOP_SESSION=gnome
 
@@ -16,15 +21,18 @@ export XDG_CURRENT_DESKTOP=gnome
 # export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
+# QT
 export QT_QPA_PLATFORMTHEME=qt5ct
 # export QT_AUTO_SCREEN_SCALE_FACTOR=1
 # export QT_SCREEN_SCALE_FACTORS=1
 # export QT_SCALE_FACTOR=1
 # export QT_FONT_DPI=90
 
+# Java
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# clipmenu
 export CM_LAUNCHER="rofi"
 export CM_SELECTIONS="clipboard"
 

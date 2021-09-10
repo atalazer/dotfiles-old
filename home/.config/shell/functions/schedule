@@ -1,0 +1,32 @@
+#!/bin/sh
+
+schedule() {
+    SCHEDULE=${SCHEDULE:-$HOME/SCHEDULE}
+    if [ ! -f $SCHEDULE ]; then
+        touch $SCHEDULE
+        echo "$SCHEDULE Created"
+    else
+        OPT=${1:---help}
+        case $OPT in
+        -e | --edit) ${EDITOR:-nvim} $SCHEDULE ;;
+        -s | --show)
+            if command -v "glow" &>/dev/null; then
+                glow $SCHEDULE
+            elif command -v "bat" &>/dev/null; then
+                bat --paging=never $SCHEDULE
+            else
+                cat $SCHEDULE
+            fi
+            ;;
+        -h | --help)
+            echo "Command:"
+            echo "-e --edit Edit SCHEDULE file"
+            echo "-s --show Show SCHEDULE"
+            echo "-h --help Show available command"
+            ;;
+        esac
+    fi
+}
+alias sc="schedule"
+alias scs="schedule -s"
+alias sce="schedule -e"

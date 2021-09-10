@@ -1,14 +1,14 @@
 { config, pkgs, libs, ... }: {
   home.packages = with pkgs; [
-    # Base
+    ### Base
     nixUnstable
 
-    # Shell
-    zsh
+    ### Shell
+    # zsh
     tmux
     starship
 
-    # CLI Apps
+    ### CLI Apps
     bat
     exa
     fd
@@ -23,27 +23,14 @@
     ripgrep
     zoxide
 
-    # Download
+    ### Download
     wget
-    curl
     aria
 
-    # Multimedia
-    ffmpeg
-    imagemagick
-    mpc_cli
+    ### Multimedia
     mpvc
-    ncmpcpp
+    mpc_cli
     playerctl
-    pulsemixer
-
-    # Misc
-    acpi
-    jq
-    light
-    lm_sensors
-    slop
-    xorg.xset
   ];
 
   programs.bat = {

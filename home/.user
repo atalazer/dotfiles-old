@@ -1,9 +1,10 @@
 #!/bin/sh
 
-[ -f ~/.user.keys ] && source ~/.user.keys
+[[ -f ~/.user.keys ]] && source ~/.user.keys
 
-export LANG=en_US.UTF-8
-export MM_CHARSET=UTF-8
+CHARSET=UTF-8; LANG=en_US.UTF-8
+export MM_CHARSET=$CHARSET; export LANG=$LANG; export LC_ALL=$LANG
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 ## Apps
 export TERMINAL="kitty"
