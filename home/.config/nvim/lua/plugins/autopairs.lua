@@ -1,4 +1,9 @@
-local npairs = require("nvim-autopairs")
+local present, npairs = pcall(require, "nvim-autopairs")
+
+if not present then
+    return
+end
+
 local Rule = require("nvim-autopairs.rule")
 
 npairs.setup({

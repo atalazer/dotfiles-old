@@ -1,4 +1,8 @@
-local cmp = require("cmp")
+local present, cmp = pcall(require, "cmp")
+
+if not present then
+    return
+end
 
 cmp.setup({
     completion = {

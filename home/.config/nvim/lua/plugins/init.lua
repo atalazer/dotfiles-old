@@ -39,9 +39,17 @@ return packer.startup({
             config = function()
                 local notify = require("notify")
                 notify.setup({
-                    stages = "fade",
+                    stages = "fade_in_slide_out",
                     timeout = 2500,
                     background_colour = "#161822",
+                    icons = {
+                        ERROR = " ",
+                        WARN = " ",
+                        HINT = " ",
+                        INFO = " ",
+                        DEBUG = " ",
+                        TRACE = "✎",
+                    },
                 })
                 vim.notify = notify
             end,
@@ -245,32 +253,26 @@ return packer.startup({
         -- Semantic highlight
         {
             "nvim-treesitter/nvim-treesitter",
-            event = "BufRead",
+            branch = '0.5-compat',
+            run = ':TSUpdate',
+            -- event = "UIEnter",
             requires = {
                 {
                     "nvim-treesitter/playground",
                     cmd = { "TSHighlightCapturesUnderCursor", "TSPlaygroundToggle" },
-                },
-                {
-                    "nvim-treesitter/nvim-treesitter-textobjects",
-                    after = "nvim-treesitter",
-                },
-                {
-                    "mfussenegger/nvim-ts-hint-textobject",
-                    module = "tsht",
-                    after = "nvim-treesitter",
+                    -- after = "nvim-treesitter",
                 },
                 {
                     "nvim-treesitter/nvim-treesitter-refactor",
-                    after = "nvim-treesitter",
+                    -- after = "nvim-treesitter",
                 },
                 {
                     "JoosepAlviste/nvim-ts-context-commentstring",
-                    after = "nvim-treesitter",
+                    -- after = "nvim-treesitter",
                 },
                 {
                     "windwp/nvim-ts-autotag",
-                    after = { "nvim-treesitter", "nvim-autopairs" },
+                    -- after = "nvim-treesitter",
                 },
             },
             config = function()
@@ -302,12 +304,6 @@ return packer.startup({
             end,
         },
 
-        -- Svelte support
-        {
-            "leafOfTree/vim-svelte-plugin",
-            ft = "svelte",
-        },
-
         -- nim Support
         {
             "alaviss/nim.nvim",
@@ -336,7 +332,7 @@ return packer.startup({
                     links_relative_to = "current",
                     filetypes = { md = true, rmd = true, markdown = true },
                     evaluate_prefix = true,
-                    new_file_prefix = [[os.date('%Y-%m-%d_')]],
+                    new_file_prefix = [[os.date('%Y-%m-%d-')]],
                 })
             end,
         },
@@ -381,6 +377,7 @@ return packer.startup({
         {
             "andymass/vim-matchup",
             event = "CursorMoved",
+            after = "nvim-treesitter",
             setup = function()
                 vim.g.matchup_matchparen_offscreen = {
                     method = "popup",
@@ -591,10 +588,9 @@ return packer.startup({
             "kyazdani42/nvim-tree.lua",
             cmd = "NvimTreeToggle",
             setup = function()
-                vim.api.nvim_set_keymap("n", "`", "<CMD>NvimTreeToggle<CR>", { noremap = true })
-            end,
-            config = function()
                 require("plugins.nvim-tree")
+
+                vim.api.nvim_set_keymap("n", "`", "<CMD>NvimTreeToggle<CR>", { noremap = true })
             end,
         },
 
@@ -762,7 +758,6 @@ return packer.startup({
         },
     },
     config = {
-        compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
         git = {
             clone_timeout = 300,
         },

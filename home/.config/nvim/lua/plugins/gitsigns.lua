@@ -1,4 +1,10 @@
-require("gitsigns").setup({
+local present, gitsigns = pcall(require, "gitsigns")
+
+if not present then
+    return
+end
+
+gitsigns.setup({
     signs = {
         add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
         change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
@@ -22,16 +28,6 @@ require("gitsigns").setup({
         ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
         ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
     },
-    watch_index = {
-        interval = 1000,
-    },
-    preview_config = {
-        border = Util.borders,
-    },
-    current_line_blame = false,
-    sign_priority = 5,
-    update_debounce = 500,
-    status_formatter = nil, -- Use default
-    use_internal_diff = true,
-    -- use_decoration_api = true,
+    preview_config = { border = Util.borders },
+    update_debounce = 150,
 })

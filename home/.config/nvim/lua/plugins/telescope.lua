@@ -1,4 +1,9 @@
-local _, telescope = pcall(require, "telescope")
+local present, telescope = pcall(require, "telescope")
+
+if not present then
+    return
+end
+
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 
