@@ -12,7 +12,6 @@
     shellcheck
     nodePackages.eslint_d
 
-    # Formatter
     ### Formatter
     black
     stylua

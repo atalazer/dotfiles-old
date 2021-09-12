@@ -1,6 +1,5 @@
 [Added Associations]
 application/octetstream=nvim.desktop;
-application/pdf=org.pwmt.zathura-pdf-poppler.desktop;
 application/x-extension-htm=firefox.desktop;
 application/x-extension-html=firefox.desktop;
 application/x-extension-shtml=firefox.desktop;
@@ -17,12 +16,14 @@ x-scheme-handler/https=firefox.desktop;
 application/vnd.openxmlformats-officedocument.presentationml.presentation=onlyoffice.desktop;
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=onlyoffice.desktop;
+application/vnd.rar=engrampa.desktop;
 application/x-extension-htm=firefox.desktop;
 application/x-extension-html=firefox.desktop;
 application/x-extension-shtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/xhtml+xml=firefox.desktop;
+application/zip=engrampa.desktop;
 image/jpeg=feh.desktop;
 image/png=feh.desktop;viewnior.desktop;
 image/webp=viewnior.desktop;feh.desktop;

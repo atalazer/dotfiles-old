@@ -15,9 +15,8 @@ augroup END
 augroup Indents
   au!
   au FileType html,xml,css setlocal sw=2 ts=2 sts=2
-  au FileType php,javascript,typescript,svelte setlocal sw=2 ts=2 sts=2
+  au FileType php,javascript,typescript setlocal sw=2 ts=2 sts=2
   au FileType toml,yaml,json setlocal sw=2 ts=2 sts=2
-  au FileType nix setlocal sw=2 ts=2 sts=2
 augroup END
 
 augroup Posts

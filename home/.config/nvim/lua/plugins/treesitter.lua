@@ -1,8 +1,4 @@
-local present, ts_config = pcall(require, "nvim-treesitter.configs")
-
-if not present then
-    return
-end
+local ts_config = require("nvim-treesitter.configs")
 
 ts_config.setup({
     ensure_installed = {
@@ -30,10 +26,7 @@ ts_config.setup({
         "comment",
     },
     indent = { enable = true },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
+    highlight = { enable = true },
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -48,6 +41,10 @@ ts_config.setup({
     context_commentstring = {
         enable = true,
         enable_autocmd = false,
+        config = {
+            css = "// %s",
+            lua = "-- %s",
+        },
     },
     refactor = {
         highlight_definitions = { enable = false },
@@ -55,7 +52,7 @@ ts_config.setup({
         smart_rename = {
             enable = true,
             keymaps = {
-                smart_rename = "gR",
+                smart_rename = "grr",
             },
         },
         navigation = {

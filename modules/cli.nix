@@ -24,30 +24,42 @@
     zoxide
 
     ### Download
-    wget
-    aria
+    # wget
+    # aria
 
     ### Multimedia
-    mpvc
-    mpc_cli
-    playerctl
+    # mpvc
+    # mpc_cli
+    # playerctl
   ];
 
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "base16";
-      style = "plain";
+  programs = {
+    home-manager.enable = true;
+    bat = {
+      enable = true;
+      config = {
+        theme = "base16";
+        style = "plain";
+      };
     };
-  };
-
-  programs.htop = {
-    enable = true;
-    settings = {
-      enableMouse = true;
-      highlightBaseName = true;
-      highlightThreads = true;
-      showCpuFrequency = true;
+    fzf = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+      };
+    htop = {
+      enable = true;
+      settings = {
+        enableMouse = true;
+        highlightBaseName = true;
+        highlightThreads = true;
+        showCpuFrequency = true;
+      };
     };
+    zoxide = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+      };
   };
 }

@@ -147,9 +147,9 @@ telescope.setup({
 })
 
 -- Load Extensions
-require("telescope").load_extension("fzf")
-require("telescope").load_extension("frecency")
-require("telescope").load_extension("media_files")
+pcall(require("telescope").load_extension("fzf"))
+pcall(require("telescope").load_extension("frecency"))
+pcall(require("telescope").load_extension("media_files"))
 
 local builtin = require("telescope.builtin")
 M.builtins = function()

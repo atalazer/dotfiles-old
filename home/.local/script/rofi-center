@@ -17,11 +17,12 @@ OPTIONS='''
   [ "Record",           "rofi-record"],
   [ "Screenshot",       "shot"],
   [ "Switcher",         "rofi-switcher"],
+  [ "TV",               "rofi-iptv"],
   [ "Todo",             "rofi-todo"],
   [ "Translate",        "rofi-translate -i" ],
   [ "Youtube",          "rofi-youtube" ]
 ]
 '''
 
-label=$(echo $OPTIONS | jq -r "sort | .[][0]" | $DMENU)
-exec $(echo $OPTIONS | jq -r ".[] | select(.[0] == \"$label\") | .[1]")
+label=$(echo "$OPTIONS" | jq -r "sort | .[][0]" | $DMENU)
+exec $(echo "$OPTIONS" | jq -r ".[] | select(.[0] == \"$label\") | .[1]")

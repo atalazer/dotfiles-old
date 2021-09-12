@@ -2,9 +2,6 @@
 
 [[ -f $HOME/.user ]] && source $HOME/.user
 
-# Source config
-source $HOME/.config/nnn/nnn.conf
-
 # fcitx
 export GLFW_IM_MODULE="ibus"
 export GTK_IM_MODULE="fcitx"

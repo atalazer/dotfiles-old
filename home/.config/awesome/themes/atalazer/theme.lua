@@ -39,7 +39,7 @@ theme = {
 theme.icon_theme = user.icon or "Adwaita"
 -- theme.wallpaper = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/wallpaper.jpg"
 
-theme.font = (user.font .. " " .. user.fsize) or "monospace 11"
+theme.font = "monospace 11"
 
 -- Transparent
 theme.transparent = "#00000000"
@@ -76,7 +76,7 @@ theme.systray_icon_spacing = dpi(10)
 theme.titlebars_enabled = true
 theme.titlebar_size = dpi(28)
 theme.titlebar_title_enabled = true
-theme.titlebar_font = user.font .. " bold 9" or "sans bold 9"
+theme.titlebar_font = "sans bold 9"
 theme.titlebar_title_align = "center"
 theme.titlebar_position = "top"
 theme.titlebar_bg_focus = x.color0
@@ -116,15 +116,15 @@ theme.notification_icon_size = dpi(60)
 -- theme.notification_width = dpi(300)
 -- theme.notification_max_height = dpi(120)
 -- theme.notification_max_width = dpi(480)
-theme.notification_font = user.font .. " 11" or "sans 11"
-theme.notification_opacity = 0.95
-theme.notification_margin = dpi(22)
+theme.notification_font = "monospace 11"
+theme.notification_opacity = 0.90
+theme.notification_margin = dpi(20)
 theme.notification_padding = theme.screen_margin * 2
 theme.notification_spacing = theme.screen_margin * 4
 
 -- Hotkeys popup
-theme.hotkeys_font = user.font .. " 9"
-theme.hotkeys_description_font = user.font .. " 8"
+theme.hotkeys_font = "monospace 9"
+theme.hotkeys_description_font = "monospace 8"
 theme.hotkeys_bg = x.background
 theme.hotkeys_fg = x.foreground
 theme.hotkeys_label_bg = x.color0
@@ -170,8 +170,8 @@ theme.prefix_fg = x.color8
 --Tasklist
 theme.tasklist_disable_icon = false
 theme.tasklist_plain_task_name = false
-theme.tasklist_font = user.font .. " 8" or "sans medium 8"
-theme.tasklist_font_minimized = user.font .. " 8" or "sans italic 8"
+theme.tasklist_font = "sans medium 8"
+theme.tasklist_font_minimized = "sans italic 8"
 theme.tasklist_bg_focus = x.color0
 theme.tasklist_fg_focus = x.foreground
 theme.tasklist_bg_normal = "#00000000"
@@ -203,7 +203,11 @@ theme.notif_center_width = dpi(360)
 theme.notif_center_border_radius = dpi(30)
 
 -- Sidebar and Notif Center activator
-theme.activator_opacity = 0.2
+theme.activator_bg = x.color8
+theme.activator_width = dpi(2)
+theme.activator_height = 0.3        -- Percentage
+theme.activator_opacity = 0.4
+theme.activator_timeout = 0.5
 
 theme.notifbox_bg = x.color0
 
@@ -216,7 +220,7 @@ end
 -- Exit screen
 theme.exit_screen_bg = x.color0 .. "CC"
 theme.exit_screen_fg = x.color7
-theme.exit_screen_font = user.font .. " 24" or "sans 20"
+theme.exit_screen_font = "sans 20"
 theme.exit_screen_icon_size = dpi(180)
 
 -- Lock screen
@@ -238,7 +242,7 @@ for i = 1, ntags do
 end
 
 -- Noodle Text Taglist
-theme.taglist_text_font = user.font .. " 25" or "monospace 25"
+theme.taglist_text_font = "monospace 25"
 theme.taglist_text_empty = { "", "", "", "", "", "", "", "", "", "" }
 theme.taglist_text_occupied = { "", "", "", "", "", "", "", "", "", "" }
 theme.taglist_text_focused = { "", "", "", "", "", "", "", "", "", "" }
@@ -298,7 +302,7 @@ theme.taglist_text_color_urgent = {
 theme.prompt_fg = x.color12
 
 -- Text Taglist (default)
-theme.taglist_font = user.font .. " bold 9" or "monospace bold 9"
+theme.taglist_font = "monospace bold 9"
 theme.taglist_bg_focus = x.background
 theme.taglist_fg_focus = x.color12
 theme.taglist_bg_occupied = x.background
@@ -435,7 +439,12 @@ theme.enter_event = "#ffffff" .. "10"
 theme.press_event = "#ffffff" .. "15"
 theme.release_event = "#ffffff" .. "10"
 
--- Bars Widget
+-- Bars
+theme.bar_height = dpi(28)
+theme.bar_bg = theme.bg_normal
+theme.bar_fg = theme.fg_normal
+
+theme.bar_widget_margin = dpi(7)
 theme.bar_widget_fg = theme.fg_normal
 
 return theme

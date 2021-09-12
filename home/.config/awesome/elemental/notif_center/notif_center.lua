@@ -1,11 +1,9 @@
-local awful = require("awful")
 local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
-
-local HOME = os.getenv("HOME")
-
 local dpi = require("beautiful").xresources.apply_dpi
+
+local dont_disturb = require("elemental.notif_center.dont_disturb")
+local clear_all = require("elemental.notif_center.clear_all")
+local generate_notifbox = require("elemental.notif_center.generate_notifbox")
 
 local notif_header = wibox.widget({
     text = "Notification Center",
@@ -34,10 +32,10 @@ return wibox.widget({
         {
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(5),
-            require("elemental.notif_center.dont_disturb"),
-            require("elemental.notif_center.clear_all"),
+            dont_disturb,
+            clear_all,
         },
     },
     separator,
-    require("elemental.notif_center.generate_notifbox"),
+    generate_notifbox,
 })

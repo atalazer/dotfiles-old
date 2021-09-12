@@ -168,7 +168,7 @@ local notifbox_actions = function(notif)
                     {
                         {
                             id = "text_role",
-                            font = "Inter Regular 10",
+                            font = "sans 10",
                             widget = wibox.widget.textbox,
                         },
                         widget = wibox.container.place,
@@ -364,14 +364,15 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
         collectgarbage("collect")
     end)))
 
-    -- awesome.connect_signal("notifbox::deleted", function ()
-    --     if #notifbox_layout.children == 1 then
-    --         reset_notifbox_layout()
-    --     else
-    --         notifbox_delete()
-    --     end
-    --     collectgarbage("collect")
-    -- end)
+    -- Delete notifbox with dissmiss icons on Left-Click(LMB)
+    notifbox_dismiss:buttons(awful.util.table.join(awful.button({}, 1, function()
+        if #notifbox_layout.children == 1 then
+            reset_notifbox_layout()
+        else
+            notifbox_delete()
+        end
+        collectgarbage("collect")
+    end)))
 
     -- Add hover, and mouse leave events
     notifbox_template:connect_signal("mouse::enter", function()
@@ -415,7 +416,7 @@ naughty.connect_signal("request::display", function(n)
     -- For Notification Center
     if panel_visible or dont_disturb then
         naughty.destroy_all_notifications(nil, 1)
-        
+
         -- Add Sound fx to notif
         -- Depends: canberra-gtk-play
         awful.spawn("canberra-gtk-play -i message", false)

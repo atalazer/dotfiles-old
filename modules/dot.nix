@@ -100,11 +100,8 @@ in
     ".config/user-dirs.locale".source = link "home/.config/user-dirs.locale";
     ".config/mimeapps.list".source = link "home/.config/mimeapps.list";
 
-    # ".config/screenkey.json".source     = link "home/.config/screenkey.json";
-    # ".config/pavucontrol.ini".source    = link "home/.config/pavucontrol.ini";
-
-    ".gnupg/gpg-agent.conf".text =
-      "pinentry-program ${pkgs.pinentry.gnome3}/bin/pinentry";
+    ".config/screenkey.json".source     = link "home/.config/screenkey.json";
+    ".config/pavucontrol.ini".source    = link "home/.config/pavucontrol.ini";
 
   };
 }

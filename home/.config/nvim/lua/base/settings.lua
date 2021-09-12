@@ -7,6 +7,7 @@ local options = {
     autochdir = true,
     autoindent = true,
     backup = false,
+    breakindent = true,
     cursorline = true,
     expandtab = true,
     hidden = true,
@@ -57,10 +58,12 @@ local options = {
     signcolumn = "yes",
     shortmess = "csa",
     showbreak = "↪",
+    breakindentopt = "shift:2",
     undodir = vim.fn.stdpath("data") .. "/undo",
+    sessionoptions = "blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal",
 
     -- Number
-    colorcolumn = { "120" },
+    -- colorcolumn = { "120" },
     cmdheight = 2,
     laststatus = 2,
     pumheight = 12,

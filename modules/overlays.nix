@@ -7,7 +7,6 @@ in
     awesome-git = prev.awesome.overrideAttrs (
       old: {
         version = "master";
-
         src = prev.fetchFromGitHub {
           owner = "awesomewm";
           repo = "awesome";
@@ -19,7 +18,6 @@ in
     picom-git = prev.picom.overrideAttrs (
       old: {
         version = "next";
-
         src = prev.fetchFromGitHub {
           owner = "yshui";
           repo = "picom";

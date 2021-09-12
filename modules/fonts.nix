@@ -1,8 +1,8 @@
 { config, pkgs, home-manager, ... }: {
   home.packages = with pkgs; [
-    inter
-    mplus-outline-fonts
-    liberation_ttf
+    # inter
+    # liberation_ttf
+    # mplus-outline-fonts
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 }

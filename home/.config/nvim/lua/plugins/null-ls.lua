@@ -1,11 +1,7 @@
 local M = {}
 
 M.setup = function()
-    local present, null_ls = pcall(require, "null-ls")
-
-    if not present then
-        return
-    end
+    local null_ls = require("null-ls")
 
     -- local h = require("null-ls.helpers")
     -- local m = null_ls.methods

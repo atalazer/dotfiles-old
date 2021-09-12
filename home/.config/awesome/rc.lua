@@ -60,8 +60,6 @@ local exit_screen_theme = exit_screen_themes[1]
 -- User variables and preferences
 
 user = {
-    font = "JetBrainsMono Nerd Font",
-    fsize = "11",
     icon = "Papirus",
 
     -- >> Default applications <<

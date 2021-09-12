@@ -52,12 +52,7 @@ end
 
 -- Items
 local day_of_the_week = wibox.widget({
-    -- Fancy font
     font = "Scriptina Bold 80",
-    -- font = "Space Craft 50",
-    -- font = "Razed Galerie 70",
-    -- font = "A-15-BIT 70",
-    -- font = "Kill The Noise 90",
     -- Set forced width in order to keep it from getting cut off
     forced_width = dpi(1000),
     align = "center",
@@ -66,7 +61,7 @@ local day_of_the_week = wibox.widget({
 })
 
 local month = wibox.widget({
-    font = "San Francisco Display Heavy 100",
+    font = "sans 90",
     align = "center",
     valign = "center",
     widget = wibox.widget.textclock("%B %d"),
@@ -264,8 +259,9 @@ lock_screen_box:setup({
             {
                 {
                     {
-                        month,
-                        day_of_the_week,
+                        -- month,
+                        -- day_of_the_week,
+                        fancy_date,
                         layout = wibox.layout.stack,
                     },
                     {
@@ -295,7 +291,6 @@ lock_screen_box:setup({
                         layout = wibox.layout.align.horizontal,
                     },
                     spacing = dpi(20),
-                    -- spacing = dpi(10),
                     layout = wibox.layout.fixed.vertical,
                 },
                 lock_animation_widget,

@@ -1,6 +1,6 @@
 format = "$all"
-scan_timeout = 500
-command_timeout = 3000
+scan_timeout = 2000
+command_timeout = 5000
 
 [directory]
 truncation_length = 8

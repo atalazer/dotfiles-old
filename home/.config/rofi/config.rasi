@@ -24,7 +24,6 @@ configuration {
     display-run:               "CMD";
     display-window:            "WIN";
     display-file-browser:      "FLM";
-    display-calc:              "CLC";
 
     terminal:                  "kitty";
 

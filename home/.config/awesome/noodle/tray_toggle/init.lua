@@ -23,7 +23,7 @@ local widget = wibox.widget({
 local widget_button = wibox.widget({
     {
         widget,
-        margins = dpi(3),
+        margins = beautiful.bar_widget_margin or dpi(3),
         widget = wibox.container.margin,
     },
     widget = clickable_container,

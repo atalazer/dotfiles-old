@@ -1,15 +1,7 @@
-local present, cmp = pcall(require, "cmp")
-
-if not present then
-    return
-end
+local cmp = require("cmp")
 
 cmp.setup({
-    completion = {
-        completeopt = "menuone,noselect",
-        keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)\k\+]],
-        keyword_length = 2,
-    },
+    preselect = cmp.PreselectMode.None,
     snippet = {
         expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -22,10 +14,7 @@ cmp.setup({
 
     sources = {
         { name = "buffer" },
-        { name = "calc" },
-        { name = "emoji" },
         { name = "luasnip" },
-        { name = "nvim_lua" },
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "spell" },
@@ -34,28 +23,24 @@ cmp.setup({
     formatting = {
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s (%s)", require("lsp.kind").presets[vim_item.kind], vim_item.kind)
-            -- vim_item.menu = ({
-            --     nvim_lsp = "[LSP]",
-            --     nvim_lua = "[LUA]",
-            --     buffer = "[BUF]",
-            --     spell = "[SPL]",
-            -- })[entry.source.name] or vim_item.menu
+            vim_item.menu = ({
+                nvim_lua = "[L]",
+                buffer = "[B]",
+                spell = "[S]",
+            })[entry.source.name] or vim_item.menu
             return vim_item
         end,
     },
 
     mapping = {
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
         ["<M-e>"] = cmp.mapping.close(),
-        ["<Tab>"] = cmp.mapping(function(fallback) _G.Util.tab_complete(fallback) end, {"i","s",}),
-        ["<S-Tab>"] = cmp.mapping(function(fallback) _G.Util.s_tab_complete(fallback) end, {"i","s",}),
+        -- ["<Tab>"] = cmp.mapping(function(fallback) _G.Util.tab_complete(fallback) end, {"i","s",}),
+        -- ["<S-Tab>"] = cmp.mapping(function(fallback) _G.Util.s_tab_complete(fallback) end, {"i","s",}),
+        ["<S-TAB>"] = cmp.mapping.select_prev_item(),
+        ["<TAB>"] = cmp.mapping.select_next_item(),
         ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
+            behavior = cmp.ConfirmBehavior.Insert,
             select = true,
         }),
     },

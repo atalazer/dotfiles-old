@@ -49,6 +49,14 @@ source $HOME/.config/shell/functions/others
 export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
 
+# nnn config
+source $HOME/.config/nnn/nnn.conf
+
+# broot, better cd
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && \
+    source $HOME/.config/broot/launcher/bash/br
+
+# Start CLI Apps
 eval "$(zoxide init zsh)"
 eval "$(fnm env)"
 

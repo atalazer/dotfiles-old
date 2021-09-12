@@ -1,7 +1,6 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
-local naughty = require("naughty")
 local watch = awful.widget.watch
 
 local apps = require("configs.apps")
@@ -30,7 +29,7 @@ local return_button = function()
     local battery_percentage_text = wibox.widget({
         id = "percent_text",
         markup = "100%",
-        font = "Inter Bold 11",
+        font = "sans bold 11",
         align = "center",
         valign = "center",
         visible = false,
@@ -47,7 +46,7 @@ local return_button = function()
     local battery_button = wibox.widget({
         {
             battery_widget,
-            margins = dpi(3),
+            margins = beautiful.bar_widget_margin or dpi(3),
             widget = wibox.container.margin,
         },
         widget = clickable_container,

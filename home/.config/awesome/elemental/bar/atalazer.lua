@@ -7,7 +7,7 @@ local helpers = require("helpers")
 local keys = require("configs.keys")
 local apps = require("configs.apps")
 
-local dock_autohide_delay = 0.5 -- seconds
+local dock_autohide_delay = beautiful.activator_timeout or 0.3 -- seconds
 local dock = require("noodle.dock")
 local dock_placement = function(w)
     return awful.placement.bottom(w)
@@ -60,19 +60,17 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a system tray widget
     s.systray = wibox.widget({
         visible = false,
-        base_size = dpi(16),
+        base_size = dpi(20),
         horizontal = true,
         screen = "primary",
         widget = wibox.widget.systray,
     })
+
     s.tray_toggler = require("noodle.tray_toggle")
 
     local clock = require("noodle.clock")(s)
     s.battery = require("noodle.battery")()
     s.network = require("noodle.network")()
-
-    -- s.separator = wibox.widget.separator
-    -- s.separator = wibox.widget.textbox(" ")
 
     s.record_status = awful.widget.watch(
         "bash -c 'file=/tmp/recordicon; if [[ ! -f $file ]]; then touch $file && echo \"NOREC\" > $file; fi; cat $file'",
@@ -92,12 +90,11 @@ awful.screen.connect_for_each_screen(function(s)
         position = "top",
         screen = s,
         width = s.geometry.width,
-        height = dpi(20),
+        height = beautiful.bar_height or dpi(30),
         x = s.geometry.x,
         y = s.geometry.y,
-        -- bg = "#00000000",
-        bg = beautiful.bg_normal,
-        fg = beautiful.fg_normal,
+        bg = beautiful.bar_bg or beautiful.bg_normal,
+        fg = beautiful.bar_fg or beautiful.fg_normal,
     })
 
     s.mywibox:connect_signal("mouse::enter", function()
@@ -124,7 +121,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = dpi(5),
             {
                 s.systray,
-                margins = dpi(2),
+                margins = beautiful.bar_widget_margin or dpi(3),
                 widget = wibox.container.margin,
             },
             s.tray_toggler,
@@ -161,8 +158,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- Initialize wibox activator
     s.dock_activator = wibox({
         screen = s,
-        height = dpi(3),
-        bg = x.color8,
+        height = beautiful.activatir_width or dpi(3),
+        bg = beautiful.activator_bg or x.color8,
         shape = helpers.rrect(beautiful.border_radius),
         opacity = beautiful.activator_opacity or 0.3,
         visible = not s.dock.visible,
@@ -189,15 +186,6 @@ awful.screen.connect_for_each_screen(function(s)
     client.connect_signal("focus", no_dock_activator_ontop)
     client.connect_signal("unfocus", no_dock_activator_ontop)
     client.connect_signal("property::fullscreen", no_dock_activator_ontop)
-
-    s.dock_activator:buttons(gears.table.join(
-        awful.button({}, 4, function()
-            awful.tag.viewprev()
-        end),
-        awful.button({}, 5, function()
-            awful.tag.viewnext()
-        end)
-    ))
 
     local function adjust_dock()
         -- Reset position every time the number of dock items changes

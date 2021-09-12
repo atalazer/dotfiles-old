@@ -1,11 +1,12 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local gears = require("gears")
 local beautiful = require("beautiful")
+local gears = require("gears")
 
 local helpers = require("helpers")
 local dpi = require("beautiful").xresources.apply_dpi
-local HOME = os.getenv("HOME")
+
+local notif_center = require("elemental.notif_center.notif_center")
 
 local right_panel = function(screen)
     local panel_width = beautiful.notif_center_width or dpi(350)
@@ -18,14 +19,15 @@ local right_panel = function(screen)
         x = screen.geometry.width - panel_width,
         bg = beautiful.notif_center_bg or "#00000000",
         fg = beautiful.notif_center_fg or x.foreground,
-        shape = helpers.prrect(beautiful.sidebar_border_radius, true, false, false, true),
-        opacity = beautiful.notif_center_opacity or 1
+        opacity = beautiful.notif_center_opacity or 1,
     })
 
     if beautiful.notif_center_position == "right" then
         awful.placement.top_right(panel)
+        panel.shape = helpers.prrect(beautiful.sidebar_border_radius, true, false, false, true)
     else
         awful.placement.top_left(panel)
+        panel.shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, true, false)
     end
     awful.placement.maximize_vertically(panel, { honor_workarea = true, margins = { top = beautiful.useless_gap * 2 } })
 
@@ -71,48 +73,73 @@ local right_panel = function(screen)
 
     -- Activate sidebar by moving the mouse at the edge of the screen
     if user.notif.show_on_mouse_screen_edge then
-        local activator_width = dpi(24)
-        local activator_height = screen.geometry.height * 0.3
-        local offset_x = dpi(20)
+        local activator_width = beautiful.activator_width or dpi(2)
+        local activator_height = sidebar.height * (beautiful.activator_height or 0.3)
 
-        local notif_activator = wibox({
-            bg = x.color8,
-            shape = helpers.rrect(activator_width/2),
-            x = screen.geometry.width - activator_width + offset_x,
+        local activator = wibox({
+            bg = beautiful.activator_bg or x.color8,
+            shape = helpers.rrect(activator_width / 2),
+            opacity = beautiful.activator_opacity or 0.3,
             y = (screen.geometry.height - activator_height) / 2,
-            width = activator_width,
-            height = activator_height,
             visible = true,
             ontop = true,
-            opacity = beautiful.activator_opacity or 0.3,
             below = true,
             screen = screen,
+            type = "utility",
         })
 
-        notif_activator:connect_signal("mouse::enter", function()
-            openPanel()
+        if beautiful.notif_center_position == "right" then
+            activator.x = screen.geometry.width - activator_width
+            activator.width = activator_width
+            activator.height = activator_height
+        else
+            activator.width = activator_width
+            activator.height = activator_height
+        end
+
+        local timer = gears.timer({
+            timeout = beautiful.activator_timeout or 0.3,
+            call_now = false,
+            autostart = false,
+            callback = function(self)
+                openPanel()
+                self:stop()
+            end,
+        })
+
+        activator:connect_signal("mouse::enter", function()
+            if timer.started then
+                timer:again()
+            else
+                timer:start()
+            end
+        end)
+
+        activator:connect_signal("mouse::leave", function()
+            if timer.started then
+                timer:stop()
+            end
         end)
 
         -- We have set the notif_activator to be ontop, but we do not want it to be
         -- above fullscreen clients
         local no_notif_activator_ontop = function(c)
             if c.fullscreen then
-                notif_activator.ontop = false
+                activator.ontop = false
             else
-                notif_activator.ontop = true
+                activator.ontop = true
             end
         end
         client.connect_signal("focus", no_notif_activator_ontop)
         client.connect_signal("unfocus", no_notif_activator_ontop)
         client.connect_signal("property::fullscreen", no_notif_activator_ontop)
-
     end
 
     panel:setup({
         expand = "none",
         layout = wibox.layout.fixed.vertical,
         {
-            require("elemental.notif_center.notif_center"),
+            notif_center,
             margins = dpi(15),
             widget = wibox.container.margin,
         },

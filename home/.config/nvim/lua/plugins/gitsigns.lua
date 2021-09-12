@@ -1,10 +1,5 @@
-local present, gitsigns = pcall(require, "gitsigns")
-
-if not present then
-    return
-end
-
-gitsigns.setup({
+require("gitsigns").setup({
+    preview_config = { border = Util.borders },
     signs = {
         add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
         change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
@@ -12,9 +7,12 @@ gitsigns.setup({
         topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
         changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
     },
+    signcolumn = true,
+    numhl = false,
+    linehl = false,
+    word_diff = false,
     keymaps = {
         noremap = true,
-        buffer = true,
         ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
         ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
 
@@ -28,6 +26,4 @@ gitsigns.setup({
         ["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
         ["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
     },
-    preview_config = { border = Util.borders },
-    update_debounce = 150,
 })

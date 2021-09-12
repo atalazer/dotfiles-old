@@ -3,10 +3,6 @@
 nnoremap Q  <Nop>
 nnoremap q: <Nop>
 
-" --------------------------------------
-inoremap jj <Esc><Esc>
-inoremap <Esc> <Esc><Esc>
-
 " -------------------------------------
 nnoremap <leader>qa :quitall<CR>
 nnoremap <C-s>      :write<CR>
@@ -25,12 +21,23 @@ nnoremap <leader>er :source ~/.config/nvim/init.vim<CR>
 
 " -------------------------------------
 " move vertically by visual line on wrapped lines
-nnoremap j gj
-nnoremap k gk
-nnoremap <Down> g<Down>
-nnoremap <Up> g<Up>
+nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+nnoremap <expr> <Down> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+nnoremap <expr> <Up> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
+nnoremap {  {zz
+nnoremap }  }zz
+nnoremap n  nzz
+nnoremap N  Nzz
+nnoremap ]c ]czz
+nnoremap [c [czz
+nnoremap [j <C-o>zz
+nnoremap ]j <C-i>zz
+nnoremap ]s ]szz
+nnoremap [s [szz
 
+" -------------------------------------
 "- Alt+Delete
 inoremap <M-BS> <C-w>
 nnoremap <M-BS> i<C-w>

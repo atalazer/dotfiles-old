@@ -195,14 +195,7 @@ local search_text = wibox.widget({
     widget = wibox.widget.textbox(),
 })
 
-local search_bar = wibox.widget({
-    shape = gears.shape.rounded_bar,
-    bg = x.color0,
-    widget = wibox.container.background(),
-})
-
 local search = wibox.widget({
-    -- search_bar,
     {
         {
             search_icon,
@@ -396,7 +389,7 @@ sidebar.opacity = beautiful.sidebar_opacity or 1
 sidebar.height = screen.primary.geometry.height
 sidebar.width = beautiful.sidebar_width or dpi(300)
 sidebar.y = 0
-local radius = beautiful.sidebar_border_radius or 0
+
 if beautiful.sidebar_position == "right" then
     awful.placement.top_right(sidebar)
 else
@@ -438,52 +431,67 @@ if user.sidebar.hide_on_mouse_leave then
 end
 -- Activate sidebar by moving the mouse at the edge of the screen
 if user.sidebar.show_on_mouse_screen_edge then
-    local activator_width = dpi(4)
-    local activator_height =  sidebar.height * 0.3
+    local screen = screen.primary
+    local activator_width = beautiful.activator_width or dpi(2)
+    local activator_height = sidebar.height * (beautiful.activator_height or 0.3)
 
-    local sidebar_activator = wibox({
-        bg = x.color8,
-        shape = helpers.rrect(activator_width/2),
-        width = activator_width,
-        height = activator_height,
+    local activator = wibox({
+        bg = beautiful.activator_bg or x.color8,
+        shape = helpers.rrect(activator_width / 2),
+        opacity = beautiful.activator_opacity or 0.3,
+        y = (screen.geometry.height - activator_height) / 2,
         visible = true,
         ontop = true,
-        opacity = beautiful.activator_opacity or 0.3,
         below = true,
-        screen = screen.primary,
+        screen = screen,
+        type = "utility",
     })
 
-    sidebar_activator:connect_signal("mouse::enter", function()
-        sidebar.visible = true
+    if beautiful.sidebar_position == "right" then
+        activator.x = screen.geometry.width - activator_width
+        activator.width = activator_width
+        activator.height = activator_height
+    else
+        activator.width = activator_width
+        activator.height = activator_height
+    end
+
+    local timer = gears.timer({
+        timeout = beautiful.activator_timeout or 0.3,
+        call_now = false,
+        autostart = false,
+        callback = function(self)
+            sidebar_show()
+            self:stop()
+        end,
+    })
+
+    activator:connect_signal("mouse::enter", function()
+        if timer.started then
+            timer:again()
+        else
+            timer:start()
+        end
     end)
 
-    if beautiful.sidebar_position == "right" then
-        awful.placement.right(sidebar_activator)
-    else
-        awful.placement.left(sidebar_activator)
-    end
+    activator:connect_signal("mouse::leave", function()
+        if timer.started then
+            timer:stop()
+        end
+    end)
 
-    -- We have set the sidebar_activator to be ontop, but we do not want it to be
+    -- We have set the notif_activator to be ontop, but we do not want it to be
     -- above fullscreen clients
-    local no_sidebar_activator_ontop = function(c)
+    local no_notif_activator_ontop = function(c)
         if c.fullscreen then
-            sidebar_activator.ontop = false
+            activator.ontop = false
         else
-            sidebar_activator.ontop = true
+            activator.ontop = true
         end
     end
-    client.connect_signal("focus", no_sidebar_activator_ontop)
-    client.connect_signal("unfocus", no_sidebar_activator_ontop)
-    client.connect_signal("property::fullscreen", no_sidebar_activator_ontop)
-
-    sidebar_activator:buttons(gears.table.join(
-        awful.button({}, 4, function()
-            awful.tag.viewprev()
-        end),
-        awful.button({}, 5, function()
-            awful.tag.viewnext()
-        end)
-    ))
+    client.connect_signal("focus", no_notif_activator_ontop)
+    client.connect_signal("unfocus", no_notif_activator_ontop)
+    client.connect_signal("property::fullscreen", no_notif_activator_ontop)
 end
 
 -- Item placement
@@ -583,7 +591,9 @@ sidebar:setup({
         },
         layout = wibox.layout.align.vertical,
     },
-    shape = helpers.prrect(beautiful.sidebar_border_radius, false, true, true, false),
+    shape = beautiful.sidebar_position == "left"
+        and helpers.prrect(beautiful.sidebar_border_radius,false,true,true,false)
+        or helpers.prrect(beautiful.sidebar_border_radius, true, false, false, true),
     bg = beautiful.sidebar_bg or beautiful.wibar_bg or "#111111",
     widget = wibox.container.background,
 })
