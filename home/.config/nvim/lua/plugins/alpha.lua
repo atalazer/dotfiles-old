@@ -1,12 +1,15 @@
 -- Stole from https://github.com/hhn-pham/dotfiles/blob/main/.config/nvim/lua/configs/alpha.lua
 
 local alpha = require("alpha")
+local telescope = require("plugins.telescope")
 
-local header = {
+local section = {}
+
+section.header = {
     type = "text",
     val = {
         " ⠀⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀ ",
-        " ⠀⠀⠀⣴⠿⠏⠀⠀⠀⠀⠀⠀⢳⡀⠀⡏⠀⠀⠀⠀⠀⢷  ",
+        " ⠀⠀⠀⣴⠿⠏⠀⠀⠀⠀⠀⠀⢳⡀⠀ ⡏⠀⠀⠀⠀⢷  ",
         " ⠀⠀⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀⠀⠀ ⡇ ",
         " ⠀⠀⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿⠀⣸⠀⠀OK⠀ ⡇ ",
         " ⠀⠀⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀⣿⠀⢹⠀⠀⠀⠀⠀ ⡇ ",
@@ -24,7 +27,7 @@ local header = {
     },
 }
 
-local footer = {
+section.footer = {
     type = "text",
     val = "Atalazer",
     opts = {
@@ -33,54 +36,48 @@ local footer = {
     },
 }
 
-local function button(sc, txt, keybind)
-    local sc_ = sc:gsub("%s", ""):gsub("SPC", "<leader>")
-
+local function button(shortcut, text, command)
     local opts = {
         position = "center",
-        text = txt,
-        shortcut = sc,
+        text = text,
+        shortcut = shortcut,
         cursor = 5,
-        width = 24,
+        width = 50,
         align_shortcut = "right",
         hl_shortcut = "AlphaShortcut",
         hl_text = "AlphaText",
     }
-    if keybind then
-        opts.keymap = { "n", sc_, keybind, { noremap = true, silent = true } }
+    if command then
+        opts.keymap = { "n", shortcut, command, { noremap = true, silent = true } }
     end
 
     return {
         type = "button",
-        val = txt,
+        val = text,
         on_press = function()
-            local key = vim.api.nvim_replace_termcodes(sc_, true, false, true)
-            vim.api.nvim_feedkeys(key, "normal", false)
+            if type(command) == "function" then
+                command()
+            else
+                vim.cmd(command)
+            end
         end,
         opts = opts,
     }
 end
 
-local buttons = {
+section.buttons = {
     type = "group",
     val = {
-        button("CTRL p  ", "  Find File   ", ":Telescope find_files<CR>"),
-        button("SPC  f o", "  Recents     ", ":Telescope oldfiles<CR>"),
-        button("SPC  f d", "  Bookmarks   ", ":Telescope marks<CR>"),
-        button("        ", "  Session     ", ":lua require('persistence').load({ last = true })<CR>"),
+        button("CTRL p  ", "  Find File   ", "Telescope find_files"),
+        button("SPC  f o", "  Recents     ", "Telescope oldfiles"),
+        button("SPC  f f", "  Frecency    ", telescope.frecency ),
+        button("SPC  f d", "  Bookmarks   ", "Telescope marks"),
+        button("F1      ", "  Session     ", Util.session.last),
     },
-    opts = {
-        spacing = 1,
-    },
+    opts = { spacing = 1 },
 }
 
-local section = {
-    header = header,
-    buttons = buttons,
-    footer = footer,
-}
-
-local opts = {
+alpha.setup({
     layout = {
         { type = "padding", val = 2 },
         section.header,
@@ -89,8 +86,7 @@ local opts = {
         { type = "padding", val = 4 },
         section.footer,
     },
-    opts = {
-        margin = 5,
-    },
-}
-alpha.setup(opts)
+    opts = { margin = 3 },
+})
+
+

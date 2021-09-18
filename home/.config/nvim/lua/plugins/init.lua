@@ -1,4 +1,5 @@
 local packer_ok, packer = pcall(require, "packer")
+
 if not packer_ok then
     return
 end
@@ -32,15 +33,18 @@ return packer.startup({
 
         -- ======= User Interface =======
         -- Colorscheme
+        -- { "rktjmp/lush.nvim" },
         {
             -- "nekonako/xresources-nvim",
             "~/Documents/GitHub/xresources-nvim",
-            -- as = "theme",
-            -- event = "VimEnter",
-            -- module = "xresources",
-            config = function()
-                require("xresources").colorscheme()
-            end,
+            config = [[require("xresources").colorscheme()]],
+        },
+        {
+            "folke/tokyonight.nvim",
+            "Pocco81/Catppuccino.nvim",
+            "EdenEast/nightfox.nvim",
+            "Shatur/neovim-ayu",
+            "yonlu/omni.vim"
         },
 
         -- Customizable neovim greeter like dashboard-nvim or vim-startify
@@ -50,43 +54,32 @@ return packer.startup({
         },
 
         -- vim-devicons written in lua
-        { 
+        {
             "kyazdani42/nvim-web-devicons",
-            -- after = "theme",
         },
 
         -- Beautiful Statusline with Animation
         {
             "windwp/windline.nvim",
-            -- after = "nvim-web-devicons",
-            config = function()
-                require("plugins.windline")
-            end,
+            config = [[require("plugins.windline")]],
         },
 
         -- Snazzy bufferline
         {
             "akinsho/nvim-bufferline.lua",
-            -- after = "nvim-web-devicons",
-            config = function()
-                require("plugins.bufferline")
-            end,
+            config = [[require("plugins.bufferline")]]
         },
 
         -- Indenting
         {
             "lukas-reineke/indent-blankline.nvim",
-            setup = function()
-                require("plugins.indent-blankline")
-            end,
+            setup = [[require("plugins.indent-blankline")]]
         },
 
         -- vim which key
         {
             "folke/which-key.nvim",
-            config = function()
-                require("plugins.which-key")
-            end,
+            config = [[require("plugins.which-key")]]
         },
 
         -- ======= Languange =======
@@ -161,25 +154,36 @@ return packer.startup({
                 {
                     "folke/lsp-trouble.nvim",
                     cmd = { "Trouble", "TroubleToggle" },
-                    config = function()
-                        require("plugins.trouble")
-                    end,
+                    config = [[require("plugins.trouble")]]
                 },
             },
         },
+
+        -- Coq.nvim, completion
+        -- {
+        --     "ms-jpq/coq_nvim",
+        --     branch = "coq",
+        --     requires = {
+        --         { "ms-jpq/coq.artifacts", branch = "artifacts" },
+        --         { "ms-jpq/coq.thirdparty", branch = "3p" },
+        --     },
+        --     setup = require("plugins.coq").setup,
+        --     config = require("plugins.coq").config,
+        -- },
 
         -- Completion
         {
             "hrsh7th/nvim-cmp",
             config = [[require("plugins.cmp")]],
             requires = {
-                "saadparwaiz1/cmp_luasnip",
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-path",
                 "hrsh7th/cmp-nvim-lsp",
                 "f3fora/cmp-spell",
+                "saadparwaiz1/cmp_luasnip",
             },
         },
+
 
         -- Snippet
         {
@@ -217,7 +221,7 @@ return packer.startup({
             config = function()
                 require("nvim_comment").setup({
                     marker_padding = true,
-                    comment_empty = true,
+                    comment_empty = false,
                     create_mappings = true,
                     line_mapping = "gcc",
                     operator_mapping = "gc",
@@ -322,12 +326,9 @@ return packer.startup({
                 require("sniprun").setup({
                     borders = Util.borders,
                     display = {
+                        -- "Classic",
                         "Terminal",
                         "VirtualTextOk",
-                    },
-                    repl_enable = {
-                        "Bash_original",
-                        "Python3_original",
                     },
                 })
             end,
@@ -378,7 +379,7 @@ return packer.startup({
             "lambdalisue/suda.vim",
             setup = function()
                 vim.g.suda_smart_edit = 1
-                vim.g["suda#prompt"] = "Password : "
+                vim.g["suda#prompt"] = "[Suda] Password : "
             end,
         },
 
@@ -387,7 +388,7 @@ return packer.startup({
         {
             "lewis6991/gitsigns.nvim",
             wants = "plenary.nvim",
-            config = [[require("plugins.gitsigns")]]
+            config = [[require("plugins.gitsigns")]],
         },
 
         {
@@ -439,9 +440,7 @@ return packer.startup({
             setup = function()
                 vim.api.nvim_set_keymap("n", "<leader>gz", ":ZenMode<CR>", { noremap = true, silent = true })
             end,
-            config = function()
-                require("plugins.zen-mode")
-            end,
+            config = [[require("plugins.zen-mode")]],
         },
 
         -- limelight.vim in lua
@@ -486,9 +485,7 @@ return packer.startup({
             "iamcco/markdown-preview.nvim",
             cmd = "MarkdownPreview",
             ft = "markdown",
-            run = function()
-                vim.fn["mkdp#util#install"]()
-            end,
+            run = [[vim.fn["mkdp#util#install"]()]],
             setup = function()
                 vim.g.mkdp_auto_start = 0
                 vim.g.mkdp_auto_close = 0
@@ -500,13 +497,6 @@ return packer.startup({
         -- Session management
         {
             "folke/persistence.nvim",
-            module = "persistence",
-            setup = function()
-                vim.cmd([[
-                    nnoremap <F1> :lua require'persistence'.load({ last = true })<CR>
-                    nnoremap <F2> :lua require'persistence'.save()<CR>
-                ]])
-            end,
             config = function()
                 require("persistence").setup({
                     dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions/"),
@@ -546,6 +536,7 @@ return packer.startup({
         },
     },
     config = {
+        compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
         git = {
             clone_timeout = 300,
         },

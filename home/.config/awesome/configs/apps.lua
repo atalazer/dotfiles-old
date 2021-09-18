@@ -42,11 +42,11 @@ apps.battery = function()
 end
 
 apps.network = function()
-    awful.spawn.with_shell("rofi_network_manager")
+    awful.spawn.with_shell("rofi-network-manager")
 end
 
 apps.password = function()
-    awful.spawn.with_shell("rofi_pass")
+    awful.spawn.with_shell("rofi-pass")
 end
 
 apps.youtube = function()

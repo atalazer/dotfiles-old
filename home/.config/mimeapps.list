@@ -13,6 +13,8 @@ x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
 
 [Default Applications]
+application/epub+zip=org.pwmt.zathura.desktop;
+application/pdf=org.pwmt.zathura.desktop;
 application/vnd.openxmlformats-officedocument.presentationml.presentation=onlyoffice.desktop;
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=onlyoffice.desktop;

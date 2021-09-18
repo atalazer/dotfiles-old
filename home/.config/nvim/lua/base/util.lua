@@ -9,16 +9,39 @@ Util.check_back_space = function()
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
--- see lua/plugins/cmp.lua for context
+-- see lua/plugins/autopairs.lua for context
 -- Use nvim-autopairs cr instead
 Util.trigger_completion = function()
-    -- if vim.fn.pumvisible() ~= 0 then
-    --     if vim.fn.complete_info()["selected"] ~= -1 then
-    --         return vim.fn["compe#confirm"]()
-    --     end
-    -- end
+    local npair_exist, npairs = pcall(require, "nvim-autopairs")
+
+    if npair_exist then
+        if vim.fn.pumvisible() ~= 0 then
+            if vim.fn.complete_info({ "selected" }).selected ~= -1 then
+                return npairs.esc("<C-y>")
+            else
+                -- you can change <c-g><c-g> to <c-e> if you don't use other i_CTRL-X modes
+                return npairs.esc("<C-g><C-g>") .. npairs.autopairs_cr()
+            end
+        else
+            return npairs.autopairs_cr()
+        end
+    end
 
     return Util.t("<CR>")
+end
+
+-- see lua/plugins/autopairs.lua for context
+Util.backspace = function()
+    local npair_exist, npairs = pcall(require, "nvim-autopairs")
+
+    if npair_exist then
+        if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ "mode" }).mode == "eval" then
+            return npairs.esc("<C-e>") .. npairs.autopairs_bs()
+        else
+            return npairs.autopairs_bs()
+        end
+    end
+    return Util.t("<BS>")
 end
 
 -- see lua/plugins/cmp.lua for context
@@ -68,8 +91,6 @@ Util.lsp_on_attach = function(client, bufnr)
 
     require("lsp_signature").on_attach({
         bind = true, -- This is mandatory, otherwise border config won't get registered.
-        doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
-        floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
         hint_enable = false, -- virtual hint enable
         handler_opts = {
             border = Util.borders, -- double, single, shadow, none
@@ -85,13 +106,25 @@ Util.lsp_on_init = function(client)
     })
 end
 
-Util.packer_lazy_load = function(plugin, timer)
-    if plugin then
-        timer = timer or 0
-        vim.defer_fn(function()
-            require("packer").loader(plugin)
-        end, timer)
-    end
-end
+local session_dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions/")
+local last_session = session_dir .. "last.vim"
+local persistence_exist, persistence = pcall(require, "persistence")
+
+Util.session = {
+    save = function()
+        if persistence_exist then
+            persistence.save()
+        else
+            vim.cmd("mksession! " .. last_session)
+        end
+    end,
+    last = function()
+        if persistence_exist then
+            persistence.load({ last = true })
+        else
+            vim.cmd("source " .. last_session)
+        end
+    end,
+}
 
 return Util

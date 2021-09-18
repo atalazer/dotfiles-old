@@ -3,13 +3,18 @@
 export ZDIR=$HOME/.zsh
 fpath=($HOME/.zsh/completions $fpath)
 
+# @function: source file if exist.
+so (){
+    FILE=$1
+    [ -f "$FILE" ] && source $FILE
+}
+
 # }}}
 
 # ===== Plugins ===== {{{
 
 setopt promptsubst
-
-[[ -f $ZDIR/zinit.zsh ]] && source $ZDIR/zinit.zsh
+so $ZDIR/zinit.zsh
 
 # }}}
 
@@ -24,9 +29,9 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE
 
-source $ZDIR/modules/compe.zsh
-source $ZDIR/modules/dir.zsh
-source $ZDIR/modules/keys.zsh
+so $ZDIR/modules/compe.zsh
+so $ZDIR/modules/dir.zsh
+so $ZDIR/modules/keys.zsh
 
 # Allow Comment in Interactive Shell
 setopt interactive_comments
@@ -34,37 +39,40 @@ setopt interactive_comments
 #}}}
 
 # ===== User ===== {{{
-
 # User alias definition
-source $HOME/.config/shell/aliases
+so $HOME/.config/shell/aliases
 
 # User function definition
-source $HOME/.config/shell/functions/dict
-source $HOME/.config/shell/functions/git
-source $HOME/.config/shell/functions/schedule
-source $HOME/.config/shell/functions/todo
-source $HOME/.config/shell/functions/weather
-source $HOME/.config/shell/functions/others
+so $HOME/.config/shell/functions/dict
+so $HOME/.config/shell/functions/git-svn
+so $HOME/.config/shell/functions/pet
+so $HOME/.config/shell/functions/schedule
+so $HOME/.config/shell/functions/todo
+so $HOME/.config/shell/functions/weather
+so $HOME/.config/shell/functions/others
+
+# User config
+so $HOME/.config/nnn/nnn.conf
+so $HOME/.config/lf/lf.conf
 
 export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
 
-# nnn config
-source $HOME/.config/nnn/nnn.conf
-
 # broot, better cd
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && \
-    source $HOME/.config/broot/launcher/bash/br
+    so $HOME/.config/broot/launcher/bash/br
 
 # Start CLI Apps
-eval "$(zoxide init zsh)"
-eval "$(fnm env)"
+command -v "zoxide" > /dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v "fnm" > /dev/null 2>&1 && eval "$(fnm env)"
 
 # }}}
 
 # ===== Prompt ===== {{{
-export STARSHIP_CONFIG=$HOME/.config/starship.toml
-eval "$(starship init zsh)"
+if command -v "starship" > /dev/null 2>&1; then
+    export STARSHIP_CONFIG=$HOME/.config/starship.toml
+    eval "$(starship init zsh)"
+fi
 
 # }}}
 

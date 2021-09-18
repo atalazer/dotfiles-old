@@ -24,11 +24,12 @@
 # mpvc: https://github.com/lwilletts/mpvc
 
 DMENU="rofi -dmenu -i"
-# DIR=${$(xdg-user-dir VIDEOS):-$HOME/Videos}
+_XDG_=$(xdg-user-dir VIDEOS)
+DIR="${_XDG_:-$HOME/Videos}"
 
 if command -v "mpvc" >/dev/null 2>&1; then true; else exit 1; fi
 
-OPT=${1:-track}
+OPT=${1:-find}
 case $OPT in
 track | "-t")
     mpvc --stop
@@ -45,6 +46,20 @@ playlist | "-p")
 
     if [[ -n $PLAYLIST_FILE ]]; then
         mpv "${PLAYLIST_DIR}/${PLAYLIST_FILE}"
+    fi
+    ;;
+find | "-f")
+    path=$(find "$DIR" -type f -regex '.*.\(mp4\|mkv\)' | \
+        sed s/"\/home\/atalariq\/Videos\/"// | \
+        rofi -dmenu -p "Videos" -width 70 -lines 20 \
+            -case-sensitive \
+    )
+
+    if [ -n "$path" ]; then
+        video="$DIR/$path"
+        if [[ -f $video ]]; then
+            mpv "$video"
+        fi
     fi
     ;;
 esac

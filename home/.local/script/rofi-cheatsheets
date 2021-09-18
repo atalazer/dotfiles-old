@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IMG_VIEW="feh"
+IMG_VIEW="opener"
 DMENU="rofi -dmenu -i -p Cheatsheets"
 
 CHEATSHEET_DIR=~/Pictures/Cheatsheets

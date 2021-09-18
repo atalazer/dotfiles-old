@@ -77,7 +77,9 @@ telescope.setup({
                 ["<C-c>"] = actions.close,
 
                 ["<C-u>"] = actions.preview_scrolling_up,
+                ["<PageUp>"] = actions.preview_scrolling_up,
                 ["<C-d>"] = actions.preview_scrolling_down,
+                ["<PageDown>"] = actions.preview_scrolling_down,
                 ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
                 ["<Tab>"] = actions.toggle_selection,
             },
@@ -92,7 +94,9 @@ telescope.setup({
                 ["k"] = actions.move_selection_previous,
 
                 ["<C-u>"] = actions.preview_scrolling_up,
+                ["<PageUp>"] = actions.preview_scrolling_up,
                 ["<C-d>"] = actions.preview_scrolling_down,
+                ["<PageDown>"] = actions.preview_scrolling_down,
                 ["<C-q>"] = actions.send_to_qflist,
                 ["<Tab>"] = actions.toggle_selection,
             },
@@ -133,6 +137,7 @@ telescope.setup({
                 ["dots"] = os.getenv("DOTS"),
                 ["blog"] = os.getenv("BLOG"),
                 ["repo"] = HOME .. "/Documents/GitHub",
+                ["pro"] = HOME .. "/Documents/Dev",
                 ["pro"] = HOME .. "/Documents/Project",
                 ["sch"] = HOME .. "/Documents/School",
                 ["scr"] = HOME .. "/Documents/.Scratch",

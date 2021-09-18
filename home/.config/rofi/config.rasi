@@ -9,22 +9,12 @@ configuration {
     disable-history:           false;
     max-history-size:          15;
 
-    threads:                   2;
     sort:                      true;
     sorting-method:            "fzf";
     matching:                  "fuzzy";
 
-    modi:                      "drun,window,file-browser,calc";
+    modi:                      "drun,window,file-browser";
     combi-modi:                "window,drun";
-
-    display-drun:              "APP";
-    drun-use-desktop-cache:    true;
-    drun-reload-desktop-cache: true;
-
-    display-run:               "CMD";
-    display-window:            "WIN";
-    display-file-browser:      "FLM";
-
     terminal:                  "kitty";
 
     columns:                   1;

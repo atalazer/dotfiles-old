@@ -56,21 +56,8 @@ augroup Whitespace
   au BufWritePre * if g:strip_whitespace | %s/\s\+$//e
 augroup END
 
-augroup Dashboard
-  au!
-  au FileType dashboard setlocal showtabline=0 laststatus=0 signcolumn=no nolist noruler | au WinLeave <buffer> setlocal showtabline=2 laststatus=2 signcolumn=yes list ruler
-  au FileType dashboard map q :quit<CR> | au WinLeave <buffer> unmap q
-augroup END
-
 augroup Emmet
   au!
   au FileType html,javascript,typescript,javascriptreact,typescriptreact,svelte EmmetInstall
 augroup END
 
-" " hide the cursor if we're inside NvimTree
-" augroup HideCursor
-"   au!
-"   au WinLeave,FileType NvimTree set guicursor=n-v-c-sm:block,i-ci-ve:ver2u,r-cr-o:hor20,
-"   au WinEnter,FileType NvimTree set guicursor=n-c-v:block-Cursor/Cursor-blinkon0,
-" augroup END
-" au FileType NvimTree hi Cursor blend=100

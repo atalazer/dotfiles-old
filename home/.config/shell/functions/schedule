@@ -8,17 +8,17 @@ schedule() {
     else
         OPT=${1:---help}
         case $OPT in
-        -e | --edit) ${EDITOR:-nvim} $SCHEDULE ;;
-        -s | --show)
+        "-e" | "--edit") "${EDITOR:-nvim}" "$SCHEDULE" ;;
+        "-s" | "--show")
             if command -v "glow" &>/dev/null; then
-                glow $SCHEDULE
+                glow "$SCHEDULE"
             elif command -v "bat" &>/dev/null; then
-                bat --paging=never $SCHEDULE
+                bat --paging=never "$SCHEDULE"
             else
-                cat $SCHEDULE
+                cat "$SCHEDULE"
             fi
             ;;
-        -h | --help)
+        "-h" | "--help")
             echo "Command:"
             echo "-e --edit Edit SCHEDULE file"
             echo "-s --show Show SCHEDULE"

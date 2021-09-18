@@ -76,29 +76,16 @@ cmd unexecute ${{
 }}
 
 # Bindings
-# Remove some defaults
-map m
-map o
-map n
-map "'"
-map '"'
-map d
-map c
-map e
-map f
-map r
-map y
-
 # Basic Functions
 map cd push :cd<space>
-map dc cd ~/.config
-map dd cd ~/.dotfiles
-map dl cd ~/Downloads
-map dD cd ~/Documents
-map dr cd ~/Documents/GitHub
-map dv cd ~/Videos
-map dp cd ~/Pictures
-map dm cd ~/Music
+map bc cd ~/.config
+map bd cd ~/.dotfiles
+map bl cd ~/Downloads
+map bD cd ~/Documents
+map br cd ~/Documents/GitHub
+map bv cd ~/Videos
+map bp cd ~/Pictures
+map bm cd ~/Music
 
 map . set hidden!
 map p paste

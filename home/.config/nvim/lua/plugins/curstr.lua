@@ -32,6 +32,7 @@ M.config = function()
             { "top", "bottom" },
             { "right", "left" },
             { "he", "she" },
+            { "always", "never" },
         },
     }
 
@@ -46,36 +47,27 @@ M.config = function()
             },
         },
         togglable = {
-            names = {
-                "camel_snake",
-            },
+            names = {},
         },
     }
 
-    -- snake_case to camelCase or vice versa
-    source.camel_snake = {
-        names = { "togglable/pattern" },
-        opts = { patterns = { { "\\v_(.)", "\\u\\1" }, { "\\v\\C([A-Z])", "_\\l\\1" } } },
-        filetypes = { "lua", "bash", "python" },
-    }
-
     -- Toggle word
-    local tw_tbl = {}
+    local togglable_words = {}
     for i, word in ipairs(config.togglable) do
         local word = {
             names = { "togglable/word" },
             opts = { words = { word[1], word[2] }, normalized = true },
         }
-        tw_tbl["word" .. i] = word
+        togglable_words["word" .. i] = word
         table.insert(source.togglable.names, tostring("word" .. i))
     end
-    source = vim.tbl_extend("force", source, tw_tbl)
+    source = vim.tbl_extend("force", source, togglable_words)
 
     require("curstr").setup({
         source_aliases = source,
     })
 end
 
--- M.setup()
--- M.config()
+M.setup()
+M.config()
 return M

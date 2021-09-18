@@ -43,36 +43,34 @@ local servers = {
     svelte = require("lsp.server.svelte").config,
     texlab = require("lsp.server.texlab").config,
     tailwindcss = {
-        filetypes = { "html", "css", "javascriptreact", "typescriptreact" }
+        filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
     },
     tsserver = require("lsp.server.tsserver").config,
     vimls = {},
     yamlls = {},
+    zeta_note = { cmd = { "zeta-note" } },
+    zk = {},
     ["null-ls"] = {},
 }
 
 require("plugins.null-ls").setup()
 
-for name,opts in pairs(servers) do
-    local exist, server = lsp_installer.get_server(name)
-    if exist then
+for name, opts in pairs(servers) do
+    opts = vim.tbl_extend("force", {
+        flags = { debounce_text_changes = 150 },
+        on_attach = Util.lsp_on_attach,
+        on_init = Util.lsp_on_init,
+        capabilities = capabilities,
+    }, opts)
+
+    local server_exist, server = lsp_installer.get_server(name)
+
+    if server_exist then
         if not server:is_installed() then
             server:install()
         end
         server:setup(opts)
-        -- server:setup(vim.tbl_extend("force", {
-        --     flags = { debounce_text_changes = 150 },
-        --     on_attach = Util.lsp_on_attach,
-        --     on_init = Util.lsp_on_init,
-        --     capabilities = capabilities,
-        -- }, opts))
     else
-        lspconfig[name].setup(vim.tbl_extend("force", {
-            flags = { debounce_text_changes = 150 },
-            on_attach = Util.lsp_on_attach,
-            on_init = Util.lsp_on_init,
-            capabilities = capabilities,
-        }, opts))
+        lspconfig[name].setup(opts)
     end
 end
-

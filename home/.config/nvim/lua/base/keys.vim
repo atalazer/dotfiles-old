@@ -6,8 +6,8 @@ nnoremap q: <Nop>
 " -------------------------------------
 nnoremap <leader>qa :quitall<CR>
 nnoremap <C-s>      :write<CR>
-inoremap <C-s>      <Esc>:write<CR>
-vnoremap <C-s>      <Esc>:write<CR>
+inoremap <C-s>      <Esc><Esc>:write<CR>
+vnoremap <C-s>      <Esc><Esc>:write<CR>
 
 " source lua/vim files
 nnoremap <localleader>l   <Cmd>source %<CR>
@@ -112,10 +112,12 @@ nnoremap <Leader>rl <CMD>luafile %<CR>
 nnoremap <Leader>rn <CMD>!node %<CR>
 
 " run python
-nnoremap({ "<localleader>rp", "<Cmd>!python %<CR>" })
+nnoremap <localleader>rp <Cmd>!python %<CR>
 
 " ------------------------------------- Function
-nnoremap <F4> <cmd>!xdg-open %<CR>
+nnoremap <F1> <CMD>lua Util.session.last()<CR><CMD>echo "Session Restored"<CR>
+nnoremap <F2> <CMD>lua Util.session.save()<CR><CMD>echo "Session Saved"<CR>
+nnoremap <F4> <CMD>!opener %<CR>
 noremap <F3>
       \ :exe "let g:strip_whitespace = !g:strip_whitespace"<CR>
       \ :exe "echo 'Strip whitespace mode toggled!'"<CR>
@@ -123,26 +125,26 @@ noremap <F3>
 "- ===================================== Workspace
 
 "- Tabs Buffer
-nnoremap <M-k> :BufferLineCyclePrev<CR>
-nnoremap <M-j> :BufferLineCycleNext<CR>
-nnoremap <M-[> :BufferLineCyclePrev<CR>
-nnoremap <M-]> :BufferLineCycleNext<CR>
-nnoremap <M-PageUp> :BufferLineCyclePrev<CR>
-nnoremap <M-PageDown> :BufferLineCycleNext<CR>
+nnoremap <M-k> <CMD>BufferLineCyclePrev<CR>
+nnoremap <M-j> <CMD>BufferLineCycleNext<CR>
+nnoremap <M-[> <CMD>BufferLineCyclePrev<CR>
+nnoremap <M-]> <CMD>BufferLineCycleNext<CR>
+nnoremap <M-PageUp> <CMD>BufferLineCyclePrev<CR>
+nnoremap <M-PageDown> <CMD>BufferLineCycleNext<CR>
 
-nnoremap <M-K> :BufferLineMovePrev<CR>
-nnoremap <M-J> :BufferLineMoveNext<CR>
+nnoremap <M-K> <CMD>BufferLineMovePrev<CR>
+nnoremap <M-J> <CMD>BufferLineMoveNext<CR>
 
-nnoremap <M-1> :lua require'bufferline'.go_to_buffer(1)<CR>
-nnoremap <M-2> :lua require'bufferline'.go_to_buffer(2)<CR>
-nnoremap <M-3> :lua require'bufferline'.go_to_buffer(3)<CR>
-nnoremap <M-4> :lua require'bufferline'.go_to_buffer(4)<CR>
-nnoremap <M-5> :lua require'bufferline'.go_to_buffer(5)<CR>
-nnoremap <M-6> :lua require'bufferline'.go_to_buffer(6)<CR>
-nnoremap <M-7> :lua require'bufferline'.go_to_buffer(7)<CR>
-nnoremap <M-8> :lua require'bufferline'.go_to_buffer(8)<CR>
-nnoremap <M-9> :lua require'bufferline'.go_to_buffer(9)<CR>
-nnoremap <M-0> :lua require'bufferline'.go_to_buffer(10)<CR>
+nnoremap <M-1> <CMD>lua require'bufferline'.go_to_buffer(1)<CR>
+nnoremap <M-2> <CMD>lua require'bufferline'.go_to_buffer(2)<CR>
+nnoremap <M-3> <CMD>lua require'bufferline'.go_to_buffer(3)<CR>
+nnoremap <M-4> <CMD>lua require'bufferline'.go_to_buffer(4)<CR>
+nnoremap <M-5> <CMD>lua require'bufferline'.go_to_buffer(5)<CR>
+nnoremap <M-6> <CMD>lua require'bufferline'.go_to_buffer(6)<CR>
+nnoremap <M-7> <CMD>lua require'bufferline'.go_to_buffer(7)<CR>
+nnoremap <M-8> <CMD>lua require'bufferline'.go_to_buffer(8)<CR>
+nnoremap <M-9> <CMD>lua require'bufferline'.go_to_buffer(9)<CR>
+nnoremap <M-0> <CMD>lua require'bufferline'.go_to_buffer(10)<CR>
 
 "- Movement between windows
 nnoremap <M-Left>     <C-w><C-h>
@@ -158,5 +160,5 @@ nnoremap <M-S-Right>  <CMD>vertical resize +2<CR>
 
 " ------------------------------------ Spelling
 nnoremap csU :s/\<./\u&/g<CR>:nohlsearch<CR>
-nnoremap csu :s/\<./\l&/g<cR>:nohlsearch<cR>
+nnoremap csu :s/\<./\l&/g<CR>:nohlsearch<CR>
 "
