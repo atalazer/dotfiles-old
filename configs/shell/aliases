@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+
+PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
+EDITOR="${EDITOR:-nvim}"
+TRASH_CMD=${TRASH_CMD:-"gio"}
+
+# Basic
+alias c="clear"
+alias r="exec zsh"
+alias {:q,q}="exit"
+alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
+alias cdb="cd ${BLOG:-$HOME/Work/Blog}"
+alias cdn="cd ${NOTE_DIR:-$HOME/Documents/Notes}"
+alias cdp="cd ${PROGRAMMING_DIR:-$HOME/Work/Programming}"
+alias cds="cd ${SCHOOL_DIR:-$HOME/School}"
+
+# Use advcpmv instead mv cp
+if command -v "mvg" > /dev/null 2>&1; then
+    alias mv="mvg -g"
+fi
+if command -v "cpg" > /dev/null 2>&1; then
+    alias cp="cpg -g"
+fi
+
+# Use exa instead of ls
+if command -v "exa" > /dev/null 2>&1; then
+    alias ls="exa --icons --group-directories-first"
+    alias lsa="exa --icons --group-directories-first -a"
+    alias ll="exa --icons --group-directories-first -lgh"
+    alias lla="exa --icons --group-directories-first -algh"
+fi
+
+# Use Trash Instead of rm
+if [[ $TRASH_CMD == "gio" ]]; then
+    alias rm="gio trash"
+    alias tr="gio trash"
+    alias tl="gio trash --list"
+    alias trs="gio trash --restore"
+elif [[ $TRASH_CMD == "trash" ]]; then
+    alias rm="trash"
+    alias tr="trash"
+    alias tl="trash-list"
+    alias trs="trash-restore"
+fi
+
+# EDITOR Alias
+alias se="sudoedit"
+alias {e,vi,vim}="$EDITOR"
+alias el="$EDITOR -c 'SessionLoad last'"
+alias ep="$EDITOR ~/.config/nvim/lua/plugins/init.lua"
+alias {envim,ev}="$EDITOR ~/.config/nvim/init.vim"
+alias {zshrc,ez}="$EDITOR ~/.zshrc"
+alias {xrc,ex}="$EDITOR ~/.Xresources"
+alias {awc,ea}="$EDITOR ~/.config/awesome/rc.lua"
+alias zen="$EDITOR +ZenMode "
+
+# Xresources Alias
+alias xload="xrdb -load ~/.Xresources"
+alias xmerge="xrdb -merge ~/.Xresources"
+
+# FZF SKIM alias
+alias fzfp="fzf --reverse --preview 'bat --style=numbers --color=always {}'"
+alias skp="sk --reverse --preview 'bat --style=numbers --color=always {}'"
+
+# Git Alias
+alias ga="git add"
+alias gr="git remove"
+alias gs="git status"
+alias glg="git log"
+
+alias gb="git branch"
+alias gco="git checkout"
+alias gcl="git clone --recursive"
+alias gp="git push"
+alias gl="git pull"
+alias gf="git fetch"
+alias gcm="git commit"
+alias gcmsg="git commit -m"
+
+alias grh="git reset"
+alias grhh="git reset --hard"
+alias grev="git revert"
+
+alias gstp="git stash push"
+alias gsta="git stash apply"
+alias gstc="git stash clear"
+alias gstd="git stash drop"
+alias gstl="git stash list"
+
+alias {lg,lz}="lazygit"
+
+# Archlinux
+if command -v "pacman" > /dev/null 2>&1; then
+    alias pacin="$PERMISSION pacman -S"
+    alias pacsearch="pacman -Ss"
+    alias pacupd="$PERMISSION pacman -Syy"
+    alias pacupg="$PERMISSION pacman -Syu"
+    alias pacrem="$PERMISSION pacman -Rns"
+    alias pacrmorp="pacman Qtdq | $PERMISSION pacman -Rns -"
+    
+    pacsize(){
+        LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h | grep $1
+    }
+fi
+
+if command -v "paru" > /dev/null 2>&1; then
+    alias pain="paru -S"
+    alias pasearch="paru -Ss"
+    alias paupd="paru -Syy"
+    alias paupg="paru -Syu"
+    alias parem="paru -Rcns"
+    alias parmorp="paru -Qtdq | paru -Rns -"
+fi
+
+# tmux
+if command -v "tmux" > /dev/null 2>&1; then
+    alias tma='tmux attach -t'
+    alias tms='tmux new-session -s'
+    alias tml='tmux list-sessions'
+    alias tmk='tmux kill-session -t'
+fi
+
+# Kitty Terminal
+alias icat="kitty +kitten icat"
+alias kifetch="neofetch --config ~/.config/neofetch/config-kitty.conf"
+alias fetch="neofetch --config none"
+
+# mpd ncmpcpp
+if command -v "ncmpcpp" > /dev/null 2>&1; then
+    alias killmpd=" killall mpd ncmpcpp ncmpcpp_cover_art.sh"
+    alias mpdcpp=" ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
+    alias rmpd="killmpd && mpd && mpdcpp"
+fi
+
+# youtube-dl
+if command -v "youtube-dl" > /dev/null 2>&1; then
+    alias yt="youtube-dl"
+    alias yt720p="youtube-dl -f 'best[height<=720][ext=mp4]' --embed-thumbnail"
+    alias yt480p="youtube-dl -f 'best[height<=480][ext=mp4]' --embed-thumbnail"
+    alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
+fi
+# Games
+if command -v "zsh" > /dev/null 2>&1; then
+    alias tetris="autoload -Uz tetriscurses; tetriscurses"
+fi
+
+# cpupower
+if command -v "cpupower" > /dev/null 2>&1; then
+    alias performance="$PERMISSION cpupower frequency-set -g performance"
+    alias ondemand="$PERMISSION cpupower frequency-set -g ondemand"
+fi
+alias cpuinfo="watch -n1 \"cat /proc/cpuinfo | grep 'MHz'\""
+

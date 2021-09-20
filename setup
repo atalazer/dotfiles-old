@@ -1,4 +1,6 @@
-# #!/bin/sh
+#!/bin/sh
 
 # - linux
-nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#linux'" --show-trace
+
+CFG="${1:-linux}"
+nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" --show-trace

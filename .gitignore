@@ -1,3 +1,4 @@
+**/*.zwc
 **/*.dat
 **/*.db
 **/.uuid
@@ -21,12 +22,12 @@
 **/history.*
 **/state.*
 **/*__
+**/*.keys
+**/*.private
+**/.mode
 **/watch_later/*
+**/ncmpcpp/patterns.list
+**/qutebrowser/bookmarks
+**/qutebrowser/quickmarks
 
 result
-home/.user.keys
-home/.config/hosts/.mode
-home/.config/ncmpcpp/patterns.list
-home/.config/gtk-3.0/settings.ini
-
-home/.config/nvim/plugin/packer_compiled.lua

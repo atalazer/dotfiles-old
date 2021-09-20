@@ -1,0 +1,16 @@
+#!/bin/sh
+
+IMG_VIEW="opener"
+DMENU="rofi -dmenu -i -p Cheatsheets"
+
+CHEATSHEET_DIR=~/Pictures/Cheatsheets
+IMG_EXT="png"
+
+label=$(/usr/bin/ls ~/Pictures/Cheatsheets | grep ".$IMG_EXT" | sed 's_.png__g' /dev/stdin | $DMENU)
+IMG="${CHEATSHEET_DIR}/${label}.${IMG_EXT}"
+
+if [[ -n $IMG ]]; then
+    $IMG_VIEW "$IMG"
+fi
+
+exit 0

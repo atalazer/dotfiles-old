@@ -20,9 +20,6 @@
             homeDirectory = "/home/${username}";
             username = username;
             configuration = { pkgs, config, ... }: {
-              xdg.configFile."nix/nix.conf".text = ''
-                experimental-features = nix-command flakes
-              '';
               nixpkgs = {
                 config = { allowUnfree = true; };
                 overlays = [ (import ./modules/overlays.nix) ];

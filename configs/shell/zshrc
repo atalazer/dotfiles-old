@@ -1,0 +1,91 @@
+# ===== Variable ===== {{{
+
+export ZDIR=$HOME/.zsh
+fpath=($HOME/.zsh/completions $fpath)
+
+# @function: source file if exist.
+so (){
+    FILE=$1
+    [ -f "$FILE" ] && source $FILE
+}
+
+# }}}
+
+# ===== Plugins ===== {{{
+
+setopt promptsubst
+so $ZDIR/zinit.zsh
+
+# }}}
+
+# ===== Zsh ===== {{{
+
+# Zsh Modules
+MODULE_DIR=$ZDIR/modules
+if [ -d $MODULE_DIR ] ; then
+    for f in $MODULE_DIR/?* ; do
+        so $f
+    done
+    unset f
+fi
+
+# History
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=${ZDOTDIR:-${HOME}}/.zsh-history
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_DUPS
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_SPACE
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+
+# Allow Comment in Interactive Shell
+setopt interactive_comments
+
+#}}}
+
+# ===== User ===== {{{
+# User alias definition
+ALIASES=$HOME/.config/shell/aliases
+so $ALIASES
+
+# User function definition
+FUNCTIONS=$HOME/.config/shell/functions
+if [ -d $FUNCTIONS ] ; then
+    for f in $FUNCTIONS/?* ; do
+        so $f
+    done
+    unset f
+fi
+
+# User config
+so $HOME/.config/nnn/nnn.conf
+so $HOME/.config/lf/lf.conf
+
+export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
+export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
+
+# broot, better cd
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && \
+    so $HOME/.config/broot/launcher/bash/br
+
+# Start CLI Apps
+command -v "zoxide" > /dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v "fnm" > /dev/null 2>&1 && eval "$(fnm env)"
+
+if command -v "gpg" > /dev/null 2>&1; then
+    export GPG_TTY=$(tty)
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+fi
+
+# }}}
+
+# ===== Prompt ===== {{{
+if command -v "starship" > /dev/null 2>&1; then
+    export STARSHIP_CONFIG=$HOME/.config/starship.toml
+    eval "$(starship init zsh)"
+fi
+
+# }}}
+

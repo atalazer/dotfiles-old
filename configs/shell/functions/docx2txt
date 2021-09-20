@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Convert .docx file to plain text
+# Source: https://www.commandlinefu.com/commands/view/4311/extract-plain-text-from-ms-word-docx-files
+
+docx2txt() {
+    FILE="$1"
+    OUTPUT="$2"
+    unzip -p "$FILE" word/document.xml | \
+        sed -e 's/<\/w:p>/\n/g; s/<[^>]\{1,\}>//g; s/[^[:print:]\n]\{1,\}//g' \
+        > "$OUTPUT"
+}

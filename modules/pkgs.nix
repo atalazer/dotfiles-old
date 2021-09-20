@@ -4,13 +4,13 @@
     ### Desktop Environment(DE)/Window Manger(WM)
     # my.awesome-git
     # my.picom-git
+    # rofi
+    # rofi-calc
     pywal
 
-    rofi
-    rofi-calc
-
     ### Utils
-    handlr # xdg-open alternative
+    # handlr # xdg-open alternative
+    mimeo # xdg-open alternative
     # maim
     # scrot
     # tesseract
@@ -18,7 +18,7 @@
     ### Services
     espanso
     # fusuma
-    gcr # for pinentry-gnome3
+    # gcr # for pinentry-gnome3
     mpd
     xclip
 

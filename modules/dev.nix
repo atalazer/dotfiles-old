@@ -8,15 +8,19 @@
     # neovim
 
     ### LSP and Linter
+    # codespell
     rnix-lsp
     shellcheck
+    # vale
+    # vim-vint
     nodePackages.eslint_d
 
     ### Formatter
     black
-    stylua
-    shfmt
     nixfmt
+    shfmt
+    stylua
+    nodePackages.prettier
 
   ];
 }

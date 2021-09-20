@@ -7,101 +7,105 @@ in
 {
   home.file = {
     ### GUI Stuff
-    ".config/awesome".source = link "home/.config/awesome";
-    # ".config/sway".source               = link "home/.config/sway";
-    # ".config/mako".source               = link "home/.config/mako";
-    # ".config/dunst".source              = link "home/.config/dunst";
-    # ".config/waybar".source             = link "home/.config/waybar";
-    # ".config/fusuma".source = link "home/.config/fusuma";
-    ".config/picom".source = link "home/.config/picom";
+    ".config/awesome".source = link "configs/wm/awesome";
+    ".config/sway".source = link "configs/wm/sway";
+    ".config/mako".source = link "configs/wm/mako";
+    ".config/dunst".source = link "configs/wm/dunst";
+    ".config/waybar".source = link "configs/wm/waybar";
+    ".config/fusuma".source = link "configs/wm/fusuma";
+    ".config/picom".source = link "configs/wm/picom";
+    ".config/rofi".source = link "configs/wm/rofi";
+    ".config/espanso".source = link "configs/wm/espanso";
 
     ### GUI-Apps Stuff
-    ".config/espanso".source = link "home/.config/espanso";
-    # ".config/fcitx".source              = link "home/.config/fcitx";
-    # ".config/fcitx5".source             = link "home/.config/fcitx5";
-    ".config/mpv".source = link "home/.config/mpv";
-    ".config/rofi".source = link "home/.config/rofi";
-    ".config/qutebrowser".source = link "home/.config/qutebrowser";
-    ".config/viewnior".source = link "home/.config/viewnior";
+    ".config/alacritty".source = link "configs/gui/alacritty";
+    ".config/kitty".source = link "configs/gui/kitty";
+    ".config/fcitx".source = link "configs/gui/fcitx";
+    ".config/fcitx5".source = link "configs/gui/fcitx5";
+    ".config/mpv".source = link "configs/gui/mpv";
+    ".config/qutebrowser".source = link "configs/gui/qutebrowser";
+    ".config/viewnior".source = link "configs/gui/viewnior";
+    ".config/tridactyl".source = link "configs/gui/tridactyl";
 
     ### CLI Stuff
-    # ".config/alacritty".source          = link "home/.config/alacritty";
-    ".config/kitty".source = link "home/.config/kitty";
-    ".config/nvim".source = link "home/.config/nvim";
-    ".config/lf".source = link "home/.config/lf";
-    ".config/nnn".source = link "home/.config/nnn";
-
-    ### CLI-Apps Stuff
-    # ".config/bat".source                = link "home/.config/bat";
-    # ".config/htop".source               = link "home/.config/htop";
-    ".config/glow".source = link "home/.config/glow";
-    ".config/neofetch".source = link "home/.config/neofetch";
-    # ".config/neomutt".source            = link "home/.config/neomutt";
-    # ".config/newsboat".source           = link "home/.config/newsboat";
-    # ".config/wtf".source                = link "home/.config/wtf";
-    # ".config/ytmdl".source              = link "home/.config/ytmdl";
-    # ".config/zellij".source             = link "home/.config/zellij";
-    ".tmux.conf".source = link "home/.tmux.conf";
+    ".config/bat".source = link "configs/cli/bat";
+    ".config/cava".source = link "configs/cli/cava";
+    ".config/glow".source = link "configs/cli/glow";
+    ".config/htop".source = link "configs/cli/htop";
+    ".config/lazygit".source = link "configs/cli/lazygit";
+    ".config/lf".source = link "configs/cli/lf";
+    ".config/mpd".source = link "configs/cli/mpd";
+    ".config/ncmpcpp".source = link "configs/cli/ncmpcpp";
+    ".config/neofetch".source = link "configs/cli/neofetch";
+    ".config/neomutt".source = link "configs/cli/neomutt";
+    ".config/newsboat".source = link "configs/cli/newsboat";
+    ".config/nnn".source = link "configs/cli/nnn";
+    ".config/nvim".source = link "configs/cli/nvim";
+    ".config/wtf".source = link "configs/cli/wtf";
+    ".config/ytmdl".source = link "configs/cli/ytmdl";
+    ".config/zellij".source = link "configs/cli/zellij";
+    ".tmux.conf".source = link "configs/cli/tmux.conf";
+    ".gitconfig".source = link "configs/cli/gitconfig";
 
     ### Shell Stuff
-    ".config/shell/aliases".source = link "home/.config/aliases";
-    ".config/shell/functions".source = link "home/.config/shell/functions";
-    ".config/starship.toml".source = link "home/.config/starship.toml";
-    # ".config/fish".source               = link "home/.config/fish";
-    ".zsh".source = link "home/.zsh";
-    ".zshrc".source = link "home/.zshrc";
-    ".zshenv".source = link "home/.zshenv";
-    ".zprofile".source = link "home/.zprofile";
-    # ".bashrc".source = link "home/.bashrc";
-    ".inputrc".source = link "home/.inputrc";
-    ".profile".source = link "home/.profile";
-    ".pam_environment".source = link "home/.pam_environment";
-    ".user".source = link "home/.user";
-    ".user.keys".source = link "home/.user.keys";
-
-    ### Git Stuff
-    ".gitconfig".source = link "home/.gitconfig";
-    ".config/lazygit".source = link "home/.config/lazygit";
-
-    ### Music
-    # ".config/cava".source               = link "home/.config/cava";
-    ".config/mpd".source = link "home/.config/mpd";
-    ".config/ncmpcpp".source = link "home/.config/ncmpcpp";
+    ".config/shell/aliases".source = link "configs/shell/aliases";
+    ".config/shell/functions".source = link "configs/shell/functions";
+    ".config/starship.toml".source =
+      link "configs/shell/starship/starship.toml";
+    ".config/fish".source = link "configs/shell/fish";
+    ".zsh".source = link "configs/shell/zsh";
+    ".zshrc".source = link "configs/shell/zshrc";
+    ".zshenv".source = link "configs/shell/zshenv";
+    ".zprofile".source = link "configs/shell/zprofile";
+    ".bashrc".source = link "configs/shell/bashrc";
+    ".inputrc".source = link "configs/shell/inputrc";
+    ".profile".source = link "configs/shell/profile";
+    ".pam_environment".source = link "configs/shell/pam_environment";
+    ".user".source = link "configs/shell/user";
+    ".user.keys".source = link "configs/shell/user.keys";
 
     ### User Script
-    ".local/script".source = link "home/.local/script";
-    # ".local/bin".source                 = link "home/.local/bin";
-    ".config/hosts".source = link "home/.config/hosts";
-    ".config/script".source = link "home/.config/script";
+    # ".local/bin".source = link "configs/bin";
+    ".local/script".source = link "configs/script/script";
+    ".config/script".source = link "configs/script/script-conf";
+    ".config/hosts".source = link "configs/misc/hosts";
+
+    ### Fonts
+    # ".fonts".source = link "configs/font/fonts";
+    ".config/fontconfig".source = link "configs/font/fontconfig";
 
     ### Themes
-    # ".fonts".source                     = link "home/.fonts";
-    ".config/wal".source = link "home/.config/wal";
-    ".config/fontconfig".source = link "home/.config/fontconfig";
-    ".config/gtk-2.0".source = link "home/.config/gtk-2.0";
-    ".config/gtk-3.0".source = link "home/.config/gtk-3.0";
-    ".gtkrc-2.0".source = link "home/.gtkrc-2.0";
-    ".xsettingsd".source = link "home/.xsettingsd";
+    ".config/wal".source = link "configs/theme/wal";
+    ".config/gtk-2.0".source = link "configs/theme/gtk-2.0";
+    ".config/gtk-3.0".source = link "configs/theme/gtk-3.0";
+    ".gtkrc-2.0".source = link "configs/theme/gtkrc-2.0";
 
     # X Stuff
-    ".xprofile".source = link "home/.xprofile";
-    ".xinitrc".source = link "home/.xinitrc";
-    ".xserverrc".source = link "home/.xserverrc";
-    ".Xmodmap".source = link "home/.Xmodmap";
-    ".Xdefaults".source = link "home/.Xdefaults";
-    ".Xresources".source = link "home/.Xresources";
-    ".Xresources.d".source = link "home/.Xresources.d";
+    ".xprofile".source = link "configs/x11/xprofile";
+    ".xinitrc".source = link "configs/x11/xinitrc";
+    ".xserverrc".source = link "configs/x11/xserverrc";
+    ".Xmodmap".source = link "configs/x11/Xmodmap";
+    ".Xdefaults".source = link "configs/x11/Xdefaults";
+    ".Xresources".source = link "configs/x11/Xresources";
+    ".Xresources.d".source = link "configs/x11/Xresources.d";
+    ".xsettingsd".source = link "configs/x11/xsettingsd";
+
+    ### Archlinux Stuff
+    ".config/pacman".source = link "configs/archlinux/pacman";
+    ".config/paru".source = link "configs/archlinux/paru";
 
     ### Others
-    # ".wallpaper".soure                  = link "home/.wallpaper";
-    ".startpage".source = link "home/.startpage";
+    # ".wallpaper".soure = link "configs/wallpaper";
+    ".startpage".source = link "configs/startpage";
 
-    ".config/user-dirs.dirs".source = link "home/.config/user-dirs.dirs";
-    ".config/user-dirs.locale".source = link "home/.config/user-dirs.locale";
-    ".config/mimeapps.list".source = link "home/.config/mimeapps.list";
+    ".config/user-dirs.dirs".source = link "configs/misc/user-dirs.dirs";
+    ".config/user-dirs.locale".source =
+      link "configs/misc/user-dirs.locale";
+    ".config/mimeapps.list".source = link "configs/misc/mimeapps.list";
 
-    ".config/screenkey.json".source     = link "home/.config/screenkey.json";
-    ".config/pavucontrol.ini".source    = link "home/.config/pavucontrol.ini";
+    ".config/screenkey.json".source = link "configs/misc/screenkey.json";
+    ".config/pavucontrol.ini".source =
+      link "configs/misc/pavucontrol.ini";
 
   };
 }
