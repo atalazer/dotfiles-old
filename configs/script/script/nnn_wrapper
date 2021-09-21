@@ -1,5 +1,0 @@
-#!/bin/bash
-[ -f ~/.zsh/plug-conf/nnn.zsh ] && source ~/.zsh/plug-conf/nnn.zsh
-
-VISUAL=nnn_e nnn -er
-

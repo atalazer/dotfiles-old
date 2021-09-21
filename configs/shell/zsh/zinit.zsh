@@ -57,5 +57,7 @@ zic https://github.com/knqyf263/pet/blob/master/misc/completions/zsh/_pet
 
 # Plugins
 zinit wait lucid for \
+    wfxr/forgit \
     kazhala/dotbare \
-    wfxr/forgit
+    as"command" pick"bin/mk" \
+        NNBnh/mk

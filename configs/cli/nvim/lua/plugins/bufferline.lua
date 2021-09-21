@@ -21,6 +21,11 @@ require("bufferline").setup({
                 text = "File Explorer",
                 text_align = "center",
             },
+            {
+                filetype = "SidebarNvim",
+                text = "Sidebar",
+                text_align = "center",
+            },
         },
         custom_areas = {
             right = function()

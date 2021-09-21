@@ -1,17 +1,19 @@
-vim.api.nvim_set_keymap("n", "<leader>ss", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
+local sidebar = require("sidebar-nvim")
 
-require("sidebar-nvim").setup({
+sidebar.setup({
     disable_default_keybindings = 0,
-    bindings = nil,
+    bindings = {
+        q = sidebar.close,
+    },
     open = false,
     initial_width = 35,
     update_interval = 1000,
     side = "left",
-    section_separator = "─────",
+    section_separator = "─────".."─────".."─────".."─────".."─────".."─────".."─────",
     sections = {
         "datetime",
-        -- "git-status",
-        "diagnostics",
+        "git-status",
+        "lsp-diagnostics",
         -- "todos",
         -- "containers",
     },

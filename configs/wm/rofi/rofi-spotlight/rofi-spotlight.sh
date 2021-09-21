@@ -8,11 +8,11 @@ CURRENT_FILE="${TMP_DIR}rofi_fb_current_file"
 MY_PATH="$(realpath "$0" | xargs dirname)"
 HIST_FILE="${MY_PATH}/history.txt"
 
-OPENER=xdg-open
-TERM_EMU=kitty
-TEXT_EDITOR=$EDITOR
-FILE_MANAGER=xdg-open
-BLUETOOTH_SEND=blueman-sendto
+OPENER="${OPENER:-opener}"
+TERM_EMU="${TERMIANL:-kitty}"
+TEXT_EDITOR="${EDITOR:-nvim}"
+FILE_MANAGER="${FILEMAN:-thunar}"
+BLUETOOTH_SEND="blueman-sendto"
 
 CUR_DIR=$PWD
 NEXT_DIR=""

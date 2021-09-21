@@ -29,8 +29,11 @@ in
 
     ### CLI Stuff
     ".config/bat".source = link "configs/cli/bat";
+    ".config/bottom".source = link "configs/cli/bottom";
+    ".config/broot".source = link "configs/cli/broot";
     ".config/cava".source = link "configs/cli/cava";
     ".config/glow".source = link "configs/cli/glow";
+    ".config/handlr".source = link "configs/cli/handlr";
     ".config/htop".source = link "configs/cli/htop";
     ".config/lazygit".source = link "configs/cli/lazygit";
     ".config/lf".source = link "configs/cli/lf";
@@ -41,9 +44,12 @@ in
     ".config/newsboat".source = link "configs/cli/newsboat";
     ".config/nnn".source = link "configs/cli/nnn";
     ".config/nvim".source = link "configs/cli/nvim";
+    ".config/pet".source = link "configs/cli/pet";
     ".config/wtf".source = link "configs/cli/wtf";
     ".config/ytmdl".source = link "configs/cli/ytmdl";
     ".config/zellij".source = link "configs/cli/zellij";
+    ".config/zk".source = link "configs/cli/zk";
+    ".config/topgrade.toml".source = link "configs/cli/topgrade.toml";
     ".tmux.conf".source = link "configs/cli/tmux.conf";
     ".gitconfig".source = link "configs/cli/gitconfig";
 
@@ -68,11 +74,7 @@ in
     # ".local/bin".source = link "configs/bin";
     ".local/script".source = link "configs/script/script";
     ".config/script".source = link "configs/script/script-conf";
-    ".config/hosts".source = link "configs/misc/hosts";
-
-    ### Fonts
-    # ".fonts".source = link "configs/font/fonts";
-    ".config/fontconfig".source = link "configs/font/fontconfig";
+    ".config/hosts".source = link "configs/script/hosts";
 
     ### Themes
     ".config/wal".source = link "configs/theme/wal";
@@ -93,6 +95,10 @@ in
     ### Archlinux Stuff
     ".config/pacman".source = link "configs/archlinux/pacman";
     ".config/paru".source = link "configs/archlinux/paru";
+
+    ### Nix Stuff
+    ".config/nix".source = link "configs/nix/nix";
+    ".config/nixpkgs".source = link "configs/nix/nixpkgs";
 
     ### Others
     # ".wallpaper".soure = link "configs/wallpaper";

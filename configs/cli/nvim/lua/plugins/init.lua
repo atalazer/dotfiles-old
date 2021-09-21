@@ -73,6 +73,10 @@ return packer.startup({
         -- Customizable Sidebar
         {
             "GustavoKatel/sidebar.nvim",
+            setup = function()
+                vim.api.nvim_set_keymap("n", "~", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
+                vim.api.nvim_set_keymap("n", "<leader>ss", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
+            end,
             config = [[require("plugins.sidebar")]],
         },
 
@@ -537,6 +541,12 @@ return packer.startup({
                 vim.g.silicon.background = "#f8f8f2"
                 vim.g.silicon.output = os.getenv("HOME") .. "/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
             end,
+        },
+
+        -- Discord Rich Presence for Neovim
+        {
+            "andweeb/presence.nvim",
+            config = [[require("plugins.presence")]],
         },
 
         -- Startuptime

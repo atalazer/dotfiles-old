@@ -14,7 +14,7 @@ apps.record = function()
 end
 
 apps.clipboard = function()
-    awful.spawn.with_shell("env CM_HISTLENGTH=20 CM_LAUNCHER=rofi clipmenu")
+    awful.spawn.with_shell("clipmenu")
 end
 
 apps.terminal = function()

@@ -1,0 +1,14 @@
+[[snippets]]
+  description = "Lihat Jadwal Sekolah"
+  command = "source ~/.config/shell/functions/schedule && SCHEDULE=~/Documents/Notes/JADWAL_SEKOLAH.md schedule --show"
+  output = ""
+
+[[snippets]]
+  description = "Rofi Calc"
+  command = "rofi -show calc -modi calc -no-show-match -no-sort"
+  output = ""
+
+[[snippets]]
+  description = "Pick Markdown File, then Open It With Glow."
+  command = "glow \"$(fzf --reverse --preview 'bat --style=numbers --color=always {}')\""
+  output = ""

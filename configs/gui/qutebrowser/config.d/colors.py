@@ -11,6 +11,9 @@ def readXresources(prefix):
 xrdb = readXresources("*")
 
 x = {
+    "bg":   xrdb["*background"],
+    "fg":     xrdb["*foreground"],
+
     "black":   xrdb["*color0"],
     "red":     xrdb["*color1"],
     "green":   xrdb["*color2"],
@@ -34,54 +37,54 @@ x = {
 # all columns or a list of three colors, one for each column.
 # Type: List of QtColor, or QtColor
 c.colors.completion.fg = [
-    x["light_white"],
+    x["fg"],
     x["white"],
-    x["light_white"],
+    x["fg"],
 ]
 
 # Background color of the completion widget for odd rows.
 # Type: QssColor
-c.colors.completion.odd.bg = x["black"]
+c.colors.completion.odd.bg = x["bg"]
 
 # Background color of the completion widget for even rows.
 # Type: QssColor
-c.colors.completion.even.bg = x["black"]
+c.colors.completion.even.bg = x["bg"]
 
 # Foreground color of completion widget category headers.
 # Type: QtColor
-c.colors.completion.category.fg = x["light_white"]
+c.colors.completion.category.fg = x["fg"]
 
 # Background color of the completion widget category headers.
 # Type: QssColor
-c.colors.completion.category.bg = x["black"]
+c.colors.completion.category.bg = x["bg"]
 
 # Top border color of the completion widget category headers.
 # Type: QssColor
-c.colors.completion.category.border.top = x["black"]
+c.colors.completion.category.border.top = x["bg"]
 
 # Bottom border color of the completion widget category headers.
 # Type: QssColor
-c.colors.completion.category.border.bottom = x["black"]
+c.colors.completion.category.border.bottom = x["bg"]
 
 # Foreground color of the selected completion item.
 # Type: QtColor
-c.colors.completion.item.selected.fg = x["black"]
+c.colors.completion.item.selected.fg = x["bg"]
 
 # Background color of the selected completion item.
 # Type: QssColor
-c.colors.completion.item.selected.bg = x["yellow"]
+c.colors.completion.item.selected.bg = x["blue"]
 
 # Top border color of the selected completion item.
 # Type: QssColor
-c.colors.completion.item.selected.border.top = x["yellow"]
+c.colors.completion.item.selected.border.top = x["blue"]
 
 # Bottom border color of the selected completion item.
 # Type: QssColor
-c.colors.completion.item.selected.border.bottom = x["yellow"]
+c.colors.completion.item.selected.border.bottom = x["blue"]
 
 # Foreground color of the matched text in the selected completion item.
 # Type: QtColor
-c.colors.completion.item.selected.match.fg = x["black"]
+c.colors.completion.item.selected.match.fg = x["bg"]
 
 # Foreground color of the matched text in the completion.
 # Type: QtColor
@@ -89,31 +92,31 @@ c.colors.completion.match.fg = x["yellow"]
 
 # Color of the scrollbar handle in the completion view.
 # Type: QssColor
-c.colors.completion.scrollbar.fg = x["yellow"]
+c.colors.completion.scrollbar.fg = x["blue"]
 
 # Color of the scrollbar in the completion view.
 # Type: QssColor
-c.colors.completion.scrollbar.bg = x["black"]
+c.colors.completion.scrollbar.bg = x["bg"]
 
 # Background color for the download bar.
 # Type: QssColor
-c.colors.downloads.bar.bg = x["black"]
+c.colors.downloads.bar.bg = x["bg"]
 
 # Color gradient start for download text.
 # Type: QtColor
-c.colors.downloads.start.fg = x["light_white"]
+c.colors.downloads.start.fg = x["blue"]
 
 # Color gradient start for download backgrounds.
 # Type: QtColor
-c.colors.downloads.start.bg = x["blue"]
+c.colors.downloads.start.bg = x["bg"]
 
 # Color gradient end for download text.
 # Type: QtColor
-c.colors.downloads.stop.fg = x["light_white"]
+c.colors.downloads.stop.fg = x["green"]
 
 # Color gradient stop for download backgrounds.
 # Type: QtColor
-c.colors.downloads.stop.bg = x["green"]
+c.colors.downloads.stop.bg = x["bg"]
 
 # Color gradient interpolation system for download text.
 # Type: ColorSystem
@@ -135,11 +138,11 @@ c.colors.downloads.system.bg = "rgb"
 
 # Foreground color for downloads with errors.
 # Type: QtColor
-c.colors.downloads.error.fg = x["light_white"]
+c.colors.downloads.error.fg = x["red"]
 
 # Background color for downloads with errors.
 # Type: QtColor
-c.colors.downloads.error.bg = x["red"]
+c.colors.downloads.error.bg = x["bg"]
 
 # Font color for hints.
 # Type: QssColor
@@ -156,7 +159,7 @@ c.colors.hints.match.fg = x["yellow"]
 
 # Text color for the keyhint widget.
 # Type: QssColor
-c.colors.keyhint.fg = x["light_white"]
+c.colors.keyhint.fg = x["fg"]
 
 # Highlight color for keys to complete the current keychain.
 # Type: QssColor
@@ -168,7 +171,7 @@ c.colors.keyhint.bg = "rgba(0, 0, 0, 80%)"
 
 # Foreground color of an error message.
 # Type: QssColor
-c.colors.messages.error.fg = x["light_white"]
+c.colors.messages.error.fg = x["fg"]
 
 # Background color of an error message.
 # Type: QssColor
@@ -192,19 +195,19 @@ c.colors.messages.warning.border = x["yellow"]
 
 # Foreground color of an info message.
 # Type: QssColor
-c.colors.messages.info.fg = x["light_white"]
+c.colors.messages.info.fg = x["fg"]
 
 # Background color of an info message.
 # Type: QssColor
-c.colors.messages.info.bg = x["black"]
+c.colors.messages.info.bg = x["bg"]
 
 # Border color of an info message.
 # Type: QssColor
-c.colors.messages.info.border = x["black"]
+c.colors.messages.info.border = x["bg"]
 
 # Foreground color for prompts.
 # Type: QssColor
-c.colors.prompts.fg = x["light_white"]
+c.colors.prompts.fg = x["fg"]
 
 # Border used around UI elements in prompts.
 # Type: String
@@ -212,23 +215,23 @@ c.colors.prompts.border = "1px solid {}".format(x["black"])
 
 # Background color for prompts.
 # Type: QssColor
-c.colors.prompts.bg = x["black"]
+c.colors.prompts.bg = x["bg"]
 
 # Background color for the selected item in filename prompts.
 # Type: QssColor
-c.colors.prompts.selected.bg = x["cyan"]
+c.colors.prompts.selected.bg = x["magenta"]
 
 # Foreground color of the statusbar.
 # Type: QssColor
-c.colors.statusbar.normal.fg = x["white"]
+c.colors.statusbar.normal.fg = x["fg"]
 
 # Background color of the statusbar.
 # Type: QssColor
-c.colors.statusbar.normal.bg = x["black"]
+c.colors.statusbar.normal.bg = x["bg"]
 
 # Foreground color of the statusbar in insert mode.
 # Type: QssColor
-c.colors.statusbar.insert.fg = x["white"]
+c.colors.statusbar.insert.fg = x["bg"]
 
 # Background color of the statusbar in insert mode.
 # Type: QssColor
@@ -240,7 +243,7 @@ c.colors.statusbar.passthrough.fg = x["white"]
 
 # Background color of the statusbar in passthrough mode.
 # Type: QssColor
-c.colors.statusbar.passthrough.bg = x["cyan"]
+c.colors.statusbar.passthrough.bg = x["magenta"]
 
 # Foreground color of the statusbar in private browsing mode.
 # Type: QssColor
@@ -296,12 +299,13 @@ c.colors.statusbar.url.error.fg = x["red"]
 
 # Foreground color of the URL in the statusbar for hovered links.
 # Type: QssColor
-c.colors.statusbar.url.hover.fg = x["light_white"]
+c.colors.statusbar.url.hover.fg = x["blue"]
 
 # Foreground color of the URL in the statusbar on successful load
 # (http).
 # Type: QssColor
-c.colors.statusbar.url.success.http.fg = x["light_green"]
+c.colors.statusbar.url.success.http.fg = x["fg"]
+c.colors.statusbar.url.success.https.fg = x["fg"]
 
 # Foreground color of the URL in the statusbar when there's a warning.
 # Type: QssColor
@@ -309,7 +313,7 @@ c.colors.statusbar.url.warn.fg = x["yellow"]
 
 # Background color of the tab bar.
 # Type: QssColor
-c.colors.tabs.bar.bg = x["black"]
+c.colors.tabs.bar.bg = x["bg"]
 
 # Color gradient start for the tab indicator.
 # Type: QtColor
@@ -334,67 +338,67 @@ c.colors.tabs.indicator.system = "rgb"
 
 # Foreground color of unselected odd tabs.
 # Type: QtColor
-c.colors.tabs.odd.fg = x["light_white"]
+c.colors.tabs.odd.fg = x["fg"]
 
 # Background color of unselected odd tabs.
 # Type: QtColor
-c.colors.tabs.odd.bg = x["black"]
+c.colors.tabs.odd.bg = x["bg"]
 
 # Foreground color of unselected even tabs.
 # Type: QtColor
-c.colors.tabs.even.fg = x["light_white"]
+c.colors.tabs.even.fg = x["fg"]
 
 # Background color of unselected even tabs.
 # Type: QtColor
-c.colors.tabs.even.bg = x["black"]
+c.colors.tabs.even.bg = x["bg"]
 
 # Foreground color of selected odd tabs.
 # Type: QtColor
-c.colors.tabs.selected.odd.fg = x["black"]
+c.colors.tabs.selected.odd.fg = x["bg"]
 
 # Background color of selected odd tabs.
 # Type: QtColor
-c.colors.tabs.selected.odd.bg = x["cyan"]
+c.colors.tabs.selected.odd.bg = x["blue"]
 
 # Foreground color of selected even tabs.
 # Type: QtColor
-c.colors.tabs.selected.even.fg = x["black"]
+c.colors.tabs.selected.even.fg = x["bg"]
 
 # Background color of selected even tabs.
 # Type: QtColor
-c.colors.tabs.selected.even.bg = x["cyan"]
+c.colors.tabs.selected.even.bg = x["blue"]
 
 # Foreground color of pinned unselected odd tabs.
 # Type: QtColor
-c.colors.tabs.pinned.odd.fg = x["light_white"]
+c.colors.tabs.pinned.odd.fg = x["bg"]
 
 # Background color of pinned unselected odd tabs.
 # Type: QtColor
-c.colors.tabs.pinned.odd.bg = x["blue"]
+c.colors.tabs.pinned.odd.bg = x["fg"]
 
 # Foreground color of pinned unselected even tabs.
 # Type: QtColor
-c.colors.tabs.pinned.even.fg = x["light_white"]
+c.colors.tabs.pinned.even.fg = x["bg"]
 
 # Background color of pinned unselected even tabs.
 # Type: QtColor
-c.colors.tabs.pinned.even.bg = x["blue"]
+c.colors.tabs.pinned.even.bg = x["fg"]
 
 # Foreground color of pinned selected odd tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.odd.fg = x["light_white"]
+c.colors.tabs.pinned.selected.odd.fg = x["bg"]
 
 # Background color of pinned selected odd tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.odd.bg = x["cyan"]
+c.colors.tabs.pinned.selected.odd.bg = x["blue"]
 
 # Foreground color of pinned selected even tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.even.fg = x["light_white"]
+c.colors.tabs.pinned.selected.even.fg = x["bg"]
 
 # Background color of pinned selected even tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.even.bg = x["cyan"]
+c.colors.tabs.pinned.selected.even.bg = x["blue"]
 
 # Background color for webpages if unset (or empty to use the theme's
 # color).

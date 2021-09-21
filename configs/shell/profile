@@ -1,8 +1,42 @@
 #!/bin/sh
 
-[[ -f $HOME/.user ]] && source $HOME/.user
+[ -f "$HOME/.user" ] && source "$HOME/.user"
 
+# XDG
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# Locale
+CHARSET=UTF-8; LANG=en_US.UTF-8
+export MM_CHARSET=$CHARSET; export LANG=$LANG; export LC_ALL=$LANG
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+
+# CLI
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less -Ri"
+export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+
+## Apps
+export TERM_CMD="env LIBGL_ALWAYS_SOFTWARE=1 kitty"
+export BROWSER="qutebrowser"
+export FILEMAN="thunar"
+export TRASH_CMD="gio"
+
+# Command
+export PERMISSION="sudo"
+export SHUTDOWN_CMD="poweroff"
+export REBOOT_CMD="reboot"
+export SUSPEND_CMD="suspend"
+export LOCK_CMD=""
+
+# clipmenu
+export CM_DIR=/tmp/clipmenu
+export CM_HISTLENGTH=20
+export CM_LAUNCHER="rofi"
+export CM_SELECTIONS="clipboard"
 
 # fcitx
 export GLFW_IM_MODULE="ibus"
@@ -14,30 +48,22 @@ export IBUS_USE_PORTAL=1
 
 # Themes
 export XDG_CURRENT_DESKTOP=gnome
-# export DESKTOP_SESSION=gnome
+export DESKTOP_SESSION=gnome
 
-# export GTK_OVERLAY_SCROLLING=1
-# export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # QT
 export QT_QPA_PLATFORMTHEME=gtk2
-# export QT_AUTO_SCREEN_SCALE_FACTOR=1
-# export QT_SCREEN_SCALE_FACTORS=1
-# export QT_SCALE_FACTOR=1
-# export QT_FONT_DPI=90
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_SCALE_FACTOR=1
+export QT_SCREEN_SCALE_FACTORS=1
+# export QT_FONT_DPI=96
 
 # Java
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# clipmenu
-export CM_LAUNCHER="rofi"
-export CM_SELECTIONS="clipboard"
-
-export FZF_DEFAULT_COMMAND="rg --files --no-ignore --ignore-file '.gitignore'"
-export SKIM_DEFAULT_COMMAND="rg --files --no-ignore --ignore-file '.gitignore'"
-
+# Golang
 export CC="gcc"
 export GOPATH="$HOME/.local/go"
 export GOBIN="$HOME/.local/go/bin"
@@ -49,27 +75,27 @@ export ICEAUTHORITY="${XDG_CACHE_HOME}/ICEauthority"
 
 ### $PATH {{{
 TO_PATH() {
-    if [[ -d $1 ]]; then
-        if [[ -z $(printf $PATH | grep $1) ]]; then
+    if [ -d "$1" ]; then
+        if [ -z "$(printf "%s" "$PATH" | grep "$1")" ]; then
             export PATH="$1:$PATH"
         fi
     fi
 }
 
-TO_PATH ${APP_DIR:-$HOME/Applications}/bin
-TO_PATH ${BIN_DIR:-$HOME/.local/bin}
-TO_PATH $HOME/.local/script
-TO_PATH $HOME/.local/go/bin
-TO_PATH $HOME/.emacs.d/bin
-TO_PATH $HOME/.choosenim/toolchains/nim-1.4.8/bin
-TO_PATH $HOME/.nimble/bin
+TO_PATH "${APP_DIR:-$HOME/Applications}/bin"
+TO_PATH "${BIN_DIR:-$HOME/.local/bin}"
+TO_PATH "$HOME/.local/script"
+TO_PATH "$HOME/.local/go/bin"
+TO_PATH "$HOME/.emacs.d/bin"
+TO_PATH "$HOME/.choosenim/toolchains/nim-1.4.8/bin"
+TO_PATH "$HOME/.nimble/bin"
 
 # }}}
 
 # include Mycroft commands
-[[ -f $HOME/.profile_mycroft ]] && source $HOME/.profile_mycroft
+[ -f "$HOME/.profile_mycroft" ] && source "$HOME/.profile_mycroft"
 
 # added by Nix installer
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then 
-    source $HOME/.nix-profile/etc/profile.d/nix.sh
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
+    source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi

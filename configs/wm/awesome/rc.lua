@@ -58,15 +58,16 @@ local exit_screen_themes = {
 local exit_screen_theme = exit_screen_themes[1]
 -- ===================================================================
 -- User variables and preferences
+local env = os.getenv
 
 user = {
     icon = "Papirus",
 
     -- >> Default applications <<
     -- Check configs/apps.lua for more
-    browser = os.getenv("BROWSER") or "firefox",
-    file_manager = os.getenv("FILEMAN") or "thunar",
-    terminal = "kitty",
+    browser = env("BROWSER") or "firefox",
+    file_manager = env("FILEMAN") or "thunar",
+    terminal = env("TERM_CMD") or "kitty",
     floating_terminal = "kitty --name floating_terminal",
     editor = "kitty --name editor -e nvim",
     email_client = "kitty --name email -e neomutt",
@@ -91,18 +92,18 @@ user = {
     round_enabled = true,
 
     -- >> User profile <<
-    profile_picture = os.getenv("HOME") .. "/.face",
+    profile_picture = env("HOME") .. "/.face",
 
     -- Directories with fallback values
     dirs = {
-        downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/Downloads",
-        documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/Documents",
-        music = os.getenv("XDG_MUSIC_DIR") or "~/Music",
-        pictures = os.getenv("XDG_PICTURES_DIR") or "~/Pictures",
-        videos = os.getenv("XDG_VIDEOS_DIR") or "~/Videos",
+        downloads = env("XDG_DOWNLOAD_DIR") or "~/Downloads",
+        documents = env("XDG_DOCUMENTS_DIR") or "~/Documents",
+        music = env("XDG_MUSIC_DIR") or "~/Music",
+        pictures = env("XDG_PICTURES_DIR") or "~/Pictures",
+        videos = env("XDG_VIDEOS_DIR") or "~/Videos",
         -- Make sure the directory exists so that your screenshots
         -- are not lost
-        screenshots = os.getenv("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
+        screenshots = env("XDG_SCREENSHOTS_DIR") or "~/Pictures/Screenshots",
     },
 
     -- >> Sidebar <<
@@ -135,15 +136,15 @@ user = {
     -- Get your key and find your city id at
     -- https://openweathermap.org/
     -- (You will need to make an account!)
-    openweathermap_key = os.getenv("OPEN_WEATHER_MAP_API_KEY") or "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    openweathermap_city_id = os.getenv("OPEN_WEATHER_MAP_CITY_ID") or "yyyyyyy",
+    openweathermap_key = env("OPEN_WEATHER_MAP_API_KEY") or "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    openweathermap_city_id = env("OPEN_WEATHER_MAP_CITY_ID") or "yyyyyyy",
     -- > Use "metric" for Celcius, "imperial" for Fahrenheit
     weather_units = "metric",
 
     -- >> Coronavirus <<
     -- Country to check for corona statistics
     -- Uses the https://corona-stats.online API
-    coronavirus_country = os.getenv("COUNTRY") or "indonesia",
+    coronavirus_country = env("COUNTRY") or "indonesia",
 }
 -- ===================================================================
 
@@ -188,7 +189,7 @@ awful.util.shell = "sh"
 local naughty = require("naughty")
 
 -- Load theme
-local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
+local theme_dir = env("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
 beautiful.init(theme_dir .. "theme.lua")
 
 -- Error handling and Autostart
@@ -306,11 +307,11 @@ local set_wallpaper = function(s)
         -- awful.spawn.with_shell("feh --bg-fill " .. beautiful.wallpaper)
 
         -- >> Method 3: Set last wallpaper with feh
-        awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
+        awful.spawn.with_shell(env("HOME") .. "/.fehbg")
     else
-        -- awful.spawn.with_shell("feh --bg-fill " .. wallpaper or os.getenv("HOME") .. "/.fehbg")
+        -- awful.spawn.with_shell("feh --bg-fill " .. wallpaper or env("HOME") .. "/.fehbg")
         -- >> Method 3: Set last wallpaper with feh
-        awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
+        awful.spawn.with_shell(env("HOME") .. "/.fehbg")
     end
 end
 

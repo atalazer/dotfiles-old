@@ -15,7 +15,7 @@ cmd open ${{
         video/*) mpv "$f";;
         image/*) feh "$f";;
         application/pdf) zathura "$f";;
-        *) xdg-open "$f" ;;
+        *) opener "$f" ;;
     esac
 }}
 

@@ -15,6 +15,7 @@ settings:
   content.notifications.enabled:
     https://blog.csdn.net: false
     https://infokomputer.grid.id: false
+    https://jateng.idntimes.com: false
     https://mail.google.com: true
     https://meet.google.com: true
     https://web.whatsapp.com: true

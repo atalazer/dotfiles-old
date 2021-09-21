@@ -266,7 +266,7 @@ local quickfix = {
 }
 
 local explorer = {
-    filetypes = { "fern", "NvimTree", "lir" },
+    filetypes = { "fern", "NvimTree", "lir", "SidebarNvim" },
     active = {
         { "  ", { "white", "black_light" } },
         { sep.slant_left_2, { "black", "black_light" } },

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+OPENER=mimeo
+
+if command -v "$OPENER" > /dev/null 2>&1; then
+    $OPENER "$@"
+elif command -v "handlr" > /dev/null 2>&1; then
+    handlr open "$@"
+elif command -v "mimeo" > /dev/null 2>&1; then
+    mimeo "$@"
+else
+    xdg-open "$@"
+fi
+

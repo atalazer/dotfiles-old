@@ -30,7 +30,7 @@ c.tabs.favicons.scale = 1.0
 #   - always: Always show favicons.
 #   - never: Always hide favicons.
 #   - pinned: Show favicons only on pinned tabs.
-c.tabs.favicons.show = "always"
+c.tabs.favicons.show = "pinned"
 
 # How to behave when the last tab is closed.
 # Type: String
@@ -40,7 +40,7 @@ c.tabs.favicons.show = "always"
 #   - startpage: Load the start page.
 #   - default-page: Load the default page.
 #   - close: Close the window.
-c.tabs.last_close = "ignore"
+c.tabs.last_close = "startpage"
 
 # Switch between tabs using the mouse wheel.
 # Type: Bool

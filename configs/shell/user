@@ -1,28 +1,6 @@
 #!/bin/sh
 
-[ -f ~/.user.keys ] && . ~/.user.keys
-
-CHARSET=UTF-8; LANG=en_US.UTF-8
-export MM_CHARSET=$CHARSET; export LANG=$LANG; export LC_ALL=$LANG
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
-
-## Apps
-export TERMINAL="kitty"
-export BROWSER="qutebrowser"
-export FILEMAN="thunar"
-
-export EDITOR="nvim"
-export VISUAL="nvim"
-export PAGER="less"
-
-# CMD
-export PERMISSION="sudo"
-export SHUTDOWN_CMD="poweroff"
-export REBOOT_CMD="reboot"
-export SUSPEND_CMD="suspend"
-export LOCK_CMD=""
-
-export TRASH_CMD="gio"
+[ -f "$HOME/.user.keys" ] && source "$HOME/.user.keys"
 
 # Dirs
 export APP_DIR="$HOME/Applications"

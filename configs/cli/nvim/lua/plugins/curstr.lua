@@ -1,4 +1,5 @@
 local M = {}
+local dev = false
 
 M.setup = function()
     local maps = {
@@ -33,6 +34,10 @@ M.config = function()
             { "right", "left" },
             { "he", "she" },
             { "always", "never" },
+            { "foreground", "background" },
+            { "fg", "bg" },
+            { "white", "black" },
+            { "light", "dark" },
         },
     }
 
@@ -68,6 +73,8 @@ M.config = function()
     })
 end
 
-M.setup()
-M.config()
+if dev == true then
+    M.setup()
+    M.config()
+end
 return M

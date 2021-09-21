@@ -16,6 +16,8 @@ so (){
 setopt promptsubst
 so $ZDIR/zinit.zsh
 
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
 # }}}
 
 # ===== Zsh ===== {{{
@@ -47,11 +49,11 @@ setopt interactive_comments
 
 # ===== User ===== {{{
 # User alias definition
-ALIASES=$HOME/.config/shell/aliases
+ALIASES=${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases
 so $ALIASES
 
 # User function definition
-FUNCTIONS=$HOME/.config/shell/functions
+FUNCTIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions
 if [ -d $FUNCTIONS ] ; then
     for f in $FUNCTIONS/?* ; do
         so $f
@@ -60,15 +62,20 @@ if [ -d $FUNCTIONS ] ; then
 fi
 
 # User config
-so $HOME/.config/nnn/nnn.conf
-so $HOME/.config/lf/lf.conf
+CONFIGS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/configs
+if [ -d $CONFIGS ] ; then
+    for f in $CONFIGS/?* ; do
+        so $f
+    done
+    unset f
+fi
 
 export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
 
 # broot, better cd
-[ -f "$HOME/.config/broot/launcher/bash/br" ] && \
-    so $HOME/.config/broot/launcher/bash/br
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/broot/launcher/bash/br" ] && \
+    so ${XDG_CONFIG_HOME:-$HOME/.config}/broot/launcher/bash/br
 
 # Start CLI Apps
 command -v "zoxide" > /dev/null 2>&1 && eval "$(zoxide init zsh)"
@@ -83,7 +90,7 @@ fi
 
 # ===== Prompt ===== {{{
 if command -v "starship" > /dev/null 2>&1; then
-    export STARSHIP_CONFIG=$HOME/.config/starship.toml
+    export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship.toml
     eval "$(starship init zsh)"
 fi
 
