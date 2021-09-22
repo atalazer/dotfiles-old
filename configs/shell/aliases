@@ -46,7 +46,7 @@ fi
 # EDITOR Alias
 alias se="sudoedit"
 alias {e,vi,vim}="$EDITOR"
-alias el="$EDITOR -c 'SessionLoad last'"
+alias el="$EDITOR -c 'lua  Util.session.last()'"
 alias ep="$EDITOR ~/.config/nvim/lua/plugins/init.lua"
 alias {envim,ev}="$EDITOR ~/.config/nvim/init.vim"
 alias {zshrc,ez}="$EDITOR ~/.zshrc"

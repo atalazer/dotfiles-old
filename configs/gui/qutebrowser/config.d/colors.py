@@ -239,7 +239,7 @@ c.colors.statusbar.insert.bg = x["blue"]
 
 # Foreground color of the statusbar in passthrough mode.
 # Type: QssColor
-c.colors.statusbar.passthrough.fg = x["white"]
+c.colors.statusbar.passthrough.fg = x["bg"]
 
 # Background color of the statusbar in passthrough mode.
 # Type: QssColor
@@ -247,11 +247,11 @@ c.colors.statusbar.passthrough.bg = x["magenta"]
 
 # Foreground color of the statusbar in private browsing mode.
 # Type: QssColor
-c.colors.statusbar.private.fg = x["white"]
+c.colors.statusbar.private.fg = x["fg"]
 
 # Background color of the statusbar in private browsing mode.
 # Type: QssColor
-c.colors.statusbar.private.bg = x["light_black"]
+c.colors.statusbar.private.bg = x["black"]
 
 # Foreground color of the statusbar in command mode.
 # Type: QssColor
@@ -267,7 +267,7 @@ c.colors.statusbar.command.private.fg = x["white"]
 
 # Background color of the statusbar in private browsing + command mode.
 # Type: QssColor
-c.colors.statusbar.command.private.bg = x["light_black"]
+c.colors.statusbar.command.private.bg = x["black"]
 
 # Foreground color of the statusbar in caret mode.
 # Type: QssColor
@@ -275,7 +275,7 @@ c.colors.statusbar.caret.fg = x["black"]
 
 # Background color of the statusbar in caret mode.
 # Type: QssColor
-c.colors.statusbar.caret.bg = x["cyan"]
+c.colors.statusbar.caret.bg = x["blue"]
 
 # Foreground color of the statusbar in caret mode with a selection.
 # Type: QssColor
@@ -354,19 +354,19 @@ c.colors.tabs.even.bg = x["bg"]
 
 # Foreground color of selected odd tabs.
 # Type: QtColor
-c.colors.tabs.selected.odd.fg = x["bg"]
+c.colors.tabs.selected.odd.fg = x["light_cyan"]
 
 # Background color of selected odd tabs.
 # Type: QtColor
-c.colors.tabs.selected.odd.bg = x["blue"]
+c.colors.tabs.selected.odd.bg = x["black"]
 
 # Foreground color of selected even tabs.
 # Type: QtColor
-c.colors.tabs.selected.even.fg = x["bg"]
+c.colors.tabs.selected.even.fg = x["light_cyan"]
 
 # Background color of selected even tabs.
 # Type: QtColor
-c.colors.tabs.selected.even.bg = x["blue"]
+c.colors.tabs.selected.even.bg = x["black"]
 
 # Foreground color of pinned unselected odd tabs.
 # Type: QtColor
@@ -386,19 +386,19 @@ c.colors.tabs.pinned.even.bg = x["fg"]
 
 # Foreground color of pinned selected odd tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.odd.fg = x["bg"]
+c.colors.tabs.pinned.selected.odd.fg = x["light_cyan"]
 
 # Background color of pinned selected odd tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.odd.bg = x["blue"]
+c.colors.tabs.pinned.selected.odd.bg = x["black"]
 
 # Foreground color of pinned selected even tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.even.fg = x["bg"]
+c.colors.tabs.pinned.selected.even.fg = x["light_cyan"]
 
 # Background color of pinned selected even tabs.
 # Type: QtColor
-c.colors.tabs.pinned.selected.even.bg = x["blue"]
+c.colors.tabs.pinned.selected.even.bg = x["black"]
 
 # Background color for webpages if unset (or empty to use the theme's
 # color).

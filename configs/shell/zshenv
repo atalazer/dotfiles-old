@@ -1,3 +1,4 @@
+[[ -f "$HOME"/.profile ]] && source "$HOME/.profile"
 # Start blinking
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
 # Start bold
@@ -14,7 +15,7 @@ export LESS_TERMCAP_ue=$(tput sgr0)
 export LESS_TERMCAP_me=$(tput sgr0)
 
 # Rust Cargo
-source "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then 
     . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

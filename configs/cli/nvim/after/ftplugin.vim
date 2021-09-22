@@ -10,13 +10,18 @@ augroup Filetypes
   au BufNewFile,BufRead *.fish set filetype=fish
 augroup END
 
-" Set filetypes
+" set commentstring
+augroup CommentString
+  au!
+  au FileType toml,yaml set commentstring=#%s
+augroup END
+
 " Set tabsize for each filetype
 augroup Indents
   au!
-  au FileType html,xml,css setlocal sw=2 ts=2 sts=2
-  au FileType php,javascript,typescript setlocal sw=2 ts=2 sts=2
-  au FileType toml,yaml,json setlocal sw=2 ts=2 sts=2
+  au FileType html,xml,css set sw=2 ts=2 sts=2
+  au FileType php,javascript,typescript set sw=2 ts=2 sts=2
+  au FileType toml,yaml,json set sw=2 ts=2 sts=2
 augroup END
 
 augroup Posts

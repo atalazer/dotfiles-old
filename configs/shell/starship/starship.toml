@@ -1,17 +1,24 @@
-format = "$all"
-scan_timeout = 2000
-command_timeout = 5000
+format = """$all"""
+# right_format = """$all"""
 
 [directory]
 truncation_length = 8
 
+[git_branch]
+format = "on [$symbol$branch]($style) "
+symbol = " "
+
 [git_status]
 ahead = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 
-[shell]
-fish_indicator = ""
-zsh_indicator = "_"
+[package]
 disabled = true
+
+[golang]
+format = "via [ $version](bold blue) "
+
+[lua]
+format = "via [ $version](bold blue) "
 

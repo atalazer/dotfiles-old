@@ -19,11 +19,14 @@ cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('
 cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
 
 " order matters
-runtime! lua/base/keymap.lua
-runtime! lua/base/settings.lua
-runtime! lua/base/util.lua
-runtime! lua/base/keys.vim
-runtime! lua/base/event.vim
+runtime! mappings.vim
+lua << EOF
+require("base.settings")
+require("base.keymap")
+require("base.util")
+require("plugins.compiled")
+EOF
+runtime! mappings.vim
 
 command! PackerInstall packadd packer.nvim | lua require('plugins').install()
 command! PackerUpdate  packadd packer.nvim | lua require('plugins').update()

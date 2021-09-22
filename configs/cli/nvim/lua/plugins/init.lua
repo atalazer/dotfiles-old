@@ -1,4 +1,5 @@
 local packer_ok, packer = pcall(require, "packer")
+local enabled = require("base.rc").plugin_enabled
 
 if not packer_ok then
     return
@@ -39,40 +40,35 @@ return packer.startup({
             "~/Documents/GitHub/xresources-nvim",
             config = [[require("xresources").colorscheme()]],
         },
-        {
-            "folke/tokyonight.nvim",
-            "Pocco81/Catppuccino.nvim",
-            "EdenEast/nightfox.nvim",
-            "Shatur/neovim-ayu",
-            "yonlu/omni.vim",
-        },
 
         -- vim-devicons written in lua
-        {
-            "kyazdani42/nvim-web-devicons",
-        },
+        { "kyazdani42/nvim-web-devicons" },
 
         -- Customizable neovim greeter like dashboard-nvim or vim-startify
         {
             "hhn-pham/alpha-nvim",
+            disable = not enabled.alpha,
             config = [[require("plugins.alpha")]],
         },
 
         -- Beautiful Statusline with Animation
         {
             "windwp/windline.nvim",
+            disable = not enabled.windline,
             config = [[require("plugins.windline")]],
         },
 
         -- Snazzy bufferline
         {
             "akinsho/nvim-bufferline.lua",
+            disable = not enabled.bufferline,
             config = [[require("plugins.bufferline")]],
         },
 
         -- Customizable Sidebar
         {
             "GustavoKatel/sidebar.nvim",
+            disable = not enabled.sidebar,
             setup = function()
                 vim.api.nvim_set_keymap("n", "~", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
                 vim.api.nvim_set_keymap("n", "<leader>ss", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
@@ -94,12 +90,14 @@ return packer.startup({
         -- Indenting
         {
             "lukas-reineke/indent-blankline.nvim",
+            disable = not enabled.indent_blankline,
             setup = [[require("plugins.indent-blankline")]],
         },
 
         -- Vim Which Key But Lua!
         {
             "folke/which-key.nvim",
+            disable = not enabled.which_key,
             config = [[require("plugins.which-key")]],
         },
 
@@ -209,20 +207,22 @@ return packer.startup({
         },
 
         -- Coq.nvim, completion
-        -- {
-        --     "ms-jpq/coq_nvim",
-        --     branch = "coq",
-        --     requires = {
-        --         { "ms-jpq/coq.artifacts", branch = "artifacts" },
-        --         { "ms-jpq/coq.thirdparty", branch = "3p" },
-        --     },
-        --     setup = require("plugins.coq").setup,
-        --     config = require("plugins.coq").config,
-        -- },
+        {
+            "ms-jpq/coq_nvim",
+            disable = not enabled.coq,
+            branch = "coq",
+            requires = {
+                { "ms-jpq/coq.artifacts", branch = "artifacts" },
+                { "ms-jpq/coq.thirdparty", branch = "3p" },
+            },
+            setup = require("plugins.coq").setup,
+            config = require("plugins.coq").config,
+        },
 
         -- Completion
         {
             "hrsh7th/nvim-cmp",
+            disable = not enabled.cmp,
             config = [[require("plugins.cmp")]],
             requires = {
                 "hrsh7th/cmp-buffer",
@@ -236,7 +236,13 @@ return packer.startup({
         -- Snippet
         {
             "L3MON4D3/LuaSnip",
-            requires = { "rafamadriz/friendly-snippets" },
+            disable = not enabled.luasnip,
+            requires = {
+                {
+                    "rafamadriz/friendly-snippets",
+                    disable = not enabled.luasnip,
+                },
+            },
             config = function()
                 require("luasnip.loaders.from_vscode").lazy_load({
                     paths = vim.fn.stdpath("config"),
@@ -360,6 +366,7 @@ return packer.startup({
 
         {
             "michaelb/sniprun",
+            disable = not enabled.sniprun,
             run = "bash install.sh",
             keys = { "<Plug>SnipRun", "<Plug>SnupClose" },
             cmd = "SnipRun",
@@ -386,6 +393,7 @@ return packer.startup({
         -- show git stuff in signcolumn
         {
             "lewis6991/gitsigns.nvim",
+            disable = not enabled.gitsigns,
             wants = "plenary.nvim",
             event = "BufEnter",
             config = [[require("plugins.gitsigns")]],
@@ -412,6 +420,7 @@ return packer.startup({
         -- Smooth Scrolling
         {
             "psliwka/vim-smoothie",
+            disable = not enabled.smoothie,
             setup = function()
                 vim.g.smoothie_update_interval = 30
                 vim.g.smoothie_speed_constant_factor = 10
@@ -448,11 +457,6 @@ return packer.startup({
             cmd = "ZenMode",
             setup = function()
                 vim.api.nvim_set_keymap("n", "<leader>gz", ":ZenMode<CR>", { noremap = true, silent = true })
-
-                local ZEN = vim.env.NVIMZEN
-                if ZEN == 1 or ZEN == true then
-                    vim.cmd("ZenMode")
-                end
             end,
             config = [[require("plugins.zen-mode")]],
         },
@@ -511,6 +515,7 @@ return packer.startup({
         -- Session management
         {
             "folke/persistence.nvim",
+            disable = not enabled.persistence,
             config = function()
                 require("persistence").setup({
                     dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions/"),
@@ -546,6 +551,7 @@ return packer.startup({
         -- Discord Rich Presence for Neovim
         {
             "andweeb/presence.nvim",
+            disable = not enabled.presence,
             config = [[require("plugins.presence")]],
         },
 
@@ -556,14 +562,26 @@ return packer.startup({
         },
     },
     config = {
-        compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
+        -- compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
+        compile_path = vim.fn.stdpath("config") .. "/lua/plugins/compiled.lua",
+        auto_clean = false,
+        transitive_opt = true,
+        transitive_disable = true,
+        auto_reload_compiled = true,
         git = {
+            depth = 1,
             clone_timeout = 300,
         },
         display = {
             open_fn = function()
                 return require("packer.util").float({ border = Util.borders })
             end,
+            keybindings = {
+                quit = "q",
+                toggle_info = "<CR>",
+                diff = "d",
+                prompt_revert = "r",
+            },
         },
     },
 })

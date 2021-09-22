@@ -20,7 +20,7 @@ export PAGER="less -Ri"
 export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
 
 ## Apps
-export TERM_CMD="env LIBGL_ALWAYS_SOFTWARE=1 kitty"
+export TERM_CMD="kitty"
 export BROWSER="qutebrowser"
 export FILEMAN="thunar"
 export TRASH_CMD="gio"

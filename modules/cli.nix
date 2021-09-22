@@ -6,28 +6,28 @@
 
     ### Shell
     # zsh
+    # starship  # Manage by zinit
     tmux
-    starship
 
     ### CLI Apps
     bat
-    bottom
+    # bottom
     # broot
     # choose
     # dasel
-    dogdns
-    duf
+    # dogdns
+    # duf
     # duff
-    du-dust
+    # du-dust
     exa
     fd
     fzf
     glow
     # gopass
-    gping
-    grex
+    # gping
+    # grex
     htop
-    hyperfine
+    # hyperfine
     jq
     lf
     mdp
@@ -36,13 +36,14 @@
     pass
     pet
     # procs
-    tokei
+    # tokei
+    # topgrade
     translate-shell
     trash-cli
     ripgrep
     # sd
     # skim
-    xh
+    # xh
     zoxide
 
     ### Download
@@ -58,6 +59,5 @@
   programs = {
     home-manager.enable = true;
     password-store.enable = true;
-    topgrade.enable = true;
   };
 }

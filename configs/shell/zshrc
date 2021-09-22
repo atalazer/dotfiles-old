@@ -45,6 +45,10 @@ setopt EXTENDED_HISTORY
 # Allow Comment in Interactive Shell
 setopt interactive_comments
 
+# Binkeys
+bindkey -e
+KEYTIMEOUT=1
+
 #}}}
 
 # ===== User ===== {{{
@@ -90,9 +94,22 @@ fi
 
 # ===== Prompt ===== {{{
 if command -v "starship" > /dev/null 2>&1; then
-    export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship.toml
+    export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship.toml
+    export STARSHIP_CACHE=$XDG_CACHE_HOME/starship/cache
     eval "$(starship init zsh)"
 fi
+
+function set_win_title(){
+    print -Pn "\e]0;%~\a"
+}
+precmd_functions+=(set_win_title)
+
+# Fix cursor
+_fix_cursor() {
+   # echo -ne '\e[5 q'      # Beam
+   echo -ne '\e[1 q'      # Block
+}
+precmd_functions+=(_fix_cursor)
 
 # }}}
 
