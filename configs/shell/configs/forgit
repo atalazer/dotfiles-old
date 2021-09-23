@@ -1,0 +1,28 @@
+#!/bin/sh
+
+export FORGIT_FZF_DEFAULT_OPTS="
+    --exact
+    --border
+    --cycle
+    --reverse
+    --height '70%'
+"
+
+FORGIT_PAGER=$PAGER
+FORGIT_SHOW_PAGER=$FORGIT_PAGER
+FORGIT_DIFF_PAGER="delta"
+FORGIT_IGNORE_PAGER="bat -l gitignore --color always"
+
+export forgit_log=gl
+export forgit_diff=gd
+export forgit_add=ga
+export forgit_reset_head=grh
+export forgit_ignore=gi
+export forgit_checkout_file=gcf
+export forgit_checkout_branch=gcb
+export forgit_checkout_commit=gco
+export forgit_clean=gclean
+export forgit_stash_show=gss
+export forgit_cherry_pick=gcp
+export forgit_rebase=grb
+export forgit_fixup=gfu

@@ -72,6 +72,7 @@ zic https://github.com/chmln/handlr/blob/master/completions/_handlr
 zic https://github.com/xwmx/nb/blob/master/etc/nb-completion.zsh
 zic https://github.com/jarun/nnn/blob/master/misc/auto-completion/zsh/_nnn
 zic https://github.com/knqyf263/pet/blob/master/misc/completions/zsh/_pet
+zic https://github.com/dandavison/delta/blob/master/etc/completion/completion.zsh
 
 # Plugins
 zinit wait lucid for \

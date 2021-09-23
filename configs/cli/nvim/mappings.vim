@@ -133,6 +133,8 @@ nnoremap J <CMD>BufferLineCycleNext<CR>
 
 nnoremap gK <CMD>BufferLineMovePrev<CR>
 nnoremap gJ <CMD>BufferLineMoveNext<CR>
+nnoremap <C-K> <CMD>BufferLineMovePrev<CR>
+nnoremap <C-J> <CMD>BufferLineMoveNext<CR>
 
 nnoremap <M-1> <CMD>lua require'bufferline'.go_to_buffer(1)<CR>
 nnoremap <M-2> <CMD>lua require'bufferline'.go_to_buffer(2)<CR>

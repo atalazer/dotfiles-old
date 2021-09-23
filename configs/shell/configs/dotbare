@@ -1,0 +1,29 @@
+#!/bin/sh
+
+export DOTBARE_DIR="${DOTS:-$HOME/.dotfiles}/.git"
+export DOTBARE_TREE="${DOTS:-$HOME/.dotfiles}"
+export DOTBARE_BACKUP="${XDG_DATA_HOME:-$HOME/.local/share}/dotbare"
+export DOTBARE_KEY="
+    --bind=alt-a:toggle-all
+    --bind=alt-d:jump
+    --bind=alt-w:top
+    --bind=alt-s:toggle-sort
+    --bind=alt-t:toggle-preview
+"
+export DOTBARE_FZF_DEFAULT_OPTS=${FZF_DEFAULT_OPTS:-"--preview-window=right:60%"}
+export DOTBARE_PREVIEW=${FZF_PREVIEW:-"bat --style=numbers --color=always {}"}
+export DOTBARE_DIFF_PAGER="$(git config pager.diff || echo 'delta --diff-so-fancy --line-numbers')"
+
+# -------------------------------------
+# Alias for dotbare
+# -------------------------------------
+alias dots="dotbare"
+alias da="dotbare fadd"
+alias de="dotbare fedit"
+alias dl="dotbare flog"
+
+# -------------------------------------
+# Keys for dotbare
+# -------------------------------------
+bindkey -s '^g' "dotbare fedit"^j
+

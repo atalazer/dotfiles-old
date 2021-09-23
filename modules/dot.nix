@@ -32,10 +32,12 @@ in
     ".config/bottom".source = link "configs/cli/bottom";
     ".config/broot".source = link "configs/cli/broot";
     ".config/cava".source = link "configs/cli/cava";
+    ".config/gitui".source = link "configs/cli/gitui";
     ".config/glow".source = link "configs/cli/glow";
     ".config/handlr".source = link "configs/cli/handlr";
     ".config/htop".source = link "configs/cli/htop";
     ".config/lazygit".source = link "configs/cli/lazygit";
+    ".config/lcfetch".source = link "configs/cli/lcfetch";
     ".config/lf".source = link "configs/cli/lf";
     ".config/mpd".source = link "configs/cli/mpd";
     ".config/ncmpcpp".source = link "configs/cli/ncmpcpp";
@@ -55,7 +57,9 @@ in
 
     ### Shell Stuff
     ".config/shell/aliases".source = link "configs/shell/aliases";
+    ".config/shell/configs".source = link "configs/shell/configs";
     ".config/shell/functions".source = link "configs/shell/functions";
+    ".config/shell/misc".source = link "configs/shell/misc";
     ".config/starship.toml".source =
       link "configs/shell/starship/starship.toml";
     ".config/fish".source = link "configs/shell/fish";
@@ -78,6 +82,7 @@ in
 
     ### Themes
     ".config/wal".source = link "configs/theme/wal";
+    ".config/qt5ct".source = link "configs/theme/qt5ct";
     ".config/gtk-2.0".source = link "configs/theme/gtk-2.0";
     ".config/gtk-3.0".source = link "configs/theme/gtk-3.0";
     ".gtkrc-2.0".source = link "configs/theme/gtkrc-2.0";

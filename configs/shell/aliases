@@ -46,23 +46,17 @@ fi
 # EDITOR Alias
 alias se="sudoedit"
 alias {e,vi,vim}="$EDITOR"
-alias el="$EDITOR -c 'lua  Util.session.last()'"
-alias ep="$EDITOR ~/.config/nvim/lua/plugins/init.lua"
-alias {envim,ev}="$EDITOR ~/.config/nvim/init.vim"
-alias {zshrc,ez}="$EDITOR ~/.zshrc"
-alias {xrc,ex}="$EDITOR ~/.Xresources"
-alias {awc,ea}="$EDITOR ~/.config/awesome/rc.lua"
+alias el="nvim -c 'lua  Util.session.last()'"
+alias ep="nvim ~/.config/nvim/lua/plugins/init.lua"
+alias {envim,ev}="$EDITOR ~/.config/nvim/init.*"
 alias zen="$EDITOR +ZenMode "
 
 # Xresources Alias
 alias xload="xrdb -load ~/.Xresources"
 alias xmerge="xrdb -merge ~/.Xresources"
 
-# FZF SKIM alias
-alias fzfp="fzf --reverse --preview 'bat --style=numbers --color=always {}'"
-alias skp="sk --reverse --preview 'bat --style=numbers --color=always {}'"
-
 # Git Alias
+alias g="git"
 alias ga="git add"
 alias gr="git remove"
 alias gs="git status"

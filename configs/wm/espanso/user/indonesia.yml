@@ -2,14 +2,14 @@ name: indonesia
 parent: default
 
 matches:
-  - trigger: "yg"
+  - trigger: "yg:"
     replace: "yang"
     propagate_case: true
 
-  - trigger: "dll"
+  - trigger: "dll:"
     replace: "dan lain-lain"
     propagate_case: true
 
-  - trigger: "dsb"
+  - trigger: "dsb:"
     replace: "dan lain sebagainya"
     propagate_case: true

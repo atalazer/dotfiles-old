@@ -1,70 +1,77 @@
+# vim: ft=toml
+
 [user]
-    email = baraboyolali@gmail.com
-    name = Atalazer
+email = baraboyolali@gmail.com
+name = Atalazer
 
 [credential]
-    helper = cache --timeout 86400
+helper = cache --timeout 86400
 
 [core]
-    editor = nvim
-
-[pull]
-    rebase = true
-
-[alias]
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-
-[delta]
-    line-numbers = true
-    syntax-theme = base16
-    file-modified-label = modified:
-
-[interactive]
-    diffFilter = delta --color-only
+editor = nvim
+pager = delta
+compression = 9
 
 [init]
-    defaultBranch = master
+defaultBranch = master
 
-[color "decorate"]
-    HEAD = brightcyan normal italic
-    remotebranch = brightmagenta normal
-    grafted = red normal italic
-    tag = yellow normal bold
-    stash = brightblack normal
-    branch = brightcyan normal
-[color "grep"]
-    filename = white normal
-    function = brightgreen normal
-    column = brightblack normal
-    linenumber = brightblack normal
-[color "status"]
-    changed = yellow normal
-    unmerged = red normal
-    nobranch = red normal italic
-    updated = green normal
-    localbranch = brightcyan normal
-    added = green normal
-    remotebranch = brightmagenta normal
-    branch = brightcyan normal
-[color "interactive"]
-    help = brightblack normal
-    error = red normal italic
+[diff]
+mnemonicprefix = true
+
+[merge]
+log = true
+ff = false
+
+[push]
+default = simple
+
+[pull]
+rebase = true
+
+[interactive]
+diffFilter = delta --color-only --features=interactive
+
+[delta]
+line-numbers = true
+syntax-theme = base16
+side-by-side = false
+file-modified-label = modified:
+
+[color]
+ui = true
+
 [color "branch"]
-    remote = brightmagenta normal
-    upstream = brightmagenta normal
-    plain = brightcyan normal
-    current = brightcyan blue
-    local = brightcyan normal
-[color "remote"]
-    success = brightgreen normal
-    error = brightred normal
-    hint = brightblack normal
-    warning = brightyellow normal
+current = yellow reverse
+local = yellow
+remote = green
+
 [color "diff"]
-    commit = yellow normal
-    func = brightgreen normal
-[http]
-	postBuffer = 524288000
-	version = HTTP/2
-[status]
-	submoduleSummary = true
+meta = yellow bold
+frag = magenta bold
+old = red bold
+new = green bold
+
+[color "status"]
+added = yellow
+changed = green
+untracked = red
+
+[alias]
+a = add                       # Add file contents to the index
+ai = "add --interactive"      # Add modified contents in the working tree interactively to the index.
+c = commit                    # Record changes to the repository
+cm = commit -m                # Use the given <msg> as the commit message.
+cl = clone                    # Clone a repository into a new directory
+cld = "clone --depth 1"       # Create a shallow clone with a history truncated to the specified number of commits.
+d = diff                      # Show changes between commits, commit and working tree, etc
+o = checkout                  # Switch branches or restore working tree files.
+ps = push                     # Update remote refs along with associated objects
+pl = pull                     # Fetch from and integrate with another repository or a local branch.
+s = status                    # Show the working tree status
+l = log                       # Show the working tree log
+########################
+aliases = "!git config -l | grep alias | cut -c 7"  # List git aliases
+branches = "branch --all"                           # List both remote-tracking branches and local branches.
+remotes = "remote --verbose"                        # Be a little more verbose and show remote url after name.
+contributors = "shortlog --summary --numbered"      # List contributors with number of commits
+amend = "commit --amend --no-edit"                  # Amend the currently staged files to the latest commit.

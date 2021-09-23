@@ -55,7 +55,7 @@ local options = {
         precedes = "❮",
     },
     mouse = "a",
-    signcolumn = "yes",
+    signcolumn = "yes:2",
     shortmess = "csa",
     showbreak = "↪",
     breakindentopt = "shift:2",

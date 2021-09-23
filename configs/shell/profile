@@ -16,8 +16,10 @@ export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 # CLI
 export EDITOR="nvim"
 export VISUAL="nvim"
-export PAGER="less -Ri"
-export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+export PAGER="less -R"
+export BAT_PAGER="$PAGER"
+export DELTA_PAGER="$PAGER"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 ## Apps
 export TERM_CMD="kitty"

@@ -110,10 +110,6 @@ bindkey -M vicmd '^[[1;5D' backward-word
 bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
 bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search history
 
-# Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
-
 #
 # sudo or sudoedit will be inserted before the command
 #

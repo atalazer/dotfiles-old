@@ -1,20 +1,35 @@
-format = """$all"""
-# right_format = """$all"""
+add_newline = true
+format = """
+$hostname$username$directory\
+$git_branch$git_commit$git_state$git_metrics$git_status\
+$line_break\
+$battery$character\
+"""
+
+right_format = """
+$line_break\
+$cmd_duration\
+$shell\
+"""
 
 [directory]
 truncation_length = 8
 
 [git_branch]
-format = "on [$symbol$branch]($style) "
+format = "[$symbol$branch]($style) "
 symbol = " "
 
 [git_status]
+format = "([$all_status$ahead_behind]($style) )"
 ahead = "⇡${count}"
 behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-
-[package]
-disabled = true
+diverged = "⇕⇡${ahead_count} ⇣${behind_count}"
+deleted = '[ \($count\)](red) '
+modified = '[ \($count\)](yellow) '
+renamed = '[ \($count\)](blue) '
+staged = '[ \($count\)](green) '
+stashed=" "
+untracked=" "
 
 [golang]
 format = "via [ $version](bold blue) "
@@ -22,3 +37,18 @@ format = "via [ $version](bold blue) "
 [lua]
 format = "via [ $version](bold blue) "
 
+[package]
+format = "via [ $version](208 bold)"
+disabled = false
+
+[shell]
+fish_indicator = ""
+zsh_indicator = "_"
+disabled = false
+
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "[$user]($style) in "
+disabled = false
+show_always = false
