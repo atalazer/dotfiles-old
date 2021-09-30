@@ -1,0 +1,20 @@
+name = "Atalariq Barra Hadinugraha"
+downloads-dir = "/home/atalariq/Downloads/Mail"
+signature = """
+--
+Regards,
+"""
+
+[gmail]
+default = true
+email = "baraboyolali@gmail.com"
+
+imap-host = "imap.gmail.com"
+imap-port = 993
+imap-login = "baraboyolali@gmail.com"
+imap-passwd-cmd = "gpg -dq $XDG_CONFIG_HOME/himalaya/password/baraboyolali@gmail.com.gpg"
+
+smtp-host = "smtp.gmail.com"
+smtp-port = 465
+smtp-login = "baraboyolali@gmail.com"
+smtp-passwd-cmd = "gpg -dq $XDG_CONFIG_HOME/himalaya/password/baraboyolali@gmail.com.gpg"
