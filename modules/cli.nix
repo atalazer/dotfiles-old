@@ -14,7 +14,7 @@
     # bottom
     # broot
     # choose
-    # dasel
+    dasel
     # dogdns
     # duf
     # duff
@@ -25,13 +25,16 @@
     glow
     # gopass
     # gping
-    # grex
+    grex
+    himalaya
     htop
-    # hyperfine
+    hyperfine
     jq
     lf
     mdp
     neofetch
+    # neomutt
+    newsboat
     # neuron-notes
     pass
     pet
@@ -41,8 +44,9 @@
     translate-shell
     trash-cli
     ripgrep
-    # sd
-    # skim
+    sd
+    skim
+    speedtest-cli
     # xh
     zoxide
 
@@ -54,6 +58,16 @@
     # mpvc
     # mpc_cli
     # playerctl
+
+    ### Game
+    bastet
+    moon-buggy
+    ninvaders
+    nudoku
+    terminal-typeracer
+    ttyper
+    typespeed
+    uchess
   ];
 
   programs = {

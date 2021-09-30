@@ -1,0 +1,6 @@
+# Faster Download with aria2
+--external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M'
+
+# Save in ~/Videos
+-o ~/Videos/%(title)s.%(ext)s
+

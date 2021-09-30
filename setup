@@ -1,6 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # - linux
 
-CFG="${1:-linux}"
-nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" --show-trace
+OPT="${1:-"help"}"
+
+case $OPT in
+    build)
+        CFG=${2:-"linux"}
+        echo "Build for $CFG configuration"
+        nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" \
+            && echo "Build succes!"
+        ;;
+    apply)
+        [ -f result/activate ] && result/activate \
+            || echo "Failed, 'result/activate' not found. Please build first"
+        ;;
+    help|*)
+        echo "Usage:"
+        echo "help      Show this message."
+        echo "build     Build configuration. (default: linux)"
+        echo "apply     Activate existing configuration."
+    ;;
+esac
+
+# vim:set ft=bash sw=2 ts=2:

@@ -11,6 +11,7 @@ in
     ".config/sway".source = link "configs/wm/sway";
     ".config/mako".source = link "configs/wm/mako";
     ".config/dunst".source = link "configs/wm/dunst";
+    ".config/eww".source = link "configs/wm/eww";
     ".config/waybar".source = link "configs/wm/waybar";
     ".config/fusuma".source = link "configs/wm/fusuma";
     ".config/picom".source = link "configs/wm/picom";
@@ -35,6 +36,7 @@ in
     ".config/gitui".source = link "configs/cli/gitui";
     ".config/glow".source = link "configs/cli/glow";
     ".config/handlr".source = link "configs/cli/handlr";
+    ".config/himalaya".source = link "configs/cli/himalaya";
     ".config/htop".source = link "configs/cli/htop";
     ".config/lazygit".source = link "configs/cli/lazygit";
     ".config/lcfetch".source = link "configs/cli/lcfetch";
@@ -48,12 +50,13 @@ in
     ".config/nvim".source = link "configs/cli/nvim";
     ".config/pet".source = link "configs/cli/pet";
     ".config/wtf".source = link "configs/cli/wtf";
+    ".config/youtube-dl".source = link "configs/cli/youtube-dl";
     ".config/ytmdl".source = link "configs/cli/ytmdl";
     ".config/zellij".source = link "configs/cli/zellij";
     ".config/zk".source = link "configs/cli/zk";
     ".config/topgrade.toml".source = link "configs/cli/topgrade.toml";
-    ".tmux.conf".source = link "configs/cli/tmux.conf";
     ".gitconfig".source = link "configs/cli/gitconfig";
+    # ".tmux.conf".source = link "configs/cli/tmux.conf";
 
     ### Shell Stuff
     ".config/shell/aliases".source = link "configs/shell/aliases";
@@ -72,7 +75,7 @@ in
     ".profile".source = link "configs/shell/profile";
     ".pam_environment".source = link "configs/shell/pam_environment";
     ".user".source = link "configs/shell/user";
-    ".user.keys".source = link "configs/shell/user.keys";
+    ".user.private".source = link "configs/shell/user.private";
 
     ### User Script
     # ".local/bin".source = link "configs/bin";

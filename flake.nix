@@ -29,7 +29,8 @@
                 ./modules/fonts.nix
                 ./modules/cli.nix
                 ./modules/git.nix
-                ./modules/dev.nix
+                ./modules/nvim.nix
+                ./modules/tmux.nix
                 ./modules/dot.nix
               ];
             };

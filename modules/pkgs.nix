@@ -20,6 +20,7 @@
     # fusuma
     # gcr # for pinentry-gnome3
     mpd
+    xidlehook
     xclip
 
     ### GUI Apps

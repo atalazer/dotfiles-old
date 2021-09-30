@@ -2,8 +2,9 @@
   home.packages = with pkgs; [
     delta
     gh
+    hub
     # git
-    gitui
+    # gitui
     lazygit
   ];
 }
