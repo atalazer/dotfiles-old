@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+player="mpd"
+
+if [ "$player" = "mpd" ]; then
+    command -v "mpc" >/dev/null 2>&1 || echo "Please Install mpc first"
+    prev="mpc -q prev"
+    toggle="mpc -q toggle"
+    stop="mpc -q stop"
+    next="mpc -q next"
+    status="mpc status"
+    title="$(mpc --format '[%title%|%file%]' current)"
+elif [ "$player" = "spotify" ]; then
+    command -v "spotify" >/dev/null 2>&1 || echo "Spotify not installed"
+    prev="playerctl -p spotify previous"
+    next="playerctl -p spotify next"
+    stop="playerctl -p spotify stop"
+    toggle="playerctl -p spotify play-pause"
+    status="playerctl -p spotify status"
+    title="$(playerctl -p spotify metadata -f '{{title}}')"
+else
+    prev="" toggle="" stop="" next="" status=""
+    title="There's no available player!"
+fi
+
+status="$($status)"
+
+help() {
+    cat <<EOF
+Usage for $(basename "$0"):
+  Command:
+    next            Play next
+    prev            Play previous
+    status          Show status
+    stop            Stop music
+    toggle          Toggle music
+    titile          Show title
+  Options
+    -h, --help      Show this message
+    -p, --player    Change music player (default: mpd, available: mpd,spotify)
+EOF
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    toggle) sh -c "$toggle" ;;
+    stop) sh -c "$stop" ;;
+    next) sh -c "$next" ;;
+    prev) sh -c "$prev" ;;
+    status) echo "$status" ;;
+    title) echo "$title" ;;
+    "-p" | "--player")
+        shift
+        player="$1"
+        ;;
+    "-h" | "--help") help ;;
+    *) echo "Invalid" && help ;;
+    esac
+    shift
+done

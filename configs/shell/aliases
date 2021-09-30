@@ -28,6 +28,7 @@ if command -v "exa" > /dev/null 2>&1; then
     alias lsa="exa --icons --group-directories-first -a"
     alias ll="exa --icons --group-directories-first -lgh"
     alias lla="exa --icons --group-directories-first -algh"
+    alias {tree,lt}="exa --icons --group-directories-first -T"
 fi
 
 # Use Trash Instead of rm

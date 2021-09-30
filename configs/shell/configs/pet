@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # pet
 # Simple command-line snippet manager, written in Go.

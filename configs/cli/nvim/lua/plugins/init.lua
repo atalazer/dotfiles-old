@@ -7,10 +7,26 @@ end
 
 return packer.startup({
     {
-        { "wbthomason/packer.nvim", opt = true },
-        { "lewis6991/impatient.nvim", rocks = "mpack" },
-        { "nvim-lua/plenary.nvim" },
+        -- ================================================ Base
 
+        -- Package Manager that support lazy load!
+        -- ------------------------
+        { "wbthomason/packer.nvim", opt = true },
+
+        -- Improve startup time for Neovim
+        -- ------------------------
+        { "lewis6991/impatient.nvim", rocks = "mpack" },
+
+        -- A faster version of filetype.vim
+        -- ------------------------
+        { "nathom/filetype.nvim" },
+
+        -- Set keybindings
+        -- ------------------------
+        { "b0o/mapx.nvim" },
+
+        -- Neovim notify
+        -- ------------------------
         {
             "rcarriga/nvim-notify",
             config = function()
@@ -32,19 +48,25 @@ return packer.startup({
             end,
         },
 
-        -- ======= User Interface =======
+        --All the lua functions I don't want to write twice.
+        -- ------------------------
+        { "nvim-lua/plenary.nvim" },
+
+        -- ================================================== User Interface
+
         -- Colorscheme
-        -- { "rktjmp/lush.nvim" },
+        -- ------------------------
         {
-            -- "nekonako/xresources-nvim",
-            "~/Documents/GitHub/xresources-nvim",
+            "~/Documents/Programming/Repo/xresources-nvim",
             config = [[require("xresources").colorscheme()]],
         },
 
         -- vim-devicons written in lua
+        -- ------------------------
         { "kyazdani42/nvim-web-devicons" },
 
         -- Customizable neovim greeter like dashboard-nvim or vim-startify
+        -- ------------------------
         {
             "hhn-pham/alpha-nvim",
             disable = not enabled.alpha,
@@ -52,13 +74,16 @@ return packer.startup({
         },
 
         -- Beautiful Statusline with Animation
+        -- ------------------------
         {
             "windwp/windline.nvim",
             disable = not enabled.windline,
-            config = [[require("plugins.windline")]],
+            -- config = [[require("plugins.windline")]],
+            config = [[require("wlsample.evil_line")]],
         },
 
         -- Snazzy bufferline
+        -- ------------------------
         {
             "akinsho/nvim-bufferline.lua",
             disable = not enabled.bufferline,
@@ -66,42 +91,27 @@ return packer.startup({
         },
 
         -- Customizable Sidebar
+        -- ------------------------
         {
             "GustavoKatel/sidebar.nvim",
             disable = not enabled.sidebar,
-            setup = function()
-                vim.api.nvim_set_keymap("n", "~", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
-                vim.api.nvim_set_keymap("n", "<leader>ss", "<CMD>SidebarNvimToggle<CR>", { noremap = true })
-            end,
             config = [[require("plugins.sidebar")]],
         },
 
         -- Superfast Tree File
+        -- ------------------------
         {
             "kyazdani42/nvim-tree.lua",
-            cmd = "NvimTreeToggle",
+            disable = not enabled.nvim_tree,
             setup = function()
-                vim.api.nvim_set_keymap("n", "`", "<CMD>NvimTreeToggle<CR>", { noremap = true })
-                vim.api.nvim_set_keymap("n", "<leader>sa", "<CMD>NvimTreeToggle<CR>", { noremap = true })
+                nnoremap("`", "<CMD>NvimTreeToggle<CR>", "Toggle Nvim Tree")
+                require("plugins.nvim-tree").setup()
             end,
-            config = [[require("plugins.nvim-tree")]],
-        },
-
-        -- Indenting
-        {
-            "lukas-reineke/indent-blankline.nvim",
-            disable = not enabled.indent_blankline,
-            setup = [[require("plugins.indent-blankline")]],
-        },
-
-        -- Vim Which Key But Lua!
-        {
-            "folke/which-key.nvim",
-            disable = not enabled.which_key,
-            config = [[require("plugins.which-key")]],
+            config = require("plugins.nvim-tree").config,
         },
 
         -- Fuzzy Finder
+        -- ------------------------
         {
             "nvim-telescope/telescope.nvim",
             config = [[require("plugins.telescope")]],
@@ -124,17 +134,109 @@ return packer.startup({
                 {
                     "tami5/sqlite.lua",
                     setup = function()
-                        vim.g.sqlite_clib_path = "/lib64/libsqlite3.so"
+                        vim.g.sqlite_clib_path = "/lib64/libsqlite3.so.0.8.6"
                     end,
                 },
             },
         },
 
-        -- ======= Languange =======
+        -- Vim Which Key But Lua!
+        -- ------------------------
+        {
+            "folke/which-key.nvim",
+            disable = not enabled.which_key,
+            config = [[require("plugins.which-key")]],
+        },
+
+        -- Distraction-free coding for Neovim
+        -- ------------------------
+        {
+            "folke/zen-mode.nvim",
+            cmd = "ZenMode",
+            setup = function()
+                nnoremap("<leader>gz", "<CR>ZenMode<CR>", "silent")
+            end,
+            config = [[require("plugins.zen-mode")]],
+        },
+
+        -- Dim inactive portions of the code you're editing using TreeSitter.
+        -- ------------------------
+        {
+            "folke/twilight.nvim",
+            cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
+            config = function()
+                require("twilight").setup({
+                    dimming = {
+                        alpha = 0.30,
+                        color = { "Normal", "#ffffff" },
+                        inactive = false,
+                    },
+                    context = 5,
+                    treesitter = true,
+                    expand = {
+                        "function",
+                        "method",
+                        "if_statement",
+                        "table",
+                    },
+                    exclude = {},
+                })
+            end,
+        },
+
+        -- Auto-Focusing and Auto-Resizing Splits/Windows for neovim
+        -- --------------------------
+        {
+            "beauwilliams/focus.nvim",
+            disable = not enabled.focus,
+            config = function()
+                require("focus").setup({
+                    cursorline = true,
+                    -- signcolumn = true,
+                    -- number = true,
+                    -- relativenumber = true,
+                    -- hybridnumber = true,
+                    -- compatible_filetrees = { "filetree", "nvimtree", "nerdtree", "chadtree", "fern" },
+                    -- excluded_filetypes = { "toggleterm", "TelescopePrompt", "frecency" },
+                    -- excluded_buftypes = { "help", "prompt", "nofile" },
+                })
+            end,
+        },
+
+        -- Shade inactive windows
+        -- ------------------------
+        {
+            "sunjon/shade.nvim",
+            disable = not enabled.shade,
+            config = function()
+                require("shade").setup({
+                    overlay_opacity = 50,
+                    opacity_step = 1,
+                    keys = {
+                        brightness_up = "<C-Up>",
+                        brightness_down = "<C-Down>",
+                        toggle = "<Leader>cs",
+                    },
+                })
+            end,
+        },
+
+        -- Show Indentation
+        -- ------------------------
+        {
+            "lukas-reineke/indent-blankline.nvim",
+            disable = not enabled.indent_blankline,
+            config = [[require("plugins.indent-blankline")]],
+        },
+
+        -- ===================================================== Languange
+
         -- EditorConfig for nvim
+        -- ------------------------
         { "gpanders/editorconfig.nvim" },
 
         -- Semantic highlight
+        -- ------------------------
         {
             "nvim-treesitter/nvim-treesitter",
             requires = {
@@ -149,6 +251,7 @@ return packer.startup({
         },
 
         -- LaTeX Support with Texlab LSP
+        -- ------------------------
         {
             "jakewvincent/texmagic.nvim",
             ft = { "tex", "bib", "latex" },
@@ -173,6 +276,7 @@ return packer.startup({
         },
 
         -- Markdown Support
+        -- ------------------------
         {
             "plasticboy/vim-markdown",
             ft = "markdown",
@@ -184,13 +288,20 @@ return packer.startup({
         },
 
         -- Vim Table mode
+        -- ------------------------
         {
             "dhruvasagar/vim-table-mode",
             ft = { "text", "markdown" },
         },
 
-        -- ======= LSP, Completion and Snippet =======
-        -- Lsp
+        -- yuck.vim for eww
+        -- ------------------------
+        { "elkowar/yuck.vim" },
+
+        -- ================================================= LSP, Completion and Snippet
+
+        -- Neovim built-in Lsp
+        -- ------------------------
         {
             "neovim/nvim-lspconfig",
             config = [[require("lsp")]],
@@ -207,6 +318,7 @@ return packer.startup({
         },
 
         -- Coq.nvim, completion
+        -- ------------------------
         {
             "ms-jpq/coq_nvim",
             disable = not enabled.coq,
@@ -220,6 +332,7 @@ return packer.startup({
         },
 
         -- Completion
+        -- ------------------------
         {
             "hrsh7th/nvim-cmp",
             disable = not enabled.cmp,
@@ -234,29 +347,27 @@ return packer.startup({
         },
 
         -- Snippet
+        -- ------------------------
         {
             "L3MON4D3/LuaSnip",
-            disable = not enabled.luasnip,
             requires = {
-                {
-                    "rafamadriz/friendly-snippets",
-                    disable = not enabled.luasnip,
-                },
+                { "rafamadriz/friendly-snippets" },
             },
             config = function()
                 require("luasnip.loaders.from_vscode").lazy_load({
                     paths = vim.fn.stdpath("config"),
                 })
-
                 vim.cmd([[
-                    snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(1)<CR>
                     imap <silent><expr> <C-j> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<c-j>'
+                    snoremap <silent> <C-j> <cmd>lua require('luasnip').jump(1)<CR>
                     snoremap <silent> <C-k> <cmd>lua require('luasnip').jump(-1)<CR>
                     inoremap <silent> <C-k> <cmd>lua require('luasnip').jump(-1)<CR>
                 ]])
             end,
         },
 
+        -- Emmet vim
+        -- ------------------------
         {
             "mattn/emmet-vim",
             cmd = "EmmetInstall",
@@ -267,8 +378,17 @@ return packer.startup({
             end,
         },
 
-        -- ======= Experience =======
+        -- Parinfer
+        -- ------------------------
+        {
+            "eraserhd/parinfer-rust",
+            run = "cargo build --release",
+        },
+
+        -- ======================================================= Experience
+
         -- Easy Commenting
+        -- ------------------------
         {
             "terrortylor/nvim-comment",
             keys = "gc",
@@ -287,16 +407,18 @@ return packer.startup({
         },
 
         -- Align
+        -- ------------------------
         {
             "junegunn/vim-easy-align",
             keys = "<Plug>(EasyAlign)",
             setup = function()
-                vim.api.nvim_set_keymap("n", "ga", "<Plug>(EasyAlign)", { noremap = false, silent = true })
-                vim.api.nvim_set_keymap("x", "ga", "<Plug>(EasyAlign)", { noremap = false, silent = true })
+                nnoremap("n", "ga", "<Plug>(EasyAlign)", "silent", "Align")
+                xnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
             end,
         },
 
         -- Better %
+        -- ------------------------
         {
             "andymass/vim-matchup",
             setup = function()
@@ -309,34 +431,34 @@ return packer.startup({
         },
 
         -- Neovim Autopair Plugin
+        -- ------------------------
         {
             "windwp/nvim-autopairs",
             config = [[require("plugins.autopairs")]],
         },
 
         -- Vim easy motion
+        -- ------------------------
         {
             "phaazon/hop.nvim",
             cmd = { "HopWord", "HopPattern" },
             setup = function()
-                vim.api.nvim_set_keymap("n", "<leader>z", "<CMD>HopWord<CR>", { noremap = true })
-                vim.api.nvim_set_keymap("n", "<leader>x", "<CMD>HopPattern<CR>", { noremap = true })
+                nnoremap("<leader>z", "<CMD>HopWord<CR>", "Word")
+                nnoremap("<leader>x", "<CMD>HopPattern<CR>", "Pattern")
             end,
             config = [[require("hop").setup()]],
         },
 
+        -- Sneak
+        -- ------------------------
         {
             "ggandor/lightspeed.nvim",
-            keys = {
-                "<Plug>Lightspeed_f",
-                "<Plug>Lightspeed_F",
-                "<Plug>Lightspeed_t",
-                "<Plug>Lightspeed_T",
-            },
             setup = require("plugins.lightspeed").setup,
             config = require("plugins.lightspeed").config,
         },
 
+        -- Increment and decrement
+        -- ------------------------
         {
             "monaqa/dial.nvim",
             keys = {
@@ -350,6 +472,7 @@ return packer.startup({
         },
 
         -- gf like plugins
+        -- ------------------------
         {
             "notomo/curstr.nvim",
             setup = require("plugins.curstr").setup,
@@ -357,13 +480,41 @@ return packer.startup({
         },
 
         -- Show Color
+        -- ------------------------
+        {
+            "RRethy/vim-hexokinase",
+            disable = not enabled.hexokinase,
+            run = "make hexokinase",
+            setup = function()
+                vim.g.Hexokinase_highlighters = { "backgroundfull" }
+                vim.g.Hexokinase_optInPatterns = {
+                    "full_hex",
+                    "triple_hex",
+                    "rgb",
+                    "rgba",
+                    "hsl",
+                    "hsla",
+                    "colour_names",
+                }
+                vim.g.Hexokinase_ftOptInPatterns = {
+                    css = "full_hex,rgb,rgba,hsl,hsla,colour_names",
+                    html = "full_hex,rgb,rgba,hsl,hsla,colour_names",
+                }
+            end,
+        },
+
+        -- Show Color
+        -- ------------------------
         {
             "norcalli/nvim-colorizer.lua",
+            disable = not enabled.colorizer,
             cmd = "ColorizerToggle",
             setup = require("plugins.nvim-colorizer").setup,
             config = require("plugins.nvim-colorizer").config,
         },
 
+        -- Code runner
+        -- ------------------------
         {
             "michaelb/sniprun",
             disable = not enabled.sniprun,
@@ -389,8 +540,10 @@ return packer.startup({
             end,
         },
 
-        -- ======= Git =======
-        -- show git stuff in signcolumn
+        -- ====================================================== Git
+
+        -- Show added, deleted, changed diff
+        -- ------------------------
         {
             "lewis6991/gitsigns.nvim",
             disable = not enabled.gitsigns,
@@ -399,6 +552,8 @@ return packer.startup({
             config = [[require("plugins.gitsigns")]],
         },
 
+        -- Lazygit wrapper
+        -- ------------------------
         {
             "kdheepak/lazygit.nvim",
             cmd = { "LazyGit" },
@@ -409,40 +564,67 @@ return packer.startup({
                 vim.g.lazygit_floating_window_use_plenary = 0
                 vim.g.lazygit_use_neovim_remote = 0
 
-                local map = function(lhs, rhs)
-                    vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
-                end
-                map("<leader>gt", "<CMD>LazyGit<CR>")
+                nnoremap("<leader>gt", "<CMD>LazyGit<CR>", "silent", "Open Lazy Git")
             end,
         },
 
-        -- ======= Misc =======
-        -- Smooth Scrolling
+        -- Magit clone for Neovim
+        -- ----------------------
         {
-            "psliwka/vim-smoothie",
-            disable = not enabled.smoothie,
-            setup = function()
-                vim.g.smoothie_update_interval = 30
-                vim.g.smoothie_speed_constant_factor = 10
-                vim.g.smoothie_speed_linear_factor = 10
-            end,
+            "TimUntersberger/neogit",
+            disable = not enabled.neogit,
+            cmd = "Neogit",
+            requires = {
+                "sindrets/diffview.nvim",
+            },
+            config = [[require("plugins.neogit")]],
         },
 
-        -- better window and buffer management
+        -- Vim Fugitive
+        -- ----------------------
+        {
+            "tpope/vim-fugitive",
+            disable = not enabled.fugitive,
+            requires = { "tpope/vim-rhubarb" },
+        },
+
+        -- ============================================== Misc
+
+        -- Smooth Scrolling
+        -- ------------------------
+        {
+            "karb94/neoscroll.nvim",
+            disable = not enabled.neoscroll,
+            config = [[require("plugins.neoscroll")]],
+        },
+
+        -- Better Window And Buffer Management
+        -- ------------------------
         {
             "mhinz/vim-sayonara",
-            cmd = "Sayonara",
             setup = function()
-                local map = function(lhs, rhs)
-                    vim.api.nvim_set_keymap("", lhs, rhs, { noremap = true, silent = true })
-                end
-                map("<leader>q", "<CMD>Sayonara!<CR>")
-                map("<leader>qq", "<CMD>Sayonara<CR>")
-                map("<M-w>", "<CMD>Sayonara<CR>")
+                local opts = { silent = true }
+                nnoremap("<A-w>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
+                nnoremap("<A-q>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
+                nnoremap("<A-j><A-k>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
             end,
         },
 
-        -- Open root previllage files
+        -- Escape From Insert Mode Without Delay When Typing
+        -- ------------------------
+        {
+            "max397574/better-escape.nvim",
+            config = function()
+                require("better_escape").setup({
+                    mapping = { "jk", "jj" },
+                    timeout = vim.o.timeoutlen,
+                    keys = "<Esc>",
+                })
+            end,
+        },
+
+        -- Open Previllage Files
+        -- ------------------------
         {
             "lambdalisue/suda.vim",
             setup = function()
@@ -451,54 +633,19 @@ return packer.startup({
             end,
         },
 
-        -- goyo.vim in lua
-        {
-            "folke/zen-mode.nvim",
-            cmd = "ZenMode",
-            setup = function()
-                vim.api.nvim_set_keymap("n", "<leader>gz", ":ZenMode<CR>", { noremap = true, silent = true })
-            end,
-            config = [[require("plugins.zen-mode")]],
-        },
-
-        -- limelight.vim in lua
-        {
-            "folke/twilight.nvim",
-            cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
-            config = function()
-                require("twilight").setup({
-                    dimming = {
-                        alpha = 0.30,
-                        color = { "Normal", "#ffffff" },
-                        inactive = false,
-                    },
-                    context = 5,
-                    treesitter = true,
-                    expand = {
-                        "function",
-                        "method",
-                        "if_statement",
-                        "table",
-                    },
-                    exclude = {},
-                })
-            end,
-        },
-
         -- Terminal Markdown Previewer
+        -- ------------------------
         {
             "npxbr/glow.nvim",
             cmd = "Glow",
             ft = "markdown",
             setup = function()
-                local map = function(lhs, rhs)
-                    vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
-                end
-                map("<leader>gg", "<CMD>Glow<CR>")
+                nnoremap("<leader>pm", "<CMD>Glow<CR>", "silent", "Preview File With Glow")
             end,
         },
 
         -- Markdown Previewer
+        -- ------------------------
         {
             "iamcco/markdown-preview.nvim",
             cmd = "MarkdownPreview",
@@ -513,6 +660,7 @@ return packer.startup({
         },
 
         -- Session management
+        -- ------------------------
         {
             "folke/persistence.nvim",
             disable = not enabled.persistence,
@@ -524,7 +672,12 @@ return packer.startup({
             end,
         },
 
-        -- Vim Silicon, Generate Image Source Code
+        -- Make You Better At Vim Movements.
+        -- --------------------------
+        { "ThePrimeagen/vim-be-good" },
+
+        -- Generate Image Source Code
+        -- ------------------------
         {
             "segeljakt/vim-silicon",
             cmd = "Silicon",
@@ -548,7 +701,20 @@ return packer.startup({
             end,
         },
 
+        -- -- Himalaya, CLI email client
+        -- -- ------------------------
+        -- {
+        --     "soywod/himalaya",
+        --     rtp = "vim",
+        --     disable = not enabled.himalaya,
+        --     setup = function()
+        --         vim.g.himalaya_mailbox_picker = "telescope"
+        --         vim.g.himalaya_telescope_preview_enabled = 1
+        --     end
+        -- },
+
         -- Discord Rich Presence for Neovim
+        -- ------------------------
         {
             "andweeb/presence.nvim",
             disable = not enabled.presence,
@@ -556,17 +722,14 @@ return packer.startup({
         },
 
         -- Startuptime
+        -- ------------------------
         {
             "tweekmonster/startuptime.vim",
             cmd = "StartupTime",
         },
     },
     config = {
-        -- compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
-        compile_path = vim.fn.stdpath("config") .. "/lua/plugins/compiled.lua",
-        auto_clean = false,
-        transitive_opt = true,
-        transitive_disable = true,
+        compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
         auto_reload_compiled = true,
         git = {
             depth = 1,

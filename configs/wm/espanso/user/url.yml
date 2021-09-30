@@ -2,38 +2,54 @@ name: url
 parent: default
 
 matches:
-  - trigger: ":blog"
+  ### Code
+  - triggers: ["blog!", "myweb!"]
     replace: "https://atalazer.github.io"
 
-  - trigger: ":ugh"
+  - triggers: ["github!", "gh!"]
     replace: "https://github.com"
 
-  - trigger: ":umd"
+  - triggers: ["gist!", "ghg!"]
+    replace: "https://gist.github.com"
+
+  - triggers: ["medium!", "md!"]
     replace: "https://medium.com"
 
-  - trigger: ":udt"
+  - triggers: ["devto!", "dt!"]
     replace: "https://dev.to"
 
-  - trigger: ":uhn"
+  - triggers: ["hackernoon!", "hn!"]
     replace: "https://hackernoon.com"
 
-  # Social Media
-  - trigger: ":ufb"
+  ### Social Media
+  - triggers: ["facebook!", "fb!"]
     replace: "https://facebook.com"
 
-  - trigger: ":uig"
+  - triggers: ["instagram!", "ig!"]
     replace: "https://instagram.com"
 
-  - trigger: ":utw"
+  - triggers: ["twitter!", "tw!"]
     replace: "https://twitter.com"
 
-  - trigger: ":uru"
+  - triggers: ["reddit!", "rd!"]
+    replace: "https://reddit.com"
+
+  - triggers: [":uru", "runixporn!", "rup!"]
     replace: "https://reddit.com/r/unixporn"
 
-  - trigger: ":urn"
+  - triggers: [":urn", "rneovim!", "rnvim!", "rnv!"]
     replace: "https://reddit.com/r/neovim"
 
-  # Quora Indonesia
-  - trigger: ":uiq"
+  - triggers: ["idquora!", "idq!"]
     replace: "https://id.quora.com"
+  
+  ### Others
+  - triggers: ["whatsapp!", "wa!"]
+    replace: "https://web.whatsapp.com/"
+
+  - triggers: ["telegram!", "tg!"]
+    replace: "https://web.telegram.org"
+
+  - triggers: ["elearning!", "el!"]
+    replace: "https://e.smpn1boyolali.sch.id/"
 

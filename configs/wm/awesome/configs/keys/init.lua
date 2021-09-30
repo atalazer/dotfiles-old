@@ -8,15 +8,15 @@ altkey = "Mod1"
 ctrlkey = "Control"
 shiftkey = "Shift"
 
-keys.global = require("configs.keys.global")
-keys.apps = require("configs.keys.apps")
-keys.controller = require("configs.keys.controller")
-keys.layout = require("configs.keys.layout")
-keys.tags = require("configs.keys.tags")
+keys.global = require(... ..".global")
+keys.apps = require(... ..".apps")
+keys.controller = require(... ..".controller")
+keys.layout = require(... ..".layout")
+keys.tags = require(... ..".tags")
 
-keys.button = require("configs.keys.button")
-keys.client = require("configs.keys.client")
-keys.desktopbuttons = require("configs.keys.desktop")
+keys.button = require(... ..".button")
+keys.client = require(... ..".client")
+keys.desktopbuttons = require(... ..".desktop")
 
 keys.init = function()
     awful.mouse.append_global_mousebindings({

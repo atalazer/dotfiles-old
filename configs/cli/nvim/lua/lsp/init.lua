@@ -8,43 +8,44 @@ end
 require("lsp.handlers")
 require("lsp.kind").init()
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.preselectSupport = true
-capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-capabilities.textDocument.completion.completionItem.documentationFormat = {
-    "markdown",
-    "text",
-}
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        "documentation",
-        "detail",
-        "additionalTextEdits",
-    },
-}
+local capabilities
+if pcall(require("cmp_nvim_lsp")) then
+    capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+else
+    capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.preselectSupport = true
+    capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+    capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+    capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+    capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+    capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+    capabilities.textDocument.completion.completionItem.documentationFormat = {
+        "markdown",
+        "text",
+    }
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+        properties = {
+            "documentation",
+            "detail",
+            "additionalTextEdits",
+        },
+    }
+end
 
 local servers = {
-    bashls = {
-        filetypes = { "bash", "sh", "zsh" },
-    },
-    cssls = {},
+    bashls = { filetypes = { "bash", "sh", "zsh" } },
     clangd = {},
-    html = {},
+    cssls = { cmd = { "vscode-css-language-server", "--stdio" } },
+    html = { cmd = { "vscode-html-language-server", "--stdio" } },
     -- jedi_language_server = require("lsp.server.jedi").config,
     jsonls = require("lsp.server.json").config,
-    pyright = {},
+    pylsp = {},
     rnix = {},
     sumneko_lua = require("lsp.server.sumneko_lua").config,
     svelte = require("lsp.server.svelte").config,
     texlab = require("lsp.server.texlab").config,
-    tailwindcss = {
-        filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
-    },
+    tailwindcss = { filetypes = { "html", "css", "javascriptreact", "typescriptreact" } },
     tsserver = require("lsp.server.tsserver").config,
     vimls = {},
     yamlls = {},
@@ -56,7 +57,6 @@ require("plugins.null-ls").setup()
 
 for name, opts in pairs(servers) do
     opts = vim.tbl_extend("force", {
-        flags = { debounce_text_changes = 150 },
         on_attach = Util.lsp_on_attach,
         on_init = Util.lsp_on_init,
         capabilities = capabilities,

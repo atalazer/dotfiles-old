@@ -1,0 +1,151 @@
+colors:
+  completion:
+    # fg: ["fg", "white", "fg"]
+    odd:
+      bg: "bg"
+    even:
+      bg: "bg"
+    category:
+      fg: "fg"
+      bg: "bg"
+      border:
+        top: "bg"
+        bottom: "bg"
+    item:
+      selected:
+        fg: "bg"
+        bg: "blue"
+        match:
+          fg: "bg"
+        border:
+          top: "blue"
+          bottom: "blue"
+    match:
+      fg: "yellow"
+    scrollbar:
+      fg: "blue"
+      bg: "bg"
+  downloads:
+    bar:
+      bg: "bg"
+    start:
+      fg: "blue"
+      bg: "bg"
+    stop:
+      fg: "green"
+      bg: "bg"
+    error:
+      fg: "red"
+      bg: "bg"
+    # system.fg: "rgb"
+    # system.bg: "rgb"
+  hints:
+    fg: "yellow"
+    bg: "black"
+    match:
+      fg: "yellow"
+  keyhint:
+    fg: "fg"
+    suffix:
+      fg: "yellow"
+      # bg: "rgba(0, 0, 0, 80%)"
+  messages:
+    error:
+      fg: "fg"
+      bg: "red"
+      border: "red"
+    warning:
+      fg: "black"
+      bg: "yellow"
+      border: "yellow"
+    info:
+      fg: "fg"
+      bg: "bg"
+      border: "bg"
+  prompts:
+    fg: "fg"
+    bg: "bg"
+    # border: "1px solid {{black}}"
+    selected:
+      bg: "magenta"
+  statusbar:
+    normal:
+      fg: "fg"
+      bg: "bg"
+    insert:
+      fg: "bg"
+      bg: "blue"
+    passthrough:
+      fg: "bg"
+      bg: "magenta"
+    private:
+      fg: "fg"
+      bg: "black"
+    command:
+      fg: "white"
+      bg: "black"
+      private:
+        fg: "white"
+        bg: "black"
+    caret:
+      fg: "black"
+      bg: "blue"
+      selection:
+        fg: "black"
+        bg: "yellow"
+    progress:
+      bg: "light_white"
+    url:
+      fg: "fg"
+      error:
+        fg: "red"
+      hover:
+        fg: "yellow"
+      success:
+        http:
+          fg: "fg"
+        https:
+          fg: "fg"
+  tabs:
+    bar:
+      bg: "bg"
+    odd:
+      fg: "fg"
+      bg: "bg"
+    even:
+      fg: "fg"
+      bg: "bg"
+    selected:
+      odd:
+        fg: "light_cyan"
+        bg: "black"
+      even:
+        fg: "light_cyan"
+        bg: "black"
+    pinned:
+      odd:
+        fg: "bg"
+        bg: "fg"
+      even:
+        fg: "bg"
+        bg: "fg"
+      selected:
+        odd:
+          fg: "light_cyan"
+          bg: "black"
+        even:
+          fg: "light_cyan"
+          bg: "black"
+    indicator:
+      start: "blue"
+      stop: "green"
+      error: "red"
+      # system: "rgb"
+  # webpage:
+  #   darkmode:
+  #     enabled: False
+  #     algorithm: "lightness-cielab"
+  #     grayscale.all: True
+  #     grayscale.images: 0.7
+  #     policy.images: "never"
+  #     policy.page: "smart"

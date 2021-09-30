@@ -1,3 +1,4 @@
+import yaml
 import subprocess
 
 def readXresources(prefix):
@@ -291,7 +292,7 @@ c.colors.statusbar.progress.bg = x["light_white"]
 
 # Default foreground color of the URL in the statusbar.
 # Type: QssColor
-c.colors.statusbar.url.fg = x["white"]
+c.colors.statusbar.url.fg = x["fg"]
 
 # Foreground color of the URL in the statusbar on error.
 # Type: QssColor
@@ -299,7 +300,7 @@ c.colors.statusbar.url.error.fg = x["red"]
 
 # Foreground color of the URL in the statusbar for hovered links.
 # Type: QssColor
-c.colors.statusbar.url.hover.fg = x["blue"]
+c.colors.statusbar.url.hover.fg = x["yellow"]
 
 # Foreground color of the URL in the statusbar on successful load
 # (http).
@@ -432,3 +433,16 @@ c.colors.webpage.darkmode.policy.images = "never"
 # Which pages to apply dark mode to.
 # Type: String
 c.colors.webpage.darkmode.policy.page = "smart"
+
+with (config.configdir/'colors.yml').open() as f:
+    yaml_data = yaml.safe_load(f)
+
+def dict_attrs(obj, path=''):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            yield from dict_attrs(v, '{}.{}'.format(path, k) if path else k)
+    else:
+        yield path, obj
+
+for k, v in dict_attrs(yaml_data):
+    config.set(k, x[v])

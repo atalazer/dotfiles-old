@@ -26,5 +26,10 @@
       "WARNING: ${1:Summary}"
     ],
     "description": "WARNING reminder"
+  },
+  "bash": {
+    "prefix": ["bash", "#!", "shebang"],
+    "body": "#!/usr/bin/env bash",
+    "description": "Add shebang for shell script"
   }
 }

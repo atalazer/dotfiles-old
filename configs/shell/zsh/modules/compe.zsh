@@ -28,13 +28,12 @@ zstyle ':completion:*:options' description yes
 zstyle ':completion:*:options' auto-description '%d'
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
-# --- Cache
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path "${ZDOTDIR:-${HOME}}/.zcompcache"
 
 zstyle ':completion:*' special-dirs true
 
-zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 if [[ "$OSTYPE" = solaris* ]]; then
@@ -80,3 +79,17 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
         usbmux uucp vcsa wwwrun xfs '_*'
 zstyle '*' single-ignored show
 
+# disable sort when completing options of any command
+zstyle ':completion:complete:*:options' sort false
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+
+# fzf-tab
+# ------------------
+zstyle ':fzf-tab:*' fzf-command fzf
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:*' continuous-trigger '/'
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'

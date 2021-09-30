@@ -188,8 +188,6 @@ ruled.client.connect_signal("request::rules", function()
         callback = function(c)
             -- Make it floating, ontop and move it out of the way if the current tag is maximized
             if awful.layout.get(awful.screen.focused()) == awful.layout.suit.max then
-                c.floating = true
-                c.ontop = true
                 c.width = screen_width * 0.5
                 c.height = screen_height * 0.5
                 awful.placement.bottom_right(c, {
@@ -232,7 +230,6 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule({
         rule_any = {
             class = {
-                "libreoffice",
                 "DesktopEditors",
                 "Wps",
             },
@@ -244,9 +241,12 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             titlebars_enabled = false,
-            raise = true,
+            floating = true,
             placement = centered_client_placement,
         },
+        callback = function(c)
+            awful.placement.maximize(c)
+        end,
     })
     -- }}}
 

@@ -16,7 +16,7 @@ M.config = function()
         grey_out_search_area = true,
         match_only_the_start_of_same_char_seqs = true,
         limit_ft_matches = 8,
-        full_inclusive_prefix_key = "<c-x>",
+        full_inclusive_prefix_key = "<C-x>",
     })
 end
 

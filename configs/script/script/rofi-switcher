@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # -----
 # Window switcher for AwesomeWM
 # Uses rofi for fuzzy matching based on window name, class and tag.

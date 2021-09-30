@@ -88,7 +88,7 @@ AFTER() {
 # ============================================================
 usage() {
     printf "%s" "\
-Usage $(basename $0):
+Usage $(basename "$0"):
    -h, --help           Show this help message and exit
    -e, --edit           Edit Config
    -l, --list           List All Available Themes and Icons

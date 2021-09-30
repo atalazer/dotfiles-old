@@ -11,25 +11,45 @@ wk.register({
     [";s"] = "Stage Hunk",
     [";u"] = "Undo Stage Hunk",
 
+    -- LSP
+    [";l"] = "Hover",
+    ["[l"] = "LSP Diagnostic Previous",
+    ["]l"] = "LSP Diagnostic Next",
+
+    -- Misc
+    gc = "Comment",
+    ga = "Align",
+
     -- User Custom
-    csu = "Lowercase First Letter",
-    csU = "Uppercase First Letter",
+    -- csu = "Lowercase First Letter",
+    -- csU = "Uppercase First Letter",
+    ["[e"] = "Move Line to Previous",
+    ["]e"] = "Move Line to Next",
+
+
+    ["[e"] = "Add empty lines down",
+    ["]e"] = "Add empty lines up",
 })
 
 -- Leader Key
 wk.register({
-    [","] = "Curstr Toggle",
-    cc = "Colorizer Toggle",
+    c = {
+        name = "Color",
+        c = "Colorizer Toggle",
+    },
+    q = "Quit",
+    x = "Hop Pattern",
+    z = "Hop Word",
     g = {
-        name = "Misc",
-        g = "Glow",
-        f = "Format",
+        name = "Git",
+        g = "Git",
         t = "Lazygit",
     },
     e = {
         name = "Config",
         c = "Open Config File",
         r = "Reload Config",
+        m = "Edit Macro"
     },
     f = {
         name = "Telescope",
@@ -45,23 +65,40 @@ wk.register({
     },
     l = {
         name = "LSP",
-        ["["] = "Prev Diagnostic",
-        ["]"] = "Next Diagnostic",
         a = "Code Action",
         c = "Code Lens",
         d = "Definition",
         l = "Line Diagnostic",
-        f = "Finder",
+        f = "Format",
         r = "LSP Reference",
         R = "Rename",
         t = "LSP Trouble",
     },
+    n = {
+        name = "Notes",
+        i = "Go To Index",
+        n = "Search Notes",
+    },
+    p = {
+        name = "Preview",
+        m = "Glow Markdown"
+    },
+    r = { name = "Run" },
+    s = {
+        name = "Misc",
+        r = "Sniprun Run",
+        c = "Sniprun Close",
+        a = "Toggle Tree",
+        s = "Toggle Sidebar",
+    },
+    t = { name = "Table" },
 }, {
     prefix = "<leader>",
 })
 
 -- Local Leader Key
 wk.register({
+    l = "Source Current .vim or .lua File",
     s = {
         name = "Source",
         s = "Current",
@@ -102,7 +139,7 @@ wk.setup({
     icons = {
         breadcrumb = "→",
         separator = "➜",
-        group = "±",
+        group = "± ",
     },
     window = {
         border = Util.borders,

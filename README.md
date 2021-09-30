@@ -1,6 +1,5 @@
 # Dotfiles ~/
 > Place to backup my configuration files.
->
 > Currently available for Linux.
 
 # Table of Content
@@ -82,10 +81,8 @@ export DOTS="$HOME/.dotfiles"
 git clone https://github.com/atalazer/dotfiles.git $DOTS
 cd $DOTS
 
-./setup linux
-# or
-nix-shell -p nixUnstable --command \
-   "nix build --experimental-features 'nix-command flakes' '.#linux'" --show-trace
+./setup build linux     # To Build
+./setup apply           # To Apply
 ```
 
 ## Manually

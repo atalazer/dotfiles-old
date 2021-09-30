@@ -1,27 +1,29 @@
 local k = vim.keymap
-local nnoremap = k.nnoremap
-local inoremap = k.inoremap
-local vnoremap = k.vnoremap
+local nnoremap = function(...) k.nnoremap({...}) end
+local vnoremap = function(...) k.vnoremap({...}) end
+local inoremap = function(...) k.inoremap({...}) end
 
 local M = {}
 
 local buf = vim.lsp.buf
-local diagnostic = vim.lsp.diagnostic
 local codelens = vim.lsp.codelens
+local diagnostic = vim.lsp.diagnostic
 local telescope = require("telescope.builtin")
 
 M.mappings = function()
-    inoremap({ "<C-l>", buf.signature_help, { silent = true } })
-    nnoremap({ "<Leader>la", telescope.lsp_code_actions, { silent = true } })
-    nnoremap({ "<Leader>gf", buf.formatting_seq_sync, { silent = true } })
-    vnoremap({ "<Leader>gf", buf.range_formatting, { silent = true } })
-    nnoremap({ "<Leader>ld", buf.definition, { silent = true } })
-    nnoremap({ "<Leader>lc", codelens.run, { silent = true } })
-    nnoremap({ "<Leader>lr", telescope.lsp_references, { silent = true } })
-    nnoremap({ "<Leader>lR", buf.rename, { silent = true } })
-    nnoremap({ "<Leader>lt", "<Cmd>TroubleToggle<CR>", { silent = true } })
-    nnoremap({ ";l", buf.hover, { silent = true } })
-    nnoremap({
+    local opts = mapx.silent
+    mapx.nname("<Leader>l", "LSP")
+    inoremap( "<C-l>", buf.signature_help, opts )
+    nnoremap( "<Leader>la", telescope.lsp_code_actions, opts )
+    nnoremap( "<Leader>lf", buf.formatting_seq_sync, opts )
+    vnoremap( "<Leader>lf", buf.range_formatting, opts )
+    nnoremap( "<Leader>ld", buf.definition, opts )
+    nnoremap( "<Leader>lc", codelens.run, opts )
+    nnoremap( "<Leader>lr", telescope.lsp_references, opts )
+    nnoremap( "<Leader>lR", buf.rename, opts )
+    nnoremap( "<Leader>lt", "<Cmd>TroubleToggle<CR>", opts )
+    nnoremap( ";l", buf.hover, opts )
+    nnoremap(
         "<Leader>ll",
         function()
             diagnostic.show_line_diagnostics({
@@ -29,9 +31,9 @@ M.mappings = function()
                 border = Util.borders,
             })
         end,
-        { silent = true },
-    })
-    nnoremap({
+        opts
+    )
+    nnoremap(
         "]l",
         function()
             diagnostic.goto_next({
@@ -41,9 +43,9 @@ M.mappings = function()
                 },
             })
         end,
-        { silent = true },
-    })
-    nnoremap({
+        opts
+    )
+    nnoremap(
         "[l",
         function()
             diagnostic.goto_prev({
@@ -53,8 +55,8 @@ M.mappings = function()
                 },
             })
         end,
-        { silent = true },
-    })
+        opts
+    )
 end
 
 return M

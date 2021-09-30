@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/usr/bin/env bash
 # ncmpcpp --config ~/.config/ncmpcpp/config-art
 ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug
 

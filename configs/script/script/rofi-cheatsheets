@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 IMG_VIEW="opener"
 DMENU="rofi -dmenu -i -p Cheatsheets"

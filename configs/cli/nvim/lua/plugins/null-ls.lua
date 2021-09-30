@@ -10,17 +10,12 @@ M.setup = function()
     vim.env.PRETTIERD_DEFAULT_CONFIG = vim.fn.stdpath("config") .. "/.prettierrc"
 
     null_ls.setup({
-        debounce = 150,
         sources = {
             -- b.code_actions.gitsigns,
-            -- b.diagnostics.codespell,
-            -- b.diagnostics.chktex,
             b.diagnostics.shellcheck,
-            -- b.diagnostics.vale,
-            -- b.diagnostics.vint,
-            -- b.diagnostics.eslint.with({
-            --     command = "eslint_d",
-            -- }),
+            b.diagnostics.eslint.with({
+                command = "eslint_d",
+            }),
             b.formatting.black,
             b.formatting.nixfmt,
             b.formatting.prettier,

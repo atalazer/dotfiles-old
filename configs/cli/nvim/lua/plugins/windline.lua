@@ -1,11 +1,10 @@
----@diagnostic disable: undefined-field
-
 local windline = require("windline")
+local wlfloatline = require("wlfloatline")
 local helper = require("windline.helpers")
-local b_components = require("windline.components.basic")
 local state = _G.WindLine.state
 
 local sep = helper.separators
+local comps = require("windline.components.basic")
 local lsp_comps = require("windline.components.lsp")
 local git_comps = require("windline.components.git")
 
@@ -26,7 +25,7 @@ local offset_width = 20
 local luffy_text = "" -- For Animations
 local unsaved_text = "" -- For Animations
 
-basic.divider = { b_components.divider, hl_list.Black }
+basic.divider = { comps.divider, hl_list.Black }
 basic.bg = { " ", "StatusLine" }
 
 basic.vi_mode = {
@@ -81,22 +80,22 @@ basic.file = {
         if vim.api.nvim_win_get_width(winnr) > breakpoint_width then
             return {
                 { " ", "default" },
-                { b_components.cache_file_icon({ default = "" }), "file" },
+                { comps.cache_file_icon({ default = "" }), "file" },
                 { " ", "default" },
-                { b_components.cache_file_name("[No Name]", "unique"), "file" },
-                { b_components.file_modified(unsaved_icon), "default" },
-                { b_components.cache_file_size(), "default" },
-                { " ", "default" },
+                { comps.cache_file_name("[No Name]", "unique"), "file" },
+                { comps.file_modified(unsaved_icon), "default" },
+                -- { b_components.cache_file_size(), "default" },
+                -- { " ", "default" },
                 { sep.slant_left_2, "" },
             }
         end
         return {
             { " ", "default" },
-            { b_components.cache_file_icon({ default = "" }), "default" },
+            { comps.cache_file_icon({ default = "" }), "default" },
             { " ", "default" },
-            { b_components.cache_file_name("[No Name]", "unique"), "" },
+            { comps.cache_file_name("[No Name]", "unique"), "" },
             { " ", "" },
-            { b_components.file_modified(" "), "" },
+            { comps.file_modified(unsaved_icon), "" },
             { " ", "default" },
             { sep.slant_left_2, "" },
         }
@@ -123,18 +122,18 @@ basic.info = {
                 { " ", state.mode[2] },
                 { file_type, state.mode[2] },
                 { " ", state.mode[2] },
-                { b_components.line_col, state.mode[2] },
+                { comps.line_col, state.mode[2] },
                 { " ", state.mode[2] },
-                { b_components.progress, state.mode[2] },
+                { comps.progress, state.mode[2] },
                 { " ", state.mode[2] },
             }
         end
         return {
             { sep.slant_left, state.mode[2] .. "Before" },
             { " ", state.mode[2] },
-            { b_components.line_col, state.mode[2] },
+            { comps.line_col, state.mode[2] },
             { " ", state.mode[2] },
-            { b_components.progress, state.mode[2] },
+            { comps.progress, state.mode[2] },
             { " ", state.mode[2] },
         }
     end,
@@ -149,12 +148,12 @@ basic.git = {
     },
     width = breakpoint_width,
     text = function(_, winnr)
-        if vim.api.nvim_win_get_width(winnr) > breakpoint_width + offset_width and git_comps.is_git() then
+        if vim.api.nvim_win_get_width(winnr) > breakpoint_width and git_comps.is_git() then
             return {
                 { " ", "" },
-                { git_comps.diff_added({ format = " %s", show_zero = true }), "green" },
-                { git_comps.diff_removed({ format = "  %s", show_zero = true }), "red" },
-                { git_comps.diff_changed({ format = " 柳%s", show_zero = true }), "blue" },
+                { git_comps.diff_added({ format = " %s", show_zero = false }), "green" },
+                { git_comps.diff_removed({ format = "  %s", show_zero = false }), "red" },
+                { git_comps.diff_changed({ format = " 柳%s", show_zero = false }), "blue" },
             }
         end
         return ""
@@ -169,7 +168,7 @@ basic.git_branch = {
     },
     text = function(_, winnr)
         local branch_name = get_git_branch()
-        if vim.api.nvim_win_get_width(winnr) > breakpoint_width + 20 and #branch_name > 1 then
+        if vim.api.nvim_win_get_width(winnr) > breakpoint_width and #branch_name > 1 then
             return {
                 { branch_name, "yellow" },
                 { " ", "default" },
@@ -188,12 +187,12 @@ basic.lsp = {
     },
     width = breakpoint_width,
     text = function(_, winnr)
-        if vim.api.nvim_win_get_width(winnr) > breakpoint_width + 20 and lsp_comps.check_lsp() then
+        if vim.api.nvim_win_get_width(winnr) > breakpoint_width and lsp_comps.check_lsp() then
             return {
-                { lsp_comps.lsp_error({ format = " %s", show_zero = true }), "red" },
-                { lsp_comps.lsp_warning({ format = "  %s", show_zero = true }), "yellow" },
-                { lsp_comps.lsp_info({ format = "  %s", show_zero = true }), "blue" },
-                { lsp_comps.lsp_hint({ format = "  %s", show_zero = true }), "green" },
+                { lsp_comps.lsp_error({ format = " %s", show_zero = false }), "red" },
+                { lsp_comps.lsp_warning({ format = "  %s", show_zero = false }), "yellow" },
+                { lsp_comps.lsp_info({ format = "  %s", show_zero = false }), "blue" },
+                { lsp_comps.lsp_hint({ format = "  %s", show_zero = false }), "green" },
             }
         end
         return ""
@@ -225,20 +224,20 @@ basic.inactive = {
     text = function(_, winnr)
         if vim.api.nvim_win_get_width(winnr) > breakpoint_width + 20 then
             return {
-                { b_components.line_col, "text" },
+                { comps.line_col, "text" },
                 { sep.slant_left_2, "separator" },
-                { b_components.divider, "bg" },
-                { b_components.file_name(), "text" },
-                { b_components.cache_file_name("[No Name]", "unique"), "text" },
-                { b_components.divider, "bg" },
+                { comps.divider, "bg" },
+                { comps.file_name, "text" },
+                { comps.cache_file_name("[No Name]", "unique"), "text" },
+                { comps.divider, "bg" },
                 { sep.slant_right_2, "separator" },
-                { b_components.progress, "text" },
+                { comps.progress, "text" },
             }
         end
         return {
-            { b_components.divider, "bg" },
-            { b_components.cache_file_name("[No Name]", "unique"), "text" },
-            { b_components.divider, "bg" },
+            { comps.divider, "bg" },
+            { comps.cache_file_name("[No Name]", "unique"), "text" },
+            { comps.divider, "bg" },
         }
     end,
 }
@@ -272,7 +271,7 @@ local explorer = {
         { sep.slant_left_2, { "black", "black_light" } },
         basic.divider,
         { sep.slant_right_2, { "black", "black_light" } },
-        { b_components.file_name(""), { "white", "black_light" } },
+        { comps.file_name(""), { "white", "black_light" } },
     },
     show_inactive = true,
     show_last_status = false,
@@ -285,8 +284,8 @@ local default = {
         basic.file,
         basic.git_branch,
         basic.git,
-        basic.divider,
-        basic.lsp_server_name,
+        -- basic.divider,
+        -- basic.lsp_server_name,
         basic.divider,
         basic.lsp,
         { " ", hl_list.Black },
@@ -296,12 +295,7 @@ local default = {
 }
 
 local minimal = {
-    filetypes = {
-        "",
-        "help",
-        "text",
-        "tsplayground",
-    },
+    filetypes = { "", "help", "text", "tsplayground" },
     active = {
         basic.vi_mode,
         basic.file,
@@ -315,10 +309,15 @@ local minimal = {
     },
 }
 
+hidden = {
+    filetypes = { "alpha" },
+    active = { basic.divider },
+    inactive = { basic.divider },
+}
+
 windline.setup({
     colors_name = function(colors)
         colors.File = colors.white_light
-
         return colors
     end,
     statuslines = {
@@ -327,9 +326,26 @@ windline.setup({
         explorer,
 
         minimal,
+        hidden,
     },
 })
 
+-- -- Setup Floatline
+-- wlfloatline.setup({
+--     interval = 300,
+--     ui = {
+--         active_char = "▁",
+--         active_color = "blue",
+--         -- active_hl = nil,
+--     },
+--     skip_filetypes = {
+--         "TelescopePrompt",
+--         "NvimTree",
+--         "lir",
+--     },
+-- })
+
+-- Animations
 -- need to use font family: Fira Code iCursive S12
 -- https://github.com/windwp/windline.nvim/wiki/fonts/FiraCodeiCursiveS12-Regular.ttf
 local luffy = { "􏾾", "􏾿", "􏿀", "􏿁", "􏿂", "􏿃" }
@@ -344,31 +360,15 @@ animation.basic_animation({
     end,
 })
 
--- local unsaved = { " ", " " }
-local unsaved = { " ", " " }
-
 animation.basic_animation({
     timeout = nil,
     delay = 200,
     interval = 500,
-    effect = efffects.list_text(unsaved),
+    effect = efffects.list_text({ " ", " " }),
     on_tick = function(value)
-        unsaved_text = value or  " "
+        unsaved_text = value or " "
     end,
 })
-
--- local colors = require("xresources").colors()
-
--- local color_list = {
---     colors.red,
---     colors.green,
---     colors.blue0,
---     colors.magenta,
---     colors.red1,
---     colors.teal,
---     colors.blue7,
---     colors.purple,
--- }
 
 animation.animation({
     data = {

@@ -1,23 +1,20 @@
 local M = {}
-local dev = false
+local dev = true
 
 M.setup = function()
-    local maps = {
-        ["gf"] = { "openable", "{ action = 'open' }" },
-        [".,"] = { "togglable" },
-        ["<leader><leader>"] = { "togglable" },
-    }
-
-    for key, action in pairs(maps) do
-        local exe = action[1] or ""
-        local opt = action[2] or "{}"
-        vim.api.nvim_set_keymap(
-            "n",
-            tostring(key),
-            string.format("<CMD>lua require('curstr').execute('%s', %s)<CR>", exe, opt),
-            { silent = true, noremap = true }
-        )
-    end
+    local opts = { silent = true }
+    nnoremap(
+        "gf",
+        "<CMD>lua require('curstr').execute('openable', {action = 'open'})<CR>",
+        opts,
+        "Go To File Under Cursor"
+    )
+    nnoremap(
+        "<Leader><Leader>",
+        "<CMD>lua require('curstr').execute('togglable')<CR>",
+        opts,
+        "Toggle Word Under Cursor"
+    )
 end
 
 M.config = function()
@@ -38,6 +35,7 @@ M.config = function()
             { "fg", "bg" },
             { "white", "black" },
             { "light", "dark" },
+            { "next", "previous" },
         },
     }
 
@@ -70,6 +68,12 @@ M.config = function()
 
     require("curstr").setup({
         source_aliases = source,
+        sources = {
+            ["vim/autoload_function"] = {
+                opts = { include_packpath = true },
+                filetypes = { "vim", "python", "lua" },
+            },
+        },
     })
 end
 

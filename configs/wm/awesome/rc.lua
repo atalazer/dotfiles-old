@@ -81,11 +81,7 @@ user = {
     autostart_debug = false,
     autostart = {
         "pkill dunst",
-        [[xautolock -time 15 \
-            -detectsleep -resetsaver \
-            -locker "systemctl suspend && awesome-client 'lock_screen_show()'" \
-            -notify 5 -notifier "notify-send 'Lockscreen' 'System will be suspended in 5s From now'"
-        ]],
+        "autolock"
     },
 
     -- Enable rounded for client/window
@@ -366,9 +362,12 @@ end)
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
-
--- collectgarbage("setpause", 160)
--- collectgarbage("setstepmul", 400)
-
-collectgarbage("setpause", 110)
-collectgarbage("setstepmul", 1000)
+gears.timer({
+    timeout = 30,
+    autostart = true,
+    callback = function()
+        collectgarbage()
+        collectgarbage("setpause", 110)
+        collectgarbage("setstepmul", 1000)
+    end,
+})

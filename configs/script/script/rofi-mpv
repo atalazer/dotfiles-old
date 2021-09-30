@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # dmenu_mpv
 # Copyright (c) 2020 M. Nabil Adani <nblid48[at]gmail[dot]com>
 #

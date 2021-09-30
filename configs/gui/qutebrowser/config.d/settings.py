@@ -1,25 +1,3 @@
-# Aliases for commands. The keys of the given dictionary are the
-# aliases, while the values are the commands they map to.
-# Type: Dict
-c.aliases = {
-    "q": "close",
-    "qa": "quit",
-    "w": "session-save",
-    "wq": "quit --save",
-    "wqa": "quit --save",
-    "dl": "spawn --userscript open_download",
-    "settings": "open -t qute://settings",
-    "changelog": "open -t qute://help/changelog.html",
-    "pass": "spawn --userscript qute-pass",
-    "mpv": "spawn --userscript view_in_mpv",
-    "reload-config": "config-source",
-    "private": "set content.private_browsing true",
-    "noprivate": "set content.private_browsing false",
-    "open-private": "open -p",
-    "adblock-off" : "set content.blocking.enabled false",
-    "adblock-on" : "set content.blocking.enabled true",
-}
-
 # Require a confirmation before quitting the application.
 # Type: ConfirmQuit
 # Valid values:
@@ -118,6 +96,7 @@ c.qt.force_software_rendering = "none"
 # running QtWebEngine on Wayland.
 # Type: String
 c.qt.force_platform = None
+c.qt.force_platformtheme = "qt5ctl"
 
 # Which Chromium process model to use. Alternative process models use
 # less resources, but decrease security and robustness. See the
@@ -300,7 +279,7 @@ c.keyhint.delay = 500
 # Duration (in milliseconds) to show messages in the statusbar for. Set
 # to 0 to never clear messages.
 # Type: Int
-c.messages.timeout = 2000
+c.messages.timeout = 5000
 
 # Show a filebrowser in upload/download prompts.
 # Type: Bool
@@ -450,13 +429,13 @@ c.url.searchengines = {
     "DEFAULT": "https://duckduckgo.com/?q={}",
     "d": "https://duckduckgo.com/?q={}",
     "g": "https://www.google.com/search?hl=en&q={}",
+    "r": "https://www.reddit.com/search/?q={}",
     "au": "https://aur.archlinux.org/packages/?O=0&K={}",
     "aw": "https://wiki.archlinux.org/?search={}",
     "gh": "https://github.com/search?q={}",
     "js": "https://www.npmjs.com/search?q={}",
     "py": "https://pypi.org/search/?q={}",
     "np": "https://search.nixos.org/packages?channel=unstable&sort=relevance&type=packages&query={}",
-    "r": "https://www.reddit.com/search/?q={}",
     "yt": "https://www.youtube.com/results?search_query={}",
 }
 

@@ -1,13 +1,26 @@
 local awful = require("awful")
 local gears = require("gears")
 local decorations = require("decorations")
-
+local bling = require("lib.bling")
 local helpers = require("helpers")
+local l = require("configs.keys.lib")
+
 local delta = 20
 
 local keys = {}
 
+local focus_direction = function(direction)
+    awful.client.focus.bydirection(direction)
+    -- bling.module.flash_focus.flashfocus(client.focus)
+end
+
 keys.globals = gears.table.join(
+    l.keys("Tabs", { altkey }, {
+        a = { bling.module.tabbed.pick_with_dmenu, "Pick client to add" },
+        s = { bling.module.tabbed.iter, "Iterate currently focused" },
+        r = { bling.module.tabbed.pop, "Removes focused client" }
+    }),
+
     -- Window switcher
     awful.key({ altkey }, "Tab", function()
         window_switcher_show(awful.screen.focused())
@@ -18,52 +31,52 @@ keys.globals = gears.table.join(
 
     -- Focus client by direction
     awful.key({ superkey }, "Down", function()
-        awful.client.focus.bydirection("down")
+        focus_direction("down")
     end, {
         description = "Down",
         group = "Client: Focus",
     }),
     awful.key({ superkey }, "j", function()
-        awful.client.focus.bydirection("down")
+        focus_direction("down")
     end, {
         description = "Down",
         group = "Client: Focus",
     }),
 
     awful.key({ superkey }, "Up", function()
-        awful.client.focus.bydirection("up")
+        focus_direction("up")
     end, {
         description = "Up",
         group = "Client: Focus",
     }),
     awful.key({ superkey }, "k", function()
-        awful.client.focus.bydirection("up")
+        focus_direction("up")
     end, {
         description = "Up",
         group = "Client: Focus",
     }),
 
     awful.key({ superkey }, "Left", function()
-        awful.client.focus.bydirection("left")
+        focus_direction("left")
     end, {
         description = "Left",
         group = "Client: Focus",
     }),
     awful.key({ superkey }, "h", function()
-        awful.client.focus.bydirection("left")
+        focus_direction("left")
     end, {
         description = "Left",
         group = "Client: Focus",
     }),
 
     awful.key({ superkey }, "Right", function()
-        awful.client.focus.bydirection("right")
+        focus_direction("right")
     end, {
         description = "Right",
         group = "Client: Focus",
     }),
     awful.key({ superkey }, "l", function()
-        awful.client.focus.bydirection("right")
+        focus_direction("right")
     end, {
         description = "Right",
         group = "Client: Focus",

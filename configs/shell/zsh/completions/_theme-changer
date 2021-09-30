@@ -1,0 +1,24 @@
+#compdef theme-changer
+
+_theme-changer() {
+    local I="-h --help --version"
+    local ret=1
+    local -a args
+    args+=(
+        "($I -s --set)"{-s,--set}'[Set GTK, Icon, or Cursor Theme]'
+        "($I -g --get)"{-g,--get}'[Get GTK, Icon, or Cursor Theme]'
+        "($I -l --list)"{-l,--list}'[List All Available Themes and Icons]'
+        "($I -e --edit)"{-e,--edit}'[Edit Config]'
+        "($I -a --apply)"{-a,--apply}'[Apply 1{Themes} 2{Icons} 3{cursor}]'
+        "($I -L --light)"{-L,--light}'[Turn On Light Mode]'
+        "($I -D --dark)"{-D,--dark}'[Turn On Dark Mode]'
+        "($I -t --toggle)"{-t,--toggle}'[Toggle Dark and Light Mode]'
+        '(- *)'{-h,--help}'[Display help and exit]'
+        '(- *)--version[Output version information and acknowledgments]'
+        # '*:file:_files'
+    )
+    _arguments -w -s -S $args[@] && ret=0
+    return ret
+}
+
+_theme-changer

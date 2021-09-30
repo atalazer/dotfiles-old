@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+find_note() {
+    dir=$HOME/Documents/Notes
+    while [ -n "$1" ]; do
+        case "$1" in
+        "-d" | "--dir")
+            shift
+            dir="$1"
+            ;;
+        esac
+        shift
+    done
+
+    file="$(
+        find "$dir" -iname '*.md' -exec basename -s .md {} \; |
+            fzf --bind 'J:preview-down,K:preview-up' --height 100% \
+                --preview "if file -i {}|grep -q binary; then file -b {};\
+                           else glow -s dark $dir/{}.md;\
+                           fi"
+    )"
+
+    if [[ -n $file ]]; then
+        nvim +ZenMode "$dir"/"$file".md
+    fi
+}
+
+notes() {
+    while [ -n "$1" ]; do
+        case "$1" in
+        "-f" | "--find") find_note "$@";;
+        esac
+        shift
+    done
+}

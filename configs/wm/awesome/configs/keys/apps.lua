@@ -6,52 +6,46 @@ local l = require("configs.keys.lib")
 
 local keys = gears.table.join(
     -- ===================================== Prompt {{{
-    l.keys("Apps: Prompt", { superkey }, {
-        a = { "rofi-center", "Rofi Center" },
-        -- c = { "rofi-calc", "Calculator" },
-        c = { "rofi-cheatsheets", "Cheatsheets" },
-        d = { "rofi -show", "Rofi" },
-        e = { "rofi-edit", "Edit Config" },
-        g = { "rofi-spotlight", "Global Menu" },
-        m = { "rofi-mpv -f", "Search Video and Play It" },
-        n = { apps.network, "Network Prompt" },
-        p = { apps.password, "Password Prompt" },
-        r = { "rofi-app", "App Launcher" },
-        t = { "rofi-translate -i", "Translate" },
-        F12 = { apps.record, "Record Menu" },
-        Insert = { apps.clipboard, "Clipboard Manager" },
-        Print = { "shot -i", "Shot Menu" },
-    }),
-
-    l.keys("Apps: Prompt", { superkey, shiftkey }, {
-        t = { "rofi-translate -c", "Translate From Clipboard" },
-        Print = { "shot -o", "Shot Image to Text" },
-        Insert = { "rofi-translate -m", "Translate from Image" },
+    l.set_keymap("Apps: Prompt", {
+        ["W|a"] = { "rofi-center", "Rofi Center" },
+        ["W|c"] = { "rofi-calc", "Calculator" },
+        -- ["W|c"] = { "rofi-cheatsheets", "Cheatsheets" },
+        ["W|d"] = { "rofi -show", "Rofi" },
+        ["W|e"] = { "rofi-edit", "Edit Config" },
+        ["W|g"] = { "rofi-spotlight", "Global Menu" },
+        ["W|m"] = { "rofi-mpv -f", "Search Video and Play It" },
+        ["W|n"] = { apps.network, "Network Prompt" },
+        ["W|p"] = { apps.password, "Password Prompt" },
+        ["W|r"] = { "rofi-app", "App Launcher" },
+        ["W|t"] = { "rofi-translate -i", "Translate" },
+        ["W|F12"] = { apps.record, "Record Menu" },
+        ["W|Insert"] = { apps.clipboard, "Clipboard Manager" },
+        ["W|Print"] = { "shot -i", "Shot Menu" },
+        ["WS|t"] = { "rofi-translate -c", "Translate From Clipboard" },
+        ["WS|Print"] = { "shot -o", "Shot Image to Text" },
+        ["WS|Insert"] = { "rofi-translate -m", "Translate from Image" },
     }),
 
     -- }}}
 
     -- ===================================== GUI Apps {{{
 
-    l.keys("Apps: GUI", { superkey }, {
-        f = { "Thunar", "Open File Manager" },
-        w = { apps.browser, "Open Browser" },
+    l.set_keymap("Apps: GUI", {
+        ["W|f"] = { "Thunar", "Open File Manager" },
+        ["W|w"] = { apps.browser, "Open Browser" },
     }),
 
     -- }}}
 
     -- ===================================== Terminal {{{
 
-    l.keys("Apps: CLI", { superkey }, {
-        Return = { apps.terminal, "Open Terminal" },
-    }),
-
-    l.keys("Apps: CLI", { superkey, shiftkey }, {
-        e = { apps.editor, "Editor" },
-        f = { apps.file_manager, "File Manager" },
-        m = { apps.music, "Music Player" },
-        w = { apps.mail, "E-Mail Client" },
-        ["Return"] = {
+    l.set_keymap("Apps: CLI", {
+        ["W|Return"] = { apps.terminal, "Open Terminal" },
+        ["WS|e"] = { apps.editor, "Editor" },
+        ["WS|f"] = { apps.file_manager, "File Manager" },
+        ["WS|m"] = { apps.music, "Music Player" },
+        ["WS|w"] = { apps.mail, "E-Mail Client" },
+        ["WS|Return"] = {
             function()
                 awful.spawn(user.floating_terminal, { floating = true })
             end,
@@ -62,37 +56,34 @@ local keys = gears.table.join(
     -- }}}
 
     -- ===================================== Scratchpad {{{
-    l.keys("Apps: Scratchpad", { superkey }, {
-        i = {
+    l.set_keymap("Apps: Scratchpad", {
+        ["W|i"] = {
             function()
                 awesome.emit_signal("scratch::input")
             end,
             "Markdown Input",
         },
-        ["\\"] = {
+        ["W|\\"] = {
             function()
                 awesome.emit_signal("scratch::term")
             end,
             "Ninja Terminal",
         },
-    }),
-
-    l.keys("Apps: Scratchpad", { superkey, shiftkey }, {
-        f = {
+        ["WS|f"] = {
             function()
                 awesome.emit_signal("scratch::file")
             end,
             "File Manager",
         },
-        m = {
+        ["WS|m"] = {
             function()
                 awesome.emit_signal("scratch::music")
             end,
             "Music Player",
         },
-        -- w = { function()
-        --     awesome.emit_signal("scratch::chat")
-        -- end, "Chatting Apps"},
+        -- ["WS|w"]= {
+        --     function() awesome.emit_signal("scratch::chat") end,
+        -- "Chatting Apps"},
     })
 
     -- }}}

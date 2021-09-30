@@ -1,3 +1,4 @@
+# vim: set sw=2 ts=2:
 # =================================================
 # Zinit
 # =================================================
@@ -29,43 +30,25 @@ autoload -Uz _zinit
 # Users Plugins
 # =================================================
 
-# Startup timer
-zinit light paulmelnikow/zsh-startup-timer
-
-# Pure theme
-# zinit ice compile"(pure|async).zsh" pick"async.zsh" src"pure.zsh"
-# zinit light sindresorhus/pure
-
-# Spaceship
-# zinit light spaceship-prompt/spaceship-prompt
-
-# Starship
-zinit ice from"gh-r" as"program" mv"starship* -> starship" pick"starship/starship"
-zinit light starship/starship
-
-# Shelby
-zinit ice from"gh-r" as"program" mv"shelby* -> shelby" pick"shelby/shelby"
-zinit light athul/shelby
-
-# Base
-zinit wait lucid light-mode for \
-  hlissner/zsh-autopair \
-  MichaelAquilina/zsh-you-should-use \
-    zdharma/fast-syntax-highlighting \
+# ============================================= #
+# Base                                          #
+# ============================================= #
+zinit wait"0" lucid light-mode for \
+  Aloxaf/fzf-tab \
+  zdharma/fast-syntax-highlighting \
   atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
 
-# Completions
-zinit wait lucid for \
+# ============================================= #
+# Completions                                   #
+# ============================================= #
+zinit wait"0" lucid light-mode for \
   spwhitt/nix-zsh-completions \
   ninrod/pass-zsh-completion \
   atpull'zinit creinstall -q .' atload"zicompinit; zicdreplay" blockf \
   zsh-users/zsh-completions
 
-zic(){
-  zinit ice as"completion"
-  zinit snippet "$1"
-}
+zic(){ zinit ice wait"0" lucid as"completion"; zinit snippet "$1" }
 
 zic https://github.com/gopasspw/gopass/blob/master/zsh.completion
 zic https://github.com/chmln/handlr/blob/master/completions/_handlr
@@ -73,10 +56,46 @@ zic https://github.com/xwmx/nb/blob/master/etc/nb-completion.zsh
 zic https://github.com/jarun/nnn/blob/master/misc/auto-completion/zsh/_nnn
 zic https://github.com/knqyf263/pet/blob/master/misc/completions/zsh/_pet
 zic https://github.com/dandavison/delta/blob/master/etc/completion/completion.zsh
+zic https://github.com/ajeetdsouza/zoxide/blob/main/contrib/completions/_zoxide
 
-# Plugins
-zinit wait lucid for \
+# ============================================= #
+# Be More Productive                            #
+# ============================================= #
+zinit wait"1" lucid light-mode for \
+  hlissner/zsh-autopair \
+  MichaelAquilina/zsh-you-should-use
+
+zinit wait"2" lucid light-mode for \
   wfxr/forgit \
-  kazhala/dotbare \
-  as"command" pick"bin/mk" \
-    NNBnh/mk
+  kazhala/dotbare
+
+# ============================================= #
+# Extends Your Shell                            #
+# ============================================= #
+
+# # LS_COLORS
+# # ---------------------
+# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#   atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+#   atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+# zinit light trapd00r/LS_COLORS
+
+# # direnv
+# # ---------------------
+# zinit as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
+#   atpull'%atclone' pick"direnv" src"zhook.zsh" for \
+#   direnv/direnv
+
+# ============================================= #
+# Prompt                                        #
+# ============================================= #
+
+# Starship
+# ---------------------
+zinit ice from"gh-r" as"program" mv"starship* -> starship" pick"starship/starship"
+zinit light starship/starship
+
+# Startup timer
+# ---------------------
+zinit light paulmelnikow/zsh-startup-timer
+

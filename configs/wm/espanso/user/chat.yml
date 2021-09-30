@@ -3,10 +3,16 @@ parent: default
 
 matches:
   # Salam
-  - trigger: ":salam"
+  - triggers: [":salamlengkap", ":salaml", ":lsalam"]
     replace: "Assalaamu'alaikum warahmatullaahi wabarakaatuh"
 
+  - triggers: [":salamsingkat", ":salams", ":ssalam"]
+    replace: "Assalaamu'alaikum"
+
   # Jawab Salam
-  - trigger: ":jawab"
+  - triggers: [":jawablengkap", ":jawabl", ":ljawab"]
     replace: "Wa'alaikumus salam wa rahmatullahi wabarakatuh"
+
+  - triggers: [":jawabsingkat", ":jawabs", ":sjawab"]
+    replace: "Wa'alaikumussalam"
 

@@ -47,9 +47,6 @@ local function button(shortcut, text, command)
         hl_shortcut = "AlphaShortcut",
         hl_text = "AlphaText",
     }
-    if command then
-        opts.keymap = { "n", shortcut, command, { noremap = true, silent = true } }
-    end
 
     return {
         type = "button",
@@ -68,11 +65,11 @@ end
 section.buttons = {
     type = "group",
     val = {
-        button("CTRL p  ", "  Find File   ", "Telescope find_files"),
-        button("SPC  f o", "  Recents     ", "Telescope oldfiles"),
-        button("SPC  f f", "  Frecency    ", telescope.frecency ),
-        button("SPC  f d", "  Bookmarks   ", "Telescope marks"),
-        button("F1      ", "  Session     ", Util.session.last),
+        button("CTRL p", "  Find File", "Telescope find_files"),
+        button("SPC f o", "  Recents", "Telescope oldfiles"),
+        button("SPC f f", "  Frecency", telescope.frecency ),
+        button("SPC f d", "  Bookmarks", "Telescope marks"),
+        button("F1", "  Session", Util.session.last),
     },
     opts = { spacing = 1 },
 }
@@ -88,5 +85,3 @@ alpha.setup({
     },
     opts = { margin = 3 },
 })
-
-

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# ad
+# Better way to create file or directory.
+
+# Inspired by:
+# - https://github.com/tanrax/terminal-AdvancedNewFile
+# - https://github.com/NNBnh/mk
+
+ad() {
+    mkfile() {
+        case "$1" in
+        *"/")
+            mkdir -p "$1"
+            ;;
+        *)
+            mkdir -p "$(dirname "$1")" 
+            touch "$1"
+            ;;
+        esac
+    }
+
+    for file in "$@"; do
+        mkfile "$file"
+    done
+}

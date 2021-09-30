@@ -1,7 +1,52 @@
 {
-    "check": {
-        "prefix": "check",
-        "body": "command -v \"${1:which_cmd}\" > /dev/null 2>&1",
-        "description": "Check if Command is Exist"
-    }
+  "check": {
+    "prefix": "check",
+    "body": "command -v \"${1:which_cmd}\" > /dev/null 2>&1",
+    "description": "Check if command is exist"
+  },
+  "shebang": {
+    "prefix": ["#!", "shebang"],
+    "body": "#!/usr/bin/env bash",
+    "description": "Add shebang for scripting"
+  },
+  "help": {
+    "prefix": ["help", "??"],
+    "body": [
+      "help() {",
+      "cat <<EOF",
+      "Usage for $(basename \"\\$0\"):",
+      "  Command:",
+      "  Options",
+      "    -h, --help      Show this message",
+      "    -v, --version   Show version",
+      "EOF",
+      "}"
+    ],
+    "description": "Make help"
+  },
+  "version": {
+    "prefix": "version",
+    "body": [
+      "version() {",
+      "cat <<EOF",
+      "$(basename \"\\$0\") v0.1",
+      "EOF",
+      "}"
+    ],
+    "description": "make version"
+  },
+  "script": {
+    "prefix": ["main", "script"],
+    "body": [
+      "while [ -n \"\\$1\" ]; do",
+      "\tcase \"\\$1\" in",
+      "\t\t\"-v\" | \"--version\") version ;;",
+      "\t\t\"-h\" | \"--help\") help ;;",
+      "\t\t*) echo \"Invalid\" && help ;;",
+      "\tesac",
+      "\tshift",
+      "done"
+    ],
+    "description": "Manage script argument"
+  }
 }

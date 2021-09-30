@@ -1,21 +1,33 @@
 local M = {}
 
 M.plugin_enabled = {
+    -- ================== UI
     alpha = true,
     bufferline = true,
-    cmp = true,
-    coq = false,
-    gitsigns = true,
-    indent_blankline = true,
-    luasnip = true,
-    persistence = true,
-    presence = false,
+    focus = true,
+    nvim_tree = true,
     sidebar = false,
-    smoothie = true,
-    sniprun = true,
-    treesitter = true,
     which_key = true,
     windline = true,
+    -- ================== Editing
+    cmp = true,
+    coq = false,
+    luasnip = true,
+    sniprun = true,
+    treesitter = true,
+    -- ================== Git
+    fugitive = true,
+    gitsigns = true,
+    neogit = false,
+    -- ================== Experience
+    colorizer = false,
+    hexokinase = true,
+    indent_blankline = true,
+    neoscroll = true,
+    shade = false,
+    -- ================== Misc
+    persistence = true,
+    presence = false,
 }
 
 return M

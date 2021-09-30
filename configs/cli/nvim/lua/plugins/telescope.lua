@@ -7,9 +7,6 @@ end
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 
-local k = vim.keymap
-local nnoremap = k.nnoremap
-
 local HOME = vim.env.HOME
 local M = {}
 
@@ -136,11 +133,10 @@ telescope.setup({
                 ["dotfiles"] = os.getenv("DOTS"),
                 ["dots"] = os.getenv("DOTS"),
                 ["blog"] = os.getenv("BLOG"),
-                ["repo"] = HOME .. "/Documents/GitHub",
-                ["pro"] = HOME .. "/Documents/Dev",
+                ["repo"] = HOME .. "/Documents/Programming/Repo",
+                ["pro"] = HOME .. "/Documents/Programming/Project",
                 ["sch"] = HOME .. "/Documents/School",
-                ["scr"] = HOME .. "/Documents/.Scratch",
-                ["ksn"] = HOME .. "/Documents/KSN-MTK-SMP",
+                ["scr"] = HOME .. "/Documents/Scratch",
                 ["nvim"] = HOME .. "/.config/nvim",
                 ["awm"] = HOME .. "/.config/awesome",
                 ["kitty"] = HOME .. "/.config/kitty",
@@ -175,18 +171,19 @@ M.glow_previewer = function()
 end
 
 -- Telescope
-nnoremap({ "<C-p>", ":Telescope find_files<CR>", { silent = true } })
-nnoremap({ "<leader>fo", ":Telescope oldfiles<CR>", { silent = true } })
-nnoremap({ "<leader>fl", ":Telescope live_grep<CR>", { silent = true } })
-nnoremap({ "<leader>fd", ":Telescope marks<CR>", { silent = true } })
-nnoremap({ "<leader>fb", ":Telescope file_browser<CR>", { silent = true } })
-nnoremap({ "<leader>fk", ":Telescope keymaps<CR>", { silent = true } })
-nnoremap({ "<leader>fc", ":Telescope colorscheme<CR>", { silent = true } })
-nnoremap({ "<Leader>ft", M.builtins, { silent = true } })
+mapx.nname("<Leader>f", "Telescope")
+nnoremap( "<C-p>", "<CMD>Telescope find_files<CR>", { silent = true }, "Find Files" )
+nnoremap( "<leader>fo", "<CMD>Telescope oldfiles<CR>", { silent = true }, "File History" )
+nnoremap( "<leader>fl", "<CMD>Telescope live_grep<CR>", { silent = true }, "Live Grep" )
+nnoremap( "<leader>fd", "<CMD>Telescope marks<CR>", { silent = true }, "Marks" )
+nnoremap( "<leader>fb", "<CMD>Telescope file_browser<CR>", { silent = true }, "File Browser" )
+nnoremap( "<leader>fk", "<CMD>Telescope keymaps<CR>", { silent = true }, "Keybindings" )
+nnoremap( "<leader>fc", "<CMD>Telescope colorscheme<CR>", { silent = true }, "Colorscheme" )
+nnoremap( "<Leader>ft", M.builtins, { silent = true }, "Built-Ins" )
 
--- :Telescope Extensions
-nnoremap({ "<leader>ff", M.frecency, { silent = true } })
-nnoremap({ "<leader>fg", M.glow_previewer, { silent = true } })
-nnoremap({ "<leader>fm", ":Telescope media_files<CR>", { silent = true } })
+-- <CMD>Telescope Extensions
+nnoremap( "<leader>ff", M.frecency, { silent = true }, "Frecency" )
+nnoremap( "<leader>fg", M.glow_previewer, { silent = true }, "Glow Previewer" )
+nnoremap( "<leader>fm", "<CMD>Telescope media_files<CR>", { silent = true }, "Media Files" )
 
 return M

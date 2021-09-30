@@ -2,7 +2,7 @@ local M = {}
 
 M.config = {
     filetypes = { "tex", "bib" },
-    on_attach = function()
+    on_attach = function(client, bufnr)
         local k = vim.keymap
         local nnoremap = k.nnoremap
         local inoremap = k.inoremap

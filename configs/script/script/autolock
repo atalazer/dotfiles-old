@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+lock=${LOCK_CMD:-"awesome-client 'lock_screen_show()'"}
+suspend=${SUSPEND_CMD:-"systemctl suspend"}
+
+delta=5
+brightness_up="brightness-controller -d $delta up"
+brightness_down="brightness-controller -d $delta down"
+
+# Run xidlehook
+xidlehook \
+  --not-when-fullscreen \
+  --not-when-audio \
+  --timer 30 \
+    "$brightness_down" \
+    "$brightness_up" \
+  --timer 600 \
+    "$brightness_up; $lock" \
+    "" \
+  --timer 1800 \
+    "$suspend" \
+    ""

@@ -17,8 +17,8 @@ notARepository: "skip" # one of: "prompt" | "create" | "skip"
 git:
   paging:
     colorArg: always
-    pager: "delta"
-    useConfig: false
+    # pager: "delta"
+    # useConfig: false
 os:
   editCommand: "$EDITOR" # see "Configuring File Editing" section
   openCommand: "sh -c 'opener {{filename}} >/dev/null'"

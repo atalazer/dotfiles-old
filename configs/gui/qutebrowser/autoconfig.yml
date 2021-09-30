@@ -8,19 +8,26 @@ config_version: 2
 settings:
   content.media.audio_capture:
     https://meet.google.com: true
+    https://www.youtube.com: true
   content.media.audio_video_capture:
     https://meet.google.com: true
   content.media.video_capture:
     https://meet.google.com: true
   content.notifications.enabled:
     https://blog.csdn.net: false
+    https://health.kompas.com: false
     https://infokomputer.grid.id: false
     https://jateng.idntimes.com: false
     https://mail.google.com: true
     https://meet.google.com: true
+    https://seputarlampung.pikiran-rakyat.com: false
+    https://web.telegram.org: true
     https://web.whatsapp.com: true
+    https://www.kompas.com: false
     https://www.reddit.com: false
   content.private_browsing:
     global: false
   content.register_protocol_handler:
     https://mail.google.com?extsrc=mailto&url=%25s: true
+  qt.force_platformtheme:
+    global: qt5ctl

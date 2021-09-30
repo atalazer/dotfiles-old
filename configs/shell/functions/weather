@@ -1,8 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+CITY="${CITY:-London}"
 
 # Weather Check
 weather() {
-    curl "wttr.in/${2:-Boyolali}\?${1:-1}"
+    TABLE=${1:-1}
+    CITY="${2:-$CITY}"
+    curl "wttr.in/${CITY}?${TABLE}"
 }
 
+weather2(){
+    CITY="${1:-$CITY}"
+    curl "v2.wttr.in/${CITY}"
+}
 
+alias {wttr,wth}="weather"
+alias {wttr,wth}2="weather2"

@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+delta=2
+
+up() {
+    light -A "$1"
+}
+down() {
+    light -U "$1"
+}
+
+status() {
+    light -G | cut -c 1-2
+}
+
+optimize() {
+    light -S 10
+    if [ -n "$(pgrep redshift)" ]; then
+        redshift -x && pkill redshift && killall redshift
+        echo "OFF"
+    else
+        redshift -l 0:0 -t 4500:4500 -r &>/dev/null &
+        echo "ON"
+    fi
+}
+
+help() {
+    echo "Usage:"
+    echo "up            Increase Brightness"
+    echo "down          Decrease Brightness"
+    echo "optimize      Optimize Brightness"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    delta | "-d" | "--delta")
+        shift
+        delta="$1"
+        ;;
+    up | "-U" | "--up")
+        up "$delta"
+        # notify-send $(current_bn)
+        ;;
+    down | "-D" | "--down")
+        down "$delta"
+        # notify-send $(current_bn)
+        ;;
+    optimize | "-O" | "--optimize")
+        optimize
+        ;;
+    "-h" | "--help" | *)
+        help
+        ;;
+    esac
+    shift
+done

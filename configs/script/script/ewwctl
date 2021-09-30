@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+help() {
+    cat <<EOF
+Usage for $(basename "$0"):
+  Command:
+    -b, --bar           Toggle eww bar
+    -d, --dashboard     Toogle eww dashboard
+    -r, --reload        Reload eww
+    -R, --restart       Restart eww
+    -S, --start         Start eww
+    -Q, --stop          Stop eww
+  Options
+    -h, --help          Show this message
+EOF
+}
+
+toggle() {
+    WG=${1:-bar}
+    FILESTATE=/tmp/eww-"$WG"
+    if [[ ! -f $FILESTATE ]]; then
+        eww open "$WG"
+        echo "open" >"$FILESTATE"
+    else
+        STATE="$(cat "$FILESTATE")"
+        case $STATE in
+        "open") eww close "$WG" && echo "close" >"$FILESTATE" ;;
+        "close") eww open "$WG" && echo "open" >"$FILESTATE" ;;
+        esac
+    fi
+
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    "-S" | "--start") eww ping || eww daemon ;;
+    "-Q" | "--stop") eww ping && eww kill ;;
+    "-R" | "--restart") eww ping && eww kill && eww daemon ;;
+    "-r" | "--reload") eww ping && eww reload ;;
+    "-b" | "--bar") toggle bar ;;
+    "-d" | "--dashboard") toggle dashboard ;;
+    "-h" | "--help") help ;;
+    *) echo "Invalid" && help ;;
+    esac
+    shift
+done

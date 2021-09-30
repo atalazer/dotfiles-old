@@ -75,3 +75,4 @@ branches = "branch --all"                           # List both remote-tracking 
 remotes = "remote --verbose"                        # Be a little more verbose and show remote url after name.
 contributors = "shortlog --summary --numbered"      # List contributors with number of commits
 amend = "commit --amend --no-edit"                  # Amend the currently staged files to the latest commit.
+hub = "!hub"

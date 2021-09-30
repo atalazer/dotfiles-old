@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Convert .docx file to plain text
 # Source: https://www.commandlinefu.com/commands/view/4311/extract-plain-text-from-ms-word-docx-files

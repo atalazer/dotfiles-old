@@ -29,10 +29,14 @@ translate-text() {
     if [ -z "$text" ]; then
         exit
     fi
-    name=$(echo $COUNTRY | jq -r ".[].name" | $DMENU -p "Target Language"  -mesg "Text: $text" )
-    if [ ! -z "$name" ]; then
-        code=$(echo $COUNTRY | jq -r ".[] | select(.name == \"$name\") | .code")
-        result=$(trans -b --download-audio-as /tmp/trans.ts :$code "$text")
+    if [ -z $TARGET ]; then
+        name=$(echo "$COUNTRY" | jq -r ".[].name" | $DMENU -p "Target Language"  -mesg "Text: $text" )
+        code=$(echo "$COUNTRY" | jq -r ".[] | select(.name == \"$name\") | .code")
+    else
+        code=$TARGET
+    fi
+    if [ -n "$code" ]; then
+        result=$(trans -b --download-audio-as /tmp/trans.ts :"$code" "$text")
         again=true
 
         # notify-send -i $ICON "Translate" "Result of '$text' in $name is '$result'"
@@ -51,7 +55,7 @@ translate-text() {
                 translate-text "$text"
             elif [[ $menu == "Copy To Clipboard" ]]; then
                 echo -n "$result" | xclip -selection clipboard
-                notify-send -u low -i $ICON "Translate" "Result saved to clipboard"
+                notify-send -u low -i "$ICON" "Translate" "Result saved to clipboard"
                 again=false
             elif [[ $menu == "Play Audio" ]]; then
                 mpv /tmp/trans.ts
@@ -81,7 +85,7 @@ translate-image() {
         #     -bordercolor White -border 10x10 \
         #     $IMG
         tesseract \
-            -l $LANG \
+            -l "$LANG" \
             --dpi 300 \
             $IMG \
             $TXT &> /dev/null
@@ -104,6 +108,10 @@ case "$1" in
     ;;
 "-m" | "--image")
     text=$(translate-image)
+    translate-text "$text"
+    ;;
+"-t"| "--text")
+    text=${2:?Text}
     translate-text "$text"
     ;;
 *)

@@ -1,4 +1,7 @@
-lua require('impatient')
+lua<< EOF
+require("impatient")
+mapx = require("mapx").setup({ global = true, whichkey = true })
+EOF
 
 let s:user = "wbthomason"
 let s:repo = "packer.nvim"
@@ -12,6 +15,19 @@ endif
 let g:mapleader = " "
 let g:maplocalleader = ","
 
+" disable filetype.vim
+let g:did_load_filetypes = 1
+
+" disable default built-in features
+let g:loaded_gzip = 1
+let g:loaded_tar = 1
+let g:loaded_tarPlugin = 1
+let g:loaded_zip = 1
+let g:loaded_zipPlugin = 1
+let g:loaded_matchit = 1
+let g:loaded_matchparen = 1
+let g:loaded_2html_plugin = 1
+
 " prevent typo when pressing `wq` or `q`
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
@@ -24,7 +40,6 @@ lua << EOF
 require("base.settings")
 require("base.keymap")
 require("base.util")
-require("plugins.compiled")
 EOF
 runtime! mappings.vim
 

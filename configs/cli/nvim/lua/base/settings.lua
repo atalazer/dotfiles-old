@@ -1,91 +1,79 @@
 local o = vim.opt
 
--- Settings vim options
-local options = {
-    -- Booleans
-    autoread = true,
-    autochdir = true,
-    autoindent = true,
-    backup = false,
-    breakindent = true,
-    cursorline = true,
-    expandtab = true,
-    hidden = true,
-    ignorecase = true,
-    joinspaces = false,
-    lazyredraw = true,
-    list = true,
-    number = true,
-    relativenumber = true,
-    showmode = false,
-    smartcase = true,
-    smartindent = true,
-    smarttab = true,
-    splitbelow = true,
-    splitright = true,
-    startofline = false,
-    swapfile = false,
-    termguicolors = true,
-    ttyfast = true,
-    undofile = false,
-    wrap = false,
-    writebackup = false,
+-- Booleans
+o.autoread = true
+o.autochdir = true
+o.autoindent = true
+o.backup = false
+o.breakindent = true
+o.cursorline = true
+o.expandtab = true
+o.hidden = true
+o.ignorecase = true
+o.joinspaces = false
+o.lazyredraw = true
+o.list = true
+o.number = true
+o.relativenumber = true
+o.showmode = false
+o.smartcase = true
+o.smartindent = true
+o.smarttab = true
+o.splitbelow = true
+o.splitright = true
+o.startofline = false
+o.swapfile = false
+o.termguicolors = true
+o.ttyfast = true
+o.undofile = false
+o.wrap = false
+o.writebackup = false
 
-    -- String
-    backspace = "eol,start,indent",
-    backupcopy = "yes",
-    clipboard = "unnamedplus",
-    -- completeopt = { "menu", "menuone", "noselect", "noinsert" },         -- Handle by nvim-cmp
-    encoding = "UTF-8",
-    fillchars = { vert = "│", eob = " ", fold = " ", diff = " " },
-    formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2",
-    -- foldmethod = "marker",
-    foldopen = { "percent", "search" },
-    -- foldcolumn     = "1",
-    -- foldexpr       = "nvim_treesitter#foldexpr()",
-    -- foldlevel      = 0,
-    -- foldnestmax    = 1,
-    inccommand = "split",
-    listchars = {
-        tab = "  ",
-        eol = "↴",
-        nbsp = "_",
-        trail = "·",
-        extends = "❯",
-        precedes = "❮",
-    },
-    mouse = "a",
-    signcolumn = "yes:2",
-    shortmess = "csa",
-    showbreak = "↪",
-    breakindentopt = "shift:2",
-    undodir = vim.fn.stdpath("data") .. "/undo",
-    sessionoptions = "blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal",
-
-    -- Number
-    -- colorcolumn = { "120" },
-    cmdheight = 2,
-    laststatus = 2,
-    pumheight = 12,
-    pumwidth = 15,
-    regexpengine = 0,
-    scrolloff = 2,
-    sidescroll = 2,
-    sidescrolloff = 15,
-    shiftwidth = 4,
-    softtabstop = 4,
-    tabstop = 4,
-    textwidth = 120,
-    timeoutlen = 300,
-    updatetime = 1000,
+-- String
+o.backspace = "eol,start,indent"
+o.backupcopy = "yes"
+o.clipboard = "unnamedplus"
+-- o.completeopt = { "menu", "menuone", "noselect", "noinsert" }
+o.completeopt:remove("preview")
+o.encoding = "UTF-8"
+o.fillchars = { vert = "│", eob = " ", fold = " ", diff = " " }
+-- o.formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2"
+o.formatoptions:remove("cro")
+-- o.foldmethod = "marker"
+o.foldopen = { "percent", "search" }
+-- o.foldcolumn     = "1"
+-- o.foldexpr       = "nvim_treesitter#foldexpr()"
+-- o.foldlevel      = 0
+-- o.foldnestmax    = 1
+o.inccommand = "split"
+o.listchars = {
+    tab = "  ",
+    eol = "↴",
+    nbsp = "_",
+    trail = "·",
+    extends = "❯",
+    precedes = "❮",
 }
+o.mouse = "a"
+o.signcolumn = "yes:2"
+o.shortmess = "csa"
+o.showbreak = "↪"
+o.breakindentopt = "shift:2"
+o.undodir = vim.fn.stdpath("data") .. "/undo"
 
--- Function to apply options table
-local apply_options = function(opts)
-    for k, v in pairs(opts) do
-        vim.opt[k] = v
-    end
-end
-
--- Call apply_options func for options
-apply_options(options)
+-- Number
+-- o.colorcolumn = { "120" }
+o.cmdheight = 2
+o.laststatus = 2
+o.pumheight = 12
+o.pumwidth = 15
+o.regexpengine = 0
+o.scrolloff = 2
+o.sidescroll = 2
+o.sidescrolloff = 15
+o.shiftwidth = 4
+o.softtabstop = 4
+o.tabstop = 4
+o.textwidth = 120
+o.timeoutlen = 300
+o.updatetime = 1000

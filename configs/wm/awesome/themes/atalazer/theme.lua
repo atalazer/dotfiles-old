@@ -46,12 +46,12 @@ theme.transparent = "#00000000"
 
 theme.bg_normal = theme.background
 theme.bg_dark = x.background
-theme.bg_focus = x.color8
+theme.bg_focus = theme.color0
 theme.bg_urgent = x.color8
 theme.bg_minimize = x.color8
 
 theme.fg_normal = theme.foreground
-theme.fg_focus = x.color4
+theme.fg_focus = theme.color6
 theme.fg_urgent = x.color9
 theme.fg_minimize = x.color8
 
@@ -446,5 +446,27 @@ theme.bar_fg = theme.fg_normal
 
 theme.bar_widget_margin = dpi(7)
 theme.bar_widget_fg = theme.fg_normal
+
+-- ---------------------------------------- Bling
+-- For tabbed only
+theme.tabbed_spawn_in_tab = false           -- whether a new client should spawn into the focused tabbing container
+
+-- For tabbar in general
+theme.tabbar_disable = false                -- disable the tab bar entirely
+theme.tabbar_ontop  = false
+theme.tabbar_radius = theme.border_radius   -- border radius of the tabbar
+theme.tabbar_size = 40                      -- size of the tabbar
+theme.tabbar_style = "modern"               -- style of the tabbar ("default", "boxes" or "modern")
+theme.tabbar_font = "Sans 11"               -- font of the tabbar
+theme.tabbar_position = "top"               -- position of the tabbar
+theme.tabbar_bg_normal = theme.bg_normal    -- background color of the focused client on the tabbar
+theme.tabbar_fg_normal = theme.fg_normal    -- foreground color of the focused client on the tabbar
+theme.tabbar_bg_focus  = theme.bg_focus     -- background color of unfocused clients on the tabbar
+theme.tabbar_fg_focus  = theme.fg_focus     -- foreground color of unfocused clients on the tabbar
+
+-- the following variables are currently only for the "modern" tabbar style
+theme.tabbar_color_close = theme.light_red      -- chnges the color of the close button
+theme.tabbar_color_min   = theme.light_yellow   -- chnges the color of the minimize button
+theme.tabbar_color_float = theme.light_magenta  -- chnges the color of the float button
 
 return theme

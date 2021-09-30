@@ -11,7 +11,8 @@ npairs.setup({
         ["{"] = "}",
         ["`"] = "`",
     },
-    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.%#] ]], "%s+", ""),
+    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.%#%$] ]], "%s+", ""),
+    map_bs = false,
     check_line_pair = true,
     check_ts = true,
     html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
@@ -20,18 +21,17 @@ npairs.setup({
         map = "<M-e>",
         chars = { "{", "[", "(", '"', "'" },
         pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-        end_key = "$",
-        keys = "qwertyuiopzxcvbnmasdfghjkl",
+        end_key = "e",
+        keys = "qwasdf",
         check_comma = true,
         hightlight = "Search",
     },
-    map_bs = false,
 })
 
 -- Rule
 -- ==========
 -- Endwise
-npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
+-- npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 
 -- add space paranthess
 npairs.add_rules({

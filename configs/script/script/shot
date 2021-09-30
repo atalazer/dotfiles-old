@@ -266,7 +266,7 @@ notify() {
         local prompt_rename_image = function()
             awful.prompt.run {
                 prompt       = 'New File Name: ',
-                textbox      = awful.screen.focused().mypromptbox.widget,
+                textbox      = awful.screen.focused().promptbox.widget,
                 history_path = awful.util.get_cache_dir() .. '/history',
                 exe_callback = function(new_name)
                     if not new_name or #new_name == 0 then return end

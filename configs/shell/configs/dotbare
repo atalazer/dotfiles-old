@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 export DOTBARE_DIR="${DOTS:-$HOME/.dotfiles}/.git"
 export DOTBARE_TREE="${DOTS:-$HOME/.dotfiles}"
@@ -21,9 +21,4 @@ alias dots="dotbare"
 alias da="dotbare fadd"
 alias de="dotbare fedit"
 alias dl="dotbare flog"
-
-# -------------------------------------
-# Keys for dotbare
-# -------------------------------------
-bindkey -s '^g' "dotbare fedit"^j
 

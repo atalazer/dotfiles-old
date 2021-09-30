@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 if command -v "lfrun" > /dev/null 2>&1; then
     alias lf="lfrun"

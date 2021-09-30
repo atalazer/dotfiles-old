@@ -8,14 +8,13 @@
 # it gets replaced by the "replace" string.
 
 auto_restart: true
-undo_backspace: false
-fast_inject: true
+undo_backspace: true
+fast_inject: false
 
 enable_active: true
-toggle_key: RIGHT_CTRL
-
-enable_passive: false
-passive_key: RIGHT_ALT
+enable_passive: true
+passive_key: CTRL
+toggle_key: RIGHT_ALT
 
 show_icon: true
 show_notifications: true

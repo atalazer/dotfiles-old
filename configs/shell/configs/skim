@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-export SKIM_DEFAULT_COMMAND=$FZF_DEFAULT_COMMAND
-export SKIM_DEFAULT_OPTS=$FZF_DEFAULT_OPTS
-export SKIM_PREVIEW=$FZF_PREVIEW
+if command -v "sk" >/dev/null 2>&1; then
+    export SKIM_DEFAULT_COMMAND=$FZF_DEFAULT_COMMAND
+    export SKIM_DEFAULT_OPTS=$FZF_DEFAULT_OPTS
+    export SKIM_PREVIEW=$FZF_PREVIEW
 
-alias skp="fzf --reverse --preview '$SKIM_PREVIEW'"
+    alias skp="sk --reverse --preview '$SKIM_PREVIEW'"
+fi
