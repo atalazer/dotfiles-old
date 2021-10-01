@@ -20,6 +20,9 @@ local button_size = dpi(120)
 
 -- Commands
 local exec_confirm = function(text, command)
+    gears.timer.delayed_call(function()
+        exit_screen_hide()
+    end)
     awful.prompt.run({
         prompt = text .. " Confirm[y/N]? ",
         textbox = awful.screen.focused().promptbox.widget,
@@ -135,20 +138,8 @@ local keybinds = {
     ["e"] = exit_command,
     ["p"] = poweroff_command,
     ["r"] = reboot_command,
-    ["s"] = function()
-        suspend_command()
-        gears.timer.delayed_call(function()
-            exit_screen_hide()
-        end)
-    end,
-    ["l"] = function()
-        lock_command()
-        -- Kinda fixes the "white" (undimmed) flash that appears between
-        -- exit screen disappearing and lock screen appearing
-        gears.timer.delayed_call(function()
-            exit_screen_hide()
-        end)
-    end,
+    ["s"] = suspend_command,
+    ["l"] = lock_command
 }
 
 function exit_screen_show()

@@ -1,6 +1,6 @@
 #compdef theme-changer
 
-_conf(){
+_edit_conf(){
     local IFS=$'\n'
     local prefix
     zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.cache/theme"
@@ -58,7 +58,7 @@ _theme-changer () {
                 )
                 _describe -t gets "get" gets && ret=0
                 _arguments : \
-                    "-f[Specify config file]:files:_conf" \
+                    "-f[Specify config file]:files:_edit_conf" \
                     "-d[Use dark config file]" \
                     "-l[Use light config file]"
             ;;
@@ -79,7 +79,7 @@ _theme-changer () {
                     "-dark[Use dark theme for wal]:bool:(true false)"
                 ret=0
             ;;
-            (--edit) _theme-edit ;;
+            (--edit) _edit_conf ;;
 		esac
 	else
 		local -a subcommands
