@@ -23,6 +23,7 @@ M.mappings = function()
     nnoremap( "<Leader>lR", buf.rename, opts )
     nnoremap( "<Leader>lt", "<Cmd>TroubleToggle<CR>", opts )
     nnoremap( ";l", buf.hover, opts )
+    nnoremap( "K", buf.hover, opts )
     nnoremap(
         "<Leader>ll",
         function()

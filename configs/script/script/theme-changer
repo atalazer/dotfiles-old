@@ -12,6 +12,10 @@ GTK3_CONFIG="$HOME/.config/gtk-3.0/settings.ini"
 XSETTINGSD_CONFIG="$HOME/.xsettingsd"
 XRESOURCES_CONFIG="$HOME/.Xresources"
 
+# State File
+DIR=${XDG_CONFIG_HOME:-$HOME/.config}/script
+FILE=$DIR/theme.conf
+
 # Colors
 WHITE="\e[97m"
 RED="\e[31m"
@@ -39,34 +43,25 @@ pt() {
     esac
 }
 
-# State File
-DIR=${XDG_CONFIG_HOME:-$HOME/.config}/script
-FILE=$DIR/theme.conf
-
-if [ ! -d $DIR ]; then
-    mkdir -p $DIR
+if [ ! -d "$DIR" ]; then
+    mkdir -p "$DIR"
 fi
-if [ ! -f $FILE ]; then
-    touch $FILE &&
+if [ ! -f "$FILE" ]; then
+    touch "$FILE" &&
         printf "%s" "\
-LIGHT_GTK_THEME=Adwaita
-LIGHT_ICON_THEME=Papirus
-LIGHT_CURSOR_THEME=Adwaita
-LIGHT_WAL_THEME=tokyonight
-LIGHT_WALLPAPER_THEME=
-
-DARK_GTK_THEME=Adwaita-dark
-DARK_ICON_THEME=Papirus-Dark
-DARK_CURSOR_THEME=Adwaita
-DARK_WAL_THEME=tokyonight
-DARK_WALLPAPER_THEME=
-" >$FILE
+WAL_IS_DARK=true
+GTK_THEME=Adwaita
+ICON_THEME=Papirus
+CURSOR_THEME=Adwaita
+WAL_THEME=tokyonight
+WALLPAPER_THEME=
+" > "$FILE"
 fi
 
 AFTER() {
     # Check if app is running
     check_app() {
-        pgrep -u $USER -x $1 &>/dev/null
+        pgrep -u "$USER" -x "$1" &>/dev/null
     }
 
     # Reload Kitty
@@ -89,16 +84,17 @@ AFTER() {
 usage() {
     printf "%s" "\
 Usage $(basename "$0"):
-   -h, --help           Show this help message and exit
-   -e, --edit           Edit Config
-   -l, --list           List All Available Themes and Icons
-   -a, --apply          Apply 1{Themes} 2{Icons} 3{cursor}
-   -s, --set            Set GTK, Icon, or Cursor Theme
-   -g, --get            Get GTK, Icon, or Cursor Theme
-   -L, --light          Turn On Light Mode
-   -D, --dark           Turn On Dark Mode
-   -t, --toggle         Toggle Dark and Light Mode
+    -h, --help           Show this help message and exit
+    -e, --edit           Edit Config
+    -l, --list           List All Available Themes and Icons
+    -a, --apply          Apply 1{Themes} 2{Icons} 3{cursor}
+    -s, --set            Set GTK, Icon, or Cursor Theme
+    -g, --get            Get GTK, Icon, or Cursor Theme
+    -L, --light          Turn On Light Mode
+    -D, --dark           Turn On Dark Mode
+    -t, --toggle         Toggle Dark and Light Mode
 "
+exit 0
 }
 
 LIST() {
@@ -108,18 +104,18 @@ LIST() {
     INFO() {
         echo ""
 
-        MSG=$@
-        $INFO ${MSG}
+        MSG="$*"
+        $INFO "${MSG}"
     }
     show_list() {
         DIR=$1
-        if ! test -d $DIR; then
+        if ! test -d "$DIR"; then
             return
         fi
-        if /usr/bin/ls -1qA $DIR | grep -q .; then
+        if /usr/bin/ls -1qA "$DIR" | grep -q .; then
             pt warn "From $DIR" &&
-                $LS_CMD $DIR
-            echo ""
+                $LS_CMD "$DIR"
+           echo ""
         fi
     }
 
@@ -145,246 +141,210 @@ LIST() {
 }
 
 GET() {
-    OPT=${1:-help}
     filter() {
-        cat $FILE | grep $1 | cut -c ${2:-13}-100 | head -n1
+        cat "$FILE" | grep "$1" | cut -c "${2:-13}"-100 | head -n 1
     }
-    case $OPT in
-    all)
-        if command -v "bat" >/dev/null 2>&1; then
-            bat --paging=never $FILE
-        else
-            cat $FILE
-        fi
-        ;;
-    gtk_light)
-        filter LIGHT_GTK 17
-        ;;
-    icon_light)
-        filter LIGHT_ICON 18
-        ;;
-    cursor_light)
-        filter LIGHT_CURSOR 20
-        ;;
-    wal_light)
-        filter LIGHT_WAL 17
-        ;;
-    wallpaper_light)
-        filter LIGHT_WALLPAPER 23
-        ;;
-    gtk_dark)
-        filter DARK_GTK 16
-        ;;
-    icon_dark)
-        filter DARK_ICON 17
-        ;;
-    cursor_dark)
-        filter DARK_CURSOR 19
-        ;;
-    wal_dark)
-        filter DARK_WAL 16
-        ;;
-    wallpaper_dark)
-        filter DARK_WALLPAPER 22
-        ;;
-    wal_is_dark)
-        filter WAL_IS_DARK 13
-        ;;
-    -h | --help | help | *)
-        printf "%s" "\
-Usage get Sub-Command:
-help,-h,--help          Show This Message
-gtk                     Get GTK Theme
-icon                    Get Icon Theme
-cursor                  Get Cursor Theme
-wal                     Get Wal Theme
-wallpaper               Get Wallpaper
-"
-        ;;
-    esac
+    while [ -n "$1" ]; do
+        case "$1" in
+            "-f") shift; FILE=$1 ;;
+            "-l") FILE=$HOME/.cache/theme/light.conf ;;
+            "-d") FILE=$HOME/.cache/theme/dark.conf ;;
+            all)
+                if command -v "bat" >/dev/null 2>&1; then
+                    bat --paging=never "$FILE"
+                else
+                    cat "$FILE"
+                fi
+                ;;
+            gtk) filter GTK_THEME 11 ;;
+            icon) filter ICON_THEME 12 ;;
+            cursor) filter CURSOR_THEME 14 ;;
+            wal) filter WAL_THEME 11 ;;
+            wallpaper) filter WALLPAPER 11 ;;
+            is_dark) filter WAL_IS_DARK 13 ;;
+            *) pt error "$1 is Invalid" && exit 1 ;;
+        esac
+        shift
+    done
 }
 
 SET() {
-    LIGHT_GTK_THEME=$(GET gtk_light)
-    LIGHT_ICON_THEME=$(GET icon_light)
-    LIGHT_WAL_THEME=$(GET wal_light)
-    LIGHT_CURSOR_THEME=$(GET cursor_light)
-    LIGHT_WALLPAPER=$(GET wallpaper_light)
-    DARK_GTK_THEME=$(GET gtk_dark)
-    DARK_ICON_THEME=$(GET icon_dark)
-    DARK_WAL_THEME=$(GET wal_dark)
-    DARK_CURSOR_THEME=$(GET cursor_dark)
-    DARK_WALLPAPER=$(GET wallpaper_dark)
-    WAL_IS_DARK=$(GET wal_is_dark)
+    GTK_THEME="$(GET gtk)"
+    ICON_THEME="$(GET icon)"
+    WAL_THEME="$(GET wal)"
+    CURSOR_THEME="$(GET cursor)"
+    WALLPAPER="$(GET wallpaper)"
+    WAL_IS_DARK="$(GET is_dark)"
 
-    Setup() {
-        VAL=$1
-        sed -i 's_'${2}'\_THEME=.*_'${2}'\_THEME='${VAL}'_' $FILE
-        pt info "Successfully Set $3 Theme to $VAL"
+    change() {
+        QUERY=$1
+        VAL=$2
+        sed -i 's_'"${QUERY}"'=.*_'"${QUERY}"'='"${VAL}"'_' "$FILE"
     }
 
-    OPT=${1:-help}
-    case $OPT in
-    gtk_light)
-        Setup ${2:-$LIGHT_GTK_THEME} LIGHT\\_GTK "Light GTK"
-        ;;
-    icon_light)
-        Setup ${2:-$LIGHT_ICON_THEME} LIGHT\\_ICON "Light Icon"
-        ;;
-    cursor_light)
-        Setup ${2:-$LIGHT_CURSOR_THEME} LIGHT\\_CURSOR "Light Cursor"
-        ;;
-    wal_light)
-        Setup ${2:-$LIGHT_WAL_THEME} LIGHT\\_WAL "Light Wal"
-        ;;
-    wallpaper_light | wl)
-        Setup ${2:-$LIGHT_WALLPAPER_THEME} LIGHT\\_WALLPAPER "Light Wallpaper"
-        ;;
-    gtk_dark)
-        Setup ${2:-$DARK_GTK_THEME} DARK\\_GTK "Dark GTK"
-        ;;
-    icon_dark)
-        Setup ${2:-$DARK_ICON_THEME} DARK\\_ICON "Dark Icon"
-        ;;
-    cursor_dark)
-        Setup ${2:-$DARK_CURSOR_THEME} DARK\\_CURSOR "Dark Cursor"
-        ;;
-    wal_dark)
-        Setup ${2:-$DARK_WAL_THEME} DARK\\_WAL "Dark Wal"
-        ;;
-    wallpaper_dark | wd)
-        Setup ${2:-$DARK_WALLPAPER_THEME} DARK\\_WALLPAPER "Dark Wallpaper"
-        ;;
-    wal_is_dark)
-        OPT=${2:-"$WAL_IS_DARK"}
-        case $OPT in
-        true | t | "true" | yes | y | 1)
-            VAL=true
-            ;;
-        false | f | "false" | no | n | 0)
-            VAL=false
-            ;;
-        *)
-            pt error "The Value Must true or false"
-            exit 0
-            ;;
+    while [ -n "$1" ]; do
+        case "$1" in
+            "-f") shift; FILE=$1 ;;
+            "-l") FILE=$HOME/.cache/theme/light.conf ;;
+            "-d") FILE=$HOME/.cache/theme/dark.conf ;;
+            -gtk)
+                shift
+                THEME="$1"
+                change GTK\\_THEME "$THEME" 
+                ;;
+            -icon)
+                shift
+                THEME="$1"
+                change ICON\\_THEME "$THEME" 
+                ;;
+            -cursor)
+                shift
+                THEME="$1"
+                change CURSOR\\_THEME "$THEME" 
+                ;;
+            -wal)
+                shift
+                THEME="$1"
+                change WAL\\_THEME "$THEME" 
+                ;;
+            -wallpaper)
+                shift
+                THEME="$1"
+                change WALLPAPER "$THEME" 
+                ;;
+            -dark)
+                shift
+                OPT="$1"
+                case $OPT in
+                    true | t | yes | y | 1)
+                        VAL=true
+                        ;;
+                    false | f | no | n | 0)
+                        VAL=false
+                        ;;
+                esac
+                change WAL\\_IS\\_DARK "$VAL" 
+                ;;
+            *) pt error "$1 is Invalid" && exit 1 ;;
         esac
-        sed -i 's_WAL\_IS\_DARK=.*_WAL\_IS\_DARK='$VAL'_' $FILE
-        pt info "Set Wal Is Dark to $VAL"
-        ;;
-    -h | --help | help | *)
-        printf "%s" "\
-Usage set Sub-Command:
-help,-h,--help          Show This Message
-gtk                     Set GTK Theme
-icon                    Set Icon Theme
-cursor                  Set Cursor Theme
-wal                     Set Wal Theme
-wallpaper               Set Wallpaper
-"
-        ;;
-    esac
+        shift
+    done
 }
 
 APPLY() {
-    THEMES_DIR="$HOME/.themes"
-    ICONS_DIR="$HOME/.icons"
-    GTK_THEME=${1:-"$(GET gtk_dark)"}
-    ICON_THEME=${2:-"$(GET icon_dark)"}
-    CURSOR_THEME=${3:-"$(GET cursor_dark)"}
-    WAL_THEME=${4:-"$(GET wal_dark)"}
-    WALLPAPER=${5:-"$(GET wallpaper_dark)"}
+    GTK_THEME="$(GET gtk)"
+    ICON_THEME="$(GET icon)"
+    CURSOR_THEME="$(GET cursor)"
+    WAL_THEME="$(GET wal)"
+    WALLPAPER="$(GET wallpaper)"
+    WAL_IS_DARK="$(GET is_dark)"
 
-    WAL_IS_DARK=$(GET wal_is_dark)
-
-    # if [[ -d $THEMES_DIR/$GTK_THEME ]]; then
-    #     GTK_THEME_DIR=$THEMES_DIR/$GTK_THEME
-    #     sed -i 's_Name=.*_Name='$GTK_THEME'_' $GTK_THEME_DIR/index.theme
-    #     sed -i 's_GtkTheme=.*_GtkTheme='$GTK_THEME'_' $GTK_THEME_DIR/index.theme
-    #     sed -i 's_IconTheme=.*_IconTheme='$ICON_THEME'_' $GTK_THEME_DIR/index.theme
-    #     sed -i 's_CursorTheme=.*_CursorTheme='$CURSOR_THEME'_' $GTK_THEME_DIR/index.theme
-    # fi
-
-    # if [[ -d $ICONS_DIR/$ICON_THEME ]]; then
-    #     ICON_THEME_DIR=$ICONS_DIR/$ICON_THEME
-    #     sed -i 's_Name=.*_Name='$ICON_THEME'_' $ICON_THEME_DIR/index.theme
-    # fi
-
-    # if [[ -d $ICONS_DIR/$CURSOR_THEME ]]; then
-    #     CURSOR_THEME_DIR=$ICONS_DIR/$CURSOR_THEME
-    #     sed -i 's_Name=.*_Name='$CURSOR_THEME'_' $CURSOR_THEME_DIR/index.theme
-    # fi
+    while [ -n "$1" ]; do
+        case "$1" in
+            -gtk)
+                shift
+                GTK_THEME="$1"
+                ;;
+            -icon)
+                shift
+                ICON_THEME="$1"
+                ;;
+            -cursor)
+                shift
+                CURSOR_THEME="$1"
+                ;;
+            -wal)
+                shift
+                WAL_THEME="$1"
+                ;;
+            -dark)
+                shift
+                WAL_IS_DARK="$1"
+                ;;
+            -wallpaper)
+                shift
+                WALLPAPER="$1"
+                ;;
+            *) pt error "$1 is Invalid" && exit 1 ;;
+        esac
+        shift
+    done
 
     # GTK Theme
-    sed -i 's_gtk-theme-name=.*_gtk-theme-name="'$GTK_THEME'"_' $GTK2_CONFIG
-    sed -i 's_gtk-theme-name=.*_gtk-theme-name='$GTK_THEME'_' $GTK3_CONFIG
-    sed -i 's_Net/ThemeName.*_Net/ThemeName "'$GTK_THEME'"_' $XSETTINGSD_CONFIG
+    sed -i 's_gtk-theme-name=.*_gtk-theme-name="'"$GTK_THEME"'"_' "$GTK2_CONFIG"
+    sed -i 's_gtk-theme-name=.*_gtk-theme-name='"$GTK_THEME"'_' "$GTK3_CONFIG"
+    sed -i 's_Net/ThemeName.*_Net/ThemeName "'"$GTK_THEME"'"_' "$XSETTINGSD_CONFIG"
 
     # Icon Theme
-    sed -i 's_Net/IconThemeName.*_Net/IconThemeName "'$ICON_THEME'"_' $XSETTINGSD_CONFIG
-    sed -i 's_gtk-icon-theme-name=.*_gtk-icon-theme-name="'$ICON_THEME'"_' $GTK2_CONFIG
-    sed -i 's_gtk-icon-theme-name=.*_gtk-icon-theme-name='$ICON_THEME'_' $GTK3_CONFIG
+    sed -i 's_Net/IconThemeName.*_Net/IconThemeName "'"$ICON_THEME"'"_' "$XSETTINGSD_CONFIG"
+    sed -i 's_gtk-icon-theme-name=.*_gtk-icon-theme-name="'"$ICON_THEME"'"_' "$GTK2_CONFIG"
+    sed -i 's_gtk-icon-theme-name=.*_gtk-icon-theme-name='"$ICON_THEME"'_' "$GTK3_CONFIG"
 
     # Cursor themes
-    sed -i 's_Xcursor.theme:.*_Xcursor.theme:'$CURSOR_THEME'_' $XRESOURCES_CONFIG
-    sed -i 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name="'$CURSOR_THEME'"_' $GTK2_CONFIG
-    sed -i 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name='$CURSOR_THEME'_' $GTK3_CONFIG
+    sed -i 's_Xcursor.theme:.*_Xcursor.theme:'"$CURSOR_THEME"'_' "$XRESOURCES_CONFIG"
+    sed -i 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name="'"$CURSOR_THEME"'"_' "$GTK2_CONFIG"
+    sed -i 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name='"$CURSOR_THEME"'_' "$GTK3_CONFIG"
 
     pt warn "GTK Theme:     $GTK_THEME"
     pt warn "Icon Theme:    $ICON_THEME"
     pt warn "Cursor Theme:  $CURSOR_THEME"
     pt warn "Wal Theme:     $WAL_THEME"
+    pt warn "Use Dark wal:  $WAL_IS_DARK"
     pt warn "Wallpaper:     $WALLPAPER"
 
+    if [ "$WAL_IS_DARK" == true ]; then
+        wal --theme "$WAL_THEME" &>/dev/null
+    else
+        wal -l --theme "$WAL_THEME" &>/dev/null
+    fi
+    xrdb -merge "$XRESOURCES_CONFIG" &>/dev/null
+
+    gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME" &>/dev/null
+    gsettings set org.gnome.desktop.wm.preferences theme "$GTK_THEME" &>/dev/null
     xsettingsd &>/dev/null &
     read -rt "3" <> <(:) || killall xsettingsd &
 
-    if command -v "gsettings" >/dev/null 2>&1; then
-        gsettings set org.gnome.desktop.interface gtk-theme $GTK_THEME &>/dev/null
-        gsettings set org.gnome.desktop.wm.preferences theme $GTK_THEME &>/dev/null
-    fi
-
-    if [ $WAL_IS_DARK == true ]; then
-        wal --theme $WAL_THEME &>/dev/null
-    else
-        wal -l --theme $WAL_THEME &>/dev/null
-    fi
-    xrdb -merge $XRESOURCES_CONFIG &>/dev/null
-
-    if [ -f $WALLPAPER ]; then
-        $WALLPAPER_CHANGER $WALLPAPER &>/dev/null
+    if [ -f "$WALLPAPER" ]; then
+        $WALLPAPER_CHANGER "$WALLPAPER" &>/dev/null
     fi
 
     AFTER
 
+    SET -gtk "$GTK_THEME" -icon "$ICON_THEME" -cursor "$CURSOR_THEME" \
+        -wal "$WAL_THEME" -wallpaper "$WALLPAPER" -dark "$WAL_IS_DARK" && \
     pt info "Successfully Changed The Theme"
 }
 
 LIGHT() {
     pt info "Turn On Light Mode"
-    SET wal_is_dark "false"
 
-    GTK_THEME=$(GET gtk_light)
-    ICON_THEME=$(GET icon_light)
-    CURSOR_THEME=$(GET cursor_light)
-    WAL_THEME=$(GET wal_light)
-    WALLPAPER=$(GET wallpaper_light)
+    GTK_THEME="$(GET -l gtk)"
+    ICON_THEME="$(GET -l icon)"
+    CURSOR_THEME="$(GET -l cursor)"
+    WAL_THEME="$(GET -l wal)"
+    WALLPAPER="$(GET -l wallpaper)"
 
-    APPLY $GTK_THEME $ICON_THEME $CURSOR_THEME $WAL_THEME $WALLPAPER
+    SET -gtk "$GTK_THEME" -icon "$ICON_THEME" -cursor "$CURSOR_THEME" \
+        -wal "$WAL_THEME" -wallpaper "$WALLPAPER" -dark false && \
+    APPLY
+
     echo "LIGHT" >/tmp/.light-or-dark
 }
 
 DARK() {
     pt info "Turn On Dark Mode"
-    SET wal_is_dark "true"
+    SET -dark true
 
-    GTK_THEME=$(GET gtk_dark)
-    ICON_THEME=$(GET icon_dark)
-    CURSOR_THEME=$(GET cursor_dark)
-    WAL_THEME=$(GET wal_dark)
-    WALLPAPER=$(GET wallpaper_dark)
+    GTK_THEME="$(GET -d gtk)"
+    ICON_THEME="$(GET -d icon)"
+    CURSOR_THEME="$(GET -d cursor)"
+    WAL_THEME="$(GET -d wal)"
+    WALLPAPER="$(GET -d wallpaper)"
 
-    APPLY $GTK_THEME $ICON_THEME $CURSOR_THEME $WAL_THEME $WALLPAPER
+    SET -gtk "$GTK_THEME" -icon "$ICON_THEME" -cursor "$CURSOR_THEME" \
+        -wal "$WAL_THEME" -wallpaper "$WALLPAPER" -dark true && \
+    APPLY
+
     echo "DARK" >/tmp/.light-or-dark
 }
 
@@ -396,58 +356,32 @@ TOGGLE() {
     fi
 
     case $1 in
-    auto)
-        if [[ $HOUR -le 13 && $HOUR -ge 8 ]]; then
-            LIGHT
-        else
-            DARK
-        fi
-        ;;
-    *)
-        if [[ $(cat /tmp/.light-or-dark) == "DARK" ]]; then
-            LIGHT
-        else
-            DARK
-        fi
-        ;;
+        auto)
+            if [[ "$HOUR" -le 13 && "$HOUR" -ge 8 ]]; then
+                LIGHT
+            else
+                DARK
+            fi
+            ;;
+        *)
+            if [[ $(cat /tmp/.light-or-dark) == "DARK" ]]; then
+                LIGHT
+            else
+                DARK
+            fi
+            ;;
     esac
 }
 
-case $1 in
--a | --apply | apply)
-    APPLY \
-        ${2:-"$(GET gtk_dark)"} \
-        ${3:-"$(GET icon_dark)"} \
-        ${4:-"$(GET cursor_dark)"} \
-        ${5:-"$(GET wal_dark)"} \
-        ${6:-"$(GET wallpaper_dark)"}
-    ;;
--l | --list)
-    LIST
-    ;;
--s | --set | set)
-    SET ${2:-none} ${3:-none}
-    ;;
--g | --get | get)
-    GET ${2:-all}
-    ;;
--L | --light | light)
-    LIGHT
-    ;;
--D | --dark | dark)
-    DARK
-    ;;
--t | --toggle | toggle)
-    TOGGLE ${2:-none}
-    ;;
--h | --help | help)
-    usage
-    ;;
--e | --edit | edit)
-    ${EDITOR:-vim} $FILE
-    ;;
-*)
-    echo "Invalid argument"
-    usage
-    ;;
+case "$1" in
+    "-a" | "--apply") shift; APPLY "$@" ;;
+    "-s" | "--set") shift; SET "$@" ;;
+    "-g" | "--get") shift; GET "$@" ;;
+    "-t" | "--toggle") shift; TOGGLE "$@" ;;
+    "-L" | "--light") LIGHT ;;
+    "-D" | "--dark") DARK ;;
+    "-l" | "--list") LIST ;;
+    "-e" | "--edit") shift; ${EDITOR:-vim} "${1:-$FILE}" ;;
+    "-h" | "--help") usage ;;
+    *) pt error "$1 is Invalid" && exit 1 ;;
 esac

@@ -26,7 +26,6 @@ let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
 let g:loaded_matchit = 1
 let g:loaded_matchparen = 1
-let g:loaded_2html_plugin = 1
 
 " prevent typo when pressing `wq` or `q`
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))

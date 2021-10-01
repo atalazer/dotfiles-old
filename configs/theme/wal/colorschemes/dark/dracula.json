@@ -2,19 +2,6 @@
   "special": {
     "background": "#282a36",
     "foreground": "#f8f8f2",
- 
-    "active_border": "#626483",
-    "inactive_border": "#3a3c4e",
-
-    "active_tab_fg": "#282a36",
-    "active_tab_bg": "#f8f8f2",
-    "inactive_tab_fg": "#282a36",
-    "inactive_tab_bg": "#6272a4",
-    
-    "selection_fg": "#ffffff",
-    "selection_bg": "#44475a",
-    
-    "url_color": "#8be9fd",
     "cursor": "#f8f8f2"
   },
   "colors": {
@@ -34,9 +21,6 @@
     "color12": "#d6acff",
     "color13": "#ff92df",
     "color14": "#a4ffff",
-    "color15": "#ffffff",
-    
-    "color16": "#fe5555",
-    "color17": "#de5644"
+    "color15": "#ffffff"
   }
 }

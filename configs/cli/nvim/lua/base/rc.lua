@@ -2,9 +2,8 @@ local M = {}
 
 M.plugin_enabled = {
     -- ================== UI
-    alpha = true,
+    alpha = false,
     bufferline = true,
-    focus = true,
     nvim_tree = true,
     sidebar = false,
     which_key = true,
@@ -16,11 +15,13 @@ M.plugin_enabled = {
     sniprun = true,
     treesitter = true,
     -- ================== Git
-    fugitive = true,
+    fugitive = false,
     gitsigns = true,
-    neogit = false,
+    lazygit = true,
+    neogit = true,
     -- ================== Experience
     colorizer = false,
+    focus = true,
     hexokinase = true,
     indent_blankline = true,
     neoscroll = true,

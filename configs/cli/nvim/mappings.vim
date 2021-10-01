@@ -43,8 +43,8 @@ nnoremap <leader>em  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(
 " ------------------------------------- Navigation
 " use hjkl in insert mode
 inoremap <A-h> <Left>
-inoremap <A-j> <Up>
-inoremap <A-k> <Down>
+inoremap <A-j> <Down>
+inoremap <A-k> <Up>
 inoremap <A-l> <Right>
 
 " Better J for join lines
@@ -97,16 +97,13 @@ nnoremap ]s ]szzzv
 nnoremap [s [szzzv
 
 " ------------------------------------- Search
-" keeps jumplist after searching
-nnoremap / ms/
-nnoremap ? ms?
-
 " Keep center
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " no highlight search
 nnoremap <Esc><Esc> <CMD>nohlsearch<CR>
+nnoremap <C-n> <CMD>nohlsearch<CR>
 
 " ------------------------------------- Indent
 " better indenting experience
@@ -120,18 +117,26 @@ noremap cu <CMD>s/\<./\l&/g<CR><CMD>nohlsearch<CR>
 " ------------------------------------- Workspace
 
 " better movement between windows
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
+nnoremap <A-h> <C-w><C-h>
+nnoremap <A-j> <C-w><C-j>
+nnoremap <A-k> <C-w><C-k>
+nnoremap <A-l> <C-w><C-l>
+nnoremap <A-Left> <C-w><C-h>
+nnoremap <A-Down> <C-w><C-j>
+nnoremap <A-Up> <C-w><C-k>
+nnoremap <A-Right> <C-w><C-l>
 
 " Cycle tab
-nnoremap K <CMD>BufferLineCyclePrev<CR>
-nnoremap J <CMD>BufferLineCycleNext<CR>
+" nnoremap KK <CMD>BufferLineCyclePrev<CR>
+" nnoremap JJ <CMD>BufferLineCycleNext<CR>
+nnoremap <C-k> <CMD>BufferLineCyclePrev<CR>
+nnoremap <C-j> <CMD>BufferLineCycleNext<CR>
 
 " Move tab
-nnoremap <A-j> <CMD>BufferLineMovePrev<CR>
-nnoremap <A-k> <CMD>BufferLineMoveNext<CR>
+" nnoremap HH <CMD>BufferLineMovePrev<CR>
+" nnoremap LL <CMD>BufferLineMoveNext<CR>
+nnoremap <C-h> <CMD>BufferLineMovePrev<CR>
+nnoremap <C-l> <CMD>BufferLineMoveNext<CR>
 
 nnoremap <A-1> <CMD>lua require'bufferline'.go_to_buffer(1)<CR>
 nnoremap <A-2> <CMD>lua require'bufferline'.go_to_buffer(2)<CR>
@@ -141,20 +146,14 @@ nnoremap <A-5> <CMD>lua require'bufferline'.go_to_buffer(5)<CR>
 
 " ------------------------------------ Terminal
 " move between window
-tnoremap <C-h> <C-\><C-n><C-w><C-h>
-tnoremap <C-j> <C-\><C-n><C-w><C-j>
-tnoremap <C-k> <C-\><C-n><C-w><C-k>
-tnoremap <C-l> <C-\><C-n><C-w><C-l>
-
-" resize
-tnoremap <Left>  <C-\><C-n>:vertical resize +2<CR>
-tnoremap <Right> <C-\><C-n>:vertical resize -2<CR>
-tnoremap <Up>    <C-\><C-n>:resize   +2<CR>
-tnoremap <Down>  <C-\><C-n>:resize   -2<CR>
+tnoremap <A-h> <C-\><C-n><C-w><C-h>
+tnoremap <A-j> <C-\><C-n><C-w><C-j>
+tnoremap <A-k> <C-\><C-n><C-w><C-k>
+tnoremap <A-l> <C-\><C-n><C-w><C-l>
 
 " move buffer
-tnoremap <A-h> <C-\><C-n>:bp<CR>
-tnoremap <A-l> <C-\><C-n>:bn<CR>
+tnoremap <C-h> <C-\><C-n>:bp<CR>
+tnoremap <C-l> <C-\><C-n>:bn<CR>
 
 " go to normal mode using double esc
 tnoremap <Esc><Esc> <C-\\><C-n>
@@ -176,16 +175,3 @@ noremap <F3>
 nnoremap <Leader>ni <CMD>lua Util.notes.index()<CR>
 nnoremap <Leader>nn <CMD>lua Util.notes.search()<CR>
 
-" ------------------------------------ Git
-lua << EOF
-mapx.nname("<leader>g", "Git")
-nmap("<Leader>gg", "<CMD>G<CR>", "Main Menu")
-nmap("<Leader>gh", "<CMD>diffget //2<CR>", "Merge Left")
-nmap("<Leader>gf", "<CMD>diffget //3<CR>", "Merge Right")
-nmap("<Leader>gc", "<CMD>G commit<CR>", "Commit")
-nmap("<Leader>gm", "<CMD>G merge<CR>", "Merge")
-nmap("<Leader>gb", "<CMD>G branch<CR>", "Branch")
-
-nmap("qq", "<CMD>quit<CR>", "silent", { ft = {"fugitive","git","help"} }, "Quit")
-nmap("?", "g?", "silent", { ft = {"fugitive"} }, "Help")
-EOF

@@ -412,7 +412,7 @@ return packer.startup({
             "junegunn/vim-easy-align",
             keys = "<Plug>(EasyAlign)",
             setup = function()
-                nnoremap("n", "ga", "<Plug>(EasyAlign)", "silent", "Align")
+                nnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
                 xnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
             end,
         },
@@ -556,6 +556,7 @@ return packer.startup({
         -- ------------------------
         {
             "kdheepak/lazygit.nvim",
+            disable = not enabled.lazygit,
             cmd = { "LazyGit" },
             setup = function()
                 vim.g.lazygit_floating_window_winblend = 0
@@ -575,9 +576,32 @@ return packer.startup({
             disable = not enabled.neogit,
             cmd = "Neogit",
             requires = {
-                "sindrets/diffview.nvim",
+                {
+                    "sindrets/diffview.nvim",
+                    config = function()
+                        require("diffview").setup()
+                    end
+                },
             },
             config = [[require("plugins.neogit")]],
+            setup = function()
+                mapx.nname("<leader>g", "Git")
+                nmap("<Leader>gg", "<CMD>Neogit<CR>", "Main Menu")
+                nmap("<Leader>gc", "<CMD>Neogit commit<CR>", "Commit")
+                nmap("<Leader>gd", "<CMD>Neogit diff<CR>", "Merge")
+                nmap("<Leader>gb", "<CMD>Neogit branch<CR>", "Branch")
+            end
+        },
+
+        -- GitLinker
+        -- ----------------------
+        {
+            "ruifm/gitlinker.nvim",
+            config = function()
+                require("gitlinker").setup({
+                    mappings = "<leader>gw"
+                })
+            end
         },
 
         -- Vim Fugitive
@@ -585,7 +609,16 @@ return packer.startup({
         {
             "tpope/vim-fugitive",
             disable = not enabled.fugitive,
-            requires = { "tpope/vim-rhubarb" },
+            setup = function()
+                mapx.nname("<leader>g", "Git")
+                nmap("<Leader>gg", "<CMD>G<CR>", "Main Menu")
+                nmap("<Leader>gh", "<CMD>diffget //2<CR>", "Merge Left")
+                nmap("<Leader>gf", "<CMD>diffget //3<CR>", "Merge Right")
+                nmap("<Leader>gc", "<CMD>G commit<CR>", "Commit")
+                nmap("<Leader>gm", "<CMD>G merge<CR>", "Merge")
+                nmap("<Leader>gb", "<CMD>G branch<CR>", "Branch")
+                nmap("<Leader>gw", "<CMD>GBrowse<CR>", "Branch")
+            end
         },
 
         -- ============================================== Misc

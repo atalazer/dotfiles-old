@@ -3,8 +3,8 @@
 dict(){
     DIR=$HOME/Documents/Dictionary
     FILE=$DIR/$(date '+%Y-%m-%d').md
-    if [[ ! -d $DIR ]]; then mkdir -p $DIR; fi
-    if [[ ! -f $FILE ]]; then touch $FILE && echo "|Word|Meaning|\n|---|---|" >> $FILE; fi
+    if [[ ! -d "$DIR" ]]; then mkdir -p "$DIR"; fi
+    if [[ ! -f "$FILE" ]]; then touch "$FILE" && printf "%s" "|Word|Meaning|\n|---|---|" >> "$FILE"; fi
 
     OPT=${1:-show}
     case $OPT in
@@ -14,13 +14,13 @@ dict(){
             if [[ -z $WORD ]]; then exit 1; fi
             if [[ -z $MEAN ]]; then exit 1; fi
 
-            echo "|$WORD |$MEAN|" >> $FILE
+            echo "|$WORD |$MEAN|" >> "$FILE"
             ;;
         s|"-s"|show|"--show")
             if command -v "glow" > /dev/null 2>&1; then
-                glow $FILE
+                glow "$FILE"
             else
-                cat $FILE
+                cat "$FILE"
             fi
             ;;
     esac

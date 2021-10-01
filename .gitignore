@@ -1,3 +1,4 @@
+result
 **/*.zwc
 **/*.db
 **/*.state
@@ -5,9 +6,5 @@
 **/error.log
 **/history.txt
 **/watch_later/*
-result
-
-**/compiled.*
-**/qutebrowser/autoconfig.yml
-
 configs/cli/nnn/.lastd
+configs/cli/lazygit/state.yml

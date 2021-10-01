@@ -1,23 +1,102 @@
 #compdef theme-changer
 
-_theme-changer() {
-    local I="-h --help --version"
+_conf(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.cache/theme"
+    _values -C "conf" ${$(find $prefix -type f):-""}
+}
+
+_icon(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.icons"
+    _values -C "icon" ${$(/bin/ls $prefix | /bin/tr "" "\n"):-""}
+}
+
+_wallpaper(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.wallpaper"
+    _values -C "wallpaper" ${$(find $prefix -type f):-""}
+}
+
+_gtk(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.themes"
+    _values -C "gtk" ${$(/bin/ls $prefix | /bin/tr "" "\n"):-""}
+}
+
+_wal(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.config/wal/colorschemes"
+    _values -C "wal" ${$(find "$prefix" -type f):-""}
+}
+
+_theme-changer () {
+    typeset -A opt_args
     local ret=1
-    local -a args
-    args+=(
-        "($I -s --set)"{-s,--set}'[Set GTK, Icon, or Cursor Theme]'
-        "($I -g --get)"{-g,--get}'[Get GTK, Icon, or Cursor Theme]'
-        "($I -l --list)"{-l,--list}'[List All Available Themes and Icons]'
-        "($I -e --edit)"{-e,--edit}'[Edit Config]'
-        "($I -a --apply)"{-a,--apply}'[Apply 1{Themes} 2{Icons} 3{cursor}]'
-        "($I -L --light)"{-L,--light}'[Turn On Light Mode]'
-        "($I -D --dark)"{-D,--dark}'[Turn On Dark Mode]'
-        "($I -t --toggle)"{-t,--toggle}'[Toggle Dark and Light Mode]'
-        '(- *)'{-h,--help}'[Display help and exit]'
-        '(- *)--version[Output version information and acknowledgments]'
-        # '*:file:_files'
-    )
-    _arguments -w -s -S $args[@] && ret=0
+	local cmd
+	if (( CURRENT > 2)); then
+		cmd=${words[2]}
+		curcontext="${curcontext%:*:*}:theme-changer-$cmd"
+		(( CURRENT-- ))
+		shift words
+		# Run the completion for the subcommand
+		case "${cmd}" in
+            (--get)
+                local gets; gets=(
+                    "all:Get config"
+                    "gtk:Get gtk theme"
+                    "icon:Get icon theme"
+                    "cursor:Get cursor theme"
+                    "wal:Get wal theme"
+                    "is_dark:check dark theme for wal"
+                    "wallpaper:Get wallpaper"
+                )
+                _describe -t gets "get" gets && ret=0
+                _arguments : \
+                    "-f[Specify config file]:files:_conf" \
+                    "-d[Use dark config file]" \
+                    "-l[Use light config file]"
+            ;;
+            (--toggle)
+                local toggles; toggles=(
+                    "auto:Toggle light and dark based on time"
+                    "light-dark:Toggle between light and dark"
+                )
+                _describe -t toggles "toggle" toggles && ret=0
+            ;;
+            (--set|--apply)
+                _arguments : \
+                    "-gtk[Set gtk theme]:folder:_gtk" \
+                    "-icon[Set icon theme]:folder:_icon" \
+                    "-cursor[Set cursor theme]:folder:_icon" \
+                    "-wal[Set wal theme]:files:_wal" \
+                    "-wallpaper[Set wallpaper]:files:_wallpaper" \
+                    "-dark[Use dark theme for wal]:bool:(true false)"
+                ret=0
+            ;;
+            (--edit) _theme-edit ;;
+		esac
+	else
+		local -a subcommands
+		subcommands=(
+            "--set:Set themes"
+            "--get:Get themes"
+            "--edit:Edit themes config"
+            "--apply:Apply theme based current config"
+            "--dark:Apply dark theme"
+            "--light:Apply light theme"
+            "--toggle:Toggle between light and dark theme"
+		)
+		_describe -t commands 'theme-changer' subcommands
+		_arguments : \
+			"--help[Show help message]"
+	fi
+
     return ret
 }
 

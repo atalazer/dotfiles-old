@@ -7,7 +7,7 @@ neogit.setup({
     disable_builtin_notifications = false,
     auto_refresh = true,
     commit_popup = {
-        kind = "leftabove vsplit",
+        kind = "split",
     },
     -- Plugins Integrations
     integrations = {
