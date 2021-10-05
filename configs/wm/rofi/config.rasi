@@ -1,7 +1,7 @@
 configuration {
-    font:                      "monospace 11";
+    font:                      "Inter Medium 11";
     show-icons:                true;
-    icon-theme:                "Papirus";
+    // icon-theme:                "Papirus";
     cycle:                     true;
     hide-scrollbar:            true;
     scroll-method:             1;

@@ -1,4 +1,5 @@
-set shell sh
+set shell bash
+set shellopts '-eu'
 
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/cleaner
@@ -7,6 +8,11 @@ set ratios 1:1:2
 set ignorecase true
 set icons
 # set drawbox
+
+set ifs "\n"
+set scrolloff 10
+set period 1
+set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
 
 # Custom Functions
 cmd open ${{
@@ -17,16 +23,6 @@ cmd open ${{
         application/pdf) zathura "$f";;
         *) opener "$f" ;;
     esac
-}}
-
-cmd mkdir ${{
-    directory=$1
-    if test -e "$directory"; then
-        lf -remote "send $id echo Directory exists: $directory"
-        exit 1
-    fi
-    mkdir -p "$directory"
-    lf -remote "send $id select $directory"
 }}
 
 cmd bulkrename ${{
@@ -57,44 +53,67 @@ cmd bulkrename ${{
 	rm $index $index_edit
 }}
 
-cmd touch ${{
+cmd paste &{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    case "$mode" in
+        copy)
+            rsync -av --ignore-existing --progress -- "$@" . |
+            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+            ;;
+        move) mv -n -- "$@" .;;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+
+cmd mkdir ${{
+  directory=$1
+  if test -e "$directory"; then
+    lf -remote "send $id echo Directory exists: $directory"
+    exit 1
+  fi
+  mkdir -p "$directory"
+  lf -remote "send $id select $directory"
+}}
+
+cmd mkfile ${{
   file=$1
   if test -e "$file"; then
-    lf -remote "send $id echo File exists: $file"
+    lf -remote "send $id echo Directory exists: $file"
     exit 1
   fi
   touch "$file"
   lf -remote "send $id select $file"
 }}
 
-cmd unarchive ${{
-  extract "$f"
-}}
-
-cmd unexecute ${{
-  chmod -x "$f"
-}}
-
 # Bindings
-# Basic Functions
-map cd push :cd<space>
-map bc cd ~/.config
-map bd cd ~/.dotfiles
-map bl cd ~/Downloads
-map bD cd ~/Documents
-map br cd ~/Documents/GitHub
-map bv cd ~/Videos
-map bp cd ~/Pictures
-map bm cd ~/Music
+# Remove Maps
+map "'"
+map '"'
+map o
+map n
+map d
+map c
+map e
+map r
+map y
 
+# Basic Functions
 map . set hidden!
-map p paste
-map x cut
-map c copy
+map pp paste
+map yy copy
+map dd cut
+map dD delete
+map ee $$EDITOR "$f"
 map <enter> open
 
-map af mkfile
-map ad mkdir
+map nf push :mkfile<space>
+map nd push :mkdir<space>
 
 map r rename
 map R bulkrename
@@ -104,3 +123,18 @@ map U unselect
 map o open_config
 map gg top
 map G bottom
+
+# Quick Change Directory
+map cd push :cd<space>
+map ~  cd ~
+map bc cd ~/.config
+map bd cd ~/.dotfiles
+map bl cd ~/Downloads
+map bD cd ~/Documents
+map br cd ~/Documents/GitHub
+map bv cd ~/Videos
+map bp cd ~/Pictures
+map bm cd ~/Music
+
+# Find files
+map <c-f> $lf -remote "send $id select '$(fzf)'"

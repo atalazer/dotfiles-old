@@ -1,19 +1,20 @@
-#!/usr/bin/env bash
+#!/bin/sh
+# vim: ft=sh ts=4 sw=4:
 
 schedule() {
     SCHEDULE=${SCHEDULE:-$HOME/SCHEDULE}
-    if [ ! -f $SCHEDULE ]; then
-        touch $SCHEDULE
+    if [ ! -f "$SCHEDULE" ]; then
+        touch "$SCHEDULE"
         echo "$SCHEDULE Created"
     else
         OPT=${1:---help}
         case $OPT in
         "-e" | "--edit") "${EDITOR:-nvim}" "$SCHEDULE" ;;
         "-s" | "--show")
-            if command -v "glow" &>/dev/null; then
-                glow "$SCHEDULE"
-            elif command -v "bat" &>/dev/null; then
-                bat --paging=never "$SCHEDULE"
+            if command -v "glow" >/dev/null 2>&1; then
+                glow -p "$SCHEDULE"
+            elif command -v "bat" >/dev/null 2>&1; then
+                bat --paging=always "$SCHEDULE"
             else
                 cat "$SCHEDULE"
             fi

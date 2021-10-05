@@ -1,18 +1,15 @@
 # Make sure that the terminal is in application mode when zle is active, since
 # only then values from $terminfo are valid
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-    function zle-line-init() {
+    zle-line-init() {
         echoti smkx
     }
-function zle-line-finish() {
-    echoti rmkx
-}
-zle -N zle-line-init
-zle -N zle-line-finish
+    zle-line-finish() {
+        echoti rmkx
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
 fi
-
-# Use emacs key bindings
-bindkey -e
 
 # [PageUp] - Up a line of history
 if [[ -n "${terminfo[kpp]}" ]]; then
@@ -78,6 +75,7 @@ fi
 bindkey -M emacs '^?' backward-delete-char
 bindkey -M viins '^?' backward-delete-char
 bindkey -M vicmd '^?' backward-delete-char
+
 # [Delete] - delete forward
 if [[ -n "${terminfo[kdch1]}" ]]; then
     bindkey -M emacs "${terminfo[kdch1]}" delete-char
@@ -109,50 +107,4 @@ bindkey -M vicmd '^[[1;5D' backward-word
 
 bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
 bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search history
-
-#
-# sudo or sudoedit will be inserted before the command
-#
-
-__sudo-replace-buffer() {
-    local old=$1 new=$2 space=${2:+ }
-    if [[ ${#LBUFFER} -le ${#old} ]]; then
-        RBUFFER="${space}${BUFFER#$old }"
-        LBUFFER="${new}"
-    else
-        LBUFFER="${new}${space}${LBUFFER#$old }"
-    fi
-}
-
-sudo-command-line() {
-    [[ -z $BUFFER ]] && LBUFFER="$(fc -ln -1)"
-    local WHITESPACE=""
-    if [[ ${LBUFFER:0:1} = " " ]]; then
-        WHITESPACE=" "
-        LBUFFER="${LBUFFER:1}"
-    fi
-    if [[ -n "$EDITOR" ]]; then
-        local cmd="${${(Az)BUFFER}[1]}"
-        if [[ "${aliases[$cmd]} " = (\$EDITOR|$EDITOR)\ * ]]; then
-            local EDITOR="$cmd"
-        fi
-    fi
-    if [[ -n $EDITOR && $BUFFER = $EDITOR\ * ]]; then
-        __sudo-replace-buffer "$EDITOR" "sudoedit"
-    elif [[ -n $EDITOR && $BUFFER = \$EDITOR\ * ]]; then
-        __sudo-replace-buffer "\$EDITOR" "sudoedit"
-    elif [[ $BUFFER = sudoedit\ * ]]; then
-        __sudo-replace-buffer "sudoedit" "$EDITOR"
-    elif [[ $BUFFER = sudo\ * ]]; then
-        __sudo-replace-buffer "sudo" ""
-    else
-        LBUFFER="sudo $LBUFFER"
-    fi
-    LBUFFER="${WHITESPACE}${LBUFFER}"
-}
-zle -N sudo-command-line
-# Defined shortcut keys: [Esc] [Esc]
-bindkey -M emacs '\e\e' sudo-command-line
-bindkey -M vicmd '\e\e' sudo-command-line
-bindkey -M viins '\e\e' sudo-command-line
 

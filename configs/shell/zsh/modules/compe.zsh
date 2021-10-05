@@ -5,10 +5,10 @@ WORDCHARS=''
 # unsetopt MENU_COMPLETE      # do not autoselect the first completion entry
 # setopt AUTO_MENU            # show completion menu on successive tab press
 # setopt COMPLETE_IN_WORD
-setopt ALWAYS_TO_END        # Move cursor to end of word if a full completion is inserted.
+# setopt ALWAYS_TO_END        # Move cursor to end of word if a full completion is inserted.
 setopt PATH_DIRS            # Perform path search even on command names with slashes in them.
 setopt NO_CASE_GLOB         # Make globbing case insensitive.
-setopt NO_LIST_BEEP         # Don't beep on ambiguous completions.
+# setopt NO_LIST_BEEP         # Don't beep on ambiguous completions.
 
 # =================================================
 # User Section
@@ -16,7 +16,7 @@ setopt NO_LIST_BEEP         # Don't beep on ambiguous completions.
 zstyle ':completion:*:corrections' format '%F{green}-- %d (errors: %e) --%f'
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:messages' format '%F{purple}-- %d --%f'
-zstyle ':completion:*:warnings' format '%F{red}-- Sorry, no matches found --%f'
+zstyle ':completion:*:warnings' format '%F{red}-- No matches found! --%f'
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' rehash true
@@ -29,7 +29,8 @@ zstyle ':completion:*:options' auto-description '%d'
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
 zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' cache-path "${ZDOTDIR:-${HOME}}/.zcompcache"
+# zstyle ':completion:*' cache-path "${ZDOTDIR:-${HOME}}/.zcompcache"
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compcache"
 
 zstyle ':completion:*' special-dirs true
 
@@ -78,18 +79,3 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
         rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
         usbmux uucp vcsa wwwrun xfs '_*'
 zstyle '*' single-ignored show
-
-# disable sort when completing options of any command
-zstyle ':completion:complete:*:options' sort false
-
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-
-# fzf-tab
-# ------------------
-zstyle ':fzf-tab:*' fzf-command fzf
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:*' continuous-trigger '/'
-
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'

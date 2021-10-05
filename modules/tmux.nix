@@ -5,8 +5,16 @@ let
       "${config.home.homeDirectory}/.dotfiles/${path}";
 in
 {
-  home.file = { ".config/tmux/tmux.conf".source = link "configs/cli/tmux/tmux.conf"; };
-  home.packages = with pkgs; [ tmux ];
+  home.packages = with pkgs; [
+    tmux
+    # tmuxp
+    ];
+  home.file = { 
+    ".config/tmux/tmux.conf".source = link "configs/cli/tmux/tmux.conf";
+    ".config/tmuxp".source = link "configs/cli/tmuxp";
+    ".config/smug".source = link "configs/cli/smug";
+  };
+
   programs.tmux = {
     enable = false;
     clock24 = true;

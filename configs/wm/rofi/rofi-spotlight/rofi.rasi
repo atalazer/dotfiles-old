@@ -39,8 +39,8 @@ prompt {
 
 button {
 	action: "ok";
-	str: " ";
-	font: "FantasqueSansMono Nerd Font 11";
+	str: " ";
+	font: "FiraCode Nerd Font 14";
 	expand: false;
 	text-color: @foreground;
 	background-color: @transparent;

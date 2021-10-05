@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
 EDITOR="${EDITOR:-nvim}"
@@ -8,7 +8,7 @@ TRASH_CMD=${TRASH_CMD:-"gio"}
 # ----------------------
 alias c="clear"
 alias r="exec zsh"
-alias {:q,q}="exit"
+alias :{q,Q}="exit"
 alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
 alias cdb="cd ${BLOG:-$HOME/Documents/Blog}"
 alias cdn="cd ${NOTE_DIR:-$HOME/Documents/Notes}"

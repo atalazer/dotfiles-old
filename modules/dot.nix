@@ -56,26 +56,25 @@ in
     ".config/zk".source = link "configs/cli/zk";
     ".config/topgrade.toml".source = link "configs/cli/topgrade.toml";
     ".gitconfig".source = link "configs/cli/gitconfig";
-    # ".tmux.conf".source = link "configs/cli/tmux.conf";
 
     ### Shell Stuff
-    ".config/shell/aliases".source = link "configs/shell/aliases";
-    ".config/shell/configs".source = link "configs/shell/configs";
-    ".config/shell/functions".source = link "configs/shell/functions";
-    ".config/shell/misc".source = link "configs/shell/misc";
+    ".config/shell/aliases".source = link "configs/shell/shell/aliases";
+    ".config/shell/configs".source = link "configs/shell/shell/configs";
+    ".config/shell/functions".source = link "configs/shell/shell/functions";
     ".config/starship.toml".source =
       link "configs/shell/starship/starship.toml";
     ".config/fish".source = link "configs/shell/fish";
+    ".config/fsh".source = link "configs/shell/fsh";
     ".zsh".source = link "configs/shell/zsh";
-    ".zshrc".source = link "configs/shell/zshrc";
-    ".zshenv".source = link "configs/shell/zshenv";
-    ".zprofile".source = link "configs/shell/zprofile";
-    ".bashrc".source = link "configs/shell/bashrc";
-    ".inputrc".source = link "configs/shell/inputrc";
-    ".profile".source = link "configs/shell/profile";
-    ".pam_environment".source = link "configs/shell/pam_environment";
-    ".user".source = link "configs/shell/user";
-    ".user.private".source = link "configs/shell/user.private";
+    ".zshrc".source = link "configs/shell/zsh/zshrc";
+    ".zshenv".source = link "configs/shell/zsh/zshenv";
+    ".zprofile".source = link "configs/shell/zsh/zprofile";
+    ".bashrc".source = link "configs/shell/misc/bashrc";
+    ".inputrc".source = link "configs/shell/misc/inputrc";
+    ".profile".source = link "configs/shell/misc/profile";
+    ".pam_environment".source = link "configs/shell/misc/pam_environment";
+    ".user".source = link "configs/shell/misc/user";
+    ".user.private".source = link "configs/shell/misc/user.private";
 
     ### User Script
     # ".local/bin".source = link "configs/bin";

@@ -1,0 +1,12 @@
+session: study
+root: ~/Documents/School
+
+windows:
+- name: Notes
+  layout: main-vertical
+  commands: 
+    - nvim index.md
+- name: Others
+  layout: main-vertical
+  commands: 
+    - SCHEDULE=~/Documents/School/jadwal.md schedule --show

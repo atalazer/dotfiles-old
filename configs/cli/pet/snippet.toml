@@ -27,3 +27,8 @@
   description = "Pandoc: Convert md to pdf"
   command = "pandoc --pdf-engine=pdflatex FILE.md -o FILE.pdf"
   output = ""
+
+[[snippets]]
+  description = "Tmux Session For School"
+  command = "smug start school"
+  output = ""

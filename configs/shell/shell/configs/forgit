@@ -1,10 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-export FORGIT_FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS
-FORGIT_PAGER=$PAGER
-FORGIT_SHOW_PAGER=$FORGIT_PAGER
+export FORGIT_FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --height '100%'"
+export FORGIT_PAGER=$PAGER
+export FORGIT_SHOW_PAGER=$FORGIT_PAGER
+export FORGIT_IGNORE_PAGER="bat -l gitignore --color always"
 FORGIT_DIFF_PAGER="$(git config pager.diff || echo 'delta --diff-so-fancy --line-numbers')"
-FORGIT_IGNORE_PAGER="bat -l gitignore --color always"
+export FORGIT_DIFF_PAGER
 
 export forgit_log=glg
 export forgit_diff=gd

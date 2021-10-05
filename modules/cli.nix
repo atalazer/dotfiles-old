@@ -7,7 +7,6 @@
     ### Shell
     # zsh
     # starship  # Manage by zinit
-    tmux
 
     ### CLI Apps
     bat
@@ -26,7 +25,7 @@
     # gopass
     # gping
     grex
-    himalaya
+    # himalaya
     htop
     hyperfine
     jq
@@ -38,6 +37,7 @@
     # neuron-notes
     pass
     pet
+    # pistol
     # procs
     # tokei
     # topgrade
@@ -45,8 +45,9 @@
     trash-cli
     ripgrep
     sd
-    skim
-    speedtest-cli
+    # skim
+    # speedtest-cli
+    # xplr
     # xh
     zoxide
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-[ -f $HOME/.profile ] && . $HOME/.profile
+[ -f $HOME/.profile ] && source $HOME/.profile
 
 # Lunch dbus-launch, this is important for some app
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
@@ -15,21 +15,17 @@ xset -b                 # Disable terminal bell
 xset r rate 300 50      # Set repeat rate
 
 # Themes
-# [ -f ~/Documents/Project/theme-changer/theme-changer.sh ] && \
-#     ~/Documents/Project/theme-changer/theme-changer.sh --toggle auto
-
-theme-changer --toggle auto                                         # Change Theme based on Time
-
-# wal -n -t -R            # Restore wal
-light -S 20             # Set Brightness
+theme-changer --toggle auto     # Change Theme based on Time
+light -I                        # Restore Brightness
+# wal -n -t -R                  # Restore wal
 
 # Autostart Apps
 /lib/mate-polkit/polkit-mate-authentication-agent-1 &>/dev/null &   # Polkit Agent
 clipmenud &>/dev/null &                                             # Clipboard Manager
 mpd &>/dev/null &                                                   # Music Player Daemon
-# fcitx5 --replace -d &>/dev/null &                                   # Input Method for Japanese(mozc) and Arabic(m17n)
-# an2linuxserver.py &>/dev/null &                                     # Send notification from android to linux
-# fusuma -c ~/.config/fusuma/config.yml -d &>/dev/null &              # Libinput Touchpad Gestur
+# fcitx5 --replace -d &>/dev/null &                                 # Input Method for Japanese(mozc) and Arabic(m17n)
+# an2linuxserver.py &>/dev/null &                                   # Send notification from android to linux
+# fusuma -c ~/.config/fusuma/config.yml -d &>/dev/null &            # Libinput Touchpad Gestur
 picom --config ~/.config/picom/picom.conf \
     --experimental-backends  --daemon &>/dev/null &
 

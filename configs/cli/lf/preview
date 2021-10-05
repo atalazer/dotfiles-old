@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# vim: ft=sh:
 
 image() {
 	if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
@@ -64,6 +65,9 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 	*.ino)
 		batorcat --language=cpp "$1"
 		;;
+    *.md)
+        glow -s auto "$1"
+        ;;
 	*)
 		batorcat "$1"
 		;;

@@ -2,7 +2,7 @@
 
 # clone subdirectory using subversion
 git-svn() {
-    if [[ -n $1 && -n $2 ]]; then
+    if [ -n "$1" ] && [ -n "$2" ]; then
         echo "Starting clone/copy..."
         repo=$(echo "$1" | sed 's/\/$\|.git$//')
         svn export "$repo/trunk/$2"

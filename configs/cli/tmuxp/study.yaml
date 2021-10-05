@@ -1,0 +1,12 @@
+session_name: study
+start_directory: ~/Documents/School
+windows:
+- window_name: Notes
+  layout: main-vertical
+  focus: true
+  panes:
+  - shell_command: $EDITOR index.md
+- window_name: Study
+  layout: main-vertical
+  panes:
+  - shell_command: SCHEDULE=~/Documents/School/jadwal.md schedule --show

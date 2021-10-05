@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 find_note() {
     dir=$HOME/Documents/Notes
@@ -12,17 +12,17 @@ find_note() {
         shift
     done
 
-    file="$(
-        find "$dir" -iname '*.md' -exec basename -s .md {} \; |
+    file="$( find "$dir" -iname '*.md' -exec basename -s .md {} \; |
             fzf --bind 'J:preview-down,K:preview-up' --height 100% \
                 --preview "if file -i {}|grep -q binary; then file -b {};\
                            else glow -s dark $dir/{}.md;\
                            fi"
     )"
 
-    if [[ -n $file ]]; then
-        nvim +ZenMode "$dir"/"$file".md
+    if [ -n "$file" ]; then
+        nvim "$dir"/"$file".md
     fi
+    unset dir; unset file
 }
 
 notes() {
