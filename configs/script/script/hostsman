@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 DIR=${XDG_CONFIG_DIR:-$HOME/.config}/hosts
 OPT=${1:-help}

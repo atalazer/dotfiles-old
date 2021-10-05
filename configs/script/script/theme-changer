@@ -61,20 +61,20 @@ fi
 AFTER() {
     # Check if app is running
     check_app() {
-        pgrep -u "$USER" -x "$1" &>/dev/null
+        pgrep -u "$USER" -x "$1" > /dev/null 2>&1
     }
 
     # Reload Kitty
     check_app kitty &&
         pt info "Reloading Kitty" &&
-        kitty @ set-colors --all --configured ~/.config/kitty/kitty.conf &>/dev/null
+        kitty @ set-colors --all --configured ~/.config/kitty/kitty.conf > /dev/null 2>&1
 
     # Reload WM
-    if [[ $RESTART_WM == true ]]; then
+    if [ "$RESTART_WM" = true ]; then
         pt info "Restarting WM"
-        if [[ $WM == "awesome" ]]; then
+        if [ "$WM" = "awesome" ]; then
             check_app awesome &&
-                awesome-client 'awesome.restart()' &>/dev/null
+                awesome-client 'awesome.restart()' > /dev/null 2>&1
         fi
     fi
 
@@ -142,7 +142,7 @@ LIST() {
 
 GET() {
     filter() {
-        cat "$FILE" | grep "$1" | cut -c "${2:-13}"-100 | head -n 1
+        grep "$1" < "$FILE" | cut -c "${2:-13}"-100 | head -n 1
     }
     while [ -n "$1" ]; do
         case "$1" in
@@ -292,20 +292,19 @@ APPLY() {
     pt warn "Use Dark wal:  $WAL_IS_DARK"
     pt warn "Wallpaper:     $WALLPAPER"
 
-    if [ "$WAL_IS_DARK" == true ]; then
-        wal --theme "$WAL_THEME" &>/dev/null
+    if [ "$WAL_IS_DARK" = true ]; then
+        wal --theme "$WAL_THEME" > /dev/null 2>&1
     else
-        wal -l --theme "$WAL_THEME" &>/dev/null
+        wal -l --theme "$WAL_THEME" > /dev/null 2>&1
     fi
-    xrdb -merge "$XRESOURCES_CONFIG" &>/dev/null
+    xrdb -merge "$XRESOURCES_CONFIG" > /dev/null 2>&1
 
-    gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME" &>/dev/null
-    gsettings set org.gnome.desktop.wm.preferences theme "$GTK_THEME" &>/dev/null
-    xsettingsd &>/dev/null &
-    read -rt "3" <> <(:) || killall xsettingsd &
+    gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME" > /dev/null 2>&1
+    gsettings set org.gnome.desktop.wm.preferences theme "$GTK_THEME" > /dev/null 2>&1
+    xsettingsd > /dev/null 2>&1 &
 
     if [ -f "$WALLPAPER" ]; then
-        $WALLPAPER_CHANGER "$WALLPAPER" &>/dev/null
+        $WALLPAPER_CHANGER "$WALLPAPER" > /dev/null 2>&1
     fi
 
     AFTER
@@ -349,7 +348,7 @@ DARK() {
 }
 
 TOGGLE() {
-    if [[ $(date +%H | cut -c 1) == "0" ]]; then
+    if [ "$(date +%H | cut -c 1)" = "0" ]; then
         HOUR=$(date +%H | cut -c 2)
     else
         HOUR=$(date +%H)
@@ -357,14 +356,14 @@ TOGGLE() {
 
     case $1 in
         auto)
-            if [[ "$HOUR" -le 13 && "$HOUR" -ge 8 ]]; then
+            if [ "$HOUR" -le 13 ] && [ "$HOUR" -ge 8 ]; then
                 LIGHT
             else
                 DARK
             fi
             ;;
         *)
-            if [[ $(cat /tmp/.light-or-dark) == "DARK" ]]; then
+            if [ "$(cat /tmp/.light-or-dark)" = "DARK" ]; then
                 LIGHT
             else
                 DARK

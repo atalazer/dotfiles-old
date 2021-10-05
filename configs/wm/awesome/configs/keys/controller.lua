@@ -2,7 +2,7 @@ local gears = require("gears")
 local l = require("configs.keys.lib")
 
 local keys = gears.table.join(
-    l.keys("Apps: Controller",{}, {
+    l.set_keymap("Apps: Controller", {
         -- Volume
         XF86AudioMute = { "volumectl mute", "Toggle Mute" },
         XF86AudioRaiseVolume = { "volumectl up", "Increase Volume" },
@@ -14,15 +14,11 @@ local keys = gears.table.join(
         XF86AudioPrev = {"musicctl prev", "Play Previous Song"},
         -- Brightness
         XF86MonBrightnessUp = {"brightnessctl up", "Increase Brightness"},
-        XF86MonBrightnessDown = {"brightnessctl down", "Decrease Brightness"}
-    }),
-
-    l.keys("Apps: Controller", { shiftkey }, {
-        Print = { "shot select", "Shot Selected" }
-    }),
-
-    l.keys("Apps: Controller", { altkey }, {
-        Print = { "shot active", "Shot Focused" }
+        XF86MonBrightnessDown = {"brightnessctl down", "Decrease Brightness"},
+        -- Screenshots
+        ["W|Print"] = { "shot -i", "Shot Menu" },
+        ["S|Print"] = { "shot select", "Shot Selected" },
+        ["A|Print"] = { "shot active", "Shot Focused" },
     })
 
 )

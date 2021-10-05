@@ -9,24 +9,18 @@ local helpers = require("helpers")
 local bling = require("lib.bling")
 
 -- Custom Layouts -------------------------------------------------------------
-
-local mstab = bling.layout.mstab
-local centered = bling.layout.centered
-local vertical = bling.layout.vertical
-local horizontal = bling.layout.horizontal
-local equal = bling.layout.equalarea
-
 -- Set the layouts
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
-    centered,
-    mstab,
-    vertical,
-    horizontal,
-    equal,
+    bling.layout.mstab,
+    bling.layout.centered,
+    -- bling.layout.vertical,
+    -- bling.layout.horizontal,
+    bling.layout.equalarea,
+    -- bling.layout.deck
     -- awful.layout.suit.max,
     --awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
@@ -52,9 +46,8 @@ end)
 awful.layout.layouts = layouts
 
 -- Layout List Widget ---------------------------------------------------------
-
 local ll = awful.widget.layoutlist({
-    source = awful.widget.layoutlist.source.default_layouts, -- DOC_HIDE
+    source = awful.widget.layoutlist.source.default_layouts,
     spacing = dpi(24),
     base_layout = wibox.widget({
         spacing = dpi(24),
@@ -83,16 +76,16 @@ local ll = awful.widget.layoutlist({
 local layout_popup = awful.popup({
     widget = wibox.widget({
         { ll, margins = dpi(24), widget = wibox.container.margin },
-        bg = beautiful.xbackground,
+        bg = beautiful.bg_focus,
         shape = helpers.rrect(beautiful.border_radius),
-        border_color = beautiful.widget_border_color,
-        border_width = beautiful.widget_border_width,
+        border_color = beautiful.border_color,
+        border_width = beautiful.border_width,
         widget = wibox.container.background,
     }),
     placement = awful.placement.centered,
     ontop = true,
     visible = false,
-    bg = beautiful.bg_normal .. "00",
+    bg = beautiful.bg_normal,
 })
 
 -- Key Bindings for Widget ----------------------------------------------------
@@ -101,9 +94,7 @@ local layout_popup = awful.popup({
 -- keybindings before adding this.
 function gears.table.iterate_value(t, value, step_size, filter, start_at)
     local k = gears.table.hasitem(t, value, true, start_at)
-    if not k then
-        return
-    end
+    if not k then return end
 
     step_size = step_size or 1
     local new_key = gears.math.cycle(#t, k + step_size)
@@ -122,29 +113,29 @@ function gears.table.iterate_value(t, value, step_size, filter, start_at)
 end
 
 awful.keygrabber({
-    start_callback = function()
-        layout_popup.visible = true
-    end,
-    stop_callback = function()
-        layout_popup.visible = false
-    end,
+    start_callback = function() layout_popup.visible = true end, stop_callback = function() layout_popup.visible = false end,
     export_keybindings = true,
     stop_event = "release",
     stop_key = { "Escape", "Super_L", "Super_R", "Mod4" },
     keybindings = {
         {
-            { "Mod4", "Shift" },
-            " ",
-            function()
-                awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, -1), nil)
-            end,
+            { "Mod4", "Shift" }, " ",
+            function() awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, -1), nil) end,
         },
         {
-            { "Mod4" },
-            " ",
-            function()
-                awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, 1), nil)
-            end,
+            { "Mod4" }, " ",
+            function() awful.layout.set(gears.table.iterate_value(ll.layouts, ll.current_layout, 1), nil) end,
         },
     },
 })
+
+-- Hide all windows when a splash is shown
+awesome.connect_signal("widgets::splash::visibility", function(vis)
+    local t = screen.primary.selected_tag
+    if vis then
+        for idx, c in ipairs(t:clients()) do c.hidden = true end
+    else
+        for idx, c in ipairs(t:clients()) do c.hidden = false end
+    end
+end)
+

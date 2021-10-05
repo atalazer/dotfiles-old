@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # Rofi menu for quickly editing a file in some directory
 # Requires ripgrep
 # I use it for editing dotfiles in my ~/.config directory

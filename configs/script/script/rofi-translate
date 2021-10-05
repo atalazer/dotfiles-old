@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-#vim: ft=sh: sw=2: ts=2:
+# vim: ft=sh: sw=4: ts=4:
 
-# File              : dmenu_translate (rofi_translate)
+# File              : rofi-translate (dmenu_translate)
 # License           : MIT License
 # Author            : M. Nabil Adani <nblid48@gmail.com>
 # Last Modified By  : Atalazer <baraboyolali@gmail.com>
@@ -10,7 +10,7 @@ DMENU="rofi -dmenu -i -l 5"
 ICON="$HOME/.config/awesome/icons/linebit/keyboard.png"
 HISTFILE="/tmp/rofi_translate"
 
-if [[ ! -f $HISTFILE ]]; then
+if [ ! -f $HISTFILE ]; then
     touch $HISTFILE
 fi
 
@@ -24,12 +24,12 @@ COUNTRY='''
 ]
 '''
 
-translate-text() {
+translate_text() {
     text="$1"
     if [ -z "$text" ]; then
         exit
     fi
-    if [ -z $TARGET ]; then
+    if [ -z "$TARGET" ]; then
         name=$(echo "$COUNTRY" | jq -r ".[].name" | $DMENU -p "Target Language"  -mesg "Text: $text" )
         code=$(echo "$COUNTRY" | jq -r ".[] | select(.name == \"$name\") | .code")
     else
@@ -39,34 +39,41 @@ translate-text() {
         result=$(trans -b --download-audio-as /tmp/trans.ts :"$code" "$text")
         again=true
 
-        # notify-send -i $ICON "Translate" "Result of '$text' in $name is '$result'"
+        # notify-send -i "$ICON" "Translate" "Result of '$text' in $name is '$result'"
 
         echo "$text" >> $HISTFILE
         echo "$result" | xclip
 
         while $again; do
-            menu=$(echo -e "Retry\nCopy To Clipboard\nPlay Audio\nExit" | \
+            menu=$(echo -e "Retry\nPlay Audio\nAdd To Dictionary\nCopy To Clipboard\nExit" | \
                 $DMENU -lines 2 -p "Translate Menu" -mesg "Result: $result" -select "Copy To Clipboard")
-            if [[ $menu == "Retry" ]]; then
-                text=$(echo "$text" | cut -c 1-20)
-                result=$(echo "$result" | cut -c 1-20)
-                previous_text="$text -> $result"
-                text=$($DMENU -p "Translate" -mesg "Previous: $previous_text" -input $HISTFILE)
-                translate-text "$text"
-            elif [[ $menu == "Copy To Clipboard" ]]; then
-                echo -n "$result" | xclip -selection clipboard
-                notify-send -u low -i "$ICON" "Translate" "Result saved to clipboard"
-                again=false
-            elif [[ $menu == "Play Audio" ]]; then
-                mpv /tmp/trans.ts
-            else
-                again=false
-            fi
+            case "$menu" in
+                "Retry")
+                    text=$(echo "$text" | cut -c 1-20)
+                    result=$(echo "$result" | cut -c 1-20)
+                    previous_text="$text -> $result"
+                    text=$($DMENU -p "Translate" -mesg "Previous: $previous_text" -input $HISTFILE)
+                    translate-text "$text"
+                ;;
+                "Add To Dictionary")
+                    if command -v dict >/dev/null 2>&1; then
+                        dict --add "$text" "$result"
+                    fi
+                    again=false
+                    ;;
+                "Copy To Clipboard")
+                    echo -n "$result" | xclip -selection clipboard
+                    notify-send -u low -i "$ICON" "Translate" "Result saved to clipboard"
+                    again=false
+                ;;
+                "Play Audio")   mpv /tmp/trans.ts ;;
+                *)              again=false ;;
+            esac
         done
     fi
 }
 
-translate-image() {
+translate_image() {
     IMG=/tmp/translate-image.png
     TXT=/tmp/translate-ocr
 
@@ -76,7 +83,7 @@ translate-image() {
 
     LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Select Language for Image")
 
-    if [[ -n $LANG ]]; then
+    if [ -n "$LANG" ]; then
         notify-send -t $((1000 * 3)) --app-name=screenshot "Translate" "Parse Image to Text"
         convert $IMG \
             -alpha off \
@@ -88,31 +95,31 @@ translate-image() {
             -l "$LANG" \
             --dpi 300 \
             $IMG \
-            $TXT &> /dev/null
+            $TXT > /dev/null 2>&1
 
         # https://unix.stackexchange.com/questions/587616/how-to-remove-the-empty-lines-in-a-file-in-linux
         # Delete blankline
         sed -i '/^[[:space:]]*$/d' $TXT.txt
-        cat $TXT.txt | tr -d '\n'
+        tr -d '\n' < $TXT.txt 
     fi
 }
 
 case "$1" in
 "-c" | "--clipboard")
     text=$(xclip -selection clipboard -o | tr --delete '\n')
-    translate-text "$text"
+    translate_text "$text"
     ;;
 "-i" | "--input")
     text=$($DMENU -p "Translate" -input $HISTFILE)
-    translate-text "$text"
+    translate_text "$text"
     ;;
 "-m" | "--image")
     text=$(translate-image)
-    translate-text "$text"
+    translate_text "$text"
     ;;
 "-t"| "--text")
     text=${2:?Text}
-    translate-text "$text"
+    translate_text "$text"
     ;;
 *)
     echo "Usage dmenu_translate [options]"

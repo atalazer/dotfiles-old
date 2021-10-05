@@ -21,6 +21,8 @@ awful.screen.connect_for_each_screen(function(s)
     -- We need one layoutbox per screen.
     s.layoutbox = awful.widget.layoutbox({
         screen = s,
+        forced_weight = dpi(20),
+        forced_height = dpi(20),
         buttons = {
             awful.button({}, 1, function()
                 awful.layout.inc(1)
@@ -42,59 +44,104 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         filter = awful.widget.taglist.filter.all,
         buttons = keys.taglist_buttons,
-        style = {
-            bg_focus = "#00000000",
-            bg_urgent = "#00000000",
-            bg_occupied = "#00000000",
-            bg_empty = "#00000000",
-            bg_volatile = "#00000000",
+        widget_template = {
+            {
+                {
+                    {
+                        id = "text_role",
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                right = dpi(3),
+                left = dpi(3),
+                widget = wibox.container.margin,
+            },
+            id = "background_role",
+            widget = wibox.container.background,
+            create_callback = function(self, c3, index, objects)
+                self:connect_signal("mouse::enter", function()
+                    self.bg = beautiful.bg_focus
+                    if #c3:clients() > 0 then
+                        awesome.emit_signal("bling::tag_preview::update", c3)
+                        awesome.emit_signal("bling::tag_preview::visibility", s, true)
+                    end
+                end)
+                self:connect_signal("mouse::leave", function()
+                    self.bg = beautiful.bg_normal
+                    awesome.emit_signal("bling::tag_preview::visibility", s, false)
+                end)
+            end,
+        },
+    })
 
-            fg_focus = x.color6,
-            fg_urgent = x.color3,
-            fg_occupied = x.color5,
-            fg_empty = x.color8,
-            fg_volatile = x.color9,
+    -- Tasklist widget
+    s.tasklist = awful.widget.tasklist({
+        screen = s,
+        filter = awful.widget.tasklist.filter.currenttags,
+        buttons = keys.tasklist_buttons,
+        bg = beautiful.wibar_bg,
+        style = { bg = beautiful.background },
+        layout = { spacing = dpi(8), layout = wibox.layout.fixed.horizontal },
+        widget_template = {
+            {
+                {
+                    {
+                        awful.widget.clienticon,
+                        top = dpi(1),
+                        bottom = dpi(1),
+                        layout = wibox.container.margin,
+                    },
+                    -- helpers.horizontal_pad(5),
+                    -- {id = "text_role", widget = wibox.widget.textbox},
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                top = dpi(4),
+                bottom = dpi(4),
+                left = dpi(10),
+                right = dpi(10),
+                widget = wibox.container.margin,
+            },
+            id = "background_role",
+            widget = wibox.container.background,
+            create_callback = function(self, c, index, clients)
+                self:connect_signal("mouse::enter", function()
+                    awesome.emit_signal("bling::task_preview::visibility", s, true, c)
+                end)
+                self:connect_signal("mouse::leave", function()
+                    awesome.emit_signal("bling::task_preview::visibility", s, false, c)
+                end)
+            end,
         },
     })
 
     -- Create a system tray widget
     s.systray = wibox.widget({
-        visible = false,
-        base_size = dpi(20),
+        visible = true,
+        base_size = beautiful.systray_icon_size or dpi(16),
         horizontal = true,
         screen = "primary",
         widget = wibox.widget.systray,
     })
 
     s.tray_toggler = require("noodle.tray_toggle")
-
-    local clock = require("noodle.clock")(s)
+    s.toggler = require("noodle.toggler")
+    s.search = require("noodle.search")
     s.battery = require("noodle.battery")()
     s.network = require("noodle.network")()
-
-    s.record_status = awful.widget.watch(
-        "bash -c 'file=/tmp/recordicon; if [[ ! -f $file ]]; then touch $file && echo \"NOREC\" > $file; fi; cat $file'",
-        1,
-        function(widget, stdout)
-            if stdout:match("NOREC") then
-                widget:set_markup(helpers.colorize_text(" ", beautiful.foreground))
-            else
-                widget:set_markup(helpers.colorize_text(" ", beautiful.red))
-            end
-        end
-    )
-    s.record_status:buttons(gears.table.join(awful.button({}, 1, apps.record)))
+    local clock = require("noodle.clock")(s)
+    local record = require("noodle.record")
 
     -- Create the wibox
     s.bar = awful.wibar({
         position = "top",
         screen = s,
         width = s.geometry.width,
-        height = beautiful.bar_height or dpi(30),
+        height = beautiful.wibar_height or dpi(30),
         x = s.geometry.x,
         y = s.geometry.y,
-        bg = beautiful.bar_bg or beautiful.bg_normal,
-        fg = beautiful.bar_fg or beautiful.fg_normal,
+        bg = beautiful.wibar_bg or beautiful.bg_normal,
+        fg = beautiful.wibar_fg or beautiful.fg_normal,
     })
 
     s.bar:connect_signal("mouse::enter", function()
@@ -110,24 +157,33 @@ awful.screen.connect_for_each_screen(function(s)
         expand = "none",
         {
             layout = wibox.layout.fixed.horizontal,
-            spacing = dpi(5),
+            spacing = dpi(3),
+            helpers.horizontal_pad(5),
             s.taglist,
-            s.record_status,
-            s.promptbox,
+            -- s.tasklist,
         },
-        clock,
+        s.promptbox,
         {
             layout = wibox.layout.fixed.horizontal,
-            spacing = dpi(5),
+            spacing = dpi(3),
             {
                 s.systray,
-                margins = beautiful.bar_widget_margin or dpi(3),
+                margins = dpi(5),
                 widget = wibox.container.margin,
             },
             s.tray_toggler,
-            s.network,
+            record,
             s.battery,
-            s.layoutbox,
+            s.network,
+            {
+                s.layoutbox,
+                margins = dpi(5),
+                widget = wibox.container.margin,
+            },
+            s.search,
+            s.toggler,
+            clock,
+            helpers.horizontal_pad(5),
         },
     }
 
@@ -207,46 +263,9 @@ awful.screen.connect_for_each_screen(function(s)
         end
     end)
 
-    s.dock:connect_signal("mouse::leave", function()
-        autohide()
+    s.dock:connect_signal("mouse::leave", function() autohide()
     end)
-    s.dock_activator:connect_signal("mouse::leave", function()
-        autohide()
-    end)
-
-    -- -- Create the tray box
-    -- s.traybox = wibox({
-    --     screen = s,
-    --     width = dpi(150),
-    --     height = beautiful.wibar_height,
-    --     bg = "#00000000",
-    --     visible = false,
-    --     ontop = true,
-    -- })
-    -- s.traybox:setup({
-    --     {
-    --         {
-    --             nil,
-    --             s.systray,
-    --             expand = "none",
-    --             layout = wibox.layout.align.horizontal,
-    --         },
-    --         margins = dpi(5),
-    --         widget = wibox.container.margin,
-    --     },
-    --     bg = beautiful.bg_systray,
-    --     shape = helpers.rrect(beautiful.border_radius),
-    --     widget = wibox.container.background,
-    -- })
-    -- awful.placement.bottom_right(s.traybox, { margins = beautiful.useless_gap * 2 })
-    -- s.traybox:buttons(gears.table.join(awful.button({}, 2, function()
-    --     s.traybox.visible = false
-    -- end)))
-end)
-
-awesome.connect_signal("elemental::dismiss", function()
-    local s = mouse.screen
-    s.dock.visible = false
+    s.dock_activator:connect_signal("mouse::leave", function() autohide() end)
 end)
 
 -- Every bar theme should provide these fuctions
@@ -257,8 +276,7 @@ dock_toggle = function()
     end
 end
 
--- Toggle mywibar
-
+-- Toggle wibar
 bar_toggle = function()
     local s = awful.screen.focused()
     if s.bar then
@@ -271,8 +289,9 @@ tray_toggle = function()
     local s = awful.screen.focused()
     if s.systray then
         -- s.systray.visible = not s.systray.visible
-        awesome.emit_signal("widget::systray:toggle")
+        awesome.emit_signal("systray:toggle")
     elseif s.traybox then
         s.traybox.visible = not s.traybox.visible
     end
 end
+

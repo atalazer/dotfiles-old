@@ -1,23 +1,12 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
-local beautiful = require("beautiful")
 
 local dpi = require("beautiful").xresources.apply_dpi
 
 local HOME = os.getenv("HOME")
 local clickable_container = require("noodle.clickable_container")
 local PATH_TO_ICONS = HOME .. "/.config/awesome/elemental/notif_center/icons/"
-
--- Configuration
--- Notification background
-beautiful.bg_modal = "#252525"
--- Notification actions bg color
-beautiful.bg_actions = "#353535"
--- Notification panel background
-beautiful.panel_bg = "#0a0a0a"
--- Rounded corner radius
-beautiful.modal_radius = dpi(2)
 
 -- Load panel rules, it will create panel for each screen
 require("elemental.notif_center.notif_panel_rules")

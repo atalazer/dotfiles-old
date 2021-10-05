@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 DMENU="rofi -dmenu -i -p Action Center"
 # OPTIONS = [[label, command]]

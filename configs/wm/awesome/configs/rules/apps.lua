@@ -269,6 +269,22 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- Gucharmap {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "Gucharmap" },
+            name = { "gucharmap" },
+        },
+        properties = {
+            floating = true,
+            raise = true,
+            titlebars_enabled = true,
+            placement = centered_client_placement,
+            width = screen_width * 0.75,
+            height = screen_height * 0.80,
+        },
+    })
+    -- }}}
     -- Password Manager {{{
     ruled.client.append_rule({
         rule_any = {

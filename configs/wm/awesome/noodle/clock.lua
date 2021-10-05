@@ -1,18 +1,27 @@
 local wibox = require("wibox")
 local awful = require("awful")
-local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = beautiful.xresources.apply_dpi
 local clickable_container = require("noodle.clickable_container")
 
-local military_mode = false
+local calendar_popup = require("noodle.calendar_popup")
+local military_mode = beautiful.clock_miltary_mode or false
 
 local create_clock = function(s)
-    local clock_format = nil
+    -- See: file:///usr/share/doc/awesome/doc/widgets/wibox.widget.textclock.html
+    local clock_format
     if not military_mode then
-        clock_format = '<span font="sans bold 11" foreground="'.. beautiful.foreground ..'">%I:%M %p</span>'
+        clock_format = '<span font="'
+            .. beautiful.widget_font
+            .. '" foreground="'
+            .. beautiful.widget_fg
+            .. '">%a %I:%M %p</span>'
     else
-        clock_format = '<span font="sans bold 11" foreground="'.. beautiful.foreground ..'">%H:%M</span>'
+        clock_format = '<span font="'
+            .. beautiful.widget_font
+            .. '" foreground="'
+            .. beautiful.widget_fg
+            .. '">%H:%M</span>'
     end
 
     s.clock_widget = wibox.widget.textclock(clock_format, 1)
@@ -20,7 +29,7 @@ local create_clock = function(s)
     s.clock_widget = wibox.widget({
         {
             s.clock_widget,
-            margins = beautiful.bar_widget_margin or dpi(3),
+            margins = beautiful.widget_margin or dpi(3),
             widget = wibox.container.margin,
         },
         widget = clickable_container,
@@ -72,68 +81,30 @@ local create_clock = function(s)
                 ordinal = "th"
             end
 
-            local date_str = "Today is the "
-                .. "<b>"
-                .. day
-                .. ordinal
-                .. " of "
-                .. month
-                .. "</b>.\n"
-                .. "And it's fucking "
-                .. os.date("%A")
+            local date_str = string.format(
+                "Today is the <b>%s%s of %s</b>.\n And it's fucking <b>%s</b>",
+                day,
+                ordinal,
+                month,
+                os.date("%A")
+            )
 
             return date_str
         end,
     })
 
-    s.clock_widget:connect_signal("button::press", function(self, lx, ly, button)
+    s.calendar_popup = calendar_popup({
+        placement = "top_right",
+        radius = dpi(8),
+    })
+
+    s.clock_widget:connect_signal("button::press", function(_, _, _, button)
         -- Hide the tooltip when you press the clock widget
-        if s.clock_tooltip.visible and button == 1 then
-            s.clock_tooltip.visible = false
+        if button == 1 then
+            if s.clock_tooltip.visible then s.clock_tooltip.visible = false end
+            if s.calendar_popup then s.calendar_popup.toggle() end
         end
     end)
-
-    s.month_calendar = awful.widget.calendar_popup.month({
-        start_sunday = true,
-        spacing = dpi(5),
-        font = "sans 10",
-        long_weekdays = true,
-        margin = dpi(5),
-        screen = s,
-        style_month = {
-            border_width = dpi(0),
-            bg_color = beautiful.bg_normal,
-            padding = dpi(20),
-            shape = function(cr, width, height)
-                gears.shape.partially_rounded_rect(cr, width, height, true, true, true, true, beautiful.groups_radius)
-            end,
-        },
-        style_header = {
-            border_width = 0,
-            bg_color = beautiful.transparent,
-        },
-        style_weekday = {
-            border_width = 0,
-            bg_color = beautiful.transparent,
-        },
-        style_normal = {
-            border_width = 0,
-            bg_color = beautiful.transparent,
-        },
-        style_focus = {
-            border_width = dpi(0),
-            border_color = beautiful.fg_normal,
-            bg_color = beautiful.accent,
-            shape = function(cr, width, height)
-                gears.shape.partially_rounded_rect(cr, width, height, true, true, true, true, dpi(4))
-            end,
-        },
-    })
-
-    s.month_calendar:attach(s.clock_widget, "tc", {
-        on_pressed = true,
-        on_hover = false,
-    })
 
     return s.clock_widget
 end

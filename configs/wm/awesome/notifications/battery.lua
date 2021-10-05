@@ -1,6 +1,7 @@
 local helpers = require("helpers")
 local icons = require("icons")
 local notifications = require("notifications")
+local beautiful = require("beautiful")
 
 -- Helper variables
 local charger_first_time = true
@@ -27,22 +28,19 @@ awesome.connect_signal("evil::battery", function(battery)
         icon = icons.image.battery
         if battery <= user.battery_threshold_critical and not battery_critical_already_notified then
             battery_critical_already_notified = true
-            message = "CRITICAL"
-            -- message = helpers.colorize_text("CRITICAL", x.color9)
-            timeout = 0
+            message = helpers.colorize_text("CRITICAL", beautiful.red)
+            timeout = 10
         elseif battery <= user.battery_threshold_low and not battery_low_already_notified then
             battery_low_already_notified = true
-            message = "Low"
-            -- message = helpers.colorize_text("Low", x.color11)
-            timeout = 6
+            message = helpers.colorize_text("Low", beautiful.yellow)
+            timeout = 5
         end
     else
         icon = icons.image.battery_charging
         if battery > battery_full_threshold and not battery_full_already_notified then
             battery_full_already_notified = true
-            message = "Full"
-            -- message = helpers.colorize_text("Full", x.color10)
-            timeout = 6
+            message = helpers.colorize_text("Full", beautiful.blue)
+            timeout = 3
         end
     end
 

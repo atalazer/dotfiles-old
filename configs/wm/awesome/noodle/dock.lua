@@ -12,14 +12,14 @@ local class_icons = icons.text.by_class
 
 local apps = require("configs.apps")
 
--- TODO: These variables (and more) should ideally be retrieved through `beautiful`
-local item_font = "icomoon 15"
-local item_bg = x.background
-local item_size = dpi(50)
-local item_shape = helpers.squircle(1.7, 0)
-local item_margin = dpi(8) -- For spacing between items
-local indicator_spacing = dpi(8)
-local indicator_height = dpi(7)
+local item_font = beautiful.dock_item_font or "icomoon 15"
+local item_bg = beautiful.dock_item_bg or x.background
+local item_size = beautiful.dock_item_size or dpi(50)
+local item_shape = beautiful.dock_item_shape or helpers.squircle(1.7, 0)
+local item_margin = beautiful.dock_item_margin or dpi(8) -- For spacing between items
+local indicator_spacing = beautiful.dock_indicator_spacing or dpi(8)
+local indicator_height = beautiful.dock_indicator_height or dpi(7)
+
 -- Custom arc shape
 local function draw_indicator_shape_unfocused(cr)
     cr:arc(item_size / 2, indicator_height, indicator_height, 0, 2 * math.pi)
@@ -45,11 +45,11 @@ local dock_recently_focused = {}
 -- items should always be visible, and the functions which launch them.
 -- Order matters!
 dock_pinned_apps = {
-    { class = "firefox", launcher = apps.browser },
-    { class = "email", launcher = apps.mail },
-    { class = "files", launcher = apps.file_manager },
-    { class = "music", launcher = apps.music },
-    { class = "htop", launcher = apps.process_monitor },
+    -- { class = "firefox", launcher = apps.browser },
+    -- { class = "qutebrowser", launcher = apps.browser },
+    -- { class = "kitty", launcher = apps.terminal or user.terminal },
+    -- { class = "email", launcher = apps.mail },
+    -- { class = "files", launcher = apps.file_manager },
 }
 
 ----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ dock_pinned_apps = {
 ----------------------------------------------------------------------------
 local dock_pinned_classes = {}
 local dock_pinned_launchers = {}
-for _,v in ipairs(dock_pinned_apps) do
+for _, v in ipairs(dock_pinned_apps) do
     table.insert(dock_pinned_classes, v.class)
     dock_pinned_launchers[v.class] = v.launcher
 end
@@ -137,13 +137,13 @@ local function generate_dock_icon(c, bg, fg, symbol)
             -- text = symbol,
             align = "center",
             valign = "center",
-            widget = wibox.widget.textbox()
+            widget = wibox.widget.textbox(),
         },
         shape = item_shape,
         forced_height = item_size,
         forced_width = item_size,
         bg = bg,
-        widget = wibox.container.background
+        widget = wibox.container.background,
     })
 
     local indicator_focused = cairo.ImageSurface.create(cairo.Format.ARGB32, item_size, indicator_height)
@@ -166,19 +166,19 @@ local function generate_dock_icon(c, bg, fg, symbol)
                         id = "indicator_unfocused",
                         bgimage = indicator_unfocused,
                         visible = (dock_class_count[c.class] > 0) and not is_focused,
-                        widget = wibox.container.background
+                        widget = wibox.container.background,
                     },
                     {
                         id = "indicator_focused",
                         bg = fg,
                         shape = helpers.prrect(dpi(60), true, true, false, false),
                         visible = is_focused,
-                        widget = wibox.container.background
+                        widget = wibox.container.background,
                     },
                     forced_height = indicator_height,
                     forced_width = item_size - item_margin * 2,
                     id = "indicator",
-                    layout = wibox.layout.stack
+                    layout = wibox.layout.stack,
                 },
                 -- Dummy indicator
                 -- Used to prevent the dock from moving
@@ -186,27 +186,40 @@ local function generate_dock_icon(c, bg, fg, symbol)
                 -- and indicator_focused are invisible
                 {
                     forced_height = indicator_height,
-                    widget = wibox.container.background
+                    widget = wibox.container.background,
                 },
-                layout = wibox.layout.stack
+                layout = wibox.layout.stack,
             },
             spacing = indicator_spacing,
-            layout = wibox.layout.fixed.vertical
+            layout = wibox.layout.fixed.vertical,
         },
         left = item_margin,
         right = item_margin,
-        widget = wibox.container.margin
+        widget = wibox.container.margin,
     })
 
     -- Store class here because c will become nil whenever it closes
     local class = c.class
+    local screen = awful.screen.focused()
+
+    -- Task Preview
+    w:connect_signal("mouse::enter", function()
+        if class_window_exists(class) and not dock_pinned_apps[class] then
+            awesome.emit_signal("bling::task_preview::visibility", screen, true, c)
+        end
+    end)
+    w:connect_signal("mouse::leave", function()
+        if class_window_exists(class) and not dock_pinned_apps[class] then
+            awesome.emit_signal("bling::task_preview::visibility", screen, false, c)
+        end
+    end)
 
     -- Set mousebinds
     w:buttons(gears.table.join(
         -- Left click: Focus 'relevant' client of class, minimize if already
         -- focused, or run the pinned function of the class if there is no such
         -- client
-        awful.button({ }, 1, function ()
+        awful.button({}, 1, function()
             if dock_pinned_launchers[class] and not class_window_exists(class) then
                 dock_pinned_launchers[class]() -- Run specified launcher function
             else
@@ -219,7 +232,7 @@ local function generate_dock_icon(c, bg, fg, symbol)
         end),
 
         -- Super + Left click: Move client to current tag
-        awful.button({ superkey }, 1, function ()
+        awful.button({ superkey }, 1, function()
             local found = find_relevant_client(class)
             if found then
                 found:move_to_tag(mouse.screen.selected_tag)
@@ -231,7 +244,7 @@ local function generate_dock_icon(c, bg, fg, symbol)
         -- Middle click: Kill client of class
         -- If a window with this class is already focused, then kill the
         -- focused window, else kill a 'relevant' client of this class
-        awful.button({ }, 2, function ()
+        awful.button({}, 2, function()
             if class_window_exists(class) then
                 if class_window_focused(class) then
                     client.focus:kill()
@@ -242,53 +255,62 @@ local function generate_dock_icon(c, bg, fg, symbol)
         end),
 
         -- Super + middle click: Kill ALL clients that match this class
-        awful.button({ superkey }, 2, function ()
-            helpers.find_clients_and_do({ class = class }, function (ci)
+        awful.button({ superkey }, 2, function()
+            helpers.find_clients_and_do({ class = class }, function(ci)
                 ci:kill()
             end)
         end),
 
         -- Right click: Spawn rofi menu that allows picking between all windows
         -- of this class
-        awful.button({ }, 3, function ()
+        awful.button({}, 3, function()
             local clients = helpers.find_clients({ class = class })
             -- Stop if no such client was found
-            if #clients == 0 then return end
+            if #clients == 0 then
+                return
+            end
 
             -- Create icon prefix
-            local i = class_icons[class] or class_icons['_']
-            local prefix = "<span font_family='icomoon' foreground='"..i.color.."'>"..i.symbol.."</span>"
+            local i = class_icons[class] or class_icons["_"]
+            local prefix = "<span font_family='icomoon' foreground='" .. i.color .. "'>" .. i.symbol .. "</span>"
 
             -- Generate input for rofi
             -- Each line corresponds to 1 client
             local rofi_input = ""
             for i = 1, #clients do
                 if clients[i].name then
-                    rofi_input = rofi_input..prefix..'  '..clients[i].name..'\n'
+                    rofi_input = rofi_input .. prefix .. "  " .. clients[i].name .. "\n"
                 end
             end
 
             -- Nothing to do
-            if rofi_input == "" then return end
+            if rofi_input == "" then
+                return
+            end
 
             -- Remove last \n
             rofi_input = rofi_input:sub(1, #rofi_input - 1)
 
             -- Pass lines to rofi and get user choice
-            awful.spawn.easy_async_with_shell('echo "'..rofi_input..'" | rofi -format d -markup-rows -i -matching fuzzy -dmenu -p " Pick window:"', function(out, _, __, exit_code)
-                -- If user did not cancel rofi
-                if exit_code == 0 then
-                    -- Jump to chosen client
-                    clients[tonumber(out)]:jump_to()
+            awful.spawn.easy_async_with_shell(
+                'echo "'
+                    .. rofi_input
+                    .. '" | rofi -format d -markup-rows -i -matching fuzzy -dmenu -p " Pick window:"',
+                function(out, _, __, exit_code)
+                    -- If user did not cancel rofi
+                    if exit_code == 0 then
+                        -- Jump to chosen client
+                        clients[tonumber(out)]:jump_to()
+                    end
                 end
-            end)
+            )
         end),
 
         -- Scrolling: cycle through classes
-        awful.button({ }, 4, function ()
+        awful.button({}, 4, function()
             cycle_by_class(class, false)
         end),
-        awful.button({ }, 5, function ()
+        awful.button({}, 5, function()
             cycle_by_class(class, true)
         end)
     ))
@@ -301,30 +323,28 @@ end
 
 -- Dock items will be inserted into this layout
 local dock = wibox.widget({
-    layout = wibox.layout.fixed.horizontal
+    layout = wibox.layout.fixed.horizontal,
 })
 
 -- Initialize dock with pinned clients
 for i = 1, #dock_pinned_classes do
     local class = dock_pinned_classes[i]
-    local i = class_icons[class] or class_icons['_']
+    i = class_icons[class] or class_icons["_"]
     dock_class_count[class] = dock_class_count[class] and (dock_class_count[class] + 1) or 0
     dock_items[class] = generate_dock_icon({ class = class }, item_bg, i.color, i.symbol)
     dock:add(dock_items[class])
 end
 
 -- >> Helper functions used by signals
-local add_client
-local remove_client
-add_client = function(c)
-    if not c.class then return end -- Some windows have no class (rare)
+local add_client = function(c)
+    if not c.class then return end
 
     -- Increment class count
     dock_class_count[c.class] = (dock_class_count[c.class] or 0) + 1
 
     -- Check if we need to create a new item
     if dock_class_count[c.class] == 1 then
-        local i = class_icons[c.class] or class_icons['_']
+        local i = class_icons[c.class] or class_icons["_"]
         if dock_pinned_launchers[c.class] then
             -- It is pinned, we dont need to create a new item, as it is
             -- already there. Instead, just show the indicator.
@@ -355,8 +375,8 @@ add_client = function(c)
     c:connect_signal("property::class", handle_class_change)
 end
 
-remove_client = function(c)
-    if not c.class then return end -- Some clients have no class (rare)
+local remove_client = function(c)
+    if not c.class then return end
 
     -- Decrement class count
     dock_class_count[c.class] = dock_class_count[c.class] - 1
@@ -381,10 +401,12 @@ remove_client = function(c)
 end
 
 local function update_focus(c)
-    if not c.class then return end -- Some windows have no class (rare)
+    if not c.class then return end
 
     local item = dock_items[c.class]
-    if not item then return end
+    if not item then
+        return
+    end
     local indicator_focused = item:get_children_by_id("indicator_focused")[1]
     local indicator_unfocused = item:get_children_by_id("indicator_unfocused")[1]
     if client.focus and client.focus == c then

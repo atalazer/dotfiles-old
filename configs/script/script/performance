@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # Requires that you have allowed cpufreq-set to run without password.
 if pgrep picom; then
     pkill picom

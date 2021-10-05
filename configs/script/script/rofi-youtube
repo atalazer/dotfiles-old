@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 DMENU="rofi -dmenu -lines 3 -width 30 -i -p Youtube"
 # OPTIONS = [[label, command]]

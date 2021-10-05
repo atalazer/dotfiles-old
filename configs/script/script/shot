@@ -1,25 +1,6 @@
 #!/usr/bin/env bash
-#vim: ft=sh: sw=2: ts=2:
-LC_ALL=C
-LANG=C
+# vim: ft=sh: sw=4: ts=4:
 
-DEPEND_LIST="scrot maim magick tesseract"
-for DEPEND in $DEPEND_LIST; do
-    if [[ -z $_DEP ]]; then
-        DEPEND="$DEPEND"
-    else
-        DEPEND="$_DEP $DEPEND"
-    fi
-    _DEP="$DEPEND"
-done
-
-miss_dep() {
-    notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Install <b>$DEPEND</b> First!"
-    exit 1
-}
-type -p $DEPEND &>/dev/null || miss_dep
-
-CONF=~/.config/script/shot.conf
 default_config() {
     _XDG_="$(xdg-user-dir PICTURES)/Screenshots"
     ASSET_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/script/shot"
@@ -47,7 +28,7 @@ default_config() {
     color_profile="/usr/share/color/icc/colord/sRGB.icc"
 
     font_size=12
-    font='Fura-Code-Regular-Nerd-Font-Complete'
+    font="Fura-Code-Regular-Nerd-Font-Complete"
 
     add_author=false
     author_position=("SouthEast" "+10+10")
@@ -66,19 +47,21 @@ default_config() {
     max_icon="$ASSET_DIR/maximize.png"
 }
 
-[[ -f $CONF ]] && source $CONF || default_config
+CONF=$HOME/.config/script/shot.conf
+
+# shellcheck source=/dev/null
+if [ -f "$CONF" ]; then source "$CONF"; else default_config; fi
 
 if [ ! -d "$SCREENSHOT_DIR" ]; then
-    /bin/mkdir -p "$SCREENSHOT_DIR"
+    mkdir -p "$SCREENSHOT_DIR"
 fi
 
 clean() {
-    if [[ -f $TMP_IMG ]]; then
+    if [ -f $TMP_IMG ]; then
         # /usr/bin/rm "$TMP_IMG"
         /usr/bin/mv $TMP_IMG "${TMP_FILE}-$(date '+%H%M%S').${IMG_EXT}"
 
-        if [[ $(ls $TMP_DIR | grep ".${IMG_EXT}" >$TMP_DIR/total-image &&
-            wc -l <$TMP_DIR/total-image) == $max_history ]]; then
+        if [ "$(ls $TMP_DIR/*.${IMG_EXT}  >$TMP_DIR/total-image && wc -l <$TMP_DIR/total-image)" = "$max_history" ]; then
             /usr/bin/rm "${TMP_DIR}/*.${IMG_EXT}"
             /usr/bin/rm $TMP_DIR/total-image
         fi
@@ -89,7 +72,7 @@ clean() {
 check_wm() {
     # Identify environment
     DE="${DESKTOP_STARTUP_ID}"
-    if [[ ! -z $DE && $DE == *"awesome"* ]] || [[ -n $CHECK_AWESOME_CLIENT ]]; then
+    if [ -n "$CHECK_AWESOME_CLIENT" ]  || [ -n "$DE" ] && [[ "$DE" = *"awesome"* ]]; then
         echo "AWESOME"
         return
     fi
@@ -104,23 +87,23 @@ parse() {
 
     width=$(identify -format "%w" $IMG)
     height=$(identify -format "%h" $IMG)
-    if [[ $add_text == true ]]; then
-        if [[ -n $text ]]; then
+    if [ $add_text = true ]; then
+        if [ -n "$text" ]; then
             _text=$text
-            if ((width <= 200)); then
+            if width <= 200; then
                 _text="~"
             fi
         else
             _text="$long_text"
-            if ((width <= 200)); then
-                _text="$shor_text"
+            if width <= 200; then
+                _text="$short_text"
             fi
         fi
     else
         _text=""
     fi
 
-    if [[ $add_titlebar -eq "true" && $use_custom_titlebar -eq "true" && $width -ge 500 && $height -ge 150 ]]; then
+    if [ "$add_titlebar" = true ] && [ "$use_custom_titlebar" = true ] && [ "$width" -ge 500 ] && [ "$height" -ge 150 ]; then
         convert $IMG \
             -font ${font} -pointsize 14 -gravity north \
             -background ${color_bg} -fill ${color_fg} \
@@ -140,7 +123,7 @@ parse() {
             \) -alpha off -compose CopyOpacity -composite -compose over "$IMG"
     fi
 
-    if [[ $border_size -ge 3 ]]; then
+    if [ $border_size -ge 3 ]; then
         # Generate image info
         convert "$IMG" \
             -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] '"${rounded_corner}"','"${rounded_corner}"'' \
@@ -149,12 +132,12 @@ parse() {
         # Generate rounding masked
         convert "$IMG" -border ${border_size} -alpha transparent \
             -background none -fill white -stroke none -strokewidth 0 \
-            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_mask_.png
+            -draw "@"$DIR/_rounded_.mvg $DIR/_rounded_mask_.png
 
         # Generate rounding overlay
         convert "$IMG" -border ${border_size} -alpha transparent \
             -background none -fill none -stroke ${color_fg} -strokewidth ${border_size} \
-            -draw "@"$DIR"/_rounded_.mvg" $DIR/_rounded_overlay_.png
+            -draw "@"$DIR/_rounded_.mvg $DIR/_rounded_overlay_.png
 
         # Set rounded corner & border
         convert "$IMG" -alpha set -bordercolor none -border ${border_size} \
@@ -188,9 +171,9 @@ parse() {
     # Set image author if enabled
     if [[ $add_author == true ]]; then
         echo -n " ${author} " | convert $IMG \
-            -gravity ${author_position[0]} -pointsize ${font_size} -fill ${color_fg} \
+            -gravity "${author_position[0]}" -pointsize ${font_size} -fill ${color_fg} \
             -undercolor ${color_bg} -font ${font} \
-            -annotate ${author_position[1]} @- $IMG &&
+            -annotate "${author_position[1]}" @- $IMG &&
             convert $IMG -gravity South -chop 0x$((background_size / 2)) $IMG
 
         # Add top bg
@@ -208,7 +191,7 @@ notify() {
     MSG=$1
     FILE=$TMP_IMG
 
-    if [[ "$(check_wm)" == "AWESOME" ]]; then
+    if [ "$(check_wm)" = "AWESOME" ]; then
         awesome-client "
         -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
         local naughty = require('naughty')
@@ -315,14 +298,14 @@ notify() {
 
         notify_send(message, { open_image, to_clipboard, save_image, delete_image })
         "
-    elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
+    elif [ "$(check_wm)" = "NOT_AWESOME" ]; then
         notify-send --app-name=screenshot "Shot" "${MSG}"
     fi
 }
 
 to_clip() {
     notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard"
-    if [ $XDG_SESSION_TYPE == "wayland" ]; then
+    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
         wl-copy <$TMP_IMG
     else
         xclip -selection clipboard -i $TMP_IMG -t image/png
@@ -332,69 +315,69 @@ to_clip() {
 
 _shot() {
     clean
-    if [ $XDG_SESSION_TYPE == "wayland" ]; then
+    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
         case $1 in
         normal)
-            grimshot output $TMP_IMG
+            grimshot output $TMP_IMG || exit 1
             ;;
         select)
-            grimshot area $TMP_IMG
+            grimshot area $TMP_IMG || exit 1
             ;;
         active)
-            grimshot active $TMP_IMG
+            grimshot active $TMP_IMG || exit 1
             ;;
         delay)
             notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Screenshot Taken in ${sleep}s ..."
             sleep $sleep &&
-                grimshot output $TMP_IMG
+                grimshot output $TMP_IMG || exit 1
             ;;
         esac
     else
         case $1 in
         normal)
-            maim -m $quality $TMP_IMG
-            # scrot -o -q $((10*$quality)) -p $TMP_FILE
+            maim -m $quality $TMP_IMG || exit 1
+            # scrot -o -q $((10*$quality)) -p $TMP_FILE || exit 1
             ;;
         select)
-            if [[ $use_custom_titlebar == true ]]; then
-                maim -u -m $quality -s $TMP_IMG
-                # scrot -o -q $((10*$quality)) -s $TMP_FILE
+            if [ $use_custom_titlebar = true ]; then
+                maim -u -m $quality -s $TMP_IMG || exit 1
+                # scrot -o -q $((10*$quality)) -s $TMP_FILE || exit 1
             else
-                maim -u -m $quality -n 0 -s $TMP_IMG
-                # scrot -o -q $((10*$quality)) -b -s $TMP_FILE
+                maim -u -m $quality -n 0 -s $TMP_IMG || exit 1
+                # scrot -o -q $((10*$quality)) -b -s $TMP_FILE || exit 1
             fi
             ;;
         active)
-            if [[ $use_custom_titlebar == true ]]; then
-                # maim -u -m $quality -i $(xdotool getactivewindow) $TMP_IMG
-                scrot -o -q $((10 * quality)) -u $TMP_IMG
+            if [ $use_custom_titlebar = true ]; then
+                # maim -u -m $quality -i $(xdotool getactivewindow) $TMP_IMG || exit 1
+                scrot -o -q $((10 * quality)) -u $TMP_IMG || exit 1
             else
-                # maim -u -m $quality -n 0 -i $(xdotool getactivewindow) $TMP_IMG
-                scrot -o -q $((10 * quality)) -u -b $TMP_IMG
+                # maim -u -m $quality -n 0 -i $(xdotool getactivewindow) $TMP_IMG || exit 1
+                scrot -o -q $((10 * quality)) -u -b $TMP_IMG || exit 1
             fi
             ;;
         delay)
             notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Screenshot Taken in ${sleep}s ..."
-            maim -m $quality -d $sleep $TMP_IMG
-            # scrot -o -q $((10*$quality)) -d $sleep $TMP_IMG
+            maim -m $quality -d $sleep $TMP_IMG || exit 1
+            # scrot -o -q $((10*$quality)) -d $sleep $TMP_IMG || exit 1
             ;;
         esac
     fi
 
-    if [[ $titlebar_only_active -eq true || $use_custom_titlebar -eq true ]]; then
-        if [[ $1 == "active" ]]; then
+    if [ $titlebar_only_active = true ] || [ $use_custom_titlebar = true ]; then
+        if [ "$1" = "active" ]; then
             add_titlebar=true
-            text="$(xdotool getwindowname $(xdotool getactivewindow))"
-        elif [[ $1 == "select" ]]; then
+            text="$(xdotool getwindowname "$(xdotool getactivewindow)")"
+        elif [ "$1" = "select" ]; then
             add_titlebar=true
-            text="$(xdotool getwindowname $(xdotool getactivewindow))"
+            text="$(xdotool getwindowname "$(xdotool getactivewindow)")"
         else
             add_titlebar=false
         fi
     fi
 }
 
-image-to-text() {
+image_to_text() {
     IMG=/tmp/image-ocr.png
     TXT=/tmp/shot-ocr
 
@@ -405,7 +388,7 @@ image-to-text() {
 
     LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Target Language")
 
-    if [[ -n $LANG ]]; then
+    if [ -n "$LANG" ]; then
 
         notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Parse Image to Text"
 
@@ -432,20 +415,20 @@ image-to-text() {
         # fi
 
         tesseract \
-            -l $LANG \
+            -l "$LANG" \
             --dpi 300 \
             $IMG \
-            $TXT &>/dev/null
+            $TXT > /dev/null 2>&1
 
         # https://unix.stackexchange.com/questions/587616/how-to-remove-the-empty-lines-in-a-file-in-linux
         # Delete blankline
         sed -i '/^[[:space:]]*$/d' $TXT.txt
 
-        result=$(cat $TXT.txt | tr --delete '^L')
+        result=$(tr --delete '^L' < $TXT.txt )
         countword=$(wc -w <$TXT.txt)
 
-        echo -n "$result" | xclip -selection clipboard
-        if [[ $countword -le 30 ]]; then
+        echo "$result" | xclip -selection clipboard
+        if [ "$countword" -le 30 ]; then
             notify-send -t $((1000 * 5)) --app-name=screenshot \
                 "Shot" "<b>Text Copied to Clipboard</b>:\n$result"
         else
@@ -508,15 +491,15 @@ interactive() {
         ["Delay",                   "_parse delay"],
         ["Fullscreen",              "_parse full"],
         ["Select",                  "_parse select"],
-        ["Image to Text",           "image-to-text"],
+        ["Image to Text",           "image)to_text"],
         ["Active(N)",               "_noparse active"],
         ["Fullscreen(N)",           "_noparse full"],
         ["Delay(N)",                "_noparse delay"],
         ["Select(N)",               "_noparse select"]
     ]
     '''
-    menu=$(echo $OPTIONS | jq -r ".[][0]" | $DMENU)
-    $(echo $OPTIONS | jq -r ".[] | select(.[0] == \"$menu\") | .[1]")
+    menu=$(echo "$OPTIONS" | jq -r ".[][0]" | $DMENU)
+    echo "$OPTIONS" | jq -r ".[] | select(.[0] == \"$menu\") | .[1]"
 }
 
 OPT=${1:-interactive}
@@ -530,5 +513,5 @@ case $OPT in
 -F | full_noparse) _noparse full ;;
 -S | select_noparse) _noparse select ;;
 -i | interactive) interactive ;;
--o | ocr | image-to-text) image-to-text ;;
+-o | ocr | image-to-text) image_to_text ;;
 esac

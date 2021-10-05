@@ -5,6 +5,7 @@ local beautiful = require("beautiful")
 
 local helpers = require("helpers")
 local decorations = require("decorations")
+local bling = require("lib.bling")
 
 local keys = require("configs.keys")
 
@@ -24,12 +25,12 @@ client.connect_signal("request::titlebars", function(c)
         c,
         { font = beautiful.titlebar_font, position = beautiful.titlebar_position, size = beautiful.titlebar_size }
     ):setup({
-        nil,
-        -- {
-        --     awful.titlebar.widget.iconwidget(c),
-        --     buttons = keys.titlebar_buttons,
-        --     layout = wibox.layout.fixed.horizontal,
-        -- },
+        {
+            -- awful.titlebar.widget.iconwidget(c),
+            bling.widget.tabbed_misc.titlebar_indicator(c),
+            buttons = keys.titlebar_buttons,
+            layout = wibox.layout.fixed.horizontal,
+        },
         {
             {
                 widget = beautiful.titlebar_title_enabled and awful.titlebar.widget.titlewidget(c)
@@ -42,16 +43,18 @@ client.connect_signal("request::titlebars", function(c)
         },
         {
             -- AwesomeWM native buttons (images loaded from theme)
-            awful.titlebar.widget.minimizebutton(c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.closebutton(c),
+            -- awful.titlebar.widget.minimizebutton(c),
+            -- awful.titlebar.widget.maximizedbutton(c),
+            -- awful.titlebar.widget.closebutton(c),
 
             -- Generated buttons
-            -- decorations.button(c, gen_button_shape, x.color3, gen_button_color_unfocused, 
-            --     x.color11, gen_button_size, gen_button_margin, "minimize"),
-            -- decorations.button(c, gen_button_shape, x.color2, gen_button_color_unfocused, 
-            --     x.color10, gen_button_size, gen_button_margin, "maximize"),
-            -- decorations.text_button(c, "", "Material Icons 9", x.color1, gen_button_color_unfocused, 
+            decorations.button(c, gen_button_shape, x.color3, gen_button_color_unfocused,
+                x.color11, gen_button_size, gen_button_margin, "minimize"),
+            decorations.button(c, gen_button_shape, x.color2, gen_button_color_unfocused,
+                x.color10, gen_button_size, gen_button_margin, "maximize"),
+            decorations.button(c, gen_button_shape, x.color1, gen_button_color_unfocused,
+                x.color9, gen_button_size, gen_button_margin, "close"),
+            -- decorations.text_button(c, "", "Material Icons 9", x.color1, gen_button_color_unfocused,
             --     x.color9, gen_button_size, gen_button_margin, "close"),
 
             -- Create some extra padding at the edge

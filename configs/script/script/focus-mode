@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # State
 status_file="/tmp/focus.state"
@@ -10,7 +10,7 @@ status=$(cat $status_file)
 
 focus(){
     # Set mpd volume
-    mpc volume 25 &>/dev/null
+    mpc volume 25 > /dev/null 2>&1
 
     # Change host file
     hostsman default
@@ -20,7 +20,7 @@ focus(){
 
 unfocus(){
     # Set mpd volume
-    mpc volume 50 &>/dev/null
+    mpc volume 50 > /dev/null 2>&1
     
     # Change host file
     hostsman focus

@@ -81,6 +81,18 @@ ruled.client.connect_signal("request::rules", function()
     })
     -- }}}
 
+    -- Gucharmap {{{
+    ruled.client.append_rule({
+        rule_any = {
+            class = { "Gucharmap" },
+        },
+        properties = {
+            tag = awful.screen.focused().tags[3].name,
+            switch_to_tags = true,
+        },
+    })
+    -- }}}
+
     -- Office {{{
     ruled.client.append_rule({
         rule_any = {

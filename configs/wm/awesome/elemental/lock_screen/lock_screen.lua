@@ -61,7 +61,7 @@ local day_of_the_week = wibox.widget({
 })
 
 local month = wibox.widget({
-    font = "sans 90",
+    font = beautiful.font_name.."90",
     align = "center",
     valign = "center",
     widget = wibox.widget.textclock("%B %d"),
@@ -87,11 +87,11 @@ local fancy_date = wibox.widget({
 
 local time = {
     {
-        font = "sans bold 16",
+        font = beautiful.font_bold_name.."16",
         widget = wibox.widget.textclock("%H"),
     },
     {
-        font = "sans 16",
+        font = beautiful.font_name.."16",
         widget = wibox.widget.textclock("%M"),
     },
     spacing = dpi(2),

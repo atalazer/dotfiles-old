@@ -52,14 +52,14 @@ local notifbox_empty = function()
             },
             {
                 text = "Wow, such empty.",
-                font = "SFNS Display Bold 14",
+                font = beautiful.font_bold_name .. "16",
                 align = "center",
                 valign = "center",
                 widget = wibox.widget.textbox,
             },
             {
                 text = "Come back later.",
-                font = "SFNS Display Regular 10",
+                font = beautiful.font,
                 align = "center",
                 valign = "center",
                 widget = wibox.widget.textbox,
@@ -95,7 +95,7 @@ local notifbox_layout = wibox.widget({
 })
 scroller(notifbox_layout)
 
-awesome.connect_signal("notifbox::deleted", function ()
+awesome.connect_signal("notifbox::deleted", function()
     if #notifbox_layout.children == 1 and remove_notifbox_empty then
         -- Reset layout
         notifbox_layout:reset(notifbox_layout)
@@ -125,7 +125,7 @@ end
 local notifbox_appname = function(app)
     return wibox.widget({
         markup = app,
-        font = "SFNS Display Bold 12",
+        font = beautiful.font_bold_name .. "12",
         align = "left",
         valign = "center",
         widget = wibox.widget.textbox,
@@ -136,7 +136,7 @@ end
 local notifbox_title = function(title)
     return wibox.widget({
         markup = "<b>" .. title .. "</b>",
-        font = "SFNS Display Bold 12",
+        font = beautiful.font_bold_name .. "11",
         align = "left",
         valign = "center",
         widget = wibox.widget.textbox,
@@ -147,7 +147,7 @@ end
 local notifbox_message = function(msg)
     return wibox.widget({
         markup = msg,
-        font = "SFNS Display Regular 11",
+        font = beautiful.font,
         align = "left",
         valign = "center",
         widget = wibox.widget.textbox,
@@ -168,7 +168,7 @@ local notifbox_actions = function(notif)
                     {
                         {
                             id = "text_role",
-                            font = "sans 10",
+                            font = beautiful.font,
                             widget = wibox.widget.textbox,
                         },
                         widget = wibox.container.place,
@@ -227,7 +227,7 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
     local notifbox_timepop = wibox.widget({
         id = "time_pop",
         markup = nil,
-        font = "SFNS Display Regular 10",
+        font = beautiful.font,
         align = "left",
         valign = "center",
         widget = wibox.widget.textbox,
@@ -347,6 +347,7 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
             gears.shape.partially_rounded_rect(cr, width, height, true, true, true, true, beautiful.groups_radius)
         end,
         widget = wibox.container.background,
+        bg = beautiful.bg_focus,
     })
 
     -- Delete notification box
@@ -376,13 +377,13 @@ local notifbox_box = function(notif, icon, title, message, app, bgcolor)
 
     -- Add hover, and mouse leave events
     notifbox_template:connect_signal("mouse::enter", function()
-        notifbox.bg = beautiful.bg_focus
+        notifbox.bg = beautiful.bg_urgent
         notifbox_timepop.visible = false
         notifbox_dismiss.visible = true
     end)
 
     notifbox_template:connect_signal("mouse::leave", function()
-        notifbox.bg = beautiful.bg_normal
+        notifbox.bg = beautiful.bg_focus
         notifbox_timepop.visible = true
         notifbox_dismiss.visible = false
     end)
@@ -416,7 +417,7 @@ naughty.connect_signal("request::display", function(n)
     -- For Notification Center
     if panel_visible or dont_disturb then
         naughty.destroy_all_notifications(nil, 1)
-
+    else
         -- Add Sound fx to notif
         -- Depends: canberra-gtk-play
         awful.spawn("canberra-gtk-play -i message", false)
@@ -425,7 +426,6 @@ naughty.connect_signal("request::display", function(n)
     -- Throw data from naughty to notifbox_layout
     -- Generates notifbox
     notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, n.app_name, notifbox_color))
-
 end)
 
 return notifbox_layout

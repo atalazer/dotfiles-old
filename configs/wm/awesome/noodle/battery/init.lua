@@ -6,7 +6,7 @@ local watch = awful.widget.watch
 local apps = require("configs.apps")
 local helpers = require("helpers")
 local beautiful = require("beautiful")
-local fg_color = beautiful.bar_widget_fg or beautiful.fg_normal
+local fg_color = beautiful.widget_fg or beautiful.fg_normal
 
 local clickable_container = require("noodle.clickable_container")
 local config_dir = gears.filesystem.get_configuration_dir()
@@ -29,7 +29,7 @@ local return_button = function()
     local battery_percentage_text = wibox.widget({
         id = "percent_text",
         markup = "100%",
-        font = "sans bold 11",
+        font = beautiful.widget_font_name .. "10",
         align = "center",
         valign = "center",
         visible = false,
@@ -39,14 +39,14 @@ local return_button = function()
     local battery_widget = wibox.widget({
         layout = wibox.layout.fixed.horizontal,
         spacing = dpi(0),
-        battery_imagebox,
         battery_percentage_text,
+        battery_imagebox,
     })
 
     local battery_button = wibox.widget({
         {
             battery_widget,
-            margins = beautiful.bar_widget_margin or dpi(3),
+            margins = beautiful.widget_margin or dpi(3),
             widget = wibox.container.margin,
         },
         widget = clickable_container,
@@ -87,15 +87,15 @@ local return_button = function()
     local last_battery_check = os.time()
     local notify_critcal_battery = true
 
-    -- local show_battery_warning = function()
-    --     naughty.notification({
-    --         icon = widget_icon_dir .. "battery-alert.svg",
-    --         app_name = "System notification",
-    --         title = "Battery is dying!",
-    --         message = "Hey, I think we have a problem here. Save your work before reaching the oblivion.",
-    --         urgency = "critical",
-    --     })
-    -- end
+    local show_battery_warning = function()
+        naughty.notification({
+            icon = widget_icon_dir .. "battery-alert.svg",
+            app_name = "System notification",
+            title = "Battery is dying!",
+            message = "Hey, I think we have a problem here. Save your work before reaching the oblivion.",
+            urgency = "critical",
+        })
+    end
 
     local update_battery = function(status)
         awful.spawn.easy_async_with_shell(
@@ -110,12 +110,19 @@ local return_button = function()
                     return
                 end
 
+                local color
+                if battery_percentage < 20 then
+                    color = x.color1
+                else
+                    color = fg_color
+                end
+
                 battery_widget.spacing = dpi(5)
                 battery_percentage_text.visible = true
                 battery_percentage_text:set_markup(
                     helpers.colorize_text(
                         battery_percentage .. "%",
-                        fg_color
+                        color
                     )
                 )
 
@@ -127,7 +134,7 @@ local return_button = function()
                     battery_imagebox.icon:set_image(
                         helpers.colorize_image(
                             gears.surface.load_uncached(widget_icon_dir .. icon_name .. ".svg"),
-                            fg_color
+                            color
                         )
                     )
                     return
@@ -140,12 +147,12 @@ local return_button = function()
                     if os.difftime(os.time(), last_battery_check) > 300 or notify_critcal_battery then
                         last_battery_check = os.time()
                         notify_critcal_battery = false
-                        -- show_battery_warning()
+                        show_battery_warning()
                     end
                     battery_imagebox.icon:set_image(
                         helpers.colorize_image(
                             gears.surface.load_uncached(widget_icon_dir .. icon_name .. ".svg"),
-                            fg_color
+                            color
                         )
                     )
                     return
@@ -171,7 +178,7 @@ local return_button = function()
                 battery_imagebox.icon:set_image(
                     helpers.colorize_image(
                         gears.surface.load_uncached(widget_icon_dir .. icon_name .. ".svg"),
-                        fg_color
+                        color
                     )
                 )
             end
@@ -184,7 +191,7 @@ local return_button = function()
 		upower -i $(upower -e | grep BAT) | grep state | awk '{print \$2}' | tr -d '\n'
 		"]],
         5,
-        function(widget, stdout)
+        function(_, stdout)
             local status = stdout:gsub("%\n", "")
 
             -- If no output or no battery detected

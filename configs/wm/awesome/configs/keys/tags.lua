@@ -1,84 +1,55 @@
 local awful = require("awful")
 local gears = require("gears")
 
+local l = require("configs.keys.lib")
+local utils = {
+    tags = {
+        view = {
+            next = function() awful.tag.viewnext() end,
+            prev = function() awful.tag.viewprev() end,
+        },
+        move = {
+            next = function()
+                local screen = awful.screen.focused()
+                local ctag = screen.selected_tag
+                local tag = screen.tags[ctag.index + 1]
+                local c = client.focus
+                if not c then return end
+                if tag then if c then c:move_to_tag(tag) tag:view_only() end end
+            end,
+            prev = function()
+                local screen = awful.screen.focused()
+                local ctag = screen.selected_tag
+                local tag = screen.tags[ctag.index - 1]
+                local c = client.focus
+                if not c then return end
+                if tag then if c then c:move_to_tag(tag) tag:view_only() end end
+            end,
+        }
+    },
+    gaps = {
+        increase = function() awful.tag.incgap(5, nil) end,
+        decrease = function() awful.tag.incgap(-5, nil) end,
+    },
+    screen = {
+        next = function() awful.screen.focus_relative(1) end,
+        prev = function() awful.screen.focus_relative(-1) end,
+    }
+}
+
 local keys = gears.table.join(
-    -- Tag: Gaps
-    awful.key({ superkey, shiftkey }, "minus", function()
-        awful.tag.incgap(5, nil)
-    end, {
-        description = "increment Tag: Gaps size for the current tag",
-        group = "Tag: Gaps",
-    }),
-    awful.key({ superkey }, "minus", function()
-        awful.tag.incgap(-5, nil)
-    end, {
-        description = "decrement gap size for the current tag",
-        group = "Tag: Gaps",
+    l.set_keymap("Tag: Gaps", {
+        ["W|minus"] = { utils.gaps.increase, "Increase Current Tag Gaps" },
+        ["WS|minus"] = { utils.gaps.decrease, "Decrease Current Tag Gaps" },
     }),
 
-    -- No need for these (single screen setup)
-    --awful.key({ superkey, ctrlkey }, "j", function () awful.screen.focus_relative( 1) end,
-    --{description = "focus the next screen", group = "screen"}),
-
-    --awful.key({ superkey, ctrlkey }, "k", function () awful.screen.focus_relative(-1) end,
-    --{description = "focus the previous screen", group = "screen"}),
-
-    -- ================= Tag Moves {{{
-
-    awful.key({ superkey }, "[", awful.tag.viewprev, { description = "Go To Previous Tag", group = "Tag: Move" }),
-
-    awful.key({ superkey }, "]", awful.tag.viewnext, { description = "Go To Next Tag", group = "Tag: Move" }),
-
-    awful.key({ superkey, shiftkey }, "[", function()
-        local screen = awful.screen.focused()
-        local ctag = screen.selected_tag
-        local tag = screen.tags[ctag.index - 1]
-
-        local c = client.focus
-        if not c then
-            return
-        end
-
-        if tag then
-            if c then
-                c:move_to_tag(tag)
-                tag:view_only()
-            end
-        end
-    end, {
-        description = "Move Focused Client To Previous Tag",
-        group = "Tag: Move",
+    l.set_keymap("Tag: Move", {
+        ["W|j"] = { utils.tags.view.next, "Go To Next Tag" },
+        ["W|k"] = { utils.tags.view.prev, "Go To Previous Tag" },
+        ["WS|j"] = { utils.tags.move.next, "Move To Next Tag" },
+        ["WS|k"] = { utils.tags.move.prev, "Move To Previous Tag" },
+        ["W|z"] = { awful.tag.history.restore, "Restore" }
     }),
-
-    awful.key({ superkey, shiftkey }, "]", function()
-        local screen = awful.screen.focused()
-        local ctag = screen.selected_tag
-        local tag = screen.tags[ctag.index + 1]
-
-        local c = client.focus
-        if not c then
-            return
-        end
-
-        if tag then
-            if c then
-                c:move_to_tag(tag)
-                tag:view_only()
-            end
-        end
-    end, {
-        description = "Move Focused Client To Next Tag",
-        group = "Tag: Move",
-    }),
-
-    awful.key({ superkey }, "x", function()
-        awful.tag.history.restore()
-    end, {
-        description = "Back",
-        group = "Tag: Move",
-    }),
-
-    --}}}
 
     -- ================= Tag Moves {{{
     awful.key({

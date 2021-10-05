@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Simple ncmpcpp notification script by Gerome Matilla;
 # gerome.matilla07@gmail.com

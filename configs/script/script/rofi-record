@@ -7,7 +7,7 @@ recordid="/tmp/recordid"
 recordicon="/tmp/recordicon"
 recordfilename="/tmp/recordfilename"
 
-if [[ ! -f $recordicon ]]; then
+if [ ! -f $recordicon ]; then
     touch $recordicon
     echo "NOREC" > $recordicon
 fi
@@ -16,11 +16,18 @@ fi
 check_wm() {
     # Identify environment
     DE="${DESKTOP_STARTUP_ID}"
-    if [[ ! -z "$DE" && "$DE" == *"awesome"* ]] || [[ ! -z "$CHECK_AWESOME_CLIENT" ]]; then
+    if [ -n "$DE" ] && echo "$DE" | grep -q '^awesome*$' || [ -n "$CHECK_AWESOME_CLIENT" ]; then
         echo "AWESOME"
         return
     fi
     echo "NOT_AWESOME"
+}
+
+emit_signal(){
+    is_recording="$1"
+    if [ "$(check_wm)" = "AWESOME" ]; then
+        awesome-client "awesome.emit_signal('script::record', $is_recording)"
+    fi
 }
 
 notify() {
@@ -30,7 +37,7 @@ notify() {
     case $_OPT in
     -1)
         _FILE=$3
-        if [[ "$(check_wm)" == "AWESOME" ]]; then
+        if [ "$(check_wm)" = "AWESOME" ]; then
             awesome-client "
             -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
             naughty = require('naughty')
@@ -77,7 +84,7 @@ notify() {
                 actions = { open_image, open_folder, delete_image }
             })
             "
-        elif [[ "$(check_wm)" == "NOT_AWESOME" ]]; then
+        elif [ "$(check_wm)" = "NOT_AWESOME" ]; then
             notify-send --app-name=record "Record" "${_MSG}"
         fi
     ;;
@@ -87,77 +94,84 @@ notify() {
     esac
 }
 
-function audioVideo() {
+audioVideo() {
     filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mkv"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
     
     notify -2 "<b>Start Record Audio and Video</b>"
+    emit_signal true
 
     ffmpeg -y -f x11grab -framerate 30 \
-        -s $dimensions -i :0.0 \
+        -s "$dimensions" -i :0.0 \
         -f alsa -i default \
         -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
-        -c:a aac $filename &
+        -c:a aac "$filename" &
 
-    echo $filename > $recordfilename
+    echo "$filename" > $recordfilename
     echo $! >$recordid
     echo "難REC" > $recordicon
 }
 
-function videoOnlyArea() {
+videoOnlyArea() {
     filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mp4"
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1
-    read -r X Y W H G ID < <(echo $slop)
+    read -r X Y W H G ID < <(echo "$slop")
 
-    notify -2 "<b>Start Record Video on Specific Area</b>" $filename
+    notify -2 "<b>Start Record Video on Specific Area</b>" "$filename"
+    emit_signal true
 
     ffmpeg -y -f x11grab -framerate 30 \
         -draw_mouse 1 \
-        -s "$W"x"$H" -i :0.0+$X,$Y \
+        -s "$W"x"$H" -i :0.0+"$X","$Y" \
         -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 \
         -vf setpts=N/FR/TB \
         -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
-        $filename &
-    
-    echo $filename > $recordfilename
+        "$filename" &
+
+    screenkey -s small -p bottom --geometry "$G" --timeout 1.5 &
+
+    echo "$filename" > $recordfilename
     echo $! >$recordid
     echo " REC" > $recordicon
 }
 
-function video() {
+video() {
     filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mp4"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
 
-    notify -2 "<b>Start Recording Video</b>" $filename
+    notify -2 "<b>Start Recording Video</b>" "$filename"
+    emit_signal true
 
     ffmpeg -y -f x11grab -framerate 30 \
-        -s $dimensions -i :0.0 \
+        -s "$dimensions" -i :0.0 \
         -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 \
         -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
-        $filename &
+        "$filename" &
 
-    echo $filename > $recordfilename
+    echo "$filename" > $recordfilename
     echo $! >$recordid
     echo " REC" > $recordicon
 }
 
-function audio() {
+audio() {
     filename="$OUTDIR/audio-$(date '+%y%m%d-%H%M-%S').mp3"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
     
-    notify -2 "<b>Start Recording Audio</b>" $filename
+    notify -2 "<b>Start Recording Audio</b>" "$filename"
 
-    ffmpeg -f alsa -i default -ac 2 -acodec libmp3lame -ab 128k $filename &
+    ffmpeg -f alsa -i default -ac 2 -acodec libmp3lame -ab 128k "$filename" &
 
-    echo $filename > $recordfilename
+    echo "$filename" > $recordfilename
     echo $! >$recordid
     echo " REC" > $recordicon
+    emit_signal true
 }
 
-function stoprecord() {
+stoprecord() {
+    emit_signal false
     echo "NOREC" > $recordicon
     if [ -f $recordid ]; then
-        kill -15 $(cat $recordid)
+        kill -15 "$(cat $recordid)"
         rm $recordid
     fi
 
@@ -167,16 +181,16 @@ function stoprecord() {
     fi
 }
 
-function endrecord() {
+endrecord() {
     filename=$(cat $recordfilename)
     OPTIONS='["Yes", "No"]'
-    select=$(echo $OPTIONS | jq -r ".[]" | $DMENU -mesg "Stop Recording")
-    [ "$select" == "Yes" ] && \
+    select=$(echo "$OPTIONS" | jq -r ".[]" | $DMENU -mesg "Stop Recording")
+    [ "$select" = "Yes" ] && \
         stoprecord && \
-        notify -1 "Stop Recording" $filename
+        notify -1 "Stop Recording" "$filename"
 }
 
-function startrecord() {
+startrecord() {
     OPTIONS='''
     [
         ["難 Audio Video",        "audioVideo"],
@@ -185,8 +199,8 @@ function startrecord() {
         ["  Audio Only",         "audio"]
     ]
     '''
-    select=$(echo $OPTIONS | jq -r ".[][0]" | $DMENU)
-    eval $(echo $OPTIONS | jq -r ".[] | select(.[0] == \"$select\") | .[1]")
+    select=$(echo "$OPTIONS" | jq -r ".[][0]" | $DMENU)
+    eval "$(echo "$OPTIONS" | jq -r ".[] | select(.[0] == \"$select\") | .[1]")"
 }
 
 if [ -f $recordid ]; then

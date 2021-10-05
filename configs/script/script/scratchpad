@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 SCRATCHPAD_SESSION="$(tmux ls | grep scratchpad)"
 SCRATCHPAD_WINDOW="$(xdotool search --name scratchpad)"

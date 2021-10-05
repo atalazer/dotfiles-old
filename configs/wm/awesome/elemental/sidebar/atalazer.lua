@@ -191,7 +191,7 @@ local search_text = wibox.widget({
     -- markup = helpers.colorize_text("Search", x.color8),
     align = "center",
     valign = "center",
-    font = "sans 9",
+    font = beautiful.font_name .. "9",
     widget = wibox.widget.textbox(),
 })
 

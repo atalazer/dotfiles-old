@@ -6,7 +6,7 @@ notifications.mpd = {}
 
 local notif
 local first_time = true
-local timeout = 2
+local timeout = 3
 
 local old_artist, old_song
 local send_mpd_notif = function (artist, song, paused)

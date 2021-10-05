@@ -1,5 +1,6 @@
 local wibox = require("wibox")
-local dpi = require("beautiful").xresources.apply_dpi
+local beautiful = require("beautiful")
+local dpi = beautiful.xresources.apply_dpi
 
 local dont_disturb = require("elemental.notif_center.dont_disturb")
 local clear_all = require("elemental.notif_center.clear_all")
@@ -7,7 +8,7 @@ local generate_notifbox = require("elemental.notif_center.generate_notifbox")
 
 local notif_header = wibox.widget({
     text = "Notification Center",
-    font = "SFNS Display Bold 14",
+    font = beautiful.font_bold_name .. "14",
     align = "left",
     valign = "center",
     widget = wibox.widget.textbox,

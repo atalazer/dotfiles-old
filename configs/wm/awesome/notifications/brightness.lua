@@ -4,7 +4,7 @@ local notifications = require("notifications")
 
 local notif
 local first_time = true
-local timeout = 1.5
+local timeout = 1
 
 awesome.connect_signal("evil::brightness", function (percentage)
     if first_time then

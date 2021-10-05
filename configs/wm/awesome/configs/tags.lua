@@ -1,5 +1,26 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
+local bling = require("lib.bling")
+
+local screen_width = awful.screen.focused().geometry.width
+local screen_height = awful.screen.focused().geometry.height
+
+bling.widget.tag_preview.enable({
+    scale = 0.225,
+    x = screen_width * 0.2,
+    y = screen_height * 0.2,
+    show_client_content = true,
+    honor_padding = true,
+    honor_workarea = false,
+    placement_fn = function(c)
+        awful.placement.top_left(c, {
+            margins = {
+                top = beautiful.wibar_height + beautiful.useless_gap / 2,
+                left = beautiful.useless_gap / 2
+            }
+        })
+    end,
+})
 
 -- Layout per Tags
 -- =======================================
@@ -21,7 +42,6 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create all tags at once (without seperate configuration for each tag)
     awful.tag(tagnames, s, layouts)
-
 end)
 
 local update_gap_and_shape = function(t)

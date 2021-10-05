@@ -1,25 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/sh
+# vim: ft=sh ts=4 sw=4:
 
 delta=2
-
-up() {
-    light -A "$1"
-}
-down() {
-    light -U "$1"
-}
-
-status() {
-    light -G | cut -c 1-2
-}
+_up()   { light -A "$1"; }
+_down() { light -U "$1"; }
+_get()  { light -G | cut -c 1-2; }
+_set()  { light -S "$1"; }
 
 optimize() {
-    light -S 10
+    light -S 20
     if [ -n "$(pgrep redshift)" ]; then
         redshift -x && pkill redshift && killall redshift
         echo "OFF"
     else
-        redshift -l 0:0 -t 4500:4500 -r &>/dev/null &
+        redshift -l 0:0 -t 4500:4500 -r >/dev/null 2>&1 &
         echo "ON"
     fi
 }
@@ -28,29 +22,22 @@ help() {
     echo "Usage:"
     echo "up            Increase Brightness"
     echo "down          Decrease Brightness"
+    echo "set           Set Brightness"
+    echo "get           Get Brightness"
     echo "optimize      Optimize Brightness"
+    exit 1
 }
 
 while [ -n "$1" ]; do
     case "$1" in
-    delta | "-d" | "--delta")
-        shift
-        delta="$1"
-        ;;
-    up | "-U" | "--up")
-        up "$delta"
-        # notify-send $(current_bn)
-        ;;
-    down | "-D" | "--down")
-        down "$delta"
-        # notify-send $(current_bn)
-        ;;
-    optimize | "-O" | "--optimize")
-        optimize
-        ;;
-    "-h" | "--help" | *)
-        help
-        ;;
+    up) _up "$delta" ;;
+    down) _down "$delta" ;;
+    get) _get ;;
+    set) shift; _set "$1" ;;
+    optimize) optimize ;;
+    "-d"|delta) shift; delta="$1" ;;
+    "-h" | "--help") help ;;
+    *) echo "Invalid $1" ;;
     esac
     shift
 done

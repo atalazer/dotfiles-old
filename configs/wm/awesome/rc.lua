@@ -38,7 +38,6 @@ local icon_theme = icon_themes[2]
 -- ===================================================================
 local notification_themes = {
     "atalazer", -- 1 -- Filled text icons on the right, text on the left
-    "lovelace", -- 2 -- Plain with standard image icons
 }
 local notification_theme = notification_themes[1]
 -- ===================================================================
@@ -255,7 +254,6 @@ require("configs.scratchpad")
 require("evil")
 
 -- ===================================================================
--- ===================================================================
 
 -- Get screen geometry
 -- I am using a single screen setup and I assume that screen geometry will not
@@ -363,7 +361,7 @@ end)
 -- Enable for lower memory consumption
 -- ===================================================================
 gears.timer({
-    timeout = 30,
+    timeout = 15,
     autostart = true,
     callback = function()
         collectgarbage()

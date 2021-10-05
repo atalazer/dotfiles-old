@@ -20,7 +20,6 @@ local keys = gears.table.join(
         ["W|t"] = { "rofi-translate -i", "Translate" },
         ["W|F12"] = { apps.record, "Record Menu" },
         ["W|Insert"] = { apps.clipboard, "Clipboard Manager" },
-        ["W|Print"] = { "shot -i", "Shot Menu" },
         ["WS|t"] = { "rofi-translate -c", "Translate From Clipboard" },
         ["WS|Print"] = { "shot -o", "Shot Image to Text" },
         ["WS|Insert"] = { "rofi-translate -m", "Translate from Image" },
@@ -57,33 +56,11 @@ local keys = gears.table.join(
 
     -- ===================================== Scratchpad {{{
     l.set_keymap("Apps: Scratchpad", {
-        ["W|i"] = {
-            function()
-                awesome.emit_signal("scratch::input")
-            end,
-            "Markdown Input",
-        },
-        ["W|\\"] = {
-            function()
-                awesome.emit_signal("scratch::term")
-            end,
-            "Ninja Terminal",
-        },
-        ["WS|f"] = {
-            function()
-                awesome.emit_signal("scratch::file")
-            end,
-            "File Manager",
-        },
-        ["WS|m"] = {
-            function()
-                awesome.emit_signal("scratch::music")
-            end,
-            "Music Player",
-        },
-        -- ["WS|w"]= {
-        --     function() awesome.emit_signal("scratch::chat") end,
-        -- "Chatting Apps"},
+        ["W|i"] = { function() awesome.emit_signal("scratch::input") end, "Markdown Input", },
+        ["W|\\"] = { function() awesome.emit_signal("scratch::term") end, "Ninja Terminal", },
+        ["WS|f"] = { function() awesome.emit_signal("scratch::file") end, "File Manager", },
+        ["WS|m"] = { function() awesome.emit_signal("scratch::music") end, "Music Player", },
+        -- ["WS|w"]= { function() awesome.emit_signal("scratch::chat") end, "Chatting Apps"},
     })
 
     -- }}}
