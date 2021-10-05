@@ -29,13 +29,13 @@ M.config = function()
             { "open", "close" },
             { "top", "bottom" },
             { "right", "left" },
-            { "he", "she" },
             { "always", "never" },
             { "foreground", "background" },
             { "fg", "bg" },
             { "white", "black" },
             { "light", "dark" },
             { "next", "previous" },
+            { "vertical", "horizontal" },
         },
     }
 

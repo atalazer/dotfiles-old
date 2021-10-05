@@ -8,18 +8,40 @@ local M = {}
 local buf = vim.lsp.buf
 local codelens = vim.lsp.codelens
 local diagnostic = vim.lsp.diagnostic
-local telescope = require("telescope.builtin")
+
+local telescope_exist, telescope = pcall(require, "telescope.builtin")
+local fzf_exist, fzf = pcall(require, "fzf-lua")
+
+local code_action = function()
+    if telescope_exist then
+        telescope.lsp_code_actions()
+    elseif fzf_exist then
+        fzf.lsp_code_actions()
+    else
+        buf.code_action()
+    end
+end 
+
+local lsp_reference = function()
+    if telescope_exist then
+        telescope.lsp_references()
+    elseif fzf_exist then
+        fzf.lsp_references()
+    else
+        buf.references()
+    end
+end
 
 M.mappings = function()
     local opts = mapx.silent
     mapx.nname("<Leader>l", "LSP")
     inoremap( "<C-l>", buf.signature_help, opts )
-    nnoremap( "<Leader>la", telescope.lsp_code_actions, opts )
+    nnoremap( "<Leader>la", code_action, opts )
     nnoremap( "<Leader>lf", buf.formatting_seq_sync, opts )
     vnoremap( "<Leader>lf", buf.range_formatting, opts )
     nnoremap( "<Leader>ld", buf.definition, opts )
     nnoremap( "<Leader>lc", codelens.run, opts )
-    nnoremap( "<Leader>lr", telescope.lsp_references, opts )
+    nnoremap( "<Leader>lr", lsp_reference, opts )
     nnoremap( "<Leader>lR", buf.rename, opts )
     nnoremap( "<Leader>lt", "<Cmd>TroubleToggle<CR>", opts )
     nnoremap( ";l", buf.hover, opts )

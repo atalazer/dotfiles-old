@@ -1,4 +1,5 @@
-local ts_config = require("nvim-treesitter.configs")
+local present, ts_config = pcall(require, "nvim-treesitter.configs")
+if not present then return end
 
 ts_config.setup({
     ensure_installed = {
@@ -43,11 +44,7 @@ ts_config.setup({
     autotag = { enable = true },
     context_commentstring = {
         enable = true,
-        enable_autocmd = false,
-        config = {
-            css = "// %s",
-            lua = "-- %s",
-        },
+        enable_autocmd = true,
     },
     refactor = {
         highlight_definitions = { enable = false },

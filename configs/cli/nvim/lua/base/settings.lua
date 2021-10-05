@@ -35,7 +35,7 @@ o.backupcopy = "yes"
 o.clipboard = "unnamedplus"
 -- o.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 o.completeopt:remove("preview")
-o.encoding = "UTF-8"
+o.encoding = "utf-8"
 o.fillchars = { vert = "│", eob = " ", fold = " ", diff = " " }
 -- o.formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2"
 o.formatoptions:remove("cro")
@@ -74,6 +74,8 @@ o.sidescrolloff = 15
 o.shiftwidth = 4
 o.softtabstop = 4
 o.tabstop = 4
-o.textwidth = 120
-o.timeoutlen = 300
-o.updatetime = 1000
+-- o.textwidth = 120
+-- o.timeoutlen = 300
+o.titlelen = 20
+o.titlestring = "NVIM"
+-- o.updatetime = 1000

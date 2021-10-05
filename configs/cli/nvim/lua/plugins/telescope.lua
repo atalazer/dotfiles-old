@@ -150,7 +150,6 @@ telescope.setup({
 pcall(require("telescope").load_extension("fzf"))
 pcall(require("telescope").load_extension("frecency"))
 pcall(require("telescope").load_extension("media_files"))
-pcall(require("telescope").load_extension("zk"))
 
 local builtin = require("telescope.builtin")
 M.builtins = function()
@@ -171,7 +170,6 @@ M.glow_previewer = function()
 end
 
 -- Telescope
-mapx.nname("<Leader>f", "Telescope")
 nnoremap( "<C-p>", "<CMD>Telescope find_files<CR>", { silent = true }, "Find Files" )
 nnoremap( "<leader>fo", "<CMD>Telescope oldfiles<CR>", { silent = true }, "File History" )
 nnoremap( "<leader>fl", "<CMD>Telescope live_grep<CR>", { silent = true }, "Live Grep" )

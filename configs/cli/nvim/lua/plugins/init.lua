@@ -48,9 +48,13 @@ return packer.startup({
             end,
         },
 
-        --All the lua functions I don't want to write twice.
+        -- All the lua functions I don't want to write twice.
         -- ------------------------
         { "nvim-lua/plenary.nvim" },
+
+        -- vim-devicons written in lua
+        -- ------------------------
+        { "kyazdani42/nvim-web-devicons" },
 
         -- ================================================== User Interface
 
@@ -60,10 +64,6 @@ return packer.startup({
             "~/Documents/Programming/Repo/xresources-nvim",
             config = [[require("xresources").colorscheme()]],
         },
-
-        -- vim-devicons written in lua
-        -- ------------------------
-        { "kyazdani42/nvim-web-devicons" },
 
         -- Customizable neovim greeter like dashboard-nvim or vim-startify
         -- ------------------------
@@ -114,6 +114,7 @@ return packer.startup({
         -- ------------------------
         {
             "nvim-telescope/telescope.nvim",
+            disable = not enabled.telescope,
             config = [[require("plugins.telescope")]],
             module_pattern = { "telescope", "telescope.*" },
             cmd = "Telescope",
@@ -140,6 +141,15 @@ return packer.startup({
             },
         },
 
+        -- FZF >< Lua
+        -- ------------------------
+        {
+            "ibhagwan/fzf-lua",
+            disable = not enabled.fzf,
+            requires = { "vijaymarupudi/nvim-fzf" },
+            config = [[require("plugins.fzf")]],
+        },
+
         -- Vim Which Key But Lua!
         -- ------------------------
         {
@@ -152,6 +162,7 @@ return packer.startup({
         -- ------------------------
         {
             "folke/zen-mode.nvim",
+            disable = not enabled.zenmode,
             cmd = "ZenMode",
             setup = function()
                 nnoremap("<leader>gz", "<CR>ZenMode<CR>", "silent")
@@ -163,6 +174,7 @@ return packer.startup({
         -- ------------------------
         {
             "folke/twilight.nvim",
+            disable = not enabled.twillight,
             cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
             config = function()
                 require("twilight").setup({
@@ -191,14 +203,14 @@ return packer.startup({
             disable = not enabled.focus,
             config = function()
                 require("focus").setup({
-                    cursorline = true,
+                    -- cursorline = true,
                     -- signcolumn = true,
                     -- number = true,
                     -- relativenumber = true,
                     -- hybridnumber = true,
-                    -- compatible_filetrees = { "filetree", "nvimtree", "nerdtree", "chadtree", "fern" },
-                    -- excluded_filetypes = { "toggleterm", "TelescopePrompt", "frecency" },
-                    -- excluded_buftypes = { "help", "prompt", "nofile" },
+                    compatible_filetrees = { "filetree", "nvimtree", "nerdtree", "chadtree", "fern" },
+                    excluded_filetypes = { "toggleterm", "TelescopePrompt", "frecency", "fzf" },
+                    excluded_buftypes = { "help", "prompt", "nofile" },
                 })
             end,
         },
@@ -292,6 +304,7 @@ return packer.startup({
         {
             "dhruvasagar/vim-table-mode",
             ft = { "text", "markdown" },
+            cmd = { "TableModeRealign", "TableModeToggle" },
         },
 
         -- yuck.vim for eww
@@ -308,7 +321,6 @@ return packer.startup({
             requires = {
                 "williamboman/nvim-lsp-installer",
                 "jose-elias-alvarez/null-ls.nvim",
-                "ray-x/lsp_signature.nvim",
                 {
                     "folke/lsp-trouble.nvim",
                     cmd = { "Trouble", "TroubleToggle" },
@@ -390,18 +402,18 @@ return packer.startup({
         -- Easy Commenting
         -- ------------------------
         {
-            "terrortylor/nvim-comment",
+            "winston0410/commented.nvim",
             keys = "gc",
             config = function()
-                require("nvim_comment").setup({
-                    marker_padding = true,
-                    comment_empty = false,
-                    create_mappings = true,
-                    line_mapping = "gcc",
-                    operator_mapping = "gc",
-                    hook = function()
-                        require("ts_context_commentstring.internal").update_commentstring()
-                    end,
+                require("commented").setup({
+                    comment_padding = " ",
+                    keybindings = { n = "gc", v = "gc", nl = "gcc" },
+                    prefer_block_comment = false,
+                    set_keybindings = true,
+                    ex_mode_cmd = "Comment",
+                    hooks = {
+                        before_comment = require("ts_context_commentstring.internal").update_commentstring,
+                    },
                 })
             end,
         },
@@ -441,18 +453,24 @@ return packer.startup({
         -- ------------------------
         {
             "phaazon/hop.nvim",
-            cmd = { "HopWord", "HopPattern" },
+            disable = not enabled.hop,
+            cmd = { "HopWord" },
             setup = function()
                 nnoremap("<leader>z", "<CMD>HopWord<CR>", "Word")
-                nnoremap("<leader>x", "<CMD>HopPattern<CR>", "Pattern")
             end,
-            config = [[require("hop").setup()]],
+            config = function()
+                require("hop").setup({
+                    keys = "wasdfhjkl",
+                    term_seq_bias = 0.5,
+                })
+            end,
         },
 
         -- Sneak
         -- ------------------------
         {
             "ggandor/lightspeed.nvim",
+            disable = not enabled.lightspeed,
             setup = require("plugins.lightspeed").setup,
             config = require("plugins.lightspeed").config,
         },
@@ -580,7 +598,7 @@ return packer.startup({
                     "sindrets/diffview.nvim",
                     config = function()
                         require("diffview").setup()
-                    end
+                    end,
                 },
             },
             config = [[require("plugins.neogit")]],
@@ -590,18 +608,19 @@ return packer.startup({
                 nmap("<Leader>gc", "<CMD>Neogit commit<CR>", "Commit")
                 nmap("<Leader>gd", "<CMD>Neogit diff<CR>", "Merge")
                 nmap("<Leader>gb", "<CMD>Neogit branch<CR>", "Branch")
-            end
+            end,
         },
 
         -- GitLinker
         -- ----------------------
         {
             "ruifm/gitlinker.nvim",
+            disable = not enabled.gitlinker,
             config = function()
                 require("gitlinker").setup({
-                    mappings = "<leader>gw"
+                    mappings = "<leader>gw",
                 })
-            end
+            end,
         },
 
         -- Vim Fugitive
@@ -618,7 +637,7 @@ return packer.startup({
                 nmap("<Leader>gm", "<CMD>G merge<CR>", "Merge")
                 nmap("<Leader>gb", "<CMD>G branch<CR>", "Branch")
                 nmap("<Leader>gw", "<CMD>GBrowse<CR>", "Branch")
-            end
+            end,
         },
 
         -- ============================================== Misc
@@ -689,19 +708,6 @@ return packer.startup({
                 vim.g.mkdp_auto_close = 0
                 vim.g.mkdp_refresh_slow = 0
                 vim.g.mkdp_browser = "firefox"
-            end,
-        },
-
-        -- Session management
-        -- ------------------------
-        {
-            "folke/persistence.nvim",
-            disable = not enabled.persistence,
-            config = function()
-                require("persistence").setup({
-                    dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions/"),
-                    options = { "buffers", "curdir", "tabpages", "winsize" },
-                })
             end,
         },
 

@@ -54,13 +54,6 @@ augroup Whitespace
   au BufWritePre * if g:strip_whitespace | %s/\s\+$//e
 augroup END
 
-" Set title
-" ----------------------
-augroup SetTitle
-  autocmd!
-  autocmd VimEnter * set title
-augroup END
-
 " ===================================================== Plugins
 augroup Emmet
   au!

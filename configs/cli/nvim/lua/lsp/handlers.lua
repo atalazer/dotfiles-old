@@ -11,7 +11,6 @@ lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_hel
 vim.lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
     signs = true,
-    severity_sort = false,
     update_in_insert = false,
     virtual_text = {
         prefix = "■ ",

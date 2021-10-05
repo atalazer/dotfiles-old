@@ -52,7 +52,7 @@ wk.register({
         m = "Edit Macro"
     },
     f = {
-        name = "Telescope",
+        name = "Files",
         b = "Files Browser",
         c = "Colorscheme",
         d = "(Book)Marks",

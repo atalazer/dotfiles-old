@@ -34,13 +34,13 @@ cmp.setup({
 
     mapping = {
         ["<C-Space>"] = cmp.mapping.complete(),
-        ["<M-e>"] = cmp.mapping.close(),
+        ["<A-e>"] = cmp.mapping.close(),
         -- ["<Tab>"] = cmp.mapping(function(fallback) _G.Util.tab_complete(fallback) end, {"i","s",}),
         -- ["<S-Tab>"] = cmp.mapping(function(fallback) _G.Util.s_tab_complete(fallback) end, {"i","s",}),
         ["<S-TAB>"] = cmp.mapping.select_prev_item(),
         ["<TAB>"] = cmp.mapping.select_next_item(),
         ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
+            behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         }),
     },

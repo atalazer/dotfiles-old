@@ -4,10 +4,16 @@ M.plugin_enabled = {
     -- ================== UI
     alpha = false,
     bufferline = true,
+    focus = false,
+    fzf = true,
     nvim_tree = true,
+    shade = false,
     sidebar = false,
+    telescope = false,
+    twillight = false,
     which_key = true,
     windline = true,
+    zenmode = false,
     -- ================== Editing
     cmp = true,
     coq = false,
@@ -15,19 +21,19 @@ M.plugin_enabled = {
     sniprun = true,
     treesitter = true,
     -- ================== Git
-    fugitive = false,
+    fugitive = true,
+    gitlinker = true,
     gitsigns = true,
     lazygit = true,
-    neogit = true,
+    neogit = false,
     -- ================== Experience
     colorizer = false,
-    focus = true,
     hexokinase = true,
+    hop = true,
     indent_blankline = true,
+    lightspeed = false,
     neoscroll = true,
-    shade = false,
     -- ================== Misc
-    persistence = true,
     presence = false,
 }
 

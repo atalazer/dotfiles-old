@@ -1,8 +1,39 @@
+local Job = require("plenary.job")
+
 _G.Util = {}
+
+Util.get_word = function()
+    local first_line_num, last_line_num = vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2]
+    local first_col, last_col = vim.fn.getpos("'<")[3], vim.fn.getpos("'>")[3]
+    local current_word = vim.fn.getline(first_line_num, last_line_num)[1]:sub(first_col, last_col)
+    return current_word
+end
 
 Util.t = function(cmd)
     return vim.api.nvim_replace_termcodes(cmd, true, true, true)
 end
+
+Util.open = function()
+    local filename = vim.fn.expand("<cfile>")
+    vim.loop.spawn("opener", { args = { filename } })
+end
+
+Util.translate = function(lang)
+    local word = Util.get_word()
+    local job = Job:new({
+        command = "trans",
+        args = { "-b", ":" .. (lang or "id"), word },
+    })
+    local ok, result = pcall(function() return vim.trim(job:sync()[1]) end)
+    if ok then 
+        print(result)
+        vim.cmd(string.format(
+            [[silent! !echo "%s" | tr "\n" " " | xclip -selection clipboard ]], 
+            result)
+        )
+    end
+end
+vim.cmd("command! -range -nargs=1 Translate call v:lua.Util.translate(<f-args>)")
 
 Util.check_back_space = function()
     local col = vim.fn.col(".") - 1
@@ -89,13 +120,6 @@ Util.lsp_on_attach = function(client, bufnr)
         ]])
     end
 
-    require("lsp_signature").on_attach({
-        bind = true, -- This is mandatory, otherwise border config won't get registered.
-        hint_enable = false, -- virtual hint enable
-        handler_opts = {
-            border = Util.borders, -- double, single, shadow, none
-        },
-    }, bufnr)
     require("lsp.keys").mappings()
 end
 
@@ -108,36 +132,28 @@ end
 
 local session_dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions/")
 local last_session = session_dir .. "last.vim"
-local persistence_exist, persistence = pcall(require, "persistence")
 
 Util.session = {
-    save = function()
-        if persistence_exist then
-            persistence.save()
-        else
-            vim.cmd("mksession! " .. last_session)
-        end
-    end,
-    last = function()
-        if persistence_exist then
-            persistence.load({ last = true })
-        else
-            vim.cmd("source " .. last_session)
-        end
-    end,
+    save = function() vim.cmd("mksession! " .. last_session) end,
+    last = function() vim.cmd("source " .. last_session) end,
 }
 
 Util.notes = {
     index = function()
-        local note_dir = vim.env.ZK_NOTEBOOK_DIR or (vim.env.HOME .. "/Documents/Notes/Zettelkasten")
-        vim.cmd("edit "..note_dir.."/index.md")
+        local note_dir = vim.env.NOTE_DIR or (vim.env.HOME .. "/Documents/Notes")
+        vim.cmd("edit " .. note_dir .. "/index.md")
     end,
-    search = function ()
-        local present = pcall(require("telescope").extensions.zk.zk_notes)
-        if present then
-            require("telescope").extensions.zk.zk_notes()
+    search = function(dir)
+        local note_dir = dir or vim.env.NOTE_DIR or (vim.env.HOME .. "/Documents/Notes")
+        if dir == "notes" then
+            note_dir = vim.env.NOTE_DIR or (vim.env.HOME .. "/Documents/Notes")
+        elseif dir == "school" then
+            note_dir = vim.env.SCHOOL_DIR or (vim.env.HOME .. "/Documents/School")
         end
-    end
+        require("plugins.fzf.notes").notes({dir = note_dir})
+    end,
 }
+vim.cmd("command! -range -nargs=0 NoteIndex call v:lua.Util.notes.index()")
+vim.cmd("command! -range -nargs=? NoteFind call v:lua.Util.notes.search(<f-args>)")
 
 return Util

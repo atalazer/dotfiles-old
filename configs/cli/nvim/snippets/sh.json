@@ -4,17 +4,27 @@
     "body": "command -v \"${1:which_cmd}\" > /dev/null 2>&1",
     "description": "Check if command is exist"
   },
+  "silent": {
+    "prefix": "Silent",
+    "body": ">/dev/null 2>&1",
+    "description": "silent command output"
+  },
+  "modeline": {
+    "prefix": ["vim", "modeline"],
+    "body": "# vim: ft=sh ts=4 sw=4:",
+    "description": "Add vim modeline"
+  },
   "shebang": {
     "prefix": ["#!", "shebang"],
     "body": "#!/usr/bin/env bash",
     "description": "Add shebang for scripting"
   },
   "help": {
-    "prefix": ["help", "??"],
+    "prefix": "help",
     "body": [
       "help() {",
       "cat <<EOF",
-      "Usage for $(basename \"\\$0\"):",
+      "Usage for \\$NAME:",
       "  Command:",
       "  Options",
       "    -h, --help      Show this message",
@@ -29,14 +39,23 @@
     "body": [
       "version() {",
       "cat <<EOF",
-      "$(basename \"\\$0\") v0.1",
+      "\\$NAME \\$VERSION",
       "EOF",
       "}"
     ],
     "description": "make version"
   },
-  "script": {
-    "prefix": ["main", "script"],
+  "init": {
+    "prefix": "init",
+    "body": [
+      "NAME=$1",
+      "AUTHOR:$2",
+      "VERSION=v0.1"
+    ],
+    "description": "Init Script"
+  },
+  "main": {
+    "prefix": "main",
     "body": [
       "while [ -n \"\\$1\" ]; do",
       "\tcase \"\\$1\" in",
@@ -47,6 +66,6 @@
       "\tshift",
       "done"
     ],
-    "description": "Manage script argument"
+    "description": "Main Program"
   }
 }

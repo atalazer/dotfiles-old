@@ -5,17 +5,16 @@ nnoremap q: <Nop>
 
 " -------------------------------------
 " Source Lua/Vim Files
-nnoremap <localleader>l   <CMD>source %<CR>
+nnoremap <localleader>l <CMD>source %<CR>
 
 " Edit/Reload Init.Vim
 nnoremap <leader>ec <CMD>tabe ~/.config/nvim/init.*<CR>
 nnoremap <leader>er <CMD>source ~/.config/nvim/init.*<CR>
 
 "  Save
-nnoremap cs <CMD>write<CR>
-nnoremap <C-s> <CMD>write<CR>
-inoremap <C-s> <Esc><Esc>:write<CR>
-vnoremap <C-s> <Esc><Esc>:write<CR>
+nnoremap <C-s> <CMD>update<CR>
+inoremap <C-s> <Esc><Esc><CMD>update<CR>
+vnoremap <C-s> <Esc><Esc><CMD>update<CR>
 
 " Undo
 nnoremap u <CMD>undo<CR>
@@ -28,10 +27,6 @@ nnoremap U <CMD>redo<CR>
 nnoremap <C-y> <CMD>redo<CR>
 inoremap <C-y> <Esc><CMD>redo<CR>
 vnoremap <C-y> <Esc><CMD>redo<CR>
-
-" Change pwd and reload
-nnoremap cd <CMD>cd %:p:h<CR>
-nnoremap cc <CMD>e<CR>
 
 " Saner command-line history
 cnoremap <expr> <C-n> wildmenumode() ? "\<c-n>" : "\<down>"
@@ -111,32 +106,28 @@ vnoremap < <gv
 vnoremap > >gv
 
 " ------------------------------------ Spelling
-nnoremap cU <CMD>s/\<./\u&/g<CR><CMD>nohlsearch<CR>
-noremap cu <CMD>s/\<./\l&/g<CR><CMD>nohlsearch<CR>
+nnoremap csU <CMD>s/\<./\u&/g<CR><CMD>nohlsearch<CR>
+noremap csu <CMD>s/\<./\l&/g<CR><CMD>nohlsearch<CR>
 
 " ------------------------------------- Workspace
 
 " better movement between windows
-nnoremap <A-h> <C-w><C-h>
-nnoremap <A-j> <C-w><C-j>
-nnoremap <A-k> <C-w><C-k>
-nnoremap <A-l> <C-w><C-l>
-nnoremap <A-Left> <C-w><C-h>
-nnoremap <A-Down> <C-w><C-j>
-nnoremap <A-Up> <C-w><C-k>
-nnoremap <A-Right> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-Left> <C-w><C-h>
+nnoremap <C-Down> <C-w><C-j>
+nnoremap <C-Up> <C-w><C-k>
+nnoremap <C-Right> <C-w><C-l>
 
 " Cycle tab
-" nnoremap KK <CMD>BufferLineCyclePrev<CR>
-" nnoremap JJ <CMD>BufferLineCycleNext<CR>
-nnoremap <C-k> <CMD>BufferLineCyclePrev<CR>
-nnoremap <C-j> <CMD>BufferLineCycleNext<CR>
+nnoremap <A-k> <CMD>BufferLineCyclePrev<CR>
+nnoremap <A-j> <CMD>BufferLineCycleNext<CR>
 
 " Move tab
-" nnoremap HH <CMD>BufferLineMovePrev<CR>
-" nnoremap LL <CMD>BufferLineMoveNext<CR>
-nnoremap <C-h> <CMD>BufferLineMovePrev<CR>
-nnoremap <C-l> <CMD>BufferLineMoveNext<CR>
+nnoremap <A-h> <CMD>BufferLineMovePrev<CR>
+nnoremap <A-l> <CMD>BufferLineMoveNext<CR>
 
 nnoremap <A-1> <CMD>lua require'bufferline'.go_to_buffer(1)<CR>
 nnoremap <A-2> <CMD>lua require'bufferline'.go_to_buffer(2)<CR>
@@ -146,17 +137,21 @@ nnoremap <A-5> <CMD>lua require'bufferline'.go_to_buffer(5)<CR>
 
 " ------------------------------------ Terminal
 " move between window
-tnoremap <A-h> <C-\><C-n><C-w><C-h>
-tnoremap <A-j> <C-\><C-n><C-w><C-j>
-tnoremap <A-k> <C-\><C-n><C-w><C-k>
-tnoremap <A-l> <C-\><C-n><C-w><C-l>
+tnoremap <C-h> <C-\><C-n><C-w><C-h>
+tnoremap <C-j> <C-\><C-n><C-w><C-j>
+tnoremap <C-k> <C-\><C-n><C-w><C-k>
+tnoremap <C-l> <C-\><C-n><C-w><C-l>
+tnoremap <C-Left> <C-\><C-n><C-w><C-h>
+tnoremap <C-Down> <C-\><C-n><C-w><C-j>
+tnoremap <C-Up> <C-\><C-n><C-w><C-k>
+tnoremap <C-Right> <C-\><C-n><C-w><C-l>
 
 " move buffer
-tnoremap <C-h> <C-\><C-n>:bp<CR>
-tnoremap <C-l> <C-\><C-n>:bn<CR>
+tnoremap <A-h> <C-\><C-n>:bp<CR>
+tnoremap <A-l> <C-\><C-n>:bn<CR>
 
 " go to normal mode using double esc
-tnoremap <Esc><Esc> <C-\\><C-n>
+tnoremap <A-q> <C-\\><C-n>
 
 " ------------------------------------- Runner
 nnoremap <Leader>rl <CMD>luafile %<CR>
@@ -166,12 +161,13 @@ nnoremap <localleader>rp <CMD>!python %<CR>
 " ------------------------------------- Function
 nnoremap <F1> <CMD>lua Util.session.last()<CR><CMD>echo "Session Restored"<CR>
 nnoremap <F2> <CMD>lua Util.session.save()<CR><CMD>echo "Session Saved"<CR>
-nnoremap <F4> <CMD>!opener %<CR>
+nnoremap <F4> <CMD>lua Util.open()<CR><CMD>echo "Open Current File ..."<CR>
 noremap <F3>
       \ :exe "let g:strip_whitespace = !g:strip_whitespace"<CR>
       \ :exe "echo 'Strip whitespace mode toggled!'"<CR>
 
 " ----------------------------------------- Notes
 nnoremap <Leader>ni <CMD>lua Util.notes.index()<CR>
-nnoremap <Leader>nn <CMD>lua Util.notes.search()<CR>
+nnoremap <Leader>nn <CMD>lua Util.notes.search("notes")<CR>
+nnoremap <Leader>ns <CMD>lua Util.notes.search("school")<CR>
 
