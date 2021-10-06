@@ -1,7 +1,7 @@
 #### Files
-mpd_music_dir = ~/Music
 ncmpcpp_directory  = ~/.config/ncmpcpp
-lyrics_directory  = ~/.config/ncmpcpp/lyrics
+mpd_music_dir = ~/Music
+lyrics_directory  = ~/Music/.lyrics
 mpd_host = "localhost"
 mpd_port = "6600"
 

@@ -28,12 +28,12 @@ Util.translate = function(lang)
     if ok then 
         print(result)
         vim.cmd(string.format(
-            [[silent! !echo "%s" | tr "\n" " " | xclip -selection clipboard ]], 
+            [[silent! !echo "%s" | tr --delete "\n" | xclip -selection clipboard ]], 
             result)
         )
     end
 end
-vim.cmd("command! -range -nargs=1 Translate call v:lua.Util.translate(<f-args>)")
+vim.cmd("command! -range -nargs=? Translate call v:lua.Util.translate(<f-args>)")
 
 Util.check_back_space = function()
     local col = vim.fn.col(".") - 1
@@ -136,21 +136,38 @@ local last_session = session_dir .. "last.vim"
 Util.session = {
     save = function() vim.cmd("mksession! " .. last_session) end,
     last = function() vim.cmd("source " .. last_session) end,
+    search = function(dir)
+        local session_dir = dir or (vim.loop.os_homedir() .. "/.cache/nvim/sessions")
+        require("plugins.fzf.search").search({
+            vim_cmd = "source",
+            extension = "vim",
+            previewer = "bat",
+            dir = session_dir
+        })
+    end,
 }
+vim.cmd("command! -range -nargs=0 SessionSave call v:lua.Util.session.save()")
+vim.cmd("command! -range -nargs=0 SessionLast call v:lua.Util.session.last()")
+vim.cmd("command! -range -nargs=? SessionSearch call v:lua.Util.session.search(<f-args>)")
 
 Util.notes = {
     index = function()
-        local note_dir = vim.env.NOTE_DIR or (vim.env.HOME .. "/Documents/Notes")
+        local note_dir = vim.env.NOTE_DIR or (vim.loop.os_homedir() .. "/Documents/Notes")
         vim.cmd("edit " .. note_dir .. "/index.md")
     end,
     search = function(dir)
-        local note_dir = dir or vim.env.NOTE_DIR or (vim.env.HOME .. "/Documents/Notes")
+        local note_dir = dir or vim.env.NOTE_DIR or (vim.loop.os_homedir() .. "/Documents/Notes")
         if dir == "notes" then
-            note_dir = vim.env.NOTE_DIR or (vim.env.HOME .. "/Documents/Notes")
+            note_dir = vim.env.NOTE_DIR or (vim.loop.os_homedir() .. "/Documents/Notes")
         elseif dir == "school" then
-            note_dir = vim.env.SCHOOL_DIR or (vim.env.HOME .. "/Documents/School")
+            note_dir = vim.env.SCHOOL_DIR or (vim.loop.os_homedir() .. "/Documents/School")
         end
-        require("plugins.fzf.notes").notes({dir = note_dir})
+        require("plugins.fzf.search").search({
+            vim_cmd = "edit",
+            extension = "md",
+            previewer = "glow -s auto",
+            dir = note_dir
+        })
     end,
 }
 vim.cmd("command! -range -nargs=0 NoteIndex call v:lua.Util.notes.index()")

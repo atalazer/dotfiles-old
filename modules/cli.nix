@@ -31,8 +31,9 @@
     jq
     lf
     mdp
+    mutt-wizard
     neofetch
-    # neomutt
+    neomutt
     newsboat
     # neuron-notes
     pass

@@ -1,9 +1,11 @@
 #!/bin/sh
+# vim: ft=sh ts=4 sw=4:
 
-[ -f $HOME/.xprofile ] && . $HOME/.xprofile
+[ -f "$HOME/.xprofile" ] && . "$HOME/.xprofile"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
 
-USER_XRESOURCES=$HOME/.Xresources
-USER_XMODMAP=$HOME/.Xmodmap
+USER_XRESOURCES=$XDG_CONFIG_HOME/x11/Xresources
+USER_XMODMAP=$XDG_CONFIG_HOME/x11/Xmodmap
 SYS_XRESOURCES=/etc/X11/xinit/.Xresources
 SYS_XMODMAP=/etc/X11/xinit/.Xmodmap
 

@@ -1,0 +1,49 @@
+#compdef smug
+
+_smug_conf(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${XDG_CONFIG_HOME:-$HOME/.config}/smug"
+    _values -C "config" ${$(find -L "$prefix" \( -name .git -o -name .gitattributes \) \
+        -prune -o -type f -print 2>/dev/null \
+        | sed -e "s#${prefix}/##" -e "s#.yaml##" -e "s#.yml##" | sort):-""}
+}
+
+_smug () {
+    typeset -A opt_args
+    local ret=1
+	local cmd
+	if (( CURRENT > 2)); then
+		cmd=${words[2]}
+		curcontext="${curcontext%:*:*}:smug-$cmd"
+		(( CURRENT-- ))
+		shift words
+		# Run the completion for the subcommand
+		case "${cmd}" in
+            (edit) _smug_conf ;;
+            (start) _smug_conf ;;
+            (stop) _smug_conf ;;
+		esac
+	else
+		local -a subcommands
+		subcommands=(
+            "list:list available project configurations"
+            "edit:edit project configuration"
+            "new:new project configuration"
+            "start:start project session"
+            "stop:stop project session"
+            "print:session configuration to stdout"
+		)
+		_describe -t commands 'command' subcommands
+		_arguments : \
+            "--file[A custom path to a config file]:file:_files" \
+            "--windows[List of windows to start. If session exists, those windows will be attached to current session.]" \
+            "--attach[Force switch client for a session]" \
+            "--debug[Print all commands to ~/.config/smug/smug.log]:file:_files" \
+			"--help[Show help message]"
+	fi
+
+    return ret
+}
+
+_smug

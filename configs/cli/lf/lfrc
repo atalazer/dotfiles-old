@@ -11,8 +11,6 @@ set icons
 
 set ifs "\n"
 set scrolloff 10
-set period 1
-set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
 
 # Custom Functions
 cmd open ${{
@@ -115,17 +113,22 @@ map <enter> open
 map nf push :mkfile<space>
 map nd push :mkdir<space>
 
+# File Operations
 map r rename
 map R bulkrename
 map <c-r> reload
 map C clear
 map U unselect
-map o open_config
+
+# Navigations
 map gg top
 map G bottom
 
+# Find files
+map <c-f> $lf -remote "send $id select '$(fzf)'"
+map <c-b> $zi
+
 # Quick Change Directory
-map cd push :cd<space>
 map ~  cd ~
 map bc cd ~/.config
 map bd cd ~/.dotfiles
@@ -136,5 +139,3 @@ map bv cd ~/Videos
 map bp cd ~/Pictures
 map bm cd ~/Music
 
-# Find files
-map <c-f> $lf -remote "send $id select '$(fzf)'"

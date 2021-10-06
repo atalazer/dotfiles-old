@@ -1,12 +1,16 @@
-!! ==============
-!! Xcursor theme
-!! ==============
-Xcursor.theme:Bibata-Original-Ice
+! vim: ft=xdefaults:
+
+! ==============================================================================
+! Appearances
+! ==============================================================================
+
+! Xcursor theme
+! -------------
+Xcursor.theme:McMojave-Cursors
 Xcursor.size:24
 
-!! ==============
-!! Fonts Settings
-!! ==============
+! Fonts Settings
+! --------------
 Xft.antialias: 1
 Xft.rgba:      rgb
 Xft.lcdfilter: lcddefault
@@ -15,11 +19,7 @@ Xft.autohint:  1
 Xft.hintstyle: hintfull
 Xft.dpi:       96
 
-!! Apps
-#include "/home/atalariq/.Xresources.d/urxvt"
-#include "/home/atalariq/.Xresources.d/xterm"
+! Colors
+! --------------
+#include "/home/atalariq/.cache/wal/colors.Xresources"
 
-!! Colorscheme
-#include "/home/atalariq/.Xresources.d/color/wal"
-
-!vim:   ft=xdefaults

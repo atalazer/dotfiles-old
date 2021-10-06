@@ -12,11 +12,9 @@ find_note() {
         shift
     done
 
-    file="$( find "$dir" -iname '*.md' -exec basename -s .md {} \; |
+    file="$(fd . "$dir" -e md --type file --color never | sed -e "s#${dir}/##" -e "s#.md##" |
             fzf --bind 'J:preview-down,K:preview-up' --height 100% \
-                --preview "if file -i {}|grep -q binary; then file -b {};\
-                           else glow -s dark $dir/{}.md;\
-                           fi"
+                --preview "glow -s dark $dir/{}.md"
     )"
 
     if [ -n "$file" ]; then

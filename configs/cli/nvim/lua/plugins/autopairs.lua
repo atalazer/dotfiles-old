@@ -6,33 +6,33 @@ npairs.setup({
     pairs_map = {
         ["'"] = "'",
         ['"'] = '"',
+        ["`"] = "`",
         ["("] = ")",
         ["["] = "]",
         ["{"] = "}",
-        ["`"] = "`",
     },
-    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.%#%$%(%)] ]], "%s+", ""),
+    ignored_next_char = [[ [%w%.%,%'%"%#%$%%] ]],
     map_bs = false,
     check_line_pair = true,
     check_ts = true,
     enable_moveright = true,
     enable_afterquote = true,
-    enable_check_bracket_line = true,
+    enable_check_bracket_line = false,
     html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
     disable_filetype = { "TelescopePrompt", "vim" },
     fast_wrap = {
-        map = "<M-e>",
+        map = "<A-e>",
         chars = { "{", "[", "(", '"', "'" },
         pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-        end_key = "e",
-        keys = "qwasdf",
+        end_key = "q",
+        keys = "wasdfhjkl",
         check_comma = true,
         hightlight = "Search",
     },
 })
 
 -- Rule
--- ==========
+-- ------------------
 -- Endwise
 -- npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 
@@ -40,40 +40,21 @@ npairs.setup({
 npairs.add_rules({
     Rule(" ", " "):with_pair(function(opts)
         local pair = opts.line:sub(opts.col - 1, opts.col)
+        if vim.bo.filetype == "markdown" then
+            return vim.tbl_contains({ "()", "{}" }, pair)
+        end
         return vim.tbl_contains({ "()", "[]", "{}" }, pair)
     end),
-    Rule("( ", " )")
-        :with_pair(function()
-            return false
-        end)
-        :with_move(function(opts)
-            return opts.prev_char:match(".%)") ~= nil
-        end)
-        :use_key(")"),
-    Rule("{ ", " }")
-        :with_pair(function()
-            return false
-        end)
-        :with_move(function(opts)
-            return opts.prev_char:match(".%}") ~= nil
-        end)
-        :use_key("}"),
-    Rule("[ ", " ]")
-        :with_pair(function()
-            return false
-        end)
-        :with_move(function(opts)
-            return opts.prev_char:match(".%]") ~= nil
-        end)
-        :use_key("]"),
 })
 
+-- Mappings
+-- ------------------
 if pcall(require, "cmp") then
     require("nvim-autopairs.completion.cmp").setup({
         map_cr = true, --  map <CR> on insert mode
         map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
         auto_select = false, -- automatically select the first item
-        insert = false, -- use insert confirm behavior instead of replace
+        insert = true, -- use insert confirm behavior instead of replace
         map_char = { -- modifies the function or method delimiter by filetypes
             all = "(",
             tex = "{",

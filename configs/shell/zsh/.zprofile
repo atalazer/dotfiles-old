@@ -1,6 +1,7 @@
 #!/bin/sh
 
-[ -f $HOME/.profile ] && source $HOME/.profile
+[ -f $HOME/.profile ] && . $HOME/.profile
+[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile ] && . ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile
 
 ## automatically login to WM
 if [ -z $DISPLAY ] && [ $(tty) = /dev/tty2 ]; then

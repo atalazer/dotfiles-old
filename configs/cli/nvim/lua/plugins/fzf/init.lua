@@ -1,5 +1,5 @@
 local fzf_lua = require("fzf-lua")
-
+local search = require(... .. ".search")
 -- Setup
 -- ------------------------------
 fzf_lua.setup({
@@ -26,22 +26,6 @@ fzf_lua.setup({
             ["shift-up"] = "preview-page-up",
         },
     },
-    previewers = {
-        glow = {
-            cmd = "glow",
-            args = "--pager",
-        },
-        builtin = {
-            title = true,
-            scrollbar = true,
-            scrollchar = "█",
-            syntax = true,
-            syntax_limit_b = 1024 * 1024,
-            syntax_limit_l = 0,
-            hl_cursor = "Cursor",
-            hl_cursorline = "CursorLine",
-        },
-    },
     file_icon_colors = {
         ["sh"]    = "green",
         ["lua"]    = "blue",
@@ -55,9 +39,20 @@ nnoremap("<leader>fo", "<CMD>FzfLua oldfiles<CR>", { silent = true }, "File Hist
 nnoremap("<leader>ff", "<CMD>FzfLua oldfiles<CR>", { silent = true }, "File History")
 nnoremap("<leader>fg", "<CMD>FzfLua grep<CR>", { silent = true }, "Grep")
 nnoremap("<leader>fl", "<CMD>FzfLua live_grep<CR>", { silent = true }, "Live Grep")
-nnoremap("<leader>fd", "<CMD>FzfLua marks<CR>", { silent = true }, "Marks")
+nnoremap("<leader>fm", "<CMD>FzfLua marks<CR>", { silent = true }, "Marks")
 nnoremap("<leader>fb", "<CMD>FzfLua files<CR>", { silent = true }, "File Browser")
 nnoremap("<leader>fk", "<CMD>FzfLua keymaps<CR>", { silent = true }, "Keybindings")
 nnoremap("<leader>fc", "<CMD>FzfLua colorschemes<CR>", { silent = true }, "Colorscheme")
 nnoremap("<Leader>ft", "<CMD>FzfLua builtin<CR>", { silent = true }, "Built-Ins")
 nnoremap("<Leader>f?", "<CMD>FzfLua help_tags<CR>", { silent = true }, "Help Tags")
+
+nnoremap("<Leader>df", function()
+        search.search({
+            vim_cmd = "edit",
+            previewer = "bat --style=numbers --color=always",
+            extension = "*",
+            dir = string.format("%s/.dotfiles", vim.loop.os_homedir())
+        })
+    end
+)
+

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# vim: ft=sh ts=4 sw=4:
 
 # User Configuration
 RESTART_WM=${RESTART_WM:-"true"}
@@ -7,14 +8,14 @@ WM=${WM:-"awesome"}
 WALLPAPER_CHANGER=${WALLPAPER_CHANGER:-"feh --bg-fill "}
 
 # Config FIles
-GTK2_CONFIG="$HOME/.gtkrc-2.0"
-GTK3_CONFIG="$HOME/.config/gtk-3.0/settings.ini"
-XSETTINGSD_CONFIG="$HOME/.xsettingsd"
-XRESOURCES_CONFIG="$HOME/.Xresources"
+GTK2_CONFIG="${GTK2_RC_FILES:-$HOME/.gtkrc-2.0}"
+GTK3_CONFIG="${GTK3_RC_FILES:-$HOME/.config/gtk-3.0/settings.ini}"
+XSETTINGSD_CONFIG="${XSETTINGSD_FILES:-$HOME/.xsettingsd}"
+XRESOURCES_CONFIG="${XRESOURCES_FILES:-$HOME/.Xresources}"
 
 # State File
-DIR=${XDG_CONFIG_HOME:-$HOME/.config}/script
-FILE=$DIR/theme.conf
+DIR=${XDG_CACHE_HOME:-$HOME/.cache}/theme
+FILE=$DIR/default.conf
 
 # Colors
 WHITE="\e[97m"
@@ -49,7 +50,7 @@ fi
 if [ ! -f "$FILE" ]; then
     touch "$FILE" &&
         printf "%s" "\
-WAL_IS_DARK=true
+WAL_IS_DARK=false
 GTK_THEME=Adwaita
 ICON_THEME=Papirus
 CURSOR_THEME=Adwaita
@@ -147,8 +148,8 @@ GET() {
     while [ -n "$1" ]; do
         case "$1" in
             "-f") shift; FILE=$1 ;;
-            "-l") FILE=$HOME/.cache/theme/light.conf ;;
-            "-d") FILE=$HOME/.cache/theme/dark.conf ;;
+            "-l") FILE=$DIR/light.conf ;;
+            "-d") FILE=$DIR/dark.conf ;;
             all)
                 if command -v "bat" >/dev/null 2>&1; then
                     bat --paging=never "$FILE"
@@ -179,14 +180,14 @@ SET() {
     change() {
         QUERY=$1
         VAL=$2
-        sed -i 's_'"${QUERY}"'=.*_'"${QUERY}"'='"${VAL}"'_' "$FILE"
+        sed -i --follow-symlinks 's_'"${QUERY}"'=.*_'"${QUERY}"'='"${VAL}"'_' "$FILE"
     }
 
     while [ -n "$1" ]; do
         case "$1" in
             "-f") shift; FILE=$1 ;;
-            "-l") FILE=$HOME/.cache/theme/light.conf ;;
-            "-d") FILE=$HOME/.cache/theme/dark.conf ;;
+            "-l") FILE=$DIR/light.conf ;;
+            "-d") FILE=$DIR/dark.conf ;;
             -gtk)
                 shift
                 THEME="$1"
@@ -271,19 +272,19 @@ APPLY() {
     done
 
     # GTK Theme
-    sed -i 's_gtk-theme-name=.*_gtk-theme-name="'"$GTK_THEME"'"_' "$GTK2_CONFIG"
-    sed -i 's_gtk-theme-name=.*_gtk-theme-name='"$GTK_THEME"'_' "$GTK3_CONFIG"
-    sed -i 's_Net/ThemeName.*_Net/ThemeName "'"$GTK_THEME"'"_' "$XSETTINGSD_CONFIG"
+    sed -i --follow-symlinks 's_gtk-theme-name=.*_gtk-theme-name="'"$GTK_THEME"'"_' "$GTK2_CONFIG"
+    sed -i --follow-symlinks 's_gtk-theme-name=.*_gtk-theme-name='"$GTK_THEME"'_' "$GTK3_CONFIG"
+    sed -i --follow-symlinks 's_Net/ThemeName.*_Net/ThemeName "'"$GTK_THEME"'"_' "$XSETTINGSD_CONFIG"
 
     # Icon Theme
-    sed -i 's_Net/IconThemeName.*_Net/IconThemeName "'"$ICON_THEME"'"_' "$XSETTINGSD_CONFIG"
-    sed -i 's_gtk-icon-theme-name=.*_gtk-icon-theme-name="'"$ICON_THEME"'"_' "$GTK2_CONFIG"
-    sed -i 's_gtk-icon-theme-name=.*_gtk-icon-theme-name='"$ICON_THEME"'_' "$GTK3_CONFIG"
+    sed -i --follow-symlinks 's_Net/IconThemeName.*_Net/IconThemeName "'"$ICON_THEME"'"_' "$XSETTINGSD_CONFIG"
+    sed -i --follow-symlinks 's_gtk-icon-theme-name=.*_gtk-icon-theme-name="'"$ICON_THEME"'"_' "$GTK2_CONFIG"
+    sed -i --follow-symlinks 's_gtk-icon-theme-name=.*_gtk-icon-theme-name='"$ICON_THEME"'_' "$GTK3_CONFIG"
 
     # Cursor themes
-    sed -i 's_Xcursor.theme:.*_Xcursor.theme:'"$CURSOR_THEME"'_' "$XRESOURCES_CONFIG"
-    sed -i 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name="'"$CURSOR_THEME"'"_' "$GTK2_CONFIG"
-    sed -i 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name='"$CURSOR_THEME"'_' "$GTK3_CONFIG"
+    sed -i --follow-symlinks 's_Xcursor.theme:.*_Xcursor.theme:'"$CURSOR_THEME"'_' "$XRESOURCES_CONFIG"
+    sed -i --follow-symlinks 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name="'"$CURSOR_THEME"'"_' "$GTK2_CONFIG"
+    sed -i --follow-symlinks 's_gtk-cursor-theme-name=.*_gtk-cursor-theme-name='"$CURSOR_THEME"'_' "$GTK3_CONFIG"
 
     pt warn "GTK Theme:     $GTK_THEME"
     pt warn "Icon Theme:    $ICON_THEME"
@@ -292,7 +293,7 @@ APPLY() {
     pt warn "Use Dark wal:  $WAL_IS_DARK"
     pt warn "Wallpaper:     $WALLPAPER"
 
-    if [ "$WAL_IS_DARK" = true ]; then
+    if [ "$WAL_IS_DARK" = true ] && [ -n "$WAL_THEME" ]; then
         wal --theme "$WAL_THEME" > /dev/null 2>&1
     else
         wal -l --theme "$WAL_THEME" > /dev/null 2>&1
@@ -380,7 +381,7 @@ case "$1" in
     "-L" | "--light") LIGHT ;;
     "-D" | "--dark") DARK ;;
     "-l" | "--list") LIST ;;
-    "-e" | "--edit") shift; ${EDITOR:-vim} "${1:-$FILE}" ;;
+    "-e" | "--edit") shift; ${EDITOR:-vim} "$DIR/${1:-default}.conf" ;;
     "-h" | "--help") usage ;;
     *) pt error "$1 is Invalid" && exit 1 ;;
 esac

@@ -403,7 +403,6 @@ return packer.startup({
         -- ------------------------
         {
             "winston0410/commented.nvim",
-            keys = "gc",
             config = function()
                 require("commented").setup({
                     comment_padding = " ",
@@ -668,9 +667,9 @@ return packer.startup({
             "max397574/better-escape.nvim",
             config = function()
                 require("better_escape").setup({
-                    mapping = { "jk", "jj" },
+                    mapping = { "jj" },
                     timeout = vim.o.timeoutlen,
-                    keys = "<Esc>",
+                    keys = "<Esc><Esc>",
                 })
             end,
         },

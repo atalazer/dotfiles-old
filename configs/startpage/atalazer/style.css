@@ -8,7 +8,7 @@
 /*   --fontFamily: "Roboto Mono", monospace; */
 /* } */
 
-@import url("../../.cache/wal/startpage.css");
+@import url("../../../.cache/wal/startpage.css");
 
 body {
     background-color: var(--bg);

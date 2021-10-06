@@ -1,34 +1,39 @@
 [[snippets]]
-  description = "Lihat Jadwal Sekolah"
-  command = "source ~/.config/shell/functions/schedule && SCHEDULE=~/Documents/School/jadwal.md schedule --show"
+  description = "espanso: Restart"
+  command = "espanso restart"
   output = ""
 
 [[snippets]]
-  description = "Rofi Calc"
-  command = "rofi -show calc -modi calc -no-show-match -no-sort"
-  output = ""
-
-[[snippets]]
-  description = "Pick Markdown File, then Open It With Glow."
-  command = "glow \"$(fzf --reverse --preview 'bat --style=numbers --color=always {}')\""
-  output = ""
-
-[[snippets]]
-  description = "Reload GPG Agent"
-  command = "gpg-connect-agent reloadagent /bye"
-  output = ""
-
-[[snippets]]
-  description = "Glow as FZF Preview"
+  description = "fzf+glow: Glow as FZF Preview"
   command = "fzf --reverse --height 100% --preview \"glow -s dark {}\""
   output = ""
 
 [[snippets]]
-  description = "Pandoc: Convert md to pdf"
+  description = "fzf+glow: Pick Markdown File, then Open It With Glow."
+  command = "glow \"$(fzf --reverse --preview 'bat --style=numbers --color=always {}')\""
+  output = ""
+
+[[snippets]]
+  description = "gpg: Reload GPG Agent"
+  command = "gpg-connect-agent reloadagent /bye"
+  output = ""
+
+[[snippets]]
+  description = "pandoc: Convert md to pdf"
   command = "pandoc --pdf-engine=pdflatex FILE.md -o FILE.pdf"
   output = ""
 
 [[snippets]]
-  description = "Tmux Session For School"
+  description = "rofi: Calc"
+  command = "rofi -show calc -modi calc -no-show-match -no-sort"
+  output = ""
+
+[[snippets]]
+  description = "script: School Schedule"
+  command = "source ~/.config/shell/functions/schedule && SCHEDULE=~/Documents/School/jadwal.md schedule --show"
+  output = ""
+
+[[snippets]]
+  description = "smug+tmux: Start Session For School"
   command = "smug start school"
   output = ""

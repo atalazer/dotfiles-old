@@ -1,47 +1,71 @@
 #!/bin/sh
+# vim: ft=sh ts=4 sw=4:
 
-[ -f "$HOME/.user" ] && source "$HOME/.user"
+# =========================================== Locale
+CHARSET=UTF-8; LANG=en_US.UTF-8
+export MM_CHARSET=$CHARSET; export LANG=$LANG; export LC_ALL=$LANG
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
-# XDG
+# ========================================== Directory
+# ------- XDG
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-# Locale
-CHARSET=UTF-8; LANG=en_US.UTF-8
-export MM_CHARSET=$CHARSET; export LANG=$LANG; export LC_ALL=$LANG
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+[ -f "$XDG_CONFIG_HOME/.user" ] && . "$XDG_CONFIG_HOME/.user"
+[ -f "$XDG_CONFIG_HOME/.user.keys" ] && . "$XDG_CONFIG_HOME/.user.keys"
+[ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
-# CLI
+# ------- Clean-up ~/
+export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+export GOBIN="$GOPATH/bin"
+export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+export ICEAUTHORITY="${XDG_CACHE_HOME}/ICEauthority"
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
+export LESSHISTFILE="${XDG_CONFIG_HOME:-$HOME/.config}/less/history"
+export LESSKEY="${XDG_CONFIG_HOME:-$HOME/.config}/less/keys"
+export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export TERMINFO="${XDG_DATA_HOME:-$HOME/.local/share}/terminfo"
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
+export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+
+# ========================================== Apss
+# -------- CLI
 export EDITOR="nvim"
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
 export PAGER="less -R"
 export BAT_PAGER="$PAGER"
 export DELTA_PAGER="$PAGER"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-## Apps
+## ------ Command
 export TERM_CMD="kitty"
 export BROWSER="qutebrowser"
 export FILEMAN="thunar"
 export TRASH_CMD="gio"
 
-# Command
+# ------- Command
 export PERMISSION="sudo"
 export SHUTDOWN_CMD="poweroff"
 export REBOOT_CMD="reboot"
 export SUSPEND_CMD="systemctl suspend"
 export LOCK_CMD="lock"
 
-# clipmenu
+# ------- clipmenu
 export CM_DIR=/tmp/clipmenu
 export CM_HISTLENGTH=20
 export CM_LAUNCHER="rofi"
 export CM_SELECTIONS="clipboard"
 
-# fcitx
+# ------ fcitx
 export GLFW_IM_MODULE="ibus"
 export GTK_IM_MODULE="fcitx"
 export QT_IM_MODULE="fcitx"
@@ -49,34 +73,29 @@ export XMODIFIERS="@im=fcitx"
 export SDL_IM_MODULE="fcitx"
 export IBUS_USE_PORTAL=1
 
-# Themes
+# =============================== Themes
 export XDG_CURRENT_DESKTOP=gnome
 export DESKTOP_SESSION=gnome
+export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+export GTK3_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini"
+export XSETTINGSD_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xsettingsd"
+export XRESOURCES_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources"
 
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-
-# QT
 export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_SCALE_FACTOR=1
 export QT_SCREEN_SCALE_FACTORS=1
 # export QT_FONT_DPI=96
 
-# Java
+# ================================ Code
+# ----- Java
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# Golang
+# ----- Golang
 export CC="gcc"
-export GOPATH="$HOME/.local/go"
-export GOBIN="$HOME/.local/go/bin"
 
-export TERMINFO=$HOME/.terminfo
-export LESSHISTFILE="${XDG_CONFIG_HOME}/less/history"
-export LESSKEY="${XDG_CONFIG_HOME}/less/keys"
-export ICEAUTHORITY="${XDG_CACHE_HOME}/ICEauthority"
-
-### $PATH {{{
+# ================================ PATH {{{
 TO_PATH() {
     if [ -d "$1" ]; then
         if [ -z "$(printf "%s" "$PATH" | grep "$1")" ]; then
@@ -85,20 +104,18 @@ TO_PATH() {
     fi
 }
 
-TO_PATH "${APP_DIR:-$HOME/Applications}/bin"
-TO_PATH "${BIN_DIR:-$HOME/.local/bin}"
+TO_PATH "$HOME/Applications/bin"
+TO_PATH "$HOME/.local/bin"
 TO_PATH "$HOME/.local/script"
-TO_PATH "$HOME/.local/go/bin"
 TO_PATH "$HOME/.emacs.d/bin"
 TO_PATH "$HOME/.choosenim/toolchains/nim-1.4.8/bin"
 TO_PATH "$HOME/.nimble/bin"
+TO_PATH "$GOBIN"
 
 # }}}
 
-# include Mycroft commands
-[ -f "$HOME/.profile_mycroft" ] && source "$HOME/.profile_mycroft"
-
+# ============================= Others
 # added by Nix installer
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
-    source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi

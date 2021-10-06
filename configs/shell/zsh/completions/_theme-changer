@@ -3,35 +3,39 @@
 _edit_conf(){
     local IFS=$'\n'
     local prefix
-    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.cache/theme"
-    _values -C "conf" ${$(find $prefix -type f):-""}
+    zstyle -s ":completion:${curcontext}:" prefix prefix || \
+        prefix="${THEME_CONFIG_DIR:-{XDG_CACHE_DIR:-$HOME/.cache}/theme}"
+    _values -C "conf" ${$(find -L "$prefix" \( -name .git -o -name .gitattributes \) \
+        -prune -o -type f -print 2>/dev/null \
+        | sed -e "s#${prefix}/##" -e "s#.conf##" | sort):-""}
 }
 
 _icon(){
     local IFS=$'\n'
     local prefix
-    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.icons"
-    _values -C "icon" ${$(/bin/ls $prefix | /bin/tr "" "\n"):-""}
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${ICONS_DIR:-$HOME/.icons}"
+    _values -C "icon" ${$(ls $prefix | tr "" "\n"):-""}
 }
 
 _wallpaper(){
     local IFS=$'\n'
     local prefix
-    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.wallpaper"
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${WALLPAPER_DIR:-$HOME/.wallpaper}"
     _values -C "wallpaper" ${$(find $prefix -type f):-""}
 }
 
 _gtk(){
     local IFS=$'\n'
     local prefix
-    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.themes"
-    _values -C "gtk" ${$(/bin/ls $prefix | /bin/tr "" "\n"):-""}
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${THEMES_DIR:-$HOME/.themes}"
+    _values -C "gtk" ${$(ls $prefix | tr "" "\n"):-""}
 }
 
 _wal(){
     local IFS=$'\n'
     local prefix
-    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="$HOME/.config/wal/colorschemes"
+    zstyle -s ":completion:${curcontext}:" prefix prefix || \
+        prefix="${WAL_DIR:-${XDG_CONFIG_DIR:-HOME/.config}/wal/colorschemes}"
     _values -C "wal" ${$(find "$prefix" -type f):-""}
 }
 

@@ -3,13 +3,13 @@ ZSH_INIT_TIME=$(date +%s%N)
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export ZDIR=$HOME/.zsh
-fpath=($HOME/.zsh/completions $fpath)
+GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); NORMAL=$(tput sgr0)
+fpath=($ZDOTDIR/completions $fpath)
 
 # @function: source file if exist.
 so() {
     FILE=$1
-    [ -f "$FILE" ] && source $FILE
+    [ -f "$FILE" ] && . $FILE
 }
 
 # }}}
@@ -17,11 +17,24 @@ so() {
 # ===== Plugins ===== {{{
 
 setopt promptsubst
-so $ZDIR/zinit.zsh
+so $ZDOTDIR/zinit.zsh
 
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-# unset ZSH_AUTOSUGGEST_USE_ASYNC
+# ---------------- You Should Use
+export YSU_HARDCORE=0
+export YSU_MESSAGE_POSITION="after"
+export YSU_MODE=BESTMATCH
+export YSU_MESSAGE_FORMAT="Instead use ${YELLOW}'%command'${NORMAL} use ${GREEN}'%alias'${NORMAL}"
+
+# ---------------- Augosuggestion
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+unset ZSH_AUTOSUGGEST_USE_ASYNC
+
+# --------------- vi-mode
+export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+export ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BEAM
+export ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+export ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_UNDERLINE
 
 # }}}
 
@@ -40,14 +53,11 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 
 # Binkeys
-bindkey -v # v = vim || e = emacs
+ bindkey -e # v = vim || e = emacs
 KEYTIMEOUT=1
 
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
 # Zsh Modules
-MODULE_DIR=$ZDIR/modules
+MODULE_DIR=$ZDOTDIR/modules
 if [ -d $MODULE_DIR ]; then
     for f in $MODULE_DIR/?*; do
         so $f

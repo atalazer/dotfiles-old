@@ -36,28 +36,19 @@ autoload -Uz _zinit
 zinit wait"0" lucid light-mode for \
   atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
-  zsh-users/zsh-history-substring-search \
-  zdharma/fast-syntax-highlighting
+  zdharma/fast-syntax-highlighting \
 
 # ============================================= #
 # Completions                                   #
 # ============================================= #
-zinit wait"0" lucid light-mode for \
-  spwhitt/nix-zsh-completions \
-  ninrod/pass-zsh-completion \
-  blockf atpull'zinit creinstall -q .' atload"zicompinit; zicdreplay;" \
-    zsh-users/zsh-completions
+zinit ice wait"0" lucid \
+  blockf atpull'zinit creinstall -q .' atload"zicompinit; zicdreplay;"
+zinit light zsh-users/zsh-completions
 
-# fzf-tab
-# ------------------
-# zinit ice wait"0" lucid
-# zinit light Aloxaf/fzf-tab
-# zstyle ':completion:complete:*:options' sort false
-# zstyle ':fzf-tab:*' fzf-command fzf
-# zstyle ':fzf-tab:*' switch-group ',' '.'
-# zstyle ':fzf-tab:*' continuous-trigger '/'
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+zinit wait"0" lucid light-mode for \
+  atclone"./zplug.zsh" atload"zpcdreplay" \
+    g-plane/zsh-yarn-autocompletions \
+  spwhitt/nix-zsh-completions \
 
 # Custom Source
 # ------------------
@@ -70,16 +61,27 @@ zic https://github.com/knqyf263/pet/blob/master/misc/completions/zsh/_pet
 zic https://github.com/dandavison/delta/blob/master/etc/completion/completion.zsh
 zic https://github.com/ajeetdsouza/zoxide/blob/main/contrib/completions/_zoxide
 
+# fzf-tab
+# ------------------
+# zinit ice wait"0" lucid
+# zinit light Aloxaf/fzf-tab
+# zstyle ':completion:complete:*:options' sort false
+# zstyle ':fzf-tab:*' fzf-command fzf
+# zstyle ':fzf-tab:*' switch-group ',' '.'
+# zstyle ':fzf-tab:*' continuous-trigger '/'
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+
 # ============================================= #
 # Be More Productive                            #
 # ============================================= #
 zinit wait"1" lucid light-mode for \
   hlissner/zsh-autopair \
-  MichaelAquilina/zsh-you-should-use
+  MichaelAquilina/zsh-you-should-use \
 
 zinit wait"2" lucid light-mode for \
   wfxr/forgit \
-  kazhala/dotbare
+  kazhala/dotbare \
 
 # ============================================= #
 # Extends Your Shell                            #

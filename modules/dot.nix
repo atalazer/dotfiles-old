@@ -61,20 +61,18 @@ in
     ".config/shell/aliases".source = link "configs/shell/shell/aliases";
     ".config/shell/configs".source = link "configs/shell/shell/configs";
     ".config/shell/functions".source = link "configs/shell/shell/functions";
-    ".config/starship.toml".source =
-      link "configs/shell/starship/starship.toml";
+    ".config/starship.toml".source = link "configs/shell/starship/starship.toml";
+    ".config/shell/inputrc".source = link "configs/shell/misc/inputrc";
+    ".config/shell/profile".source = link "configs/shell/misc/profile";
+    ".config/shell/pam_environment".source = link "configs/shell/misc/pam_environment";
+    ".pam_environment".source = link "configs/shell/misc/pam_environment";
+    ".config/shell/user".source = link "configs/shell/misc/user";
+    ".config/shell/user.private".source = link "configs/shell/misc/user.private";
     ".config/fish".source = link "configs/shell/fish";
     ".config/fsh".source = link "configs/shell/fsh";
-    ".zsh".source = link "configs/shell/zsh";
-    ".zshrc".source = link "configs/shell/zsh/zshrc";
-    ".zshenv".source = link "configs/shell/zsh/zshenv";
-    ".zprofile".source = link "configs/shell/zsh/zprofile";
-    ".bashrc".source = link "configs/shell/misc/bashrc";
-    ".inputrc".source = link "configs/shell/misc/inputrc";
-    ".profile".source = link "configs/shell/misc/profile";
-    ".pam_environment".source = link "configs/shell/misc/pam_environment";
-    ".user".source = link "configs/shell/misc/user";
-    ".user.private".source = link "configs/shell/misc/user.private";
+    ".config/shell/bashrc".source = link "configs/shell/misc/bashrc";
+    ".config/zsh".source = link "configs/shell/zsh";
+    ".zprofile".source = link "configs/shell/zsh/.zprofile";
 
     ### User Script
     # ".local/bin".source = link "configs/bin";
@@ -87,17 +85,18 @@ in
     ".config/qt5ct".source = link "configs/theme/qt5ct";
     ".config/gtk-2.0".source = link "configs/theme/gtk-2.0";
     ".config/gtk-3.0".source = link "configs/theme/gtk-3.0";
-    ".gtkrc-2.0".source = link "configs/theme/gtkrc-2.0";
 
     # X Stuff
     ".xprofile".source = link "configs/x11/xprofile";
-    ".xinitrc".source = link "configs/x11/xinitrc";
     ".xserverrc".source = link "configs/x11/xserverrc";
-    ".Xmodmap".source = link "configs/x11/Xmodmap";
-    ".Xdefaults".source = link "configs/x11/Xdefaults";
-    ".Xresources".source = link "configs/x11/Xresources";
-    ".Xresources.d".source = link "configs/x11/Xresources.d";
-    ".xsettingsd".source = link "configs/x11/xsettingsd";
+    ".xinitrc".source = link "configs/x11/xinitrc";
+    ".config/x11/xprofile".source = link "configs/x11/xprofile";
+    ".config/x11/xserverrc".source = link "configs/x11/xserverrc";
+    ".config/x11/xinitrc".source = link "configs/x11/xinitrc";
+    ".config/x11/xsettingsd".source = link "configs/x11/xsettingsd";
+    ".config/x11/Xmodmap".source = link "configs/x11/Xmodmap";
+    ".config/x11/Xresources".source = link "configs/x11/Xresources";
+    ".config/x11/Xdefaults".source = link "configs/x11/Xresources";
 
     ### Archlinux Stuff
     ".config/pacman".source = link "configs/archlinux/pacman";
@@ -108,17 +107,15 @@ in
     ".config/nixpkgs".source = link "configs/nix/nixpkgs";
 
     ### Others
-    # ".wallpaper".soure = link "configs/wallpaper";
-    ".startpage".source = link "configs/startpage";
+    # ".local/wallpaper".soure = link "configs/wallpaper";
+    ".local/startpage".source = link "configs/startpage";
 
     ".config/user-dirs.dirs".source = link "configs/misc/user-dirs.dirs";
-    ".config/user-dirs.locale".source =
-      link "configs/misc/user-dirs.locale";
+    ".config/user-dirs.locale".source = link "configs/misc/user-dirs.locale";
     ".config/mimeapps.list".source = link "configs/misc/mimeapps.list";
 
     ".config/screenkey.json".source = link "configs/misc/screenkey.json";
-    ".config/pavucontrol.ini".source =
-      link "configs/misc/pavucontrol.ini";
+    ".config/pavucontrol.ini".source = link "configs/misc/pavucontrol.ini";
 
   };
 }

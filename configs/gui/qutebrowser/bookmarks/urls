@@ -41,3 +41,8 @@ https://github.com/Neelfrost/slideshare-dl Neelfrost/slideshare-dl: Simple CLI s
 https://github.com/ibhagwan/fzf-lua ibhagwan/fzf-lua: Improved fzf.vim written in lua
 https://github.com/vijaymarupudi/nvim-fzf vijaymarupudi/nvim-fzf: A Lua API for using fzf in neovim.
 https://github.com/nvim-telescope/telescope.nvim/blob/master/developers.md telescope.nvim/developers.md at master · nvim-telescope/telescope.nvim
+https://github.com/monopole/mdrip monopole/mdrip: turns markdown into tested tutorials
+https://wiki.bash-hackers.org/scripting/terminalcodes Terminal codes (ANSI/VT100) introduction [Bash Hackers Wiki]
+https://github.com/jeffreytse/zsh-vi-mode jeffreytse/zsh-vi-mode: 💻 A better and friendly vi(vim) mode plugin for ZSH.
+https://github.com/chubin/cheat.sh chubin/cheat.sh: the only cheat sheet you need
+https://github.com/windwp/nvim-autopairs windwp/nvim-autopairs: autopairs for neovim written by lua

@@ -27,8 +27,13 @@
     ],
     "description": "WARNING reminder"
   },
+  "vimmodeline": {
+    "prefix": ["vim", "modeline"],
+    "body": "# vim: ft=sh ts=4 sw=4:",
+    "description": "Add vim modeline"
+  },
   "bash": {
-    "prefix": ["bash", "#!", "shebang"],
+    "prefix": ["#!", "shebang"],
     "body": "#!/usr/bin/env bash",
     "description": "Add shebang for shell script"
   }

@@ -1,6 +1,5 @@
 #!/bin/sh
-
-[ -f "$HOME/.user.keys" ] && source "$HOME/.user.keys"
+# vim: ft=sh ts=4 sw=4:
 
 # Dirs
 export APP_DIR="$HOME/Applications"
@@ -13,6 +12,9 @@ export REPO_DIR="$HOME/Documents/Programming/Repo"
 
 export BLOG="$HOME/Documents/Blog"
 export DOTS="$HOME/.dotfiles"
+
+export STARTPAGE_DIR="$HOME/.local/startpage"
+export WALLPAPER_DIR="$HOME/.local/wallpaper"
 
 # Misc
 export WAL_BACKEND=colorthief       # wal colorthief
