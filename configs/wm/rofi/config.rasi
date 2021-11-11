@@ -1,7 +1,7 @@
 configuration {
     font:                      "Inter Medium 11";
     show-icons:                true;
-    // icon-theme:                "Papirus";
+    icon-theme:             "Papirus";
     cycle:                     true;
     hide-scrollbar:            true;
     scroll-method:             1;
@@ -24,5 +24,10 @@ configuration {
     padding:                   3;
     line-margin:               2;
     line-padding:              1;
+
+    kb-remove-word-back: "Control+Alt+h,Control+BackSpace,Alt+BackSpace";
+    kb-row-up: "Up,ISO_Left_Tab,Control+p,Alt-k";
+    kb-row-down: "Down,Control+n,Alt-j";
+
 }
 @import "~/.cache/wal/colors-rofi"

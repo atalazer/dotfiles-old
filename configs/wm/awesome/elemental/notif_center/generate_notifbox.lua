@@ -425,7 +425,10 @@ naughty.connect_signal("request::display", function(n)
 
     -- Throw data from naughty to notifbox_layout
     -- Generates notifbox
-    notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, n.app_name, notifbox_color))
+    local name = n.app_name
+    if not (name:match("volume") or name:match("brightness") or name:match("battery")) then
+        notifbox_layout:insert(1, notifbox_box(n, appicon, n.title, n.message, name, notifbox_color))
+    end
 end)
 
 return notifbox_layout

@@ -4,10 +4,10 @@ _edit_conf(){
     local IFS=$'\n'
     local prefix
     zstyle -s ":completion:${curcontext}:" prefix prefix || \
-        prefix="${THEME_CONFIG_DIR:-{XDG_CACHE_DIR:-$HOME/.cache}/theme}"
+        prefix="${THEME_CONFIG_DIR:-${XDG_CACHE_DIR:-$HOME/.cache}/theme}"
     _values -C "conf" ${$(find -L "$prefix" \( -name .git -o -name .gitattributes \) \
         -prune -o -type f -print 2>/dev/null \
-        | sed -e "s#${prefix}/##" -e "s#.conf##" | sort):-""}
+        | sed -e "s#$(realpath $prefix)/##" -e "s#.conf##" | sort):-""}
 }
 
 _icon(){
@@ -34,9 +34,10 @@ _gtk(){
 _wal(){
     local IFS=$'\n'
     local prefix
-    zstyle -s ":completion:${curcontext}:" prefix prefix || \
-        prefix="${WAL_DIR:-${XDG_CONFIG_DIR:-HOME/.config}/wal/colorschemes}"
-    _values -C "wal" ${$(find "$prefix" -type f):-""}
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${XDG_CONFIG_DIR:-$HOME/.config}/wal/colorschemes"
+    _values -C "wal" ${$(find -L "$prefix" \( -name .git -o -name .gitattributes \) \
+        -prune -o -type f -print 2>/dev/null \
+        | sed -e "s#$prefix/##" -e "s#.json##" | sort):-""}
 }
 
 _theme-changer () {

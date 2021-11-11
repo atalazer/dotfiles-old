@@ -23,6 +23,8 @@ local exec_confirm = function(text, command)
     gears.timer.delayed_call(function()
         exit_screen_hide()
     end)
+
+    -- Confirmation Prompt
     awful.prompt.run({
         prompt = text .. " Confirm[y/N]? ",
         textbox = awful.screen.focused().promptbox.widget,
@@ -33,6 +35,19 @@ local exec_confirm = function(text, command)
             end
         end,
     })
+
+    -- -- Use rofi to confirm
+    -- awful.spawn(
+    --     string.format([[
+    --         prompt -q "    %s?" -y "echo 'yes' > /tmp/awesomewm-confirm && cat /tmp/awesomewm-confirm"
+    --     ]], text),
+    --     function(stdout)
+    --         if stdout:match("yes") then
+    --             command()
+    --         end
+    --     end
+    -- )
+
 end
 
 local poweroff_command = function()
@@ -61,6 +76,29 @@ local lock_command = function()
         lock_screen_show()
     end)
 end
+
+local action = wibox.widget({
+    text = " ",
+    font = beautiful.widget_font_name .. "20",
+    widget = wibox.widget.textbox,
+})
+
+local phrase_widget = wibox.widget({
+    font = "icomoon 40",
+    align = "center",
+    widget = wibox.widget.textbox,
+})
+local phrases = {
+    "Goodbye!","I'm Off!", "Peace Out!",            -- English
+    "Farvel!",                                      -- Danish
+    "Au Revoir!",                                   -- French
+    "Auf Wiedersehen!",                             -- German
+    "Selamat Tinggal!",                             -- Indonesian
+    "Arrivederci!", "A Presto!",                    -- Italian
+    "Sayōnara!", "さよなら!", "サヨナラ!",          -- Japanese
+    "Annyeong!",                                    -- Korean
+    "Adios!"                                        -- Spanish
+}
 
 -- Helper function that generates the clickable buttons
 local create_button = function(symbol, hover_color, text, command)
@@ -105,6 +143,16 @@ local create_button = function(symbol, hover_color, text, command)
         button.border_color = button_bg
     end)
 
+    -- Set Action text
+    button:connect_signal("mouse::enter", function()
+        action:set_markup(string.format(
+            '<span color="%s">%s (%s)</span>', hover_color, text, text:sub(1,1)
+        ))
+    end)
+    button:connect_signal("mouse::leave", function()
+        action:set_markup("<span> </span>")
+    end)
+
     -- Use helper function to change the cursor on hover
     helpers.add_hover_cursor(button, "hand1")
 
@@ -139,7 +187,7 @@ local keybinds = {
     ["p"] = poweroff_command,
     ["r"] = reboot_command,
     ["s"] = suspend_command,
-    ["l"] = lock_command
+    ["l"] = lock_command,
 }
 
 function exit_screen_show()
@@ -155,6 +203,14 @@ function exit_screen_show()
             keybinds[key]()
         end
     end)
+
+    -- Show random phrases
+    if #phrases > 0 then
+        phrase_widget:set_markup(
+            '<span color="' .. x.foreground .. '">' .. phrases[math.random(#phrases)] .. "</span>"
+        )
+    end
+
     exit_screen.visible = true
 end
 
@@ -173,23 +229,51 @@ exit_screen:buttons(gears.table.join(
     end)
 ))
 
--- Item placement
+-- -- Item placement
+-- exit_screen:setup({
+--     phrase_widget,
+--     {
+--         nil,
+--         {
+--             poweroff,
+--             reboot,
+--             suspend,
+--             exit,
+--             lock,
+--             spacing = dpi(50),
+--             layout = wibox.layout.fixed.horizontal,
+--         },
+--         expand = "none",
+--         layout = wibox.layout.align.horizontal,
+--     },
+--     expand = "none",
+--     layout = wibox.layout.align.vertical,
+-- })
+
 exit_screen:setup({
-    nil,
     {
-        nil,
+        phrase_widget,
         {
-            poweroff,
-            reboot,
-            suspend,
-            exit,
-            lock,
-            spacing = dpi(50),
-            layout = wibox.layout.fixed.horizontal,
+            {
+                poweroff,
+                reboot,
+                suspend,
+                exit,
+                lock,
+                spacing = dpi(50),
+                layout = wibox.layout.fixed.horizontal,
+            },
+            valigh = "center",
+            layout = wibox.container.place,
         },
-        expand = "none",
-        layout = wibox.layout.align.horizontal,
+        {
+            action,
+            haligh = "center",
+            layout = wibox.container.place,
+        },
+        spacing = dpi(16),
+        layout = wibox.layout.fixed.vertical,
     },
-    expand = "none",
-    layout = wibox.layout.align.vertical,
+    valigh = "center",
+    layout = wibox.container.place,
 })

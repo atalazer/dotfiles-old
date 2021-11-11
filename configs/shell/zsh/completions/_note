@@ -1,0 +1,44 @@
+#compdef note
+
+_get_note_file(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${NOTE_DIR:-$HOME/Documents/Notes}"
+    _values -C "notes" ${$(find -L "$prefix" \( -name .git -o -name .gitattributes -o -name mimeapps.list \) \
+        -prune -o -type f -print 2>/dev/null \
+        | sed -e "s#${prefix}/##" -e "s#.md##" | sort):-""}
+}
+
+_note () {
+    typeset -A opt_args
+    local ret=1
+	local cmd
+	if (( CURRENT > 2)); then
+		cmd=${words[2]}
+		curcontext="${curcontext%:*:*}:note-$cmd"
+		(( CURRENT-- ))
+		shift words
+		# Run the completion for the subcommand
+		case "${cmd}" in
+            (edit) _get_note_file ;;
+		esac
+	else
+		local -a subcommands
+		subcommands=(
+            "edit:edit note"
+            "find:find note"
+            "new:create new note"
+            "delete:delete a note"
+            "sync:sync notes"
+		)
+		_describe -t commands 'command' subcommands
+		_arguments : \
+            "--dir[Specify notes directory]:directory:_directories" \
+			"--version[Show version]" \
+			"--help[Show help message]"
+	fi
+
+    return ret
+}
+
+_note

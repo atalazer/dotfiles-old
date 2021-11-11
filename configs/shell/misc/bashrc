@@ -1,3 +1,4 @@
+#!/bin/bash
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -12,8 +13,8 @@ eval "$(starship init bash)"
 eval "$(zoxide init bash)"
 
 function Source(){
-    [ -f $1 ] && source $1 
+    [ -f "$1" ] && source "$1"
 }
 
-Source ${HOME}/.aliases
+Source "${HOME}/.aliases"
 

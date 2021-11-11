@@ -29,9 +29,12 @@ matches:
     replace: "atalazer"
     propagate_case: true
 
-  - trigger: ":email"
+  - triggers: [":email1", ":mail1"]
     replace: "baraboyolali@gmail.com"
-
+  
+  - triggers: [":email2",":mail2"]
+    replace: "atalariq26@gmail.com"
+  
   # Dates
   - trigger: ":date"
     replace: "{{mydate}}"

@@ -2,15 +2,10 @@ session: dotfiles
 root: ~/.dotfiles
 
 windows:
-- name: Shell
-  commands: 
-    - clear
-- name: Code
+- name: Main
   commands: 
     - clear
 - name: Files
   commands: 
     - lf
-- name: Git
-  commands: 
     - lazygit

@@ -1,25 +1,16 @@
 local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
-local remap = vim.api.nvim_set_keymap
 
 npairs.setup({
-    pairs_map = {
-        ["'"] = "'",
-        ['"'] = '"',
-        ["`"] = "`",
-        ["("] = ")",
-        ["["] = "]",
-        ["{"] = "}",
-    },
-    ignored_next_char = [[ [%w%.%,%'%"%#%$%%] ]],
-    map_bs = false,
     check_line_pair = true,
     check_ts = true,
-    enable_moveright = true,
-    enable_afterquote = true,
-    enable_check_bracket_line = false,
-    html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
     disable_filetype = { "TelescopePrompt", "vim" },
+    enable_afterquote = true,
+    enable_check_bracket_line = true,
+    enable_moveright = true,
+    html_break_line_filetype = { "html", "vue", "typescriptreact", "svelte", "javascriptreact" },
+    ignored_next_char = string.gsub([[ [%w%.%,%'%"%#%$%%] ]], "%s+", ""),
+    map_bs = false,
     fast_wrap = {
         map = "<A-e>",
         chars = { "{", "[", "(", '"', "'" },
@@ -28,6 +19,14 @@ npairs.setup({
         keys = "wasdfhjkl",
         check_comma = true,
         hightlight = "Search",
+    },
+    pairs_map = {
+        ["'"] = "'",
+        ['"'] = '"',
+        ["`"] = "`",
+        ["("] = ")",
+        ["["] = "]",
+        ["{"] = "}",
     },
 })
 
@@ -47,21 +46,3 @@ npairs.add_rules({
     end),
 })
 
--- Mappings
--- ------------------
-if pcall(require, "cmp") then
-    require("nvim-autopairs.completion.cmp").setup({
-        map_cr = true, --  map <CR> on insert mode
-        map_complete = true, -- it will auto insert `(` (map_char) after select function or method item
-        auto_select = false, -- automatically select the first item
-        insert = true, -- use insert confirm behavior instead of replace
-        map_char = { -- modifies the function or method delimiter by filetypes
-            all = "(",
-            tex = "{",
-        },
-    })
-    remap("i", "<BS>", "v:lua.Util.backspace()", { expr = true, noremap = true })
-else
-    remap("i", "<CR>", "v:lua.Util.trigger_completion()", { expr = true, noremap = true })
-    remap("i", "<BS>", "v:lua.Util.backspace()", { expr = true, noremap = true })
-end

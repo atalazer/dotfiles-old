@@ -1,5 +1,43 @@
 local packer_ok, packer = pcall(require, "packer")
-local enabled = require("base.rc").plugin_enabled
+
+-- ==============================
+-- Plugins Enabled
+-- ==============================
+local enabled = {}
+-- UI
+enabled.alpha = true
+enabled.bufferline = true
+enabled.focus = false
+enabled.fzf = true
+enabled.nvim_tree = true
+enabled.shade = false
+enabled.sidebar = false
+enabled.telescope = true
+enabled.twillight = false
+enabled.which_key = true
+enabled.windline = true
+enabled.zenmode = false
+-- Editing
+enabled.cmp = true
+enabled.coq = not enabled.cmp
+enabled.luasnip = enabled.cmp
+enabled.sniprun = true
+enabled.treesitter = true
+-- Git
+enabled.fugitive = true
+enabled.gitlinker = true
+enabled.gitsigns = true
+enabled.lazygit = true
+enabled.neogit = not enabled.fugitive
+-- Experience
+enabled.colorizer = false
+enabled.hexokinase = not enabled.colorizer
+enabled.hop = false
+enabled.indent_blankline = true
+enabled.lightspeed = true
+enabled.neoscroll = true
+-- sc
+enabled.presence = false
 
 if not packer_ok then
     return
@@ -30,7 +68,7 @@ return packer.startup({
         {
             "rcarriga/nvim-notify",
             config = function()
-                local notify = require("notify")
+                notify = require("notify")
                 notify.setup({
                     stages = "fade_in_slide_out",
                     timeout = 2000,
@@ -44,13 +82,21 @@ return packer.startup({
                         TRACE = "✎",
                     },
                 })
-                vim.notify = notify
             end,
         },
 
         -- All the lua functions I don't want to write twice.
         -- ------------------------
         { "nvim-lua/plenary.nvim" },
+
+        -- SQLite bindings for lua
+        -- -----------------------
+        {
+            "tami5/sqlite.lua",
+            setup = function()
+                vim.g.sqlite_clib_path = "/lib64/libsqlite3.so.0.8.6"
+            end,
+        },
 
         -- vim-devicons written in lua
         -- ------------------------
@@ -61,8 +107,13 @@ return packer.startup({
         -- Colorscheme
         -- ------------------------
         {
-            "~/Documents/Programming/Repo/xresources-nvim",
-            config = [[require("xresources").colorscheme()]],
+            "atalazer/wally.nvim",
+            run = "cp ./extra/wal/colors.lua ~/.config/wal/templates && wal -R",
+            setup = function()
+                vim.g.wally_wal_dir = "~/.cache/wal"
+                vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
+            end,
+            config = [[require("wally").colorscheme()]],
         },
 
         -- Customizable neovim greeter like dashboard-nvim or vim-startify
@@ -78,8 +129,12 @@ return packer.startup({
         {
             "windwp/windline.nvim",
             disable = not enabled.windline,
-            -- config = [[require("plugins.windline")]],
-            config = [[require("wlsample.evil_line")]],
+            config = function()
+                require("plugins.windline")
+                vim.defer_fn(function()
+                    vim.cmd("WindLineFloatToggle")
+                end, 300)
+            end,
         },
 
         -- Snazzy bufferline
@@ -132,12 +187,6 @@ return packer.startup({
                 "nvim-telescope/telescope-media-files.nvim",
                 "nvim-telescope/telescope-frecency.nvim",
                 { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-                {
-                    "tami5/sqlite.lua",
-                    setup = function()
-                        vim.g.sqlite_clib_path = "/lib64/libsqlite3.so.0.8.6"
-                    end,
-                },
             },
         },
 
@@ -299,6 +348,22 @@ return packer.startup({
             end,
         },
 
+        -- Markdown Notebook Navigation And Management
+        -- -------------------------------
+        {
+            "jakewvincent/mkdnflow.nvim",
+            config = function()
+                require("mkdnflow").setup({
+                    default_mappings = true,
+                    create_dirs = true,
+                    links_relative_to = "first",
+                    filetypes = { md = true, rmd = true, markdown = true },
+                    evaluate_prefix = true,
+                    new_file_prefix = [[os.date('%Y-%m-%d-')]],
+                })
+            end,
+        },
+
         -- Vim Table mode
         -- ------------------------
         {
@@ -307,9 +372,13 @@ return packer.startup({
             cmd = { "TableModeRealign", "TableModeToggle" },
         },
 
-        -- yuck.vim for eww
+        -- yuck.vim for eww .yuck
         -- ------------------------
         { "elkowar/yuck.vim" },
+
+        -- kmonad.vim for kmonad .kbd
+        -- ------------------------
+        { "kmonad/kmonad-vim" },
 
         -- ================================================= LSP, Completion and Snippet
 
@@ -335,6 +404,7 @@ return packer.startup({
             "ms-jpq/coq_nvim",
             disable = not enabled.coq,
             branch = "coq",
+            run = "COQdeps",
             requires = {
                 { "ms-jpq/coq.artifacts", branch = "artifacts" },
                 { "ms-jpq/coq.thirdparty", branch = "3p" },
@@ -402,17 +472,26 @@ return packer.startup({
         -- Easy Commenting
         -- ------------------------
         {
-            "winston0410/commented.nvim",
+            "numToStr/Comment.nvim",
             config = function()
-                require("commented").setup({
-                    comment_padding = " ",
-                    keybindings = { n = "gc", v = "gc", nl = "gcc" },
-                    prefer_block_comment = false,
-                    set_keybindings = true,
-                    ex_mode_cmd = "Comment",
-                    hooks = {
-                        before_comment = require("ts_context_commentstring.internal").update_commentstring,
+                require("Comment").setup({
+                    padding = true,
+                    ignore = "^$",
+                    mappings = {
+                        basic = true,
+                        extra = false,
                     },
+                    toggler = {
+                        line = "gcc",
+                        block = "gbc",
+                    },
+                    opleader = {
+                        line = "gc",
+                        block = "gb",
+                    },
+                    pre_hook = function()
+                        require("ts_context_commentstring.internal").update_commentstring()
+                    end,
                 })
             end,
         },
@@ -425,6 +504,20 @@ return packer.startup({
             setup = function()
                 nnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
                 xnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
+            end,
+        },
+
+        {
+            "RRethy/nvim-align",
+            setup = function()
+                vim.cmd("command! -range=% -nargs=1 Align lua require'align'.align(<f-args>)")
+            end,
+            config = function()
+                Util.align = function()
+                    print("Align: ")
+                    local toAlign = vim.fn.nr2char(vim.fn.getchar())
+                    vim.cmd("Align " .. toAlign)
+                end
             end,
         },
 
@@ -455,11 +548,11 @@ return packer.startup({
             disable = not enabled.hop,
             cmd = { "HopWord" },
             setup = function()
-                nnoremap("<leader>z", "<CMD>HopWord<CR>", "Word")
+                nnoremap("<leader>w", "<CMD>HopWord<CR>", "Word")
             end,
             config = function()
                 require("hop").setup({
-                    keys = "wasdfhjkl",
+                    keys = "asdfhjkl",
                     term_seq_bias = 0.5,
                 })
             end,
@@ -478,12 +571,6 @@ return packer.startup({
         -- ------------------------
         {
             "monaqa/dial.nvim",
-            keys = {
-                "<Plug>(dial-increment)",
-                "<Plug>(dial-increment-additional)",
-                "<Plug>(dial-decrement)",
-                "<Plug>(dial-decrement-additiona)",
-            },
             setup = require("plugins.dial").setup,
             config = require("plugins.dial").config,
         },
@@ -506,12 +593,12 @@ return packer.startup({
                 vim.g.Hexokinase_highlighters = { "backgroundfull" }
                 vim.g.Hexokinase_optInPatterns = {
                     "full_hex",
-                    "triple_hex",
+                    -- "triple_hex",
                     "rgb",
                     "rgba",
                     "hsl",
                     "hsla",
-                    "colour_names",
+                    -- "colour_names",
                 }
                 vim.g.Hexokinase_ftOptInPatterns = {
                     css = "full_hex,rgb,rgba,hsl,hsla,colour_names",
@@ -535,7 +622,7 @@ return packer.startup({
         {
             "michaelb/sniprun",
             disable = not enabled.sniprun,
-            run = "bash install.sh",
+            run = "sh install.sh",
             keys = { "<Plug>SnipRun", "<Plug>SnupClose" },
             cmd = "SnipRun",
             setup = function()
@@ -629,17 +716,35 @@ return packer.startup({
             disable = not enabled.fugitive,
             setup = function()
                 mapx.nname("<leader>g", "Git")
-                nmap("<Leader>gg", "<CMD>G<CR>", "Main Menu")
-                nmap("<Leader>gh", "<CMD>diffget //2<CR>", "Merge Left")
-                nmap("<Leader>gf", "<CMD>diffget //3<CR>", "Merge Right")
+                nmap("<Leader>gg", "<CMD>G<CR>", "Main")
+                nmap("<Leader>gh", "<CMD>diffget //2<CR>", "Merge Left (2-Way)")
+                nmap("<Leader>gf", "<CMD>diffget //3<CR>", "Merge Right (3-Way)")
                 nmap("<Leader>gc", "<CMD>G commit<CR>", "Commit")
                 nmap("<Leader>gm", "<CMD>G merge<CR>", "Merge")
                 nmap("<Leader>gb", "<CMD>G branch<CR>", "Branch")
-                nmap("<Leader>gw", "<CMD>GBrowse<CR>", "Branch")
             end,
         },
 
         -- ============================================== Misc
+
+        -- Note Taking
+        -- -------------------------
+        {
+            "nvim-neorg/neorg",
+            wants = "plenary.nvim",
+            config = [[require("plugins.neorg")]],
+        },
+
+        -- -- Google Keep Integrations
+        -- {
+        --     "stevearc/gkeep.nvim",
+        --     run = ":UpdateRemotePlugins",
+        --     setup = function()
+        --         vim.gkeep_sync_dir = "~/Documents/Google-Keep"
+        --         vim.g.gkeep_sync_archived = true
+        --         vim.g.gkeep_width = 30
+        --     end
+        -- },
 
         -- Smooth Scrolling
         -- ------------------------
@@ -655,9 +760,7 @@ return packer.startup({
             "mhinz/vim-sayonara",
             setup = function()
                 local opts = { silent = true }
-                nnoremap("<A-w>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
-                nnoremap("<A-q>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
-                nnoremap("<A-j><A-k>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
+                nnoremap("<C-w><C-w>", "<CMD>Sayonara<CR>", opts, "Close Window/Buffer/Vim")
             end,
         },
 
@@ -667,7 +770,7 @@ return packer.startup({
             "max397574/better-escape.nvim",
             config = function()
                 require("better_escape").setup({
-                    mapping = { "jj" },
+                    mapping = { "jk" },
                     timeout = vim.o.timeoutlen,
                     keys = "<Esc><Esc>",
                 })
@@ -706,15 +809,33 @@ return packer.startup({
                 vim.g.mkdp_auto_start = 0
                 vim.g.mkdp_auto_close = 0
                 vim.g.mkdp_refresh_slow = 0
-                vim.g.mkdp_browser = "firefox"
+                vim.g.mkdp_browser = os.getenv("BROWSER") or "firefox"
             end,
         },
 
-        -- Make You Better At Vim Movements.
-        -- --------------------------
-        { "ThePrimeagen/vim-be-good" },
+        --
+        -- -------------------------
+        {
+            "ekickx/clipboard-image.nvim",
+            config = function()
+                require("clipboard-image").setup({
+                    default = {
+                        img_dir = "img",
+                        img_dir_txt = "img",
+                        img_name = function() return os.date("%Y%m%d-%H%M%S") end,
+                        affix = "%s",
+                    },
+                    markdown = {
+                        img_dir = "img",
+                        img_dir_txt = "img",
+                        affix = "![Image](%s)",
+                    },
+                })
+            end,
+        },
 
-        -- Generate Image Source Code
+        -- Vim `silicon` client,
+        -- generate Beautiful source code Screenshot
         -- ------------------------
         {
             "segeljakt/vim-silicon",
@@ -736,6 +857,29 @@ return packer.startup({
                 vim.g.silicon.font = "FiraCode Nerd Font"
                 vim.g.silicon.background = "#f8f8f2"
                 vim.g.silicon.output = os.getenv("HOME") .. "/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
+            end,
+        },
+
+        -- Vim cheat.sh client
+        -- --------------------------
+        {
+            "dbeniamine/cheat.sh-vim",
+            setup = function()
+                -- Stay in origin buffer (set to 0 to keep focus on the cheat sheet buffer)
+                vim.g.CheatSheetStayInOrigBuf = 0
+                -- cheat sheet buffer name
+                vim.g.CheatSheetBufferName = "_cheat"
+                -- Default selection in normal mode (line for whole line, word for word under cursor)
+                vim.g.CheatSheetDefaultSelection = "line"
+                -- Default query mode
+                -- 0 => buffer
+                -- 1 => replace (do not use or you might loose some lines of code)
+                -- 2 => pager
+                -- 3 => paste after query
+                -- 4 => paste before query
+                vim.g.CheatSheetDefaultMode = 0
+                -- Make plugin silent by  setting bellow variable to 1
+                vim.g.CheatSheetSilent = 0
             end,
         },
 
@@ -767,8 +911,6 @@ return packer.startup({
         },
     },
     config = {
-        compile_path = vim.fn.stdpath("data") .. "/site/pack/loader/start/packer.nvim/plugin/packer_compiled.lua",
-        auto_reload_compiled = true,
         git = {
             depth = 1,
             clone_timeout = 300,

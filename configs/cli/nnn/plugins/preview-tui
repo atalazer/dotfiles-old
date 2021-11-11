@@ -176,6 +176,9 @@ preview_file () {
         if exists bat; then
             fifo_pager bat --terminal-width="$cols" --paging=never --decorations=always --color=always \
                 "$1" 2>/dev/null
+        elif exists glow && [ "$ext" = "md" ]; then
+            fifo_pager glow -s auto \
+                "$1" 2>/dev/null
         else
             $PAGER "$1" &
         fi

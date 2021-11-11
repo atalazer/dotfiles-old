@@ -131,6 +131,10 @@ awful.screen.connect_for_each_screen(function(s)
     s.network = require("noodle.network")()
     local clock = require("noodle.clock")(s)
     local record = require("noodle.record")
+    local launcher =  awful.widget.launcher({
+        image = beautiful.awesome_icon,
+        menu = require("elemental.menu")
+    })
 
     -- Create the wibox
     s.bar = awful.wibar({
@@ -159,10 +163,15 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(3),
             helpers.horizontal_pad(5),
+            {
+                launcher,
+                margins = dpi(5),
+                widget = wibox.container.margin,
+            },
             s.taglist,
-            -- s.tasklist,
+            s.promptbox,
         },
-        s.promptbox,
+        s.tasklist,
         {
             layout = wibox.layout.fixed.horizontal,
             spacing = dpi(3),
@@ -175,14 +184,14 @@ awful.screen.connect_for_each_screen(function(s)
             record,
             s.battery,
             s.network,
+            s.search,
+            s.toggler,
+            clock,
             {
                 s.layoutbox,
                 margins = dpi(5),
                 widget = wibox.container.margin,
             },
-            s.search,
-            s.toggler,
-            clock,
             helpers.horizontal_pad(5),
         },
     }

@@ -1,12 +1,12 @@
 # NOTE SETTINGS
 [note]
-language = "en"
+# language = "en"
 default-title = "Untitled"
 filename = "{{id}}"
 extension = "md"
 template = "default.md"
 id-charset = "alphanum"
-id-length = 4
+id-length = 6
 id-case = "lower"
 ignore = []
 
@@ -16,28 +16,28 @@ visibility = "public"
 author = "Atalariq Barra Hadinugraha"
 
 # GROUP OVERRIDES
-[group.diary]
-path = [ "diary/*" ]
+[group.diary_journal]
+path = [ "diary/*", "journal/*" ]
 
-[group.diary.note]
-filename = '{{date now "%Y%m-%d"}}'
+[group.diary_journal.note]
+filename = '{{date now "%Y%m%d"}}'
 
 [group.school]
-path = ["School/*"]
+path = ["School/*", "school/*"]
 
 [group.school.note]
-filename = '{{date now "%Y-%m-%d"}}-{{slug title}}'
+filename = '{{date now "%Y%m%d"}}-{{slug title}}'
 extension = "md"
 template = "school.md"
 
 # MARKDOWN SETTINGS
 [format.markdown]
-link-format = "[{{title}}]({{path}})"
-link-encode-path = true
+link-format = "wiki"
+link-encode-path = false
 link-drop-extension = true
 
 hashtags = true
-colon-tags = true
+colon-tags = false
 multiword-tags = false
 
 # EXTERNAL TOOLS

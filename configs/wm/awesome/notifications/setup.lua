@@ -22,6 +22,9 @@ ruled.notification.connect_signal("request::rules", function()
         properties = {
             screen = awful.screen.preferred,
             implicit_timeout = 5,
+            font = beautiful.notification_font,
+            width = beautiful.notification_width,
+            height = beautiful.notification_height
         },
     })
 end)

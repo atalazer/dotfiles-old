@@ -5,22 +5,30 @@
 OPT="${1:-"help"}"
 
 case $OPT in
-    build)
-        CFG=${2:-"linux"}
-        echo "Build for $CFG configuration"
-        nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" \
-            && echo "Build succes!"
-        ;;
-    apply)
-        [ -f result/activate ] && result/activate \
-            || echo "Failed, 'result/activate' not found. Please build first"
-        ;;
-    help|*)
-        echo "Usage:"
-        echo "help      Show this message."
-        echo "build     Build configuration. (default: linux)"
-        echo "apply     Activate existing configuration."
+  build)
+    CFG=${2:-"linux"}
+    echo "Build for $CFG configuration"
+    nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" \
+      && echo "Build succes!"
     ;;
+  apply)
+    [ -f result/activate ] && result/activate \
+      || echo "Failed, 'result/activate' not found. Please build first"
+    ;;
+  termux)
+    DIR=./configs/termux
+    pkg install zsh starship nvim git
+    ln -s $DIR/termux ~/.termux
+    ln -s $DIR/nvim ~/.config/nvim
+    ln -s $DIR/zsh/* ~/
+    ;;
+  help|*)
+    echo "Usage:"
+    echo "help      Show this message."
+    echo "build     Build configuration. (default: linux)"
+    echo "apply     Activate existing configuration."
+    echo "termux    Setup for termux."
+  ;;
 esac
 
 # vim:set ft=bash sw=2 ts=2:

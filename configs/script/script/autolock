@@ -6,7 +6,7 @@ lock_timeout=600
 suspend=${SUSPEND_CMD:-"systemctl suspend"}
 brightness_up="brightnessctl -d $delta up"
 brightness_down="brightnessctl -d $delta down"
-
+notify="notify-send 'Lockscreen' 'Screen Will Be Lock After 5 Sec'"
 # Set Lock Command Based On WM
 if [ -n "$CHECK_AWESOME_CLIENT" ]; then WM="AWESOME"; else WM="NOT_AWESOME"; fi
 case $WM in
@@ -16,19 +16,19 @@ case $WM in
 esac
 
 # Run xidlehook
-if [ -n "$(pgrep xidlehook)" ]; then pkill xidlehook && killall xidlehook; fi
+[ -n "$(pgrep xidlehook)" ] && pkill xidlehook && killall xidlehook
 xidlehook \
     --not-when-fullscreen \
     --not-when-audio \
-    --timer 60 \
+    --timer $((lock_timeout / 2)) \
     "$brightness_down" \
     "$brightness_up" \
     --timer $((lock_timeout - 5)) \
-    "notify-send 'Lockscreen' 'Screen Will Be Lock After 5 Sec' " \
+    "$notify" \
     "$brightness_up" \
     --timer $((lock_timeout)) \
     "$brightness_up && $lock" \
-    "" \
+    "$brightness_up" \
     --timer $((lock_timeout + 300)) \
     "$suspend" \
-    ""
+    "$brightness_up"

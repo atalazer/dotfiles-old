@@ -1,4 +1,4 @@
-" vim: set filetype=tridactyl
+" vim: ft=vim:
 
 " ================================================
 " Settings
@@ -6,23 +6,25 @@
 colors dark
 
 set editorcmd /usr/bin/nvim
-
 set findcase smart
 set smoothscroll true
 
-set allowautofocus true
-set modeindicator false
-
-set tabopencontaineraware true
-set rsscmd rsssave %u
-set visualenterauto false
-set wordpattern [^\s\/]+
-set hintdelay 100
-set hintchars qweasdzxc
+" set allowautofocus true
+" set modeindicator false
+" set hintchars wasdfhjkli
 
 set searchengine d
-set searchurls.d https://duckduckgo.com/html?q=%s
-set searchurls.g https://www.google.com/search?q=%s
+set searchengine.d https://duckduckgo.com/?q=%s
+set searchengine.g https://www.google.com/search?hl=en&q=%s
+set searchengine.r https://www.reddit.com/search/?q=%s
+set searchengine.au https://aur.archlinux.org/packages/?O=0&K=%s
+set searchengine.aw https://wiki.archlinux.org/?search=%s
+set searchengine.gh https://github.com/search?q=%s
+set searchengine.js https://www.npmjs.com/search?q=%s
+set searchengine.py https://pypi.org/search/?q=%s
+set searchengine.np https://search.nixos.org/packages?channel=unstable&sort=relevance&type=packages&query=%s
+set searchengine.yt https://www.youtube.com/results?search_query=%s
+
 
 " ================================================
 " Appearance
@@ -33,9 +35,6 @@ guiset_quiet hoverlink right
 " ================================================
 " Key
 " ================================================
-" ### Unbind
-unbind --mode=normal <Escape>
-
 " Disable <C-q>
 bind --mode=insert <C-q> js alert("<C-q> is for quitters.")
 bind --mode=input  <C-q> js alert("<C-q> is for quitters.")
@@ -43,7 +42,7 @@ bind --mode=normal <C-q> js alert("<C-q> is for quitters.")
 bind --mode=ex     <C-q> js alert("<C-q> is for quitters.")
 bind --mode=hint   <C-q> js alert("<C-q> is for quitters.")
 
-" Mbuh
+" Text Navigation
 bind --mode=ex     <Home> text.beginning_of_line
 bind --mode=insert <Home> text.beginning_of_line
 bind --mode=input  <Home> text.beginning_of_line
@@ -66,40 +65,24 @@ bind --mode=ex     <A-Delete> text.backward_kill_word
 bind --mode=insert <A-Delete> text.backward_kill_word
 bind --mode=input  <A-Delete> text.backward_kill_word
 
-" ### Hint
-bind p hint -b
-
 " ### Search
 bind ;/ fillcmdline tabopen s
 bind / fillcmdline find
 bind ? fillcmdline find -?
 bind n findnext 1
 bind N findnext -1
-bind <Esc><Esc> nohlsearch
+bind <A-n> nohlsearch
 
 " ### Tab
-bind <A-w> tabclose
-bind <A-W> undo tab
-bind <A-s> tabnew
-bind <A-a> tabprev
-bind <A-d> tabnext
-bind <A-q> tabmove -1
-bind <A-e> tabmove +1
+bind K tabprev
+bind J tabnext
+bind <A-k> tabmove -1
+bind <A-j> tabmove +1
+bind H back
+bind L forward
 
-bind <A-1> tab 1
-bind <A-2> tab 2
-bind <A-3> tab 3
-bind <A-4> tab 4
-bind <A-5> tab 5
-bind <A-6> tab 6
-bind <A-7> tab 7
-bind <A-8> tab 8
-bind <A-9> tab 9
-bind <A-0> tab 10
-
-" ### History
-bind z back
-bind Z forward
+bind o fillcmdline open
+bind O fillcmdline tabopen
 
 " ### Scroll
 bind <ArrowUp> scrollline -5
@@ -112,7 +95,7 @@ bind ,r source
 bind ,R restart
 
 " Open right click menu on links
-bind ;C composite hint_focus; !s xdotool key Menu
+bind ;C composite hint -h; !s xdotool key Menu
 
 " ================================================
 " Autocommand

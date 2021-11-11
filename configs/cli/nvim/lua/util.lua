@@ -40,8 +40,8 @@ Util.check_back_space = function()
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
--- see lua/plugins/autopairs.lua for context
 -- Use nvim-autopairs cr instead
+-- see lua/plugins/{cmp,coq}.lua for context
 Util.trigger_completion = function()
     local npair_exist, npairs = pcall(require, "nvim-autopairs")
 
@@ -61,7 +61,7 @@ Util.trigger_completion = function()
     return Util.t("<CR>")
 end
 
--- see lua/plugins/autopairs.lua for context
+-- see lua/plugins/{cmp,coq}.lua for context
 Util.backspace = function()
     local npair_exist, npairs = pcall(require, "nvim-autopairs")
 
@@ -77,9 +77,10 @@ end
 
 -- see lua/plugins/cmp.lua for context
 Util.tab_complete = function(fallback)
+    local luasnip_exist, luasnip = pcall(require, "luasnip")
     if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(Util.t("<C-n>"), "n")
-    elseif require("luasnip").expand_or_jumpable() then
+    elseif luasnip_exist and luasnip.expand_or_jumpable() then
         vim.fn.feedkeys(Util.t("<Plug>luasnip-expand-or-jump"), "")
     elseif Util.check_back_space() then
         vim.fn.feedkeys(Util.t("<Tab>"), "n")
@@ -90,9 +91,10 @@ end
 
 -- see lua/plugins/cmp.lua for context
 Util.s_tab_complete = function(fallback)
+    local luasnip_exist, luasnip = pcall(require, "luasnip")
     if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(Util.t("<C-p>"), "n")
-    elseif require("luasnip").jumpable(-1) then
+    elseif luasnip_exist and luasnip.jumpable(-1) then
         vim.fn.feedkeys(Util.t("<Plug>luasnip-jump-prev"), "")
     else
         fallback()
@@ -111,6 +113,7 @@ Util.borders = {
 }
 
 Util.lsp_on_attach = function(client, bufnr)
+    local notify = notify or vim.notify
     if client.resolved_capabilities.code_lens then
         vim.cmd([[
             augroup CodeLens
@@ -124,31 +127,48 @@ Util.lsp_on_attach = function(client, bufnr)
 end
 
 Util.lsp_on_init = function(client)
-    -- print("Language Server Protocol started!")
-    vim.notify("Language Server Client successfully started!", "info", {
-        title = client.name:upper(),
+    local notify = notify or vim.notify
+    notify("Language Server Client successfully started!", "info", {
+        title = client.name,
     })
 end
 
-local session_dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions/")
-local last_session = session_dir .. "last.vim"
+vim.g.dont_write = false
+local write = function()
+    vim.g.dont_write = false
+    vim.cmd("write")
+end
+
+-- See lua/plugins/firenvim.lua for context
+Util.delay_write = function()
+    if vim.g.dont_write then return end
+    vim.g.dont_write = true
+    vim.defer_fn(function()
+        write()
+    end, 1000)
+end
+
+local session_dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions")
+local last_session = session_dir .. "/last.vim"
 
 Util.session = {
-    save = function() vim.cmd("mksession! " .. last_session) end,
     last = function() vim.cmd("source " .. last_session) end,
-    search = function(dir)
-        local session_dir = dir or (vim.loop.os_homedir() .. "/.cache/nvim/sessions")
+    save = function(session_name)
+        local session = session_dir .. "/" .. ( session_name or "last" ) .. ".vim"
+        vim.cmd("mksession! " .. session)
+    end,
+    search = function()
         require("plugins.fzf.search").search({
             vim_cmd = "source",
             extension = "vim",
-            previewer = "bat",
+            previewer = "bat --style=numbers --color=always",
             dir = session_dir
         })
     end,
 }
-vim.cmd("command! -range -nargs=0 SessionSave call v:lua.Util.session.save()")
+vim.cmd("command! -range -nargs=? SessionSave call v:lua.Util.session.save(<f-args>)")
 vim.cmd("command! -range -nargs=0 SessionLast call v:lua.Util.session.last()")
-vim.cmd("command! -range -nargs=? SessionSearch call v:lua.Util.session.search(<f-args>)")
+vim.cmd("command! -range -nargs=0 SessionSearch call v:lua.Util.session.search()")
 
 Util.notes = {
     index = function()
@@ -158,9 +178,11 @@ Util.notes = {
     search = function(dir)
         local note_dir = dir or vim.env.NOTE_DIR or (vim.loop.os_homedir() .. "/Documents/Notes")
         if dir == "notes" then
-            note_dir = vim.env.NOTE_DIR or (vim.loop.os_homedir() .. "/Documents/Notes")
+            note_dir = vim.env.NOTE_DIR or "~/Documents/Notes"
         elseif dir == "school" then
-            note_dir = vim.env.SCHOOL_DIR or (vim.loop.os_homedir() .. "/Documents/School")
+            note_dir = vim.env.SCHOOL_DIR or "~/Documents/School"
+        elseif dir == "dict" then
+            note_dir = "~/Documents/Dictionary"
         end
         require("plugins.fzf.search").search({
             vim_cmd = "edit",

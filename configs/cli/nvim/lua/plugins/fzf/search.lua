@@ -6,7 +6,7 @@ M.search = function(opts)
     local vim_cmd = opts.vim_cmd or "edit"
     local previewer = opts.previewer or "bat --style=numbers --color=always"
     local extension = opts.extension or nil
-    local dir = opts.dir or string.format("%s/Documents/Notes", vim.loop.os_homedir())
+    local dir = vim.fn.expand(opts.dir or "~/Documents/Notes")
 
     local cmd = nil
     if extension == nil or extension == "*" then

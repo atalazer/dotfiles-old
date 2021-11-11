@@ -1,16 +1,9 @@
 local cmp = require("cmp")
 
 cmp.setup({
-    preselect = cmp.PreselectMode.None,
-    snippet = {
-        expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-        end,
-    },
-
-    documentation = {
-        border = Util.borders,
-    },
+    snippet = { expand = function(args) require("luasnip").lsp_expand(args.body) end },
+    completion = { keyword_length = 3 },
+    documentation = { border = Util.borders },
 
     sources = {
         { name = "buffer" },
@@ -18,6 +11,7 @@ cmp.setup({
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "spell" },
+        { name = "neorg" }
     },
 
     formatting = {
@@ -44,4 +38,10 @@ cmp.setup({
             select = true,
         }),
     },
+
+    experimental = {
+        native_menu = false,
+        ghost_text = false,
+    },
 })
+

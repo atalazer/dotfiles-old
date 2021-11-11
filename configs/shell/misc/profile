@@ -13,8 +13,8 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-[ -f "$XDG_CONFIG_HOME/.user" ] && . "$XDG_CONFIG_HOME/.user"
-[ -f "$XDG_CONFIG_HOME/.user.keys" ] && . "$XDG_CONFIG_HOME/.user.keys"
+[ -f "$XDG_CONFIG_HOME/shell/user" ] && . "$XDG_CONFIG_HOME/shell/user"
+[ -f "$XDG_CONFIG_HOME/shell/user.private" ] && . "$XDG_CONFIG_HOME/shell/user.private"
 [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
 # ------- Clean-up ~/
@@ -42,14 +42,15 @@ export EDITOR="nvim"
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
 export PAGER="less -R"
+export LESS="-R"
 export BAT_PAGER="$PAGER"
 export DELTA_PAGER="$PAGER"
 # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 ## ------ Command
-export TERM_CMD="kitty"
-export BROWSER="qutebrowser"
+export BROWSER="firefox"
 export FILEMAN="thunar"
+export TERM_CMD="kitty"
 export TRASH_CMD="gio"
 
 # ------- Command
@@ -74,8 +75,6 @@ export SDL_IM_MODULE="fcitx"
 export IBUS_USE_PORTAL=1
 
 # =============================== Themes
-export XDG_CURRENT_DESKTOP=gnome
-export DESKTOP_SESSION=gnome
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export GTK3_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini"
 export XSETTINGSD_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xsettingsd"
@@ -98,8 +97,8 @@ export CC="gcc"
 # ================================ PATH {{{
 TO_PATH() {
     if [ -d "$1" ]; then
-        if [ -z "$(printf "%s" "$PATH" | grep "$1")" ]; then
-            export PATH="$1:$PATH"
+        if ! printf "%s" "$PATH" | grep -q "$1"; then
+            export PATH="$PATH:$1"
         fi
     fi
 }
@@ -108,8 +107,9 @@ TO_PATH "$HOME/Applications/bin"
 TO_PATH "$HOME/.local/bin"
 TO_PATH "$HOME/.local/script"
 TO_PATH "$HOME/.emacs.d/bin"
-TO_PATH "$HOME/.choosenim/toolchains/nim-1.4.8/bin"
-TO_PATH "$HOME/.nimble/bin"
+TO_PATH "$HOME/.local/share/choosenim/toolchains/nim-1.4.8/bin"
+TO_PATH "$HOME/.local/share/nimble/bin"
+TO_PATH "$CARGO_HOME/bin"
 TO_PATH "$GOBIN"
 
 # }}}

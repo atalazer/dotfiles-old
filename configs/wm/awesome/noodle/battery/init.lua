@@ -1,6 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
+local naught = require("naughty")
 local watch = awful.widget.watch
 
 local apps = require("configs.apps")

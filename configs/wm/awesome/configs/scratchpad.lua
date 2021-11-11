@@ -88,7 +88,7 @@ awesome.connect_signal("scratch::input", function()
 end)
 
 local file_scratch = bling.module.scratchpad:new({
-    command = "kitty --name file_scratch -e nnn_wrapper",
+    command = "kitty --name file_scratch -e nnn",
     rule = { instance = "file_scratch" },
     sticky = false,
     autoclose = false,

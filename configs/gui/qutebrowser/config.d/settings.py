@@ -427,16 +427,17 @@ c.url.open_base_url = True
 # Type: Dict
 c.url.searchengines = {
     "DEFAULT": "https://duckduckgo.com/?q={}",
-    "d": "https://duckduckgo.com/?q={}",
-    "g": "https://www.google.com/search?hl=en&q={}",
-    "r": "https://www.reddit.com/search/?q={}",
-    "au": "https://aur.archlinux.org/packages/?O=0&K={}",
-    "aw": "https://wiki.archlinux.org/?search={}",
-    "gh": "https://github.com/search?q={}",
-    "js": "https://www.npmjs.com/search?q={}",
-    "py": "https://pypi.org/search/?q={}",
-    "np": "https://search.nixos.org/packages?channel=unstable&sort=relevance&type=packages&query={}",
-    "yt": "https://www.youtube.com/results?search_query={}",
+        "d": "https://duckduckgo.com/?q={}",
+        "g": "https://www.google.com/search?hl=en&q={}",
+        "w": "https://en.wikipedia.org/w/index.php?search={}",
+        "r": "https://www.reddit.com/search/?q={}",
+        "au": "https://aur.archlinux.org/packages/?O=0&K={}",
+        "aw": "https://wiki.archlinux.org/?search={}",
+        "gh": "https://github.com/search?q={}",
+        "js": "https://www.npmjs.com/search?q={}",
+        "py": "https://pypi.org/search/?q={}",
+        "np": "https://search.nixos.org/packages?channel=unstable&query={}",
+        "yt": "https://www.youtube.com/results?search_query={}",
 }
 
 # Page(s) to open at the start.

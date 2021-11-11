@@ -48,7 +48,7 @@ local keys = gears.table.join(
         ["W|k"] = { utils.tags.view.prev, "Go To Previous Tag" },
         ["WS|j"] = { utils.tags.move.next, "Move To Next Tag" },
         ["WS|k"] = { utils.tags.move.prev, "Move To Previous Tag" },
-        ["W|z"] = { awful.tag.history.restore, "Restore" }
+        ["W|q"] = { awful.tag.history.restore, "Restore" }
     }),
 
     -- ================= Tag Moves {{{

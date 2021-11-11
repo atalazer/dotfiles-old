@@ -3,6 +3,10 @@
 nnoremap Q  <Nop>
 nnoremap q: <Nop>
 
+" -------------------------------
+" Map Control-; to :
+nnoremap <C-;> :
+
 " -------------------------------------
 " Source Lua/Vim Files
 nnoremap <localleader>l <CMD>source %<CR>
@@ -45,6 +49,13 @@ inoremap <A-l> <Right>
 " Better J for join lines
 nnoremap J mzJ`z
 
+" B for break line
+function! Breakline()
+  s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
+  call histdel("/", -1)
+endfunction
+nnoremap <silent> B :<C-u>call Breakline()<CR>
+
 " move vertically by visual line on wrapped lines
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
@@ -52,13 +63,13 @@ nnoremap <expr> <Down> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj
 nnoremap <expr> <Up> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 " Better Y for copy current line
-nnoremap Y yg$
+nnoremap Y y$
 
 " Quickly move current line
-nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
-nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+nnoremap [e :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e :<c-u>execute 'move +'. v:count1<cr>
+vnoremap J  :m '>+1<CR>gv=gv
+vnoremap K  :m '<-2<CR>gv=gv
 
 " Quickly add empty lines
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
@@ -73,13 +84,6 @@ vnoremap x "_x
 inoremap <A-BS> <C-w>
 nnoremap <A-BS> i<C-w>
 cnoremap <A-BS> <C-w>
-inoremap <A-d> <C-w>
-nnoremap <A-d> i<C-w>
-cnoremap <A-d> <C-w>
-
-" m and M for PageUp and PageDown
-nnoremap m <C-d>
-nnoremap M <C-u>
 
 " keep to center
 nnoremap {  {zzzv
@@ -97,7 +101,6 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " no highlight search
-nnoremap <Esc><Esc> <CMD>nohlsearch<CR>
 nnoremap <C-n> <CMD>nohlsearch<CR>
 
 " ------------------------------------- Indent
@@ -122,12 +125,12 @@ nnoremap <C-Up> <C-w><C-k>
 nnoremap <C-Right> <C-w><C-l>
 
 " Cycle tab
-nnoremap <A-k> <CMD>BufferLineCyclePrev<CR>
-nnoremap <A-j> <CMD>BufferLineCycleNext<CR>
+nnoremap <C-PageUp> <CMD>BufferLineCyclePrev<CR>
+nnoremap <C-PageDown> <CMD>BufferLineCycleNext<CR>
 
 " Move tab
-nnoremap <A-h> <CMD>BufferLineMovePrev<CR>
-nnoremap <A-l> <CMD>BufferLineMoveNext<CR>
+nnoremap <C-Home> <CMD>BufferLineMovePrev<CR>
+nnoremap <C-End> <CMD>BufferLineMoveNext<CR>
 
 nnoremap <A-1> <CMD>lua require'bufferline'.go_to_buffer(1)<CR>
 nnoremap <A-2> <CMD>lua require'bufferline'.go_to_buffer(2)<CR>
@@ -147,11 +150,11 @@ tnoremap <C-Up> <C-\><C-n><C-w><C-k>
 tnoremap <C-Right> <C-\><C-n><C-w><C-l>
 
 " move buffer
-tnoremap <A-h> <C-\><C-n>:bp<CR>
-tnoremap <A-l> <C-\><C-n>:bn<CR>
+tnoremap <C-PageUp> <C-\><C-n>:bp<CR>
+tnoremap <C-PageDown> <C-\><C-n>:bn<CR>
 
-" go to normal mode using double esc
-tnoremap <A-q> <C-\\><C-n>
+" go to normal mode
+tnoremap <C-w><C-w> <C-\\><C-n>
 
 " ------------------------------------- Runner
 nnoremap <Leader>rl <CMD>luafile %<CR>

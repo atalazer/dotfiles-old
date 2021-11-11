@@ -37,3 +37,18 @@
   description = "smug+tmux: Start Session For School"
   command = "smug start school"
   output = ""
+
+[[snippets]]
+  description = "tmux: Reload Config"
+  command = "tmux source-file ~/.config/tmux/tmux.conf"
+  output = ""
+
+[[snippets]]
+  description = "gpg: Show secret key list"
+  command = "gpg --list-secret-keys --keyid-format=long"
+  output = ""
+
+[[snippets]]
+  description = "syncthing: Start daemon"
+  command = "syncthing -no-browser -no-restart -logflags=0 -logfile=$HOME/.cache/syncthing"
+  output = ""

@@ -1,18 +1,58 @@
 #!/bin/sh
-
-IMG_VIEW="opener"
-DMENU="rofi -dmenu -i -p Cheatsheets"
-
-CHEATSHEET_DIR=~/Pictures/Cheatsheets
-IMG_EXT="png"
-
-label=$(ls ~/Pictures/Cheatsheets | grep ".$IMG_EXT" | sed 's_.png__g' /dev/stdin | $DMENU)
-IMG="${CHEATSHEET_DIR}/${label}.${IMG_EXT}"
-
-if [ -n "$IMG" ]; then
-    $IMG_VIEW "$IMG"
-fi
-
-exit 0
-
 # vim: ft=sh:
+# shellcheck disable=SC2091
+
+DMENU="rofi -dmenu -i -p Cheatsheets"
+OPENER="opener"
+
+# Check required apps
+check_app(){
+    command -v "$1" > /dev/null 2>&1 || (echo "Please Install \`$1\` package with your package manager!" && exit 0)
+}
+check_app fd
+check_app $OPENER
+
+# Cheatsheets with doc extension e.g. `.pdf`
+doc(){
+    CHEATSHEET_DIR=$HOME/Documents/Cheatsheets
+    FILENAME=$(fd . "$CHEATSHEET_DIR" --type f \
+        | sed -e "s#$(realpath "$CHEATSHEET_DIR")/##" \
+        | $DMENU)
+    [ -z "$FILENAME" ] && exit 0
+
+    FILE="${CHEATSHEET_DIR}/${FILENAME}"
+    [ -f "$FILE" ] && $OPENER "$FILE" >/dev/null 2>&1
+}
+
+# Cheatsheets with image extension
+image(){
+    CHEATSHEET_DIR=$HOME/Pictures/Cheatsheets
+    FILENAME=$(fd . "$CHEATSHEET_DIR" --type f \
+        | sed -e "s#$(realpath "$CHEATSHEET_DIR")/##" \
+        | $DMENU)
+    [ -z "$FILENAME" ] && exit 0
+
+    IMG="${CHEATSHEET_DIR}/$FILENAME"
+    [ -f "$IMG" ] && $OPENER "$IMG" >/dev/null 2>&1
+}
+
+# Pick between doc or image
+interactive(){
+    OPTIONS='''
+    [
+        ["Docs",        "doc"],
+        ["Image",      "image"]
+    ]
+    '''
+    MENU=$(echo "$OPTIONS" | jq -r ".[][0]" | $DMENU -lines 2 -width 20)
+    $(echo "$OPTIONS" | jq -r ".[] | select(.[0] == \"$MENU\") | .[1]")
+}
+
+# Main
+OPT=${1:-"--interactive"}
+case $OPT in
+    "-I"|"--image") image ;;
+    "-D"|"--doc") doc;;
+    "-i"|"--interactive") interactive ;;
+esac
+

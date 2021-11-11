@@ -1,9 +1,4 @@
-#!/bin/sh
-
-# Alias Finder
-fa() {
-    alias | grep "$1"
-}
+#!/usr/bin/env bash
 
 stats() {
     fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | \
@@ -12,6 +7,6 @@ stats() {
 
 take() {
     if command -v "zoxide" > /dev/null 2>&1; then CD="z"; else CD="cd"; fi
-    mkdir -p $@ && $CD ${@:$#}
+    mkdir -p "$@" && $CD "${@:$#}"
 }
 

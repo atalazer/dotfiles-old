@@ -18,4 +18,6 @@ c.aliases = {
     "open-private": "open -p",
     "adblock-off": "set content.blocking.enabled false",
     "adblock-on": "set content.blocking.enabled true",
+    "translate-id": "spawn --userscript translate --target id --text",
+    "translate-en": "spawn --userscript translate --target en --text"
 }

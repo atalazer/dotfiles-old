@@ -18,7 +18,7 @@ EOF
 toggle() {
     WG=${1:-bar}
     FILESTATE=/tmp/eww-"$WG"
-    if [[ ! -f $FILESTATE ]]; then
+    if [ ! -f "$FILESTATE" ]; then
         eww open "$WG"
         echo "open" >"$FILESTATE"
     else

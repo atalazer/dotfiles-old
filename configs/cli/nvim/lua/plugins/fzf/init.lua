@@ -1,5 +1,6 @@
 local fzf_lua = require("fzf-lua")
-local search = require(... .. ".search")
+local search = require("plugins.fzf.search")
+
 -- Setup
 -- ------------------------------
 fzf_lua.setup({
@@ -47,12 +48,11 @@ nnoremap("<Leader>ft", "<CMD>FzfLua builtin<CR>", { silent = true }, "Built-Ins"
 nnoremap("<Leader>f?", "<CMD>FzfLua help_tags<CR>", { silent = true }, "Help Tags")
 
 nnoremap("<Leader>df", function()
-        search.search({
-            vim_cmd = "edit",
-            previewer = "bat --style=numbers --color=always",
-            extension = "*",
-            dir = string.format("%s/.dotfiles", vim.loop.os_homedir())
-        })
-    end
-)
+    search.search({
+        vim_cmd = "edit",
+        previewer = "bat --style=numbers --color=always",
+        extension = "*",
+        dir = string.format("%s/.dotfiles", vim.loop.os_homedir())
+    })
+end, "Search Dotfiles")
 

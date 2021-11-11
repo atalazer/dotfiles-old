@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+
+# zsh completions: ~/.config/zsh/completions/_note
+
+NAME="note"
+AUTHOR="Atalariq Barra Hadinugraha"
+VERSION=v0.1
+
+version() {
+cat <<EOF
+$NAME $VERSION
+by. $AUTHOR
+EOF
+}
+
+help() {
+cat <<EOF
+Usage for $NAME:
+  Command:
+    edit            Edit note.
+    find            Find notes interactively.
+    new             Create a new note.
+    delete          Delete a note.
+    sync            Sync note.
+  Options:
+    -d, --dir       Specify notes directory (default to $DIR).
+    -v, --version   Show version.
+    -h, --help      Show this message.
+EOF
+}
+
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+NORMAL=$(tput sgr0)
+
+EDITOR=${EDITOR:-nvim}
+DIR=${NOTE_DIR:-$HOME/Documents/Notes}
+
+# edit file in notes directory
+# usage: _edit "$filename"
+_edit(){
+    file=$DIR/"$1".md
+    [ -f "$file" ] \
+        && $EDITOR "$file" \
+        || echo "${RED}${file} Isn't Exist!${NORMAL}"
+}
+
+# delete note
+_delete() {
+    FILE="$1"
+    FILE="$DIR/$FILE".md
+    [ -f "$FILE" ] \
+        && read -p "${YELLOW}Do you really want to delete ${RED}'$FILE'? ${YELLOW}(y/N)${NORMAL} " -r confirm \
+        || echo "${YELLOW}$FILE Doesnt Exist${NORMAL}"
+    case $confirm in
+    [yY][eE][sS] | [yY]) rm "$FILE" && echo "${BLUE}$FILE Deleted${NORMAL}" ;;
+    [Nn][Oo] | *) exit ;;
+    esac
+}
+
+# create a note
+_new() {
+    FILE="$1"
+    FILE="$DIR/$FILE.md"
+    TITLE="${2:-$FILE}"
+    CONTENT="${3:-"content"}"
+
+    [ ! -f "$FILE" ] &&
+        printf "# %s\n %s" "$TITLE" "$CONTENT" >"$FILE" &&
+        echo "${GREEN}$FILE Created${NORMAL}" ||
+        echo "${YELLOW}$FILE Exist${NORMAL}"
+}
+
+# find notes interactively with fzf
+find() {
+    DIR=$1
+    file=$(
+        fd . "$DIR" -e md --type file --color never | sed -e "s#$(realpath "$DIR")/##" -e "s#.md##" |
+            fzf --preview "glow -s auto $DIR/{}.md"
+    )
+    _edit "$file"
+}
+
+# sync notes dir
+sync() {
+    cd "$DIR" || echo "$DIR Isn't Exist!"
+    gstatus=$(git status --porcelain)
+    if [ ${#gstatus} -ne 0 ]; then
+        git add --all
+        git commit -m "$gstatus"
+        git pull --rebase
+        git push
+    else
+        git pull
+    fi
+}
+
+[ -z "$1" ] && help
+while [ -n "$1" ]; do
+    case "$1" in
+    "-d" | "--dir")
+        shift
+        [ -d "$DIR" ] && DIR="$1"
+        ;;
+    delete)
+        shift
+        [ -n "$1" ] && _delete "$1"
+        ;;
+    find) find "$DIR" ;;
+    edit) _edit "$2" ;;
+    new)
+        shift
+        [ -n "$*" ] && _new "$*"
+        ;;
+    sync) sync ;;
+    "-h" | "--help") help ;;
+    "-v" | "--version") version ;;
+    *) echo "Invalid $1" && help && exit ;;
+    esac
+    shift
+done

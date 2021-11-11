@@ -6,127 +6,140 @@
 # Author            : M. Nabil Adani <nblid48@gmail.com>
 # Last Modified By  : Atalazer <baraboyolali@gmail.com>
 
-DMENU="rofi -dmenu -i -l 5"
+DMENU="rofi -dmenu -i"
 ICON="$HOME/.config/awesome/icons/linebit/keyboard.png"
-HISTFILE="/tmp/rofi_translate"
 
-if [ ! -f $HISTFILE ]; then
-    touch $HISTFILE
-fi
-
+DEFAULT_COUNTRY="Indonesian"
 COUNTRY='''
 [
-  { "code": "id", "name": "Indonesian" },
-  { "code": "en", "name": "English" },
-  { "code": "jv", "name": "Javanese" },
-  { "code": "ja", "name": "Japanese" },
-  { "code": "ar", "name": "Arabic" }
+  { "name": "English"   , "code": "en" },
+  { "name": "Indonesian", "code": "id" },
+  { "name": "Javanese"  , "code": "jv" },
+  { "name": "Arabic"    , "code": "ar" },
+  { "name": "French"    , "code": "fr" },
+  { "name": "German"    , "code": "de" },
+  { "name": "Italian"   , "code": "it" },
+  { "name": "Japanese"  , "code": "ja" }
 ]
 '''
 
+SOURCE=""
+TARGET=""
+ASK_TARGET=true
+
 translate_text() {
+    source=$SOURCE
+    target=$TARGET
+    
     text="$1"
-    if [ -z "$text" ]; then
-        exit
+    [ -z "$text" ] && exit 1
+
+    if [ -z "$TARGET" ] && [ "$ASK_TARGET" = true ]; then
+        name=$(echo "$COUNTRY" | jq -r ".[].name" | \
+            $DMENU -p "Select Target Language" -mesg "$text" -select "$DEFAULT_COUNTRY")
+        target=$(echo "$COUNTRY" | jq -r ".[] | select(.name == \"$name\") | .code")
     fi
-    if [ -z "$TARGET" ]; then
-        name=$(echo "$COUNTRY" | jq -r ".[].name" | $DMENU -p "Target Language"  -mesg "Text: $text" )
-        code=$(echo "$COUNTRY" | jq -r ".[] | select(.name == \"$name\") | .code")
-    else
-        code=$TARGET
-    fi
-    if [ -n "$code" ]; then
-        result=$(trans -b --download-audio-as /tmp/trans.ts :"$code" "$text")
+
+    if [ -n "$target" ]; then
+        result=$(trans -b --download-audio-as /tmp/trans.ts "$source":"$target" "$text")
         again=true
 
-        # notify-send -i "$ICON" "Translate" "Result of '$text' in $name is '$result'"
+        if [ -n "$POP" ]; then
+            again=false
+            if awesome-client "print(true)" >/dev/null 2>&1;then 
+                awesome-client "
+                    -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
+                    local naughty = require('naughty')
+                    local awful = require('awful')
+                    local beautiful = require('beautiful')
+                    local text = \"$text\"
+                    local result = \"$result\"
+                    local add_to_dict = naughty.action({
+                        name = 'Add To Dictionary',
+                        icon_only = false,
+                    })
+                    add_to_dict:connect_signal('invoked', function()
+                        awful.spawn(string.format('dict add \"%s\" \"%s\"', text, result))
+                    end)
+                    naughty.notification ({
+                        app_name = 'translate',
+                        icon = '$ICON',
+                        timeout = 5,
+                        font = beautiful.notification_font,
+                        width = beautiful.notification_width,
+                        height = beautiful.notification_height,
+                        title = '<b>Translate</b>',
+                        message = '<b>Text:</b>\n$text\n<b>Result:</b>\n$result',
+                        actions = { add_to_dict }
+                    })
+                "
+            else
+                notify-send \
+                    --app-name=translate -t 5000 -u normal \
+                    -i "$ICON" "Translate" "<b>Text:</b>\n$text\n<b>Result:</b>\n$result"
+            fi
+        fi
 
-        echo "$text" >> $HISTFILE
         echo "$result" | xclip
 
         while $again; do
-            menu=$(echo -e "Retry\nPlay Audio\nAdd To Dictionary\nCopy To Clipboard\nExit" | \
-                $DMENU -lines 2 -p "Translate Menu" -mesg "Result: $result" -select "Copy To Clipboard")
+            menu=$(echo -e "Retry\nPlay Audio\nCopy To Clipboard\nAdd To Dictionary\nExit" |
+                $DMENU -p "Result" -mesg "$result" -select "Play Audio")
             case "$menu" in
-                "Retry")
-                    text=$(echo "$text" | cut -c 1-20)
-                    result=$(echo "$result" | cut -c 1-20)
-                    previous_text="$text -> $result"
-                    text=$($DMENU -p "Translate" -mesg "Previous: $previous_text" -input $HISTFILE)
-                    translate-text "$text"
+            "Play Audio") mpv /tmp/trans.ts & ;;
+            "Add To Dictionary")
+                notify-send -u low -i "$ICON" "Translate" "Result Added To Dictionary"
+                command -v dict >/dev/null 2>&1 && dict add "$text" "$result"
+                again=false
                 ;;
-                "Add To Dictionary")
-                    if command -v dict >/dev/null 2>&1; then
-                        dict --add "$text" "$result"
-                    fi
-                    again=false
-                    ;;
-                "Copy To Clipboard")
-                    echo -n "$result" | xclip -selection clipboard
-                    notify-send -u low -i "$ICON" "Translate" "Result saved to clipboard"
-                    again=false
+            "Copy To Clipboard")
+                echo -n "$result" | xclip -selection clipboard
+                notify-send -u low -i "$ICON" "Translate" "Result Saved To Clipboard"
+                again=false
                 ;;
-                "Play Audio")   mpv /tmp/trans.ts ;;
-                *)              again=false ;;
+            "Retry")
+                text=$(echo "$text" | cut -c 1-20)
+                result=$(echo "$result" | cut -c 1-20)
+                text=$($DMENU -p "Text")
+                translate_text "$text"
+                ;;
+            "Exit" | *) again=false ;;
             esac
         done
     fi
 }
 
-translate_image() {
-    IMG=/tmp/translate-image.png
-    TXT=/tmp/translate-ocr
-
-    # Get with `tesseract --list-langs`
-    notify-send -t $((1000 * 3)) --app-name=translate "Translate" "Select Region To Scan"
-    maim -m 10 -s $IMG || exit 1
-
-    LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Select Language for Image")
-
-    if [ -n "$LANG" ]; then
-        notify-send -t $((1000 * 3)) --app-name=screenshot "Translate" "Parse Image to Text"
-        convert $IMG \
-            -alpha off \
-            $IMG
-        # convert $IMG \
-        #     -bordercolor White -border 10x10 \
-        #     $IMG
-        tesseract \
-            -l "$LANG" \
-            --dpi 300 \
-            $IMG \
-            $TXT > /dev/null 2>&1
-
-        # https://unix.stackexchange.com/questions/587616/how-to-remove-the-empty-lines-in-a-file-in-linux
-        # Delete blankline
-        sed -i '/^[[:space:]]*$/d' $TXT.txt
-        tr -d '\n' < $TXT.txt 
-    fi
-}
-
-case "$1" in
-"-c" | "--clipboard")
-    text=$(xclip -selection clipboard -o | tr --delete '\n')
-    translate_text "$text"
-    ;;
-"-i" | "--input")
-    text=$($DMENU -p "Translate" -input $HISTFILE)
-    translate_text "$text"
-    ;;
-"-m" | "--image")
-    text=$(translate-image)
-    translate_text "$text"
-    ;;
-"-t"| "--text")
-    text=${2:?Text}
-    translate_text "$text"
-    ;;
-*)
-    echo "Usage dmenu_translate [options]"
-    echo ""
-    echo "Available Options:"
-    echo "-c  --clipboard   read text from clipboard"
-    echo "-i  --input       read text from user input"
-    echo ""
-    ;;
-esac
+while [ -n "$1" ]; do
+    case "$1" in
+        "--source") shift; SOURCE=$1 ;;
+        "--target") shift; TARGET=$1 ;;
+        "--ask-target") shift; ASK_TARGET=$1 ;;
+        "--pop") POP=true ;;
+        "-c" | "--clipboard")
+            text=$(xclip -selection clipboard -o | tr --delete '\n')
+            translate_text "$text"
+            ;;
+        "-i" | "--input")
+            text=$($DMENU -p "Text")
+            translate_text "$text"
+            ;;
+        "-m" | "--image")
+            text=$(shot --ocr)
+            translate_text "$text"
+            ;;
+        "-t" | "--text")
+            shift; text="$1"
+            [ -z "$text" ] && exit 1
+            translate_text "$text"
+            ;;
+        "-h" | "--help" | *)
+            echo "Usage $(basename "$0") [options]"
+            echo "Available Options:"
+            echo "-c, --clipboard   read text from clipboard"
+            echo "-i, --input       read text from user input"
+            echo "-m, --image       read from image text"
+            echo "-t, --text        read directly from a text. Useful for translate from selected text"
+            ;;
+    esac
+    shift
+done

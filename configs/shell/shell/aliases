@@ -1,28 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env bash
+# shellcheck disable=SC2139
 
 PERMISSION="${PERMISSION:-sudo}"       # sudo doas or any
 EDITOR="${EDITOR:-nvim}"
-TRASH_CMD=${TRASH_CMD:-"gio"}
+TRASH_CMD=${TRASH_CMD:-gio}
+
+# Find Alias
+fa() { alias | grep "$1"; }
 
 # Basic
 # ----------------------
 alias c="clear"
 alias r="exec zsh"
 alias :{q,Q}="exit"
-alias cdf="cd ${DOTS:-$HOME/.dotfiles}"
-alias cdb="cd ${BLOG:-$HOME/Documents/Blog}"
-alias cdn="cd ${NOTE_DIR:-$HOME/Documents/Notes}"
-alias cdp="cd ${PROGRAMMING_DIR:-$HOME/Documents/Programming/Dev}"
-alias cds="cd ${SCHOOL_DIR:-$HOME/Documents/School}"
 
 # EDITOR Alias
 # ----------------------
 alias se="sudoedit"
-alias {e,vi,vim}="$EDITOR"
+alias {e,vi}="$EDITOR"
 alias el="nvim -c 'lua  Util.session.last()'"
 alias ep="nvim ~/.config/nvim/lua/plugins/init.lua"
 alias {envim,ev}="$EDITOR ~/.config/nvim/init.*"
-alias zen="$EDITOR +ZenMode "
 
 # Git Alias
 # ----------------------
@@ -43,10 +41,8 @@ alias {lg,lz}="lazygit"
 
 # Better mv/cp
 # ----------------------
-if command -v "mvg" > /dev/null 2>&1; then
+if command -v mvg cpg > /dev/null 2>&1; then
     alias mv="mvg -g"
-fi
-if command -v "cpg" > /dev/null 2>&1; then
     alias cp="cpg -g"
 fi
 
@@ -62,71 +58,75 @@ fi
 
 # Safety rm
 # ----------------------
-if [[ $TRASH_CMD == "gio" ]]; then
+if [ "$TRASH_CMD" = "gio" ]; then
     alias rm="gio trash"
     alias trm="gio trash"
     alias trl="gio trash --list"
     alias trs="gio trash --restore"
-elif [[ $TRASH_CMD == "trash" ]]; then
+elif [ "$TRASH_CMD" = "trash" ]; then
     alias rm="trash"
     alias trm="trash"
     alias trl="trash-list"
     alias trs="trash-restore"
 fi
 
-# Tmux
+# tmux
 # ----------------------
-if command -v "tmux" > /dev/null 2>&1; then
-    alias tma='tmux attach -t'
-    alias tms='tmux new-session -s'
-    alias tml='tmux list-sessions'
-    alias tmk='tmux kill-session -t'
-fi
+alias tma="tmux attach -t"
+alias tmn="tmux new-session -s"
+alias tmk="tmux kill-session -t"
+alias tml="tmux list-sessions"
+alias tms="tmux source-file ~/.config/tmux/tmux.conf"
+
+# smug
+# ----------------------
+alias sm="smug"
+alias sms="smug start"
+alias smS="smug stop"
+alias sme="smug edit"
 
 # Kitty Terminal
 # ----------------------
 alias icat="kitty +kitten icat"
+
+# neofetch
+# ---------------------
 alias kifetch="neofetch --config ~/.config/neofetch/config-kitty.conf"
 alias fetch="neofetch --config none"
 
 # mpd ncmpcpp
 # ----------------------
-if command -v "ncmpcpp" > /dev/null 2>&1; then
-    alias killmpd=" killall mpd ncmpcpp ncmpcpp_cover_art.sh"
-    alias mpdcpp=" ~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
-    alias rmpd="killmpd && mpd && mpdcpp"
-fi
+alias mpd-kill="killall mpd ncmpcpp ncmpcpp_cover_art.sh"
+alias mpd-album-art="~/.config/ncmpcpp/ncmpcpp-ueberzug/ncmpcpp-ueberzug"
+alias mpd-restart="killmpd && mpd && mpdcpp"
+alias mpd-lyrics="ncmpcpp --screen lyrics"
 
 # Games
 # ----------------------
-if command -v "zsh" > /dev/null 2>&1; then
+if echo "$0" | grep "zsh" > /dev/null 2>&1; then
     alias tetris="autoload -Uz tetriscurses; tetriscurses"
 fi
 
 # cpupower
 # ----------------------
-if command -v "cpupower" > /dev/null 2>&1; then
-    alias performance="$PERMISSION cpupower frequency-set -g performance"
-    alias ondemand="$PERMISSION cpupower frequency-set -g ondemand"
-fi
+alias performance="$PERMISSION cpupower frequency-set -g performance"
+alias ondemand="$PERMISSION cpupower frequency-set -g ondemand"
 alias cpuinfo="watch -n1 \"cat /proc/cpuinfo | grep 'MHz'\""
 
 # Archlinux
 # ----------------------
-if command -v "pacman" > /dev/null 2>&1; then
+if cat /etc/*-release | grep "Arch"  > /dev/null 2>&1; then
     alias pacin="$PERMISSION pacman -S"
     alias pacsearch="pacman -Ss"
     alias pacupd="$PERMISSION pacman -Syy"
     alias pacupg="$PERMISSION pacman -Syu"
     alias pacrem="$PERMISSION pacman -Rns"
     alias pacrmorp="pacman Qtdq | $PERMISSION pacman -Rns -"
-    
-    pacsize(){
-        LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h | grep $1
-    }
-fi
 
-if command -v "paru" > /dev/null 2>&1; then
+    pacsize(){
+        LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h | grep "$1"
+    }
+
     alias pain="paru -S"
     alias pasearch="paru -Ss"
     alias paupd="paru -Syy"
@@ -137,19 +137,17 @@ fi
 
 # youtube-dl
 # ----------------------
-if command -v "youtube-dl" > /dev/null 2>&1; then
-    alias yt="youtube-dl"
-    alias yt720p="youtube-dl -f 'best[height<=720][ext=mp4]' --embed-thumbnail"
-    alias yt480p="youtube-dl -f 'best[height<=480][ext=mp4]' --embed-thumbnail"
-    alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
-fi
+alias yt="youtube-dl"
+alias yt720p="youtube-dl -f 'best[height<=720][ext=mp4]' --embed-thumbnail"
+alias yt480p="youtube-dl -f 'best[height<=480][ext=mp4]' --embed-thumbnail"
+alias ytm="youtube-dl --extract-audio --add-metadata --xattrs --embed-thumbnail --audio-quality 0 --audio-format mp3"
 
 # Xresources Alias
 # ----------------------
 alias xload="xrdb -load ~/.Xresources"
 alias xmerge="xrdb -merge ~/.Xresources"
 
-# theme-changer
+# userscript
 # ----------------------
-alias tch="theme-changer"
-
+alias tch="theme-changer"       # theme-changer
+alias nt="note"                 # Note

@@ -1,13 +1,7 @@
 session: school
-root: ~/Documents/School
+root: ~/Documents/Notes/school
 
 windows:
 - name: Notes
   commands: 
-    - clear
-- name: Schedule
-  commands: 
-    - SCHEDULE=~/Documents/School/jadwal.md schedule --show
-- name: Others
-  commands: 
-    - clear
+    - SCHEDULE=~/Documents/Notes/school/schedule.md schedule --show

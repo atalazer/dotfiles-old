@@ -53,3 +53,5 @@ matches:
   - triggers: ["elearning!", "el!"]
     replace: "https://e.smpn1boyolali.sch.id/"
 
+  - triggers: ["gmail!", "mail!", "gm!"]
+    replace: "https://mail.google.com"

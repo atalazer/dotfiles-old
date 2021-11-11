@@ -1,0 +1,69 @@
+#!/bin/sh
+
+DIR=$HOME/Documents/Dictionary
+FILE=$DIR/$(date '+%Y-%m-%d').md
+
+[ -z "$EDITOR" ] && EDITOR=nvim
+[ ! -d "$DIR" ] && mkdir -p "$DIR"
+[ ! -f "$FILE" ] && printf "|Word|Meaning|\n|---|---|\n" >"$FILE"
+
+# Tidy up file with vim-table-mode
+_tidy(){
+    command -v "nvim" > /dev/null 2>&1 && \
+        nvim --headless -c "TableModeRealign" "$FILE" -c "wq" >/dev/null 2>&1
+}
+
+# Add word to Dictionary
+add(){
+    echo "$WORD Added"
+    echo "|$WORD |$MEAN|" >>"$FILE"
+    _tidy &
+}
+
+# Show Dictionary
+show(){
+    FILE=$1
+    if command -v "glow" >/dev/null 2>&1; then
+        glow -s auto -p "$FILE"
+    elif command -v "bat" >/dev/null 2>&1; then
+        bat --color=always "$FILE"
+    else
+        cat "$FILE"
+    fi
+}
+
+# Show list of file in FZF, then pick it to edit.
+pick(){
+    file=$(fd . "$DIR" -e md --type file --color never | sed -e "s#$(realpath "$DIR")/##" -e "s#.md##" |
+        fzf --preview "glow -s auto $DIR/{}.md"
+    )
+    [ -n "$file" ] && $EDITOR "$DIR"/"$file".md
+}
+
+# Find word
+find_word(){
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    INITIAL_QUERY=""
+    FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \
+        fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+            --ansi --phony --query "$INITIAL_QUERY"
+}
+
+# Main script
+while [ -n "$1" ]; do
+    case "$1" in
+        "-d" | "--dir") shift; [ -z "$1" ] && DIR=$1 ;;
+        add)
+            shift; WORD="$1"; [ -z "$WORD" ] && exit 1
+            shift; MEAN="$1"; [ -z "$MEAN" ] && exit 1
+            add "$WORD" "$MEAN"
+        ;;
+        pick) pick ;;
+        find) find_word ;;
+        show) show "$FILE" ;;
+        edit) $EDITOR "$FILE" ;;
+        *) echo "Invalid Argument" ;;
+    esac
+    shift
+done
+

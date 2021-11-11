@@ -28,7 +28,8 @@ export YSU_MESSAGE_FORMAT="Instead use ${YELLOW}'%command'${NORMAL} use ${GREEN}
 # ---------------- Augosuggestion
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-unset ZSH_AUTOSUGGEST_USE_ASYNC
+# unset ZSH_AUTOSUGGEST_USE_ASYNC
+bindkey '^ ' autosuggest-accept
 
 # --------------- vi-mode
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
@@ -89,6 +90,12 @@ zle -N zle-keymap-select
 _fix_cursor() { echo -ne '\e[5 q'; }
 precmd_functions+=(_fix_cursor)
 
+# Reload Completions
+rc() {
+  local f; f=($HOME/.config/zsh/completions/*(.))
+  unfunction $f:t 2> /dev/null; autoload -U $f:t
+}
+
 #}}}
 
 # ===== Prompt ===== {{{
@@ -109,6 +116,11 @@ precmd_functions+=(set_win_title)
 # User alias definition
 ALIASES=${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases
 so $ALIASES
+
+# User abbreviations definition
+# ABBREVIATIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/abbreviations
+# so $ABBREVIATIONS
+# abbr import-aliases
 
 # User function definition
 FUNCTIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions
@@ -137,41 +149,11 @@ export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
 
 # Start CLI Apps
 command -v "zoxide" >/dev/null 2>&1 && eval "$(zoxide init zsh)"
-command -v "fnm" >/dev/null 2>&1 && eval "$(fnm env)"
+
+export FNM_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/fnm
+command -v "fnm" >/dev/null 2>&1 && eval "$(fnm env --fnm-dir $FNM_DIR)"
 
 export GPG_TTY="$(tty)"
-gpg-connect-agent updatestartuptty /bye >/dev/null
-
-# -------------------------------------------------
-skim-history-widget() {
-    local selected num
-    echo -ne "\r"
-    setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
-    selected=( $(fc -rl 1 |
-        SKIM_DEFAULT_OPTIONS="--height=40% $SKIM_DEFAULT_OPTIONS -n2..,.. --tiebreak=score,index \
-        $SKIM_CTRL_R_OPTS --query=${(qqq)LBUFFER} -m" sk) 
-    )
-    local ret=$?
-    if [ -n "$selected" ]; then
-        num=$selected[1]
-        if [ -n "$num" ]; then
-            zle vi-fetch-history -n $num
-        fi
-    fi
-    zle reset-prompt
-    return $ret
-}
-zle -N skim-history-widget
-bindkey '^R' skim-history-widget
-
-skim-redraw-prompt() {
-    local precmd
-    for precmd in $precmd_functions; do
-        $precmd
-    done
-    zle reset-prompt
-}
-zle -N skim-redraw-prompt
 
 # }}}
 

@@ -1,16 +1,15 @@
 #!/bin/sh
 # vim: ft=sh ts=4 sw=4:
 
-[ -f $HOME/.profile ] && . $HOME/.profile
-[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile ] && . ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile
+[ -f "$HOME/.profile" ] && source "$HOME/.profile"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" ] && \
+    source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
 
 # Lunch dbus-launch, this is important for some app
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
 
-# For several script and if using awesomeWM
-export CHECK_AWESOME_CLIENT=true
 
 # Initialization
 xset -b                 # Disable terminal bell
@@ -22,6 +21,7 @@ light -I                        # Restore Brightness
 # wal -n -t -R                  # Restore wal
 
 # Autostart Apps
+gpg-connect-agent updatestartuptty /bye >/dev/null                      # GPG Agent
 /lib/mate-polkit/polkit-mate-authentication-agent-1 >/dev/null 2>&1 &   # Polkit Agent
 clipmenud >/dev/null 2>&1 &                                             # Clipboard Manager
 mpd >/dev/null 2>&1 &                                                   # Music Player Daemon

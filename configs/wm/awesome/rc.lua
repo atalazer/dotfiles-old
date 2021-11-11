@@ -64,17 +64,17 @@ user = {
 
     -- >> Default applications <<
     -- Check configs/apps.lua for more
-    browser = env("BROWSER") or "firefox",
+    browser = "defapps run browser",
     file_manager = env("FILEMAN") or "thunar",
-    terminal = env("TERM_CMD") or "kitty",
+    terminal = "defapps run terminal",
     floating_terminal = "kitty --name floating_terminal",
     editor = "kitty --name editor -e nvim",
     email_client = "kitty --name email -e neomutt",
     music_client = "kitty -o font_size=12 --name music -e ncmpcpp-ueberzug",
 
     -- >> Web Search <<
-    web_search_cmd = "xdg-open https://duckduckgo.com/?q=",
-    -- web_search_cmd = "xdg-open https://www.google.com/search?q=",
+    web_search_cmd = "opener https://duckduckgo.com/?q=",
+    -- web_search_cmd = "opener https://www.google.com/search?q=",
 
     -- Autostart apps ( Lets ~/.xinitrc or ~/.xprofile handle this )
     autostart_debug = false,
@@ -330,16 +330,17 @@ require("configs.tags")
 
 -- Rules
 -- ===================================================================
--- Rules to apply to new clients (through the "manage" signal).
 require("configs.rules")
 
 -- Signals
 -- ===================================================================
-require("configs.window")
-
 -- Scratchpad modules
 require("configs.scratchpad")
 
+-- Modules
+require("configs.window")
+
+-- Signals
 require("configs.signals")
 
 -- Show the dashboard on login
@@ -360,12 +361,5 @@ end)
 -- Garbage collection
 -- Enable for lower memory consumption
 -- ===================================================================
-gears.timer({
-    timeout = 15,
-    autostart = true,
-    callback = function()
-        collectgarbage()
-        collectgarbage("setpause", 110)
-        collectgarbage("setstepmul", 1000)
-    end,
-})
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)

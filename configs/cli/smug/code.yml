@@ -1,0 +1,7 @@
+session: code
+root: ~/Documents/Programming
+
+windows:
+- name: Main
+  commands: 
+    - clear

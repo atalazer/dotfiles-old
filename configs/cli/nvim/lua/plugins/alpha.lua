@@ -1,9 +1,31 @@
 -- Stole from https://github.com/hhn-pham/dotfiles/blob/main/.config/nvim/lua/configs/alpha.lua
 
 local alpha = require("alpha")
-local telescope = require("plugins.telescope")
+local telescope_exist, telescope = pcall(require, "telescope")
+local fzf_exist, fzf = pcall(require, "fzf-lua")
 
 local section = {}
+
+-- string(for vim command) or function
+local cmd = {}
+cmd.find_files = ""
+cmd.recent_files = ""
+cmd.frecency = ""
+cmd.marks = ""
+cmd.last_session = Util.session.last
+cmd.quit = "Sayonara"
+
+if telescope_exist then
+    cmd.find_files = "Telescope files"
+    cmd.recent_files = "Telescope oldfiles"
+    cmd.frecency = "Telescope frecency"
+    cmd.marks = "Telescope marks"
+else
+    cmd.find_files = "FzfLua files"
+    cmd.recent_files = "FzfLua oldfiles"
+    cmd.frecency = "FzfLua oldfiles"
+    cmd.marks = "FzfLua marks"
+end
 
 section.header = {
     type = "text",
@@ -65,11 +87,12 @@ end
 section.buttons = {
     type = "group",
     val = {
-        button("CTRL p", "  Find File", "Telescope find_files"),
-        button("SPC f o", "  Recents", "Telescope oldfiles"),
-        button("SPC f f", "  Frecency", telescope.frecency ),
-        button("SPC f d", "  Bookmarks", "Telescope marks"),
-        button("F1", "  Session", Util.session.last),
+        button("CTRL p",    "  Find File", cmd.find_files),
+        button("SPC f o",   "  Recents",   cmd.recent_files),
+        button("SPC f f",   "  Frecency",  cmd.frecency ),
+        button("SPC f d",   "  Bookmarks", cmd.marks),
+        button("F1",        "  Session",   cmd.last_session),
+        button("",          "  Quit",      cmd.quit)
     },
     opts = { spacing = 1 },
 }

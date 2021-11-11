@@ -16,26 +16,27 @@ x-scheme-handler/https=browser.desktop;
 
 # Documents
 text/plain=text.desktop;
+text/markdown=text.desktop;
 text/x-lua=text.desktop;
 
 application/postscript=pdf.desktop;
 application/pdf=pdf.desktop;
 application/epub+zip=pdf.desktop;
 
-application/vnd.openxmlformats-officedocument.presentationml.presentation=onlyoffice.desktop;
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=onlyoffice.desktop;
-application/vnd.openxmlformats-officedocument.wordprocessingml.document=onlyoffice.desktop;
+application/vnd.openxmlformats-officedocument.presentationml.presentation=office.desktop;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=office.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=office.desktop;
+
+# File
+inode/directory=file.desktop
+application/zip=engrampa.desktop;
+application/vnd.rar=engrampa.desktop;
 
 # Image
 image/png=image.desktop;
 image/jpeg=image.desktop;
 image/gif=image.desktop;
 image/webp=image.desktop
-
-# File
-inode/directory=file.desktop
-application/zip=engrampa.desktop;
-application/vnd.rar=engrampa.desktop;
 
 # Link
 application/x-extension-htm=browser.desktop;

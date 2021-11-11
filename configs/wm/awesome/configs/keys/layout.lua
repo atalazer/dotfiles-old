@@ -56,8 +56,8 @@ local keys = gears.table.join(
         ["WA|Down"] = { utils.columns.decrease, "Decrease the number of columns" },
         ["WA|Up"] = { utils.columns.increase, "Increase the number of columns" },
 
-        ["W|Space"] = { utils.layout.next, "Select Next Layout" },
-        ["WS|Space"] = { utils.layout.prev, "Select Prev Layout" },
+        ["W|space"] = { utils.layout.next, "Select Next Layout" },
+        ["WS|space"] = { utils.layout.prev, "Select Prev Layout" },
 
         ["WA|f"] = { utils.layout.floating, "Set Floating Layout" },
         ["WA|t"] = { utils.layout.tilling, "Set Tilling Layout" },

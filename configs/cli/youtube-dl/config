@@ -1,6 +1,11 @@
-# Faster Download with aria2
---external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M'
+# vim: ft=conf commentstring=#%s :
 
-# Save in ~/Videos
--o ~/Videos/%(title)s.%(ext)s
+# ------- Faster Download with aria2
+--external-downloader aria2c
+
+# Argument handle by config (see ~/.config/aria2/aria2.conf)
+# --external-downloader-args "-c -j 2 -x 2 -s 2"
+
+# ------- Set Filename
+-o %(title)s.%(ext)s
 

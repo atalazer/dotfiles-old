@@ -5,6 +5,28 @@ local beautiful = require("beautiful")
 -- local keys = require("configs.keys")
 local decorations = require("decorations")
 
+-- Global variable
+-- Required by apps and tags rules
+-- ===== internet related
+browser_class = { "firefox", "Nightly", "Brave-browser" }
+browser_instance = { "qutebrowser", "brave-browser", "Navigator" }
+chatting_class = { "TelegramDesktop", "KotatogramDesktop", "whatsdesk" }
+-- ===== documents/media related
+pdf_viewer_class = { "Okular", "Zathura", "Evince" }
+image_editor_class = { "Gimp", "Inkscape", }
+image_viewer_class = { "feh", "Sxiv", "Viewnior" }
+video_player_class = { "mpv", "vlc", "MPlayer" }
+office_class = { "DesktopEditors", "Wps" }
+office_instance = { "libreoffice", "DesktopEditors", "wps" }
+-- ===== others
+terminal_instance = { "Alacritty", "kitty" }
+terminal_class = { "Alacritty", "kitty", }
+file_manager_class = { "Nemo", "Thunar", "file" }
+file_archive_class = { "Engrampa", "File-roller" }
+password_manager_class = { "KeePassXC" }
+game_class = { "osu!", "opsu", "opsu!" }
+game_instance = { "osu!", "opsu", "opsu!" }
+
 ruled.client.connect_signal("request::rules", function()
     -- All clients will match this rule {{{
     ruled.client.append_rule({

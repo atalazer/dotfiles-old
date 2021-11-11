@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # vim: ft=sh: sw=4: ts=4:
+# shellcheck disable=SC2091
 
 default_config() {
     _XDG_="$(xdg-user-dir PICTURES)/Screenshots"
@@ -47,16 +48,17 @@ default_config() {
     max_icon="$ASSET_DIR/maximize.png"
 }
 
-CONF=$HOME/.config/script/shot.conf
+default_config
 
+CONF=$HOME/.config/script/shot.conf
 # shellcheck source=/dev/null
-if [ -f "$CONF" ]; then source "$CONF"; else default_config; fi
+[ -f "$CONF" ] && source "$CONF"
 
 if [ ! -d "$SCREENSHOT_DIR" ]; then
     mkdir -p "$SCREENSHOT_DIR"
 fi
 
-clean() {
+_clean() {
     if [ -f $TMP_IMG ]; then
         # /usr/bin/rm "$TMP_IMG"
         /usr/bin/mv $TMP_IMG "${TMP_FILE}-$(date '+%H%M%S').${IMG_EXT}"
@@ -69,17 +71,19 @@ clean() {
 }
 
 # Check DE/WM
-check_wm() {
+_check_wm() {
     # Identify environment
     DE="${DESKTOP_STARTUP_ID}"
-    if [ -n "$CHECK_AWESOME_CLIENT" ]  || [ -n "$DE" ] && [[ "$DE" = *"awesome"* ]]; then
+    if [ -n "$DE" ] && [[ "$DE" = *"awesome"* ]] \
+        || [ -n "$CHECK_AWESOME_CLIENT" ] \
+        || awesome-client "print(true)"; then
         echo "AWESOME"
         return
     fi
     echo "NOT_AWESOME"
 }
 
-parse() {
+_parse() {
     notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Parsing Image"
 
     IMG=$TMP_IMG
@@ -90,14 +94,10 @@ parse() {
     if [ $add_text = true ]; then
         if [ -n "$text" ]; then
             _text=$text
-            if width <= 200; then
-                _text="~"
-            fi
+            [ "$width" -le 200 ] && _text="~"
         else
             _text="$long_text"
-            if width <= 200; then
-                _text="$short_text"
-            fi
+            [ "$width" -le 200 ] && _text="$short_text"
         fi
     else
         _text=""
@@ -187,11 +187,11 @@ parse() {
 
 }
 
-notify() {
+_notify() {
     MSG=$1
     FILE=$TMP_IMG
 
-    if [ "$(check_wm)" = "AWESOME" ]; then
+    if [ "$(_check_wm)" = "AWESOME" ]; then
         awesome-client "
         -- IMPORTANT NOTE: THIS PART OF THE SCRIPT IS LUA!
         local naughty = require('naughty')
@@ -225,7 +225,7 @@ notify() {
             name = 'Rename',
             icon_only = false,
         }
-        
+
         local open_image = naughty.action {
             name = 'Open',
             icon_only = false,
@@ -298,34 +298,18 @@ notify() {
 
         notify_send(message, { open_image, to_clipboard, save_image, delete_image })
         "
-    elif [ "$(check_wm)" = "NOT_AWESOME" ]; then
-        notify-send --app-name=screenshot "Shot" "${MSG}"
+    elif [ "$(_check_wm)" = "NOT_AWESOME" ]; then
+        notify-send --app-name=screenshot -i $FILE "Shot" "${MSG}"
     fi
-}
-
-to_clip() {
-    notify-send --app-name=screenshot "Shot" "Screenshot Saved to Clipboard"
-    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-        wl-copy <$TMP_IMG
-    else
-        xclip -selection clipboard -i $TMP_IMG -t image/png
-    fi
-
 }
 
 _shot() {
-    clean
+    _clean
     if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
         case $1 in
-        normal)
-            grimshot output $TMP_IMG || exit 1
-            ;;
-        select)
-            grimshot area $TMP_IMG || exit 1
-            ;;
-        active)
-            grimshot active $TMP_IMG || exit 1
-            ;;
+        normal) grimshot output $TMP_IMG || exit 1 ;;
+        select) grimshot area $TMP_IMG || exit 1 ;;
+        active) grimshot active $TMP_IMG || exit 1 ;;
         delay)
             notify-send -t $((1000 * 1)) --app-name=screenshot "Shot" "Screenshot Taken in ${sleep}s ..."
             sleep $sleep &&
@@ -381,38 +365,29 @@ image_to_text() {
     IMG=/tmp/image-ocr.png
     TXT=/tmp/shot-ocr
 
-    # Get with `tesseract --list-langs`
-    notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Select Region To Scan"
-    # _shot select
-    maim -m 10 -s $IMG || exit 1
+    notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Select Text To Scan"
+    maim -u -m 10 -s $IMG || exit 1
 
-    LANG=$(echo -e "ind\neng" | rofi -dmenu -i -l 5 -p "Target Language")
+    # Get with `tesseract --list-langs`
+    LANG_LIST='''
+    [
+        ["Indonesia", "ind"],
+        ["English", "eng"]
+    ]
+    '''
+    MENU=$(echo "$LANG_LIST" | jq -r ".[][0]" | $DMENU)
+    LANG=$(echo "$LANG_LIST" | jq -r ".[] | select(.[0] == \"$MENU\") | .[1]")
 
     if [ -n "$LANG" ]; then
 
         notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Parse Image to Text"
 
-        # --- Improve Quality
-        # https://tesseract-ocr.github.io/tessdoc/ImproveQuality
-        # https://stackoverflow.com/questions/9480013/image-processing-to-improve-tesseract-ocr-accuracy/10034214#10034214
-
         # - Add white border
-        # convert $TMP_IMG \
-        #     -bordercolor White -border 10x10 \
-        #     $IMG
-
         # - Remove Transparancy
-        convert $TMP_IMG \
+        convert $IMG \
+            -bordercolor White -border 10x10 \
             -alpha off \
             $IMG
-
-        # - Textcleaner: http://www.fmwconcepts.com/imagemagick/textcleaner/index.php
-        # if command -v "textcleaner" > /dev/null 2>&1; then
-        #    textcleaner \
-        #       -g -e none \
-        #       -s 1 \
-        #       $IMG $IMG
-        # fi
 
         tesseract \
             -l "$LANG" \
@@ -424,78 +399,61 @@ image_to_text() {
         # Delete blankline
         sed -i '/^[[:space:]]*$/d' $TXT.txt
 
-        result=$(tr --delete '^L' < $TXT.txt )
-        countword=$(wc -w <$TXT.txt)
-
+        result=$(cat $TXT.txt)
+        notify-send -t $((1000 * 3)) --app-name=screenshot "Shot" "Text Copied To Clipboard"
         echo "$result" | xclip -selection clipboard
-        if [ "$countword" -le 30 ]; then
-            notify-send -t $((1000 * 5)) --app-name=screenshot \
-                "Shot" "<b>Text Copied to Clipboard</b>:\n$result"
-        else
-            notify-send -t $((1000 * 3)) --app-name=screenshot \
-                "Shot" "<b>Text Copied to Clipboard</b>"
-        fi
+
+        echo "$result"
     fi
 }
 
-_noparse() {
+scan_qr(){
+    tmp_file=$(mktemp -t maimscript-XXXXXX)
+    maim -m 10 -s "$tmp_file" || exit
+    scanresult=$(zbarimg --quiet --raw "$tmp_file" | tr -d "\n")
+
+    if [ -z "$scanresult" ]; then
+        notify-send "Shot" "No scan data found"
+    else
+        echo "$scanresult" | xclip -selection clipboard
+        convert "$tmp_file" -resize 75x75 "$tmp_file"
+        notify-send -i "$tmp_file" "Shot" "$scanresult\n(Copied To Clipboard)"
+    fi
+
+    rm "$tmp_file"
+}
+
+noparse() {
     case $1 in
-    full)
-        _shot normal &&
-            notify "Screenshot Acquired"
-        ;;
-    active)
-        _shot active &&
-            notify "Screenshot Acquired"
-        ;;
-    select)
-        _shot select &&
-            notify "Screenshot Acquired"
-        ;;
-    delay)
-        _shot delay &&
-            notify "Screenshot Acquired"
-        ;;
+    full) _shot normal && _notify "Screenshot Acquired" ;;
+    active) _shot active && _notify "Screenshot Acquired" ;;
+    select) _shot select && _notify "Screenshot Acquired" ;;
+    delay) _shot delay && _notify "Screenshot Acquired" ;;
     esac
 }
 
-_parse() {
+parse() {
     case $1 in
-    full)
-        _shot normal &&
-            parse &&
-            notify "Screenshot Acquired"
-        ;;
-    active)
-        _shot active &&
-            parse &&
-            notify "Screenshot Acquired"
-        ;;
-    select)
-        _shot select &&
-            parse &&
-            notify "Screenshot Acquired"
-        ;;
-    delay)
-        _shot delay &&
-            parse &&
-            notify "Screenshot Acquired"
-        ;;
+    full) _shot normal && _parse && _notify "Screenshot Acquired" ;;
+    active) _shot active && _parse && _notify "Screenshot Acquired" ;;
+    select) _shot select && _parse && _notify "Screenshot Acquired" ;;
+    delay) _shot delay && _parse && _notify "Screenshot Acquired" ;;
     esac
 }
 
 interactive() {
     OPTIONS='''
     [
-        ["Active",                  "_parse active"],
-        ["Delay",                   "_parse delay"],
-        ["Fullscreen",              "_parse full"],
-        ["Select",                  "_parse select"],
-        ["Image to Text",           "image)to_text"],
-        ["Active(N)",               "_noparse active"],
-        ["Fullscreen(N)",           "_noparse full"],
-        ["Delay(N)",                "_noparse delay"],
-        ["Select(N)",               "_noparse select"]
+        ["Active",                  "parse active"],
+        ["Delay",                   "parse delay"],
+        ["Fullscreen",              "parse full"],
+        ["Select",                  "parse select"],
+        ["Image to Text",           "image_to_text"],
+        ["Active(N)",               "noparse active"],
+        ["Fullscreen(N)",           "noparse full"],
+        ["Delay(N)",                "noparse delay"],
+        ["Select(N)",               "noparse select"],
+        ["Scan QR",                 "scan_qr"]
     ]
     '''
     menu=$(echo "$OPTIONS" | jq -r ".[][0]" | $DMENU)
@@ -504,14 +462,15 @@ interactive() {
 
 OPT=${1:-interactive}
 case $OPT in
--a | active) _parse active ;;
--d | delay) _parse delay ;;
--f | full) _parse full ;;
--s | select) _parse select ;;
--A | active_noparse) _noparse active ;;
--D | delay_noparse) _noparse delay ;;
--F | full_noparse) _noparse full ;;
--S | select_noparse) _noparse select ;;
+-a | active) parse active ;;
+-d | delay) parse delay ;;
+-f | full) parse full ;;
+-s | select) parse select ;;
+-A | active_noparse) noparse active ;;
+-D | delay_noparse) noparse delay ;;
+-F | full_noparse) noparse full ;;
+-S | select_noparse) noparse select ;;
 -i | interactive) interactive ;;
--o | ocr | image-to-text) image_to_text ;;
+-o | --ocr) image_to_text ;;
+-q | --qr) scan_qr ;;
 esac

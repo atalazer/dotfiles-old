@@ -1,16 +1,17 @@
+# vim: sw=4 ts=4 commentstring=#%s :
 #
 # Autostart
 #
-set $gnome-schema org.gnome.desktop.interface
-exec_always {
-    gsettings set $gnome-schema gtk-theme "Kripton"
-    gsettings set $gnome-schema icon-theme "Papirus"
-    gsettings set $gnome-schema cursor-theme "Adwaita"
-    gsettings set $gnome-schema font-name "Inter 11"
-}
+
+# set $gnome-schema org.gnome.desktop.interface
+# exec_always {
+#     gsettings set $gnome-schema gtk-theme "Kripton"
+#     gsettings set $gnome-schema icon-theme "Papirus"
+#     gsettings set $gnome-schema cursor-theme "Adwaita"
+#     gsettings set $gnome-schema font-name "Inter 11"
+# }
 
 exec {
-    sh -c "~/.config/sway/set-env"
     wl-paste -t text --watch clipman store
     wal -n -R
     light -S 20
@@ -43,10 +44,10 @@ set $ws5 5
 set $ws6 6
 
 set $term           kitty
-set $browser        firefox
+set $browser        qutebrowser
 set $file_manager   thunar
-set $menu           ~/.local/script/rofi_center
-set $menu_alt       ~/.local/script/rofi_global_menu
+set $menu           ~/.local/script/rofi-center
+set $menu_alt       ~/.local/script/rofi-spotlight
 
 # Enable xwayland
 xwayland enable
@@ -100,17 +101,17 @@ bindsym $alt+Print              exec ~/.local/script/shot
 bindsym $mod+Print              exec ~/.local/script/rofi_shot
 
 ### Brightness controller
-bindsym XF86MonBrightnessUp     exec ~/.local/script/brightness-controller up
-bindsym XF86MonBrightnessDown   exec ~/.local/script/brightness-controller down
+bindsym XF86MonBrightnessUp     exec ~/.local/script/brightnessctl up
+bindsym XF86MonBrightnessDown   exec ~/.local/script/brightnessctl down
 
 ### Volume controller
-bindsym XF86AudioRaiseVolume    exec ~/.local/script/volume-controller up
-bindsym XF86AudioLowerVolume    exec ~/.local/script/volume-controller down
+bindsym XF86AudioRaiseVolume    exec ~/.local/script/volumectl up
+bindsym XF86AudioLowerVolume    exec ~/.local/script/volumectl down
 
 ### Music controller
-bindsym XF86AudioNext           exec ~/.local/script/music-controller next
-bindsym XF86AudioPrev           exec ~/.local/script/music-controller prev
-bindsym XF86AudioPlay           exec ~/.local/script/music-controller toggle
+bindsym XF86AudioNext           exec ~/.local/script/musicctl next
+bindsym XF86AudioPrev           exec ~/.local/script/musicctl prev
+bindsym XF86AudioPlay           exec ~/.local/script/musicctl toggle
 
 ### Gaps
 bindsym $mod+equal              gaps inner current set 5;       gaps outer current set 0
@@ -234,7 +235,7 @@ for_window [window_type="menu"]             floating enable, border normal
 #
 ### Colors
 include "/home/atalariq/.cache/wal/colors-sway"
-output * background /home/atalariq/.wallpaper/tokyonight-minimal.jpg fill
+output * background /home/atalariq/.local/wallpaper/tokyonight-minimal.jpg fill
 
 # class                 border          background      text         indicator         child_border
 client.focused          $color8         $background     $foreground  $color4           $color8

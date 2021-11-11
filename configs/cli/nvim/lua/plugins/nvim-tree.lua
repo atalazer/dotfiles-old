@@ -2,18 +2,9 @@ local M = {}
 local dev = true
 
 M.setup = function()
-    vim.g.nvim_tree_ignore = {
-        ".git",
-        "node_modules",
-        "__sapper__",
-        ".routify",
-        "dist",
-        ".cache",
-    }
     vim.g.nvim_tree_gitignore = 0
     vim.g.nvim_tree_quit_on_open = 0
     vim.g.nvim_tree_indent_markers = 1
-    vim.g.nvim_tree_hide_dotfiles = 0
     vim.g.nvim_tree_git_hl = 1
     vim.g.nvim_tree_highlight_opened_files = 1
     vim.g.nvim_tree_root_folder_modifier = ":~"
@@ -69,15 +60,24 @@ end
 M.config = function()
     local cb = require("nvim-tree.config").nvim_tree_callback
     require("nvim-tree").setup({
+        hide_dotfiles = 0,
         disable_netrw = false,
         hijack_netrw = true,
         hijack_cursor = true,
-        lsp_diagnostics = true,
+        diagnostics = { enable = true },
         update_cwd = true,
         update_focused_file = {
             enable = true,
             update_cwd = true,
             ignore_list = {},
+        },
+        ignore = {
+            ".git",
+            "node_modules",
+            "__sapper__",
+            ".routify",
+            "dist",
+            ".cache",
         },
         view = {
             width = 30,
@@ -98,8 +98,8 @@ M.config = function()
                     { key = ",", cb = cb("toggle_ignored") },
                     { key = ".", cb = cb("toggle_dotfiles") },
                     { key = "<C-r>", cb = cb("refresh") },
-                    { key = {"n","a"}, cb = cb("create") },
-                    { key = {"<DEL>", "d"}, cb = cb("remove") },
+                    { key = "a", cb = cb("create") },
+                    { key = "d", cb = cb("remove") },
                     { key = "r", cb = cb("rename") },
                     { key = "R", cb = cb("full_rename") },
                     { key = "x", cb = cb("cut") },

@@ -45,11 +45,9 @@ local dock_recently_focused = {}
 -- items should always be visible, and the functions which launch them.
 -- Order matters!
 dock_pinned_apps = {
-    -- { class = "firefox", launcher = apps.browser },
-    -- { class = "qutebrowser", launcher = apps.browser },
-    -- { class = "kitty", launcher = apps.terminal or user.terminal },
-    -- { class = "email", launcher = apps.mail },
-    -- { class = "files", launcher = apps.file_manager },
+    { class = "firefox", launcher = apps.browser },
+    { class = "email", launcher = apps.mail },
+    { class = "editor", launcher = apps.editor },
 }
 
 ----------------------------------------------------------------------------
@@ -200,19 +198,6 @@ local function generate_dock_icon(c, bg, fg, symbol)
 
     -- Store class here because c will become nil whenever it closes
     local class = c.class
-    local screen = awful.screen.focused()
-
-    -- Task Preview
-    w:connect_signal("mouse::enter", function()
-        if class_window_exists(class) and not dock_pinned_apps[class] then
-            awesome.emit_signal("bling::task_preview::visibility", screen, true, c)
-        end
-    end)
-    w:connect_signal("mouse::leave", function()
-        if class_window_exists(class) and not dock_pinned_apps[class] then
-            awesome.emit_signal("bling::task_preview::visibility", screen, false, c)
-        end
-    end)
 
     -- Set mousebinds
     w:buttons(gears.table.join(
@@ -329,15 +314,19 @@ local dock = wibox.widget({
 -- Initialize dock with pinned clients
 for i = 1, #dock_pinned_classes do
     local class = dock_pinned_classes[i]
-    i = class_icons[class] or class_icons["_"]
+    local i = class_icons[class] or class_icons["_"]
     dock_class_count[class] = dock_class_count[class] and (dock_class_count[class] + 1) or 0
     dock_items[class] = generate_dock_icon({ class = class }, item_bg, i.color, i.symbol)
     dock:add(dock_items[class])
 end
 
 -- >> Helper functions used by signals
-local add_client = function(c)
-    if not c.class then return end
+local add_client
+local remove_client
+add_client = function(c)
+    if not c.class then
+        return
+    end -- Some windows have no class (rare)
 
     -- Increment class count
     dock_class_count[c.class] = (dock_class_count[c.class] or 0) + 1
@@ -375,8 +364,10 @@ local add_client = function(c)
     c:connect_signal("property::class", handle_class_change)
 end
 
-local remove_client = function(c)
-    if not c.class then return end
+remove_client = function(c)
+    if not c.class then
+        return
+    end -- Some clients have no class (rare)
 
     -- Decrement class count
     dock_class_count[c.class] = dock_class_count[c.class] - 1
@@ -401,7 +392,9 @@ local remove_client = function(c)
 end
 
 local function update_focus(c)
-    if not c.class then return end
+    if not c.class then
+        return
+    end -- Some windows have no class (rare)
 
     local item = dock_items[c.class]
     if not item then

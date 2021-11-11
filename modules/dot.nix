@@ -26,6 +26,7 @@ in
     ".config/mpv".source = link "configs/gui/mpv";
     ".config/qutebrowser".source = link "configs/gui/qutebrowser";
     ".config/viewnior".source = link "configs/gui/viewnior";
+    ".config/zathura".source = link "configs/gui/zathura";
     ".config/tridactyl".source = link "configs/gui/tridactyl";
 
     ### CLI Stuff

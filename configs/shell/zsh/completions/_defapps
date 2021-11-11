@@ -1,0 +1,42 @@
+#compdef defapps
+
+_get_desktop_file(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+    _values -C "desktop file" ${$(find -L "$prefix" \( -name .git -o -name .gitattributes -o -name mimeapps.list \) \
+        -prune -o -type f -print 2>/dev/null \
+        | sed -e "s#${prefix}/##" -e "s#.desktop##" | sort):-""}
+}
+
+_defapps () {
+    typeset -A opt_args
+    local ret=1
+	local cmd
+	if (( CURRENT > 2)); then
+		cmd=${words[2]}
+		curcontext="${curcontext%:*:*}:defapps-$cmd"
+		(( CURRENT-- ))
+		shift words
+		# Run the completion for the subcommand
+		case "${cmd}" in
+            (get|set|run|exec) _get_desktop_file ;;
+		esac
+	else
+		local -a subcommands
+		subcommands=(
+            "get:get default app"
+            "set:set default app"
+            "run:run app"
+            "exec:alias for run command"
+		)
+		_describe -t commands 'command' subcommands
+		_arguments : \
+			"--version[Show apps version]" \
+			"--help[Show help message]"
+	fi
+
+    return ret
+}
+
+_defapps

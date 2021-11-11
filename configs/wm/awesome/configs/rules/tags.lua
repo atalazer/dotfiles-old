@@ -1,164 +1,70 @@
 local awful = require("awful")
 local ruled = require("ruled")
 
+-- Flaten table
+-- Required for make rules
+local function flatten(flattened, target)
+    flattened = flattened or {}
+    for _--[[ i --]], element in ipairs(target) do
+        if type(element) == "table" then
+            flatten(flattened, element)
+        else
+            table.insert(flattened, element)
+        end
+    end
+    return flattened
+end
+
+local rule_tags = {
+    ["1"] = {
+        class = {},
+        instance = { terminal_instance },
+        name = {},
+    },
+    ["2"] = {
+        class = { browser_class, chatting_class },
+        instance = { browser_instance },
+        name = {},
+    },
+    ["3"] = {
+        class = { file_manager_class, image_editor_class, office_class, "Gucharmap", "mail" },
+        instance = { office_instance, "mail" },
+        name = { "Mozilla Firefox (Private Browsing)" },
+    },
+    ["4"] = {
+        class = { game_class },
+        instance = { game_instance },
+        name = {},
+    },
+    ["5"] = {
+        class = { "Steam" },
+        instance = {},
+        name = { "Steam" },
+    },
+}
+
 ruled.client.connect_signal("request::rules", function()
-    -- Terminal {{{
-    ruled.client.append_rule({
-        rule_any = {
-            instance = { "Alacritty", "kitty" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[1].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Browser {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "firefox",
-                "Nightly",
+    local function make_rules_for_tag(tag_number)
+        ruled.client.append_rule({
+            rule_any = {
+                class = flatten({}, rule_tags[tag_number].class),
+                instance = flatten({}, rule_tags[tag_number].instance),
+                name = flatten({}, rule_tags[tag_number].name),
             },
-            instance = {
-                "qutebrowser",
+            except_any = {
+                role = { "GtkFileChooserDialog" },
+                instance = { "Toolkit" },
+                type = { "dialog" },
             },
-        },
-        except_any = {
-            role = { "GtkFileChooserDialog" },
-            instance = { "Toolkit" },
-            type = { "dialog" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[2].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Mail {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = { "mail" },
-            instance = { "mail" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[3],
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Chatting {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "TelegramDesktop",
-                "KotatogramDesktop",
-                "whatsdesk",
+            properties = {
+                tag = awful.screen.focused().tags[tonumber(tag_number)].name,
+                switch_to_tags = true,
             },
-            name = {
-                "Mozilla Firefox (Private Browsing)",
-            },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[3],
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
+        })
+    end
 
-    -- File Manager {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = { "Nemo", "Thunar" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[3].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
+    for number, _ --[[ rules --]] in pairs(rule_tags) do
+        make_rules_for_tag(number)
+    end
 
-    -- Gucharmap {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = { "Gucharmap" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[3].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Office {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "DesktopEditors",
-                "Wps",
-            },
-            instance = {
-                "libreoffice",
-                "DesktopEditors",
-                "wps",
-            },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[3].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Image editing {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Gimp",
-                "Inkscape",
-            },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[3].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Games {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "osu!",
-                "opsu",
-                "opsu!",
-            },
-            instance = {
-                "osu!",
-                "opsu",
-                "opsu!",
-            },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[4].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
-
-    -- Game clients/launchers {{{
-    ruled.client.append_rule({
-        rule_any = {
-            class = { "Steam" },
-            name = { "Steam" },
-        },
-        properties = {
-            tag = awful.screen.focused().tags[5].name,
-            switch_to_tags = true,
-        },
-    })
-    -- }}}
 end)

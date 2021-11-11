@@ -150,6 +150,7 @@ keys.clientkeys = gears.table.join(
     }),
 
     l.set_keymap("Client: Control", {
+        ["W|s"] = { bling.module.window_swallowing.start, "Window Swallow" },
         ["WC|space"] = { utils.control.floating, "Toggle Floating" },
         ["WC|Return"] = { utils.control.master, "Set To Master" },
         ["W|o"] = { utils.control.opacity.increase, "Increase Opacity" },

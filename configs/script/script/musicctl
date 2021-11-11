@@ -1,6 +1,18 @@
 #!/bin/sh
 
-player="mpd"
+player_state_file="$HOME/.cache/music-player"
+[ ! -f "$player_state_file" ] && echo "mpd" > "$player_state_file"
+
+player="$(cat "$player_state_file")"
+
+player_list="mpd mpv spotify"
+
+pick(){
+   player="$(echo "$player_list" | tr " " "\n" )"
+   picker=$(printf "mpd\nmpv\nspotify" | rofi -dmenu )
+   echo "$picker" > "$player_state_file"
+   echo "Set current player to $picker"
+}
 
 if [ "$player" = "mpd" ]; then
     command -v "mpc" >/dev/null 2>&1 || echo "Please Install mpc first"
@@ -10,6 +22,14 @@ if [ "$player" = "mpd" ]; then
     next="mpc -q next"
     status="mpc status"
     title="$(mpc --format '[%title%|%file%]' current)"
+elif [ "$player" = "mpv" ]; then
+    command -v "mpvc" >/dev/null 2>&1 || echo "Spotify not installed"
+    prev="mpvc --toggle"
+    next="mpvc --toggle"
+    stop="mpvc --stop"
+    toggle="mpvc --toggle"
+    status="mpvc"
+    title="MPV"
 elif [ "$player" = "spotify" ]; then
     command -v "spotify" >/dev/null 2>&1 || echo "Spotify not installed"
     prev="playerctl -p spotify previous"
@@ -29,15 +49,16 @@ help() {
     cat <<EOF
 Usage for $(basename "$0"):
   Command:
-    next            Play next
-    prev            Play previous
-    status          Show status
-    stop            Stop music
-    toggle          Toggle music
-    titile          Show title
+    next          Play next
+    prev          Play previous
+    status        Show status
+    stop          Stop music
+    toggle        Toggle music
+    titile        Show title
+    pick          Pick player
   Options
     -h, --help      Show this message
-    -p, --player    Change music player (default: mpd, available: mpd,spotify)
+    -p, --player    Change music player (default: mpd, available: $player_list)
 EOF
 }
 
@@ -49,9 +70,10 @@ while [ -n "$1" ]; do
     prev) sh -c "$prev" ;;
     status) echo "$status" ;;
     title) echo "$title" ;;
+    pick) pick ;;
     "-p" | "--player")
         shift
-        player="$1"
+        [ -n "$1" ] && player="$1"
         ;;
     "-h" | "--help") help ;;
     *) echo "Invalid" && help ;;

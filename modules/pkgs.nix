@@ -9,7 +9,7 @@
     pywal
 
     ### Utils
-    # handlr # xdg-open alternative
+    handlr # xdg-open alternative
     mimeo # xdg-open alternative
     # maim
     # scrot
@@ -18,7 +18,7 @@
     ### Services
     espanso
     # fusuma
-    # gcr # for pinentry-gnome3
+    gcr # for pinentry-gnome3
     mpd
     xidlehook
     xclip
@@ -49,7 +49,6 @@
   # };
 
   programs = {
-    zathura = { enable = true; };
     man = { enable = true; };
   };
 

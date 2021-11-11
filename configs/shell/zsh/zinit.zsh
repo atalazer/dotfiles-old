@@ -17,8 +17,8 @@ autoload -Uz _zinit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-# zinit light-mode for \
-# zinit-zsh/z-a-bin-gem-node \
+zinit light-mode for \
+zinit-zsh/z-a-bin-gem-node
 # zinit-zsh/z-a-man \
 # zinit-zsh/z-a-as-monitor \
 # zinit-zsh/z-a-rust \
@@ -34,6 +34,7 @@ autoload -Uz _zinit
 # Base                                          #
 # ============================================= #
 zinit wait"0" lucid light-mode for \
+  olets/zsh-abbr \
   atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
   zdharma/fast-syntax-highlighting \
@@ -76,8 +77,8 @@ zic https://github.com/ajeetdsouza/zoxide/blob/main/contrib/completions/_zoxide
 # Be More Productive                            #
 # ============================================= #
 zinit wait"1" lucid light-mode for \
-  hlissner/zsh-autopair \
-  MichaelAquilina/zsh-you-should-use \
+  hlissner/zsh-autopair
+  # MichaelAquilina/zsh-you-should-use \
 
 zinit wait"2" lucid light-mode for \
   wfxr/forgit \
@@ -107,5 +108,5 @@ zinit wait"2" lucid light-mode for \
 # Starship
 # ---------------------
 zinit ice from"gh-r" as"program" mv"starship* -> starship" pick"starship/starship"
-zinit light starship/starship
+zinit load starship/starship
 

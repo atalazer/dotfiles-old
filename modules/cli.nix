@@ -16,14 +16,14 @@
     dasel
     # dogdns
     # duf
-    # duff
-    # du-dust
+    duff
+    du-dust
     exa
     fd
     fzf
     glow
     # gopass
-    # gping
+    gping
     grex
     # himalaya
     htop
@@ -31,7 +31,6 @@
     jq
     lf
     mdp
-    mutt-wizard
     neofetch
     neomutt
     newsboat
@@ -39,8 +38,8 @@
     pass
     pet
     # pistol
-    # procs
-    # tokei
+    procs
+    tokei
     # topgrade
     translate-shell
     trash-cli
@@ -49,7 +48,7 @@
     # skim
     # speedtest-cli
     # xplr
-    # xh
+    xh
     zoxide
 
     ### Download

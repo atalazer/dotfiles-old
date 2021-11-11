@@ -6,12 +6,7 @@ local beautiful = require("beautiful")
 ruled.client.connect_signal("request::rules", function()
     -- Terminal {{{
     ruled.client.append_rule({
-        rule_any = {
-            instance = {
-                "Alacritty",
-                "kitty",
-            },
-        },
+        rule_any = { instance = terminal_instance or { "Alacritty", "kitty", } },
         properties = {
             floating = false,
             titlebars_enabled = false,
@@ -21,12 +16,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Fixed terminal geometry for floating terminals {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Alacritty",
-                "kitty",
-            },
-        },
+        rule_any = { class = terminal_class or { "Alacritty", "kitty", } },
         properties = {
             width = screen_width * 0.50,
             height = screen_height * 0.50,
@@ -37,15 +27,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Browser{{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "firefox",
-                "Nightly",
-            },
-            instance = {
-                "qutebrowser",
-            },
-        },
+        rule_any = { class = browser_class or { "firefox", "Nightly", "Brave-browser" } },
         except_any = {
             role = { "GtkFileChooserDialog" },
             instance = { "Toolkit" },
@@ -55,22 +37,20 @@ ruled.client.connect_signal("request::rules", function()
             floating = true,
             placement = centered_client_placement,
         },
-        callback = function(c)
-            if c.instance == "Navigator" or c.instance == "qutebrowser" then
-                awful.placement.maximize(c)
-                awful.titlebar.hide(c)
-            end
-        end,
+    })
+
+    ruled.client.append_rule({
+        rule_any = { instance = browser_instance or { "qutebrowser", "brave-browser" } },
+        properties = {
+            maximized = true,
+            titlebars_enabled = false,
+        },
     })
     -- }}}
 
     -- Picture in Picture {{{
     ruled.client.append_rule({
-        rule_any = {
-            name = {
-                "Picture-in-Picture",
-            },
-        },
+        rule_any = { name = { "Picture-in-Picture", }, },
         properties = {
             titlebars_enabled = false,
             floating = true,
@@ -84,13 +64,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Chatting {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "TelegramDesktop",
-                "KotatogramDesktop",
-                "whatsdesk",
-            },
-        },
+        rule_any = { class = chatting_class or { "TelegramDesktop", "KotatogramDesktop", "whatsdesk" }, },
         properties = {
             floating = true,
             titlebars_enabled = true,
@@ -101,15 +75,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Urgent - Browser and Chatting {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                -- "TelegramDesktop",
-                -- "KotatogramDesktop",
-                "firefox",
-                "Nightly",
-                "qutebrowser",
-            },
-        },
+        rule_any = { class = browser_class or { "firefox", "Nightly", "qutebrowser" }, },
         callback = function(c)
             c:connect_signal("property::urgent", function()
                 if c.urgent then
@@ -123,16 +89,10 @@ ruled.client.connect_signal("request::rules", function()
     -- File managers {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "Nemo",
-                "Thunar",
-                "file",
-            },
+            class = file_manager_class or { "Nemo", "Thunar", "file", },
             instance = { "file" },
         },
-        except_any = {
-            type = { "dialog" },
-        },
+        except_any = { type = { "dialog" } },
         properties = {
             titlebars_enabled = true,
             floating = true,
@@ -145,15 +105,12 @@ ruled.client.connect_signal("request::rules", function()
 
     -- File Archive {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Engrampa",
-                "File-roller",
-            },
-        },
+        rule_any = { class = file_archive_class or { "Engrampa", "File-roller" } },
         properties = {
             titlebars_enabled = true,
             floating = true,
+            width = screen_width * 0.70,
+            height = screen_height * 0.70,
             placement = centered_client_placement,
         },
     })
@@ -165,19 +122,17 @@ ruled.client.connect_signal("request::rules", function()
             role = { "GtkFileChooserDialog" },
             name = { "Open File" },
         },
-        properties = { floating = true, width = screen_width * 0.60, height = screen_height * 0.60 },
+        properties = {
+            floating = true,
+            width = screen_width * 0.60,
+            height = screen_height * 0.60
+        },
     })
     -- }}}
 
     -- Video Player {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "mpv",
-                "vlc",
-                "MPlayer",
-            },
-        },
+        rule_any = { class = video_player_class or { "mpv", "vlc", "MPlayer" } },
         properties = {
             floating = true,
             titlebars_enabled = true,
@@ -208,11 +163,7 @@ ruled.client.connect_signal("request::rules", function()
     -- Image viewers {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "feh",
-                "Sxiv",
-                "Viewnior",
-            },
+            class = image_viewer_class or { "feh", "Sxiv", "Viewnior" },
             name = { "Media viewer" },
         },
         properties = {
@@ -229,15 +180,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Office {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "DesktopEditors",
-                "Wps",
-            },
-            instance = {
-                "libreoffice",
-                "DesktopEditors",
-                "wps",
-            },
+            class = office_class or { "DesktopEditors", "Wps", },
+            instance = office_instance or { "libreoffice", "DesktopEditors", "wps", },
         },
         properties = {
             titlebars_enabled = false,
@@ -252,13 +196,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- PDF viewers {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Okular",
-                "Zathura",
-                "Evince",
-            },
-        },
+        rule_any = { class = pdf_viewer_class or { "zathura" } },
         properties = {
             floating = true,
             titlebars_enabled = true,
@@ -271,10 +209,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Gucharmap {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = { "Gucharmap" },
-            name = { "gucharmap" },
-        },
+        rule_any = { class = { "Gucharmap" }, name = { "gucharmap" } },
         properties = {
             floating = true,
             raise = true,
@@ -285,13 +220,10 @@ ruled.client.connect_signal("request::rules", function()
         },
     })
     -- }}}
+
     -- Password Manager {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "KeePassXC",
-            },
-        },
+        rule_any = { class = password_manager_class or { "KeePassXC" } },
         properties = {
             floating = true,
             width = screen_width * 0.8,
@@ -311,16 +243,7 @@ ruled.client.connect_signal("request::rules", function()
     -- Color Picker {{{
     ruled.client.append_rule({
         rule_any = {
-            class = {
-                "Gcolor3",
-                "Gcolor2",
-                "Gpick",
-            },
-            instance = {
-                "gcolor3",
-                "gcolor2",
-                "gpick",
-            },
+            class = { "Gcolor3", "Gcolor2", "Gpick" },
             name = { "Color Picker" },
         },
         properties = {
@@ -332,12 +255,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Dragon drag and drop utility {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "Dragon-drag-and-drop",
-                "Dragon",
-            },
-        },
+        rule_any = { class = { "Dragon-drag-and-drop", "Dragon" } },
         properties = {
             floating = true,
             ontop = true,
@@ -367,12 +285,7 @@ ruled.client.connect_signal("request::rules", function()
 
     -- Screen Mirroring (scrcpy) {{{
     ruled.client.append_rule({
-        rule_any = {
-            class = {
-                "QtScrcpy",
-                "scrcpy",
-            },
-        },
+        rule_any = { class = { "QtScrcpy", "scrcpy" } },
         properties = {
             titlebars_enabled = true,
             floating = true,
@@ -397,14 +310,8 @@ ruled.client.connect_signal("request::rules", function()
     -- System Monitoring {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = {
-                "htop",
-                "monitoring",
-            },
-            class = {
-                "htop",
-                "monitoring",
-            },
+            instance = { "htop", "monitoring" },
+            class = { "htop", "monitoring" },
         },
         properties = {
             floating = true,
@@ -418,14 +325,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Editor {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = {
-                "emacs",
-                "editor",
-            },
-            class = {
-                "Emacs",
-                "editor",
-            },
+            instance = { "emacs", "editor" },
+            class = { "Emacs", "editor" },
         },
         properties = {
             titlebars_enabled = true,
@@ -492,14 +393,8 @@ ruled.client.connect_signal("request::rules", function()
     -- Scratchpad {{{
     ruled.client.append_rule({
         rule_any = {
-            instance = {
-                "scratchpad",
-                "markdown_input",
-            },
-            class = {
-                "scratchpad",
-                "markdown_input",
-            },
+            instance = { "scratchpad", "markdown_input" },
+            class = { "scratchpad", "markdown_input" },
         },
         properties = {
             skip_taskbar = true,

@@ -1,27 +1,4 @@
 #!/bin/sh
-# dmenu_mpv
-# Copyright (c) 2020 M. Nabil Adani <nblid48[at]gmail[dot]com>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-# Resource:
-# mpvc: https://github.com/lwilletts/mpvc
 
 DMENU="rofi -dmenu -i"
 _XDG_=$(xdg-user-dir VIDEOS)
@@ -32,34 +9,22 @@ if command -v "mpvc" >/dev/null 2>&1; then true; else exit 1; fi
 OPT=${1:-find}
 case $OPT in
 track | "-t")
-    mpvc --stop
-    track=$(mpvc -i | sed -r 's/\x1B\[(;?[0-9]{1,3})+[mGK]//g' | tr -d "\t" |
-        $DMENU -p "MPV Track" | cut -d " " -f 1)
-    if [[ -n $track ]]; then
-        mpvc -J "$track"
-    fi
-    mpvc --play
+    track=$(mpvc -i | sed -r 's/\x1B\[(;?[0-9]{1,3})+[mGK]//g' | tr -d "\t" | $DMENU -p "MPV Track" | cut -d " " -f 1)
+    [ -n "$track" ] && mpvc -J "$track"
     ;;
 playlist | "-p")
     PLAYLIST_DIR=$HOME/.config/mpv/playlist
     PLAYLIST_FILE=$(find "$PLAYLIST_DIR" | $DMENU -p "MPV Playlist" -l 10)
 
-    if [[ -n $PLAYLIST_FILE ]]; then
-        mpv "${PLAYLIST_DIR}/${PLAYLIST_FILE}"
-    fi
+    [ -n "$PLAYLIST_FILE" ] && mpv "${PLAYLIST_DIR}/${PLAYLIST_FILE}"
     ;;
 find | "-f")
-    path=$(find "$DIR" -type f -regex '.*.\(mp4\|mkv\)' | \
+    filename=$(find "$DIR" -type f -regex '.*.\(mp4\|mkv\)' | \
         sed s/"\/home\/atalariq\/Videos\/"// | \
         rofi -dmenu -p "Videos" -width 70 -lines 20 \
             -case-sensitive \
     )
-
-    if [ -n "$path" ]; then
-        video="$DIR/$path"
-        if [[ -f $video ]]; then
-            mpv "$video"
-        fi
-    fi
+    video="$DIR/$filename"
+    [ -f "$video" ] && mpv "$video"
     ;;
 esac

@@ -1,8 +1,9 @@
 # vim: ft=toml
 
 [user]
-email = baraboyolali@gmail.com
-name = Atalazer
+email = atalariq26@gmail.com
+name = Atalariq Barra Hadinugraha
+signingkey = B398F02B7BC1E68B
 
 [credential]
 helper = cache --timeout 86400

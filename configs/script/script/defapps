@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# vim: ft=sh ts=4 sw=4:
+
+NAME="defapps"
+AUTHOR="Atalariq Barra Hadinugraha"
+VERSION=v0.1
+
+version() {
+cat << EOF
+$NAME $VERSION
+by: $AUTHOR
+EOF
+}
+
+help() {
+cat <<EOF
+Usage for $NAME:
+  Command:
+    "get            get default app"
+    "set            set default app"
+    "run            run app"
+    "exec           alias for run command"
+  Options
+    -h, --help      Show this message
+    -v, --version   Show version
+EOF
+}
+
+#### Programs ####
+
+# Required Variables
+APP_DIR="$HOME/.local/share/applications"
+
+# Get default app
+get(){
+    FILE=$1
+    if ! echo "$FILE" | grep ".desktop" >/dev/null 2>&1; then
+        FILE=$FILE.desktop
+    fi
+
+    grep "Exec" < "$APP_DIR"/"$FILE" | head -n 1 | sed -e "s#Exec=##" -e "s#/usr/bin/env ##" -e "s# %.##"
+}
+
+# Set default app
+set(){
+    FILE=$1
+    APP=$2
+    if ! echo "$FILE" | grep ".desktop" >/dev/null 2>&1; then
+        FILE=$FILE.desktop
+    fi
+    OLD_FILE=$(get "$FILE")
+    sed -i "s#$OLD_FILE#$APP#" "$APP_DIR"/"$FILE"
+}
+
+# Run app based on desktop file
+run(){
+    APP=$1
+    if ! echo "$APP" | grep ".desktop" >/dev/null 2>&1; then
+        APP=$APP.desktop
+    fi
+    [ -f "$APP_DIR/$APP" ] && sh -c "$(get "$APP")"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+        "-v" | "--version") version ;;
+        "-h" | "--help") help ;;
+        run|exec) shift; [ -n "$1" ] && run "$1" ;;
+        get) shift; [ -n "$1" ] && get "$1" ;;
+        set)
+            shift; [ -n "$1" ] && FILE="$1" || exit 0
+            shift; [ -n "$1" ] && APP="$1" || exit 0
+            set "$FILE" "$APP" ;;
+        *) echo "Invalid $1" && help ;;
+    esac
+    shift
+done

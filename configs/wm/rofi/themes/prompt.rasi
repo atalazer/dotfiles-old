@@ -1,0 +1,112 @@
+@import "~/.cache/wal/colors-rofi.rasi"
+
+* {
+  /* General */
+  text-font:                            "icomoon bold 12";
+  icon-font:                            "icomoon bold 30";
+
+  option-6-listview-spacing:            30px;
+
+  // top right bottom left
+  menu-window-padding:                  6px 6px 6px 30px;
+  menu-prompt-padding:                  10px 20px 15px 20px;
+  menu-prompt-margin:                   0px;
+  menu-element-border:                  0px 10px 0px 10px;
+  menu-element-padding:                 27px 16px 21px 0px;
+}
+
+#window {
+  width: 230px;
+  height: 147px;
+  location: center;
+  border: 0px;
+}
+
+* {
+  background-color: @background;
+  text-color: @foreground;
+  font: @icon-font;
+}
+
+#horibox {
+  children: [ listview ];
+}
+
+#listview {
+  layout: horizontal;
+}
+
+#element {
+  border: 0px;
+  padding: @menu-element-padding;
+  background-color: @background;
+  border-radius: 8px;
+}
+
+#element.selected {
+  background-color: @foreground;
+  text-color: @background;
+}
+
+* {
+  font: @text-font;
+  location: center;
+}
+
+#window {
+  padding: @menu-window-padding;
+  children: [ inputbar, horibox ];
+}
+
+#inputbar {
+  children: [ prompt ];
+  margin: @menu-inputbar-margin;
+}
+
+#listview {
+  spacing: @option-6-listview-spacing;
+  lines: 2;
+}
+
+prompt {
+  padding: @menu-prompt-padding;
+}
+
+#prompt {
+  margin: @menu-prompt-margin;
+  background-color: @background;
+  text-color: @foreground;
+}
+
+#element {
+  font: @icon-font;
+  border: @menu-element-border;
+  padding: @menu-element-padding;
+  border-color: @background;
+}
+
+#element.selected {
+  border-color: @foreground;
+}
+
+element.active,
+element.selected.urgent {
+  background-color: @active-background;
+  text-color: @background;
+  border-color: @active-background;
+}
+
+element.selected.urgent {
+  border-color: @foreground;
+}
+
+element.urgent,
+element.selected.active {
+  background-color: @normal-foreground;
+  text-color: @background;
+  border-color: @normal-foreground;
+}
+
+element.selected.active {
+  border-color: @foreground;
+}

@@ -38,9 +38,4 @@ M.light_magenta = M.color13
 M.light_cyan    = M.color14
 M.light_white   = M.color15
 
-M.error   = M.red
-M.warning = M.yellow
-M.info    = M.blue
-M.hint    = M.light_green
-
 return M

@@ -27,18 +27,12 @@ let g:loaded_zipPlugin = 1
 let g:loaded_matchit = 1
 let g:loaded_matchparen = 1
 
-" prevent typo when pressing `wq` or `q`
-cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
-cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
-cnoreabbrev <expr> WQ ((getcmdtype() is# ':' && getcmdline() is# 'WQ')?('wq'):('WQ'))
-cnoreabbrev <expr> Wq ((getcmdtype() is# ':' && getcmdline() is# 'Wq')?('wq'):('Wq'))
-
 " order matters
 runtime! events.vim
 lua << EOF
-require("base.settings")
-require("base.keymap")
-require("base.util")
+require("settings")
+require("keymap")
+require("util")
 EOF
 runtime! mappings.vim
 
