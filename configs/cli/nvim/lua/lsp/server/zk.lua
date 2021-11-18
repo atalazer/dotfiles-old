@@ -1,16 +1,17 @@
 local M = {}
 
-
 M.config = {
     cmd = { "zk", "lsp" },
     filetypes = { "markdown" },
-    on_attach = function(client, bufnr)
-        nnoremap("<CR>", "<CMD>lua vim.lsp.buf.definition()<CR>", "silent", "Open File Under Cursor")
-        vnoremap("<CR>", "<CMD>'<,'>lua vim.lsp.buf.range_code_action()<CR>", "silent", "Code Action")
-        nnoremap("K", "<CMD>lua vim.lsp.buf.hover()<CR>", "silent", "Hover")
-        nnoremap("gzi", "<CMD>lua require'lspconfig'.zk.index()<CR>", "silent", "Go To Index")
-        nnoremap("gzn", "<CMD>lua require'lspconfig'.zk.new({ title = vim.fn.input('Title: ') })<CR>", "silent", "New Note")
-        nnoremap("gzr", "<CMD>lua vim.lsp.buf.references()<CR>", "silent")
+    on_attach = function(--[[ client, bufnr --]])
+        nnoremap("<CR>", vim.lsp.buf.definition, "silent", "Open File Under Cursor")
+        vnoremap("<CR>", vim.lsp.buf.range_code_action, "silent", "Code Action")
+        nnoremap("K", vim.lsp.buf.hover, "silent", "Hover")
+        nnoremap("gzr", vim.lsp.buf.references, "silent")
+        nnoremap("gzi", require("lspconfig").zk.index, "silent", "Go To Index")
+        nnoremap("gzn", function()
+            require("lspconfig").zk.new({ title = vim.fn.input("Title: ") })
+        end, "silent", "New Note")
     end,
 }
 

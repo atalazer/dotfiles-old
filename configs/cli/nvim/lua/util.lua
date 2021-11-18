@@ -25,10 +25,10 @@ Util.translate = function(lang)
         args = { "-b", ":" .. (lang or "id"), word },
     })
     local ok, result = pcall(function() return vim.trim(job:sync()[1]) end)
-    if ok then 
+    if ok then
         print(result)
         vim.cmd(string.format(
-            [[silent! !echo "%s" | tr --delete "\n" | xclip -selection clipboard ]], 
+            [[silent! !echo "%s" | tr --delete "\n" | xclip -selection clipboard ]],
             result)
         )
     end
@@ -113,7 +113,6 @@ Util.borders = {
 }
 
 Util.lsp_on_attach = function(client, bufnr)
-    local notify = notify or vim.notify
     if client.resolved_capabilities.code_lens then
         vim.cmd([[
             augroup CodeLens

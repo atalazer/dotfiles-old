@@ -348,13 +348,21 @@ return packer.startup({
             end,
         },
 
+        -- Vim Table mode
+        -- ------------------------
+        {
+            "dhruvasagar/vim-table-mode",
+            ft = { "text", "markdown" },
+            cmd = { "TableModeRealign", "TableModeToggle" },
+        },
+
         -- Markdown Notebook Navigation And Management
         -- -------------------------------
         {
             "jakewvincent/mkdnflow.nvim",
             config = function()
                 require("mkdnflow").setup({
-                    default_mappings = true,
+                    default_mappings = false,
                     create_dirs = true,
                     links_relative_to = "first",
                     filetypes = { md = true, rmd = true, markdown = true },
@@ -363,13 +371,25 @@ return packer.startup({
                 })
             end,
         },
-
-        -- Vim Table mode
-        -- ------------------------
         {
-            "dhruvasagar/vim-table-mode",
-            ft = { "text", "markdown" },
-            cmd = { "TableModeRealign", "TableModeToggle" },
+            "NFrid/due.nvim",
+            config = function()
+                require("due_nvim").setup({
+                    ft = "*.md",
+                    prescript = "due: ",
+                    prescript_hi = "Comment",
+                    due_hi = "String",
+                    today = "TODAY",
+                    today_hi = "Character",
+                    overdue = "OVERDUE",
+                    overdue_hi = "Error",
+                    date_hi = "Conceal",
+                    pattern_start = "<",
+                    pattern_end = ">",
+                    use_clock_time = true,
+                    default_due_time = "midnight",
+                })
+            end,
         },
 
         -- yuck.vim for eww .yuck
@@ -425,6 +445,7 @@ return packer.startup({
                 "hrsh7th/cmp-nvim-lsp",
                 "f3fora/cmp-spell",
                 "saadparwaiz1/cmp_luasnip",
+                "lukas-reineke/cmp-under-comparator",
             },
         },
 
@@ -453,11 +474,7 @@ return packer.startup({
         {
             "mattn/emmet-vim",
             cmd = "EmmetInstall",
-            setup = function()
-                vim.g.user_emmet_install_global = 0
-                vim.g.user_emmet_mode = "a"
-                vim.g.user_emmet_leader_key = ","
-            end,
+            setup = [[require("plugins.emmet")]]
         },
 
         -- Parinfer
@@ -727,25 +744,6 @@ return packer.startup({
 
         -- ============================================== Misc
 
-        -- Note Taking
-        -- -------------------------
-        {
-            "nvim-neorg/neorg",
-            wants = "plenary.nvim",
-            config = [[require("plugins.neorg")]],
-        },
-
-        -- -- Google Keep Integrations
-        -- {
-        --     "stevearc/gkeep.nvim",
-        --     run = ":UpdateRemotePlugins",
-        --     setup = function()
-        --         vim.gkeep_sync_dir = "~/Documents/Google-Keep"
-        --         vim.g.gkeep_sync_archived = true
-        --         vim.g.gkeep_width = 30
-        --     end
-        -- },
-
         -- Smooth Scrolling
         -- ------------------------
         {
@@ -813,7 +811,7 @@ return packer.startup({
             end,
         },
 
-        --
+        -- Paste Image from clipboard
         -- -------------------------
         {
             "ekickx/clipboard-image.nvim",
@@ -822,13 +820,19 @@ return packer.startup({
                     default = {
                         img_dir = "img",
                         img_dir_txt = "img",
-                        img_name = function() return os.date("%Y%m%d-%H%M%S") end,
+                        img_name = function()
+                            return os.date("%Y%m%d-%H%M%S")
+                        end,
                         affix = "%s",
                     },
                     markdown = {
                         img_dir = "img",
                         img_dir_txt = "img",
                         affix = "![Image](%s)",
+                        img_name = function()
+                            local name = vim.fn.input("Image Name: ")
+                            return tostring(name)
+                        end,
                     },
                 })
             end,

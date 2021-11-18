@@ -16,8 +16,8 @@ pdf_viewer_class = { "Okular", "Zathura", "Evince" }
 image_editor_class = { "Gimp", "Inkscape", }
 image_viewer_class = { "feh", "Sxiv", "Viewnior" }
 video_player_class = { "mpv", "vlc", "MPlayer" }
-office_class = { "DesktopEditors", "Wps" }
-office_instance = { "libreoffice", "DesktopEditors", "wps" }
+office_class = { "DesktopEditors", "Wps", "obsidian" }
+office_instance = { "libreoffice", "DesktopEditors", "wps", "obsidian" }
 -- ===== others
 terminal_instance = { "Alacritty", "kitty" }
 terminal_class = { "Alacritty", "kitty", }

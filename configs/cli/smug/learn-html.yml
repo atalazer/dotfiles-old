@@ -1,0 +1,11 @@
+
+session: code
+root: ~/Documents/Notes/code/front-end/html
+
+windows:
+- name: Code
+  commands: 
+    - clear
+- name: Server
+  commands:
+    - SERVER_IP=$(ip addr show wlan0 | grep inet | awk '{print $2}' | head -n 1 | sed -e 's#/24##'); browser-sync start --server --files . --no-notify --host $SERVER_IP --port 9000

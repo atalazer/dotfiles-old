@@ -4,7 +4,7 @@ augroup Filetypes
   au!
   au BufNewFile,BufRead *.ejs,*.hbs set filetype=html
   au BufNewFile,BufRead .prettierrc,.eslintrc,tsconfig.json set filetype=jsonc
-  au BufNewFile,BufRead *.svx,*.mdx,*.md set ft=markdown
+  au BufNewFile,BufRead *.svx,*.mdx,*.md,*.mdp set ft=markdown
   au BufNewFile,BufRead *.svelte set ft=svelte
   au BufNewFile,BufRead *.nix set ft=nix
   au BufNewFile,BufRead *.nim set ft=nim

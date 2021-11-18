@@ -85,6 +85,11 @@ inoremap <A-BS> <C-w>
 nnoremap <A-BS> i<C-w>
 cnoremap <A-BS> <C-w>
 
+" Control+Delete
+inoremap <C-BS> <C-w>
+nnoremap <C-BS> i<C-w>
+cnoremap <C-BS> <C-w>
+
 " keep to center
 nnoremap {  {zzzv
 nnoremap }  }zzzv

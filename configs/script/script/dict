@@ -1,7 +1,8 @@
 #!/bin/sh
 
 DIR=$HOME/Documents/Dictionary
-FILE=$DIR/$(date '+%Y-%m-%d').md
+DIR=$(realpath "$DIR")
+FILE=$DIR/dict-$(date '+%Y-%m-%d').md
 
 [ -z "$EDITOR" ] && EDITOR=nvim
 [ ! -d "$DIR" ] && mkdir -p "$DIR"
@@ -42,6 +43,7 @@ pick(){
 
 # Find word
 find_word(){
+    cd "$DIR" || exit 0
     RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
     INITIAL_QUERY=""
     FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \

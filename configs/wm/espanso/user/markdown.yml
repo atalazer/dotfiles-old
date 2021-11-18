@@ -22,10 +22,24 @@ matches:
     replace: |
       ---
       title: "$|$"
-      description: "some description"
       author: "Atalariq Barra Hadinugraha"
       date: {{date}}
-      draft: true
+      ---
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  - trigger: ":md-p"
+    force_clipboard: true
+    replace: |
+      ---
+      title: "$|$"
+      author: "Atalariq Barra Hadinugraha"
+      date: {{date}}
+      extensions:
+        - image_ueberzug
       ---
     vars:
       - name: date

@@ -4,4 +4,4 @@ root: ~/Documents/Notes/school
 windows:
 - name: Notes
   commands: 
-    - SCHEDULE=~/Documents/Notes/school/schedule.md schedule --show
+    - SCHEDULE=~/Documents/Notes/school/jadwal-sekolah.md schedule --show

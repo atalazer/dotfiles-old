@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# sync
+sync() {
+    gstatus=$(git status --porcelain)
+    dstatus=$(date +%Y-%m-%d)
+    msg="Backup <$dstatus>\n$gstatus"
+
+    if [ ${#gstatus} -ne 0 ]; then
+        git add --all
+        git commit -m "$msg"
+        git pull --rebase
+        git push
+    else
+        git pull
+    fi
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+        sync) sync && return ;;
+        *) echo "Invalid $1" && return ;;
+    esac
+    shift
+done

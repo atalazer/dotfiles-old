@@ -1,19 +1,36 @@
 local cmp = require("cmp")
 
 cmp.setup({
-    snippet = { expand = function(args) require("luasnip").lsp_expand(args.body) end },
     completion = { keyword_length = 3 },
     documentation = { border = Util.borders },
-
+    experimental = {
+        native_menu = false,
+        ghost_text = false,
+    },
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
     sources = {
         { name = "buffer" },
         { name = "luasnip" },
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "spell" },
-        { name = "neorg" }
     },
-
+    sorting = {
+        comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            require("cmp-under-comparator").under,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        },
+    },
     formatting = {
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s (%s)", require("lsp.kind").presets[vim_item.kind], vim_item.kind)
@@ -25,7 +42,6 @@ cmp.setup({
             return vim_item
         end,
     },
-
     mapping = {
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<A-e>"] = cmp.mapping.close(),
@@ -38,10 +54,4 @@ cmp.setup({
             select = true,
         }),
     },
-
-    experimental = {
-        native_menu = false,
-        ghost_text = false,
-    },
 })
-

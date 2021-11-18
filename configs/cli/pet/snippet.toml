@@ -52,3 +52,18 @@
   description = "syncthing: Start daemon"
   command = "syncthing -no-browser -no-restart -logflags=0 -logfile=$HOME/.cache/syncthing"
   output = ""
+
+[[snippets]]
+  description = "ip: Get local IP Address"
+  command = "ip addr show wlan0 | grep inet | awk '{print $2}' | head -n 1 | sed -e 's#/24##'"
+  output = ""
+
+[[snippets]]
+  description = "browser-sync: Start server across local network(LAN)"
+  command = "SERVER_IP=$(ip addr show wlan0 | grep inet | awk '{print $2}' | head -n 1 | sed -e 's#/24##'); browser-sync start --server --files . --no-notify --host $SERVER_IP --port 9000"
+  output = ""
+
+[[snippets]]
+  description = "surf: Open Osu!Lazer Releases Page to Update"
+  command = "surf https://github.com/ppy/osu/releases"
+  output = ""
