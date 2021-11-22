@@ -16,7 +16,7 @@ case $OPT in
     ;;
   apply)
     [ -f result/activate ] && result/activate
-    stow -d configs -t $HOME -D home
+    stow -d configs -t $HOME -R home
     ;;
   help|*)
     echo "Usage:"
