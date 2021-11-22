@@ -30,8 +30,6 @@
                 ./modules/cli.nix
                 ./modules/git.nix
                 ./modules/nvim.nix
-                ./modules/tmux.nix
-                ./modules/dot.nix
               ];
             };
           };

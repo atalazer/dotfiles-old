@@ -11,14 +11,4 @@ in
     mplus-outline-fonts
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
-
-  fonts.fontconfig.enable = true;
-
-  home.file = {
-    ".fonts".source = link "configs/font/fonts";
-    ".config/fontconfig/conf.d/20-font-preffered.font".source =
-      link "configs/font/fontconfig/conf.d/20-font-preffered.font";
-    ".config/fontconfig/conf.d/30-japanese-preffered.font".source =
-      link "configs/font/fontconfig/conf.d/30-japanese-preffered.font";
-  };
 }

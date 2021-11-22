@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# - linux
-
 OPT="${1:-"help"}"
 
 case $OPT in
@@ -12,15 +10,8 @@ case $OPT in
       && echo "Build succes!"
     ;;
   apply)
-    [ -f result/activate ] && result/activate \
-      || echo "Failed, 'result/activate' not found. Please build first"
-    ;;
-  termux)
-    DIR=./configs/termux
-    pkg install zsh starship nvim git
-    ln -s $DIR/termux ~/.termux
-    ln -s $DIR/nvim ~/.config/nvim
-    ln -s $DIR/zsh/* ~/
+    [ -f result/activate ] && result/activate
+    stow -d configs -t $HOME -D home
     ;;
   help|*)
     echo "Usage:"
