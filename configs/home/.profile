@@ -13,8 +13,8 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-[ -f "$XDG_CONFIG_HOME/shell/user" ] && . "$XDG_CONFIG_HOME/shell/user"
-[ -f "$XDG_CONFIG_HOME/shell/user.private" ] && . "$XDG_CONFIG_HOME/shell/user.private"
+[ -f "$XDG_CONFIG_HOME/shell/user" ] && . "$XDG_CONFIG_HOME/shell/user" || . "$HOME/.user"
+[ -f "$XDG_CONFIG_HOME/shell/user.private" ] && . "$XDG_CONFIG_HOME/shell/user.private" || . "$HOME/.user.private"
 [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && . "$XDG_CONFIG_HOME/user-dirs.dirs"
 
 # ------- Clean-up ~/
@@ -34,8 +34,6 @@ export TERMINFO="${XDG_DATA_HOME:-$HOME/.local/share}/terminfo"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export WWW_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/w3m"
 export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
 # ========================================== Apss
 # -------- CLI
@@ -78,8 +76,6 @@ export IBUS_USE_PORTAL=1
 # =============================== Themes
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export GTK3_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-3.0/settings.ini"
-export XSETTINGSD_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xsettingsd"
-export XRESOURCES_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources"
 
 export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_AUTO_SCREEN_SCALE_FACTOR=1

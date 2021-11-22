@@ -13,9 +13,3 @@ export LESS_TERMCAP_ue=$(printf '\033[0;10m')
 # End bold, blinking, standout, underline
 export LESS_TERMCAP_me=$(printf '\033[0;10m')
 export GROFF_NO_SGR=1
-
-# Rust Cargo
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
-
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then 
-    . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

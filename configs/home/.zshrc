@@ -2,9 +2,10 @@ ZSH_INIT_TIME=$(date +%s%N)
 # ===== Variable ===== {{{
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export ZDIR="$HOME/.zsh"
 
 GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); NORMAL=$(tput sgr0)
-fpath=($ZDOTDIR/completions $fpath)
+fpath=($ZDIR/completions $fpath)
 
 # @function: source file if exist.
 so() {
@@ -17,7 +18,7 @@ so() {
 # ===== Plugins ===== {{{
 
 setopt promptsubst
-so $ZDOTDIR/zinit.zsh
+so $ZDIR/zinit.zsh
 
 # ---------------- You Should Use
 export YSU_HARDCORE=0
@@ -58,7 +59,7 @@ setopt SHARE_HISTORY
 KEYTIMEOUT=1
 
 # Zsh Modules
-MODULE_DIR=$ZDOTDIR/modules
+MODULE_DIR=$ZDIR/modules
 if [ -d $MODULE_DIR ]; then
     for f in $MODULE_DIR/?*; do
         so $f
@@ -92,7 +93,7 @@ precmd_functions+=(_fix_cursor)
 
 # Reload Completions
 rc() {
-  local f; f=($HOME/.config/zsh/completions/*(.))
+  local f; f=($ZDIR/completions/*(.))
   unfunction $f:t 2> /dev/null; autoload -U $f:t
 }
 
