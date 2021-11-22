@@ -1,10 +1,4 @@
-{ config, pkgs, home-manager, ... }:
-let
-  link = path:
-    config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/${path}";
-in
-{
+{ config, pkgs, home-manager, ... }: {
   home.packages = with pkgs; [
     inter
     liberation_ttf

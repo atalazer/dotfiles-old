@@ -72,7 +72,6 @@
   ];
 
   programs = {
-    home-manager.enable = true;
     password-store.enable = true;
   };
 }
