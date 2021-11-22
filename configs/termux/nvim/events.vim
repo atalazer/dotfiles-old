@@ -1,1 +1,0 @@
-./configs/cli/nvim/events.vim

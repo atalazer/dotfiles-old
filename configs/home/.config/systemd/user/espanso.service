@@ -1,0 +1,11 @@
+[Unit]
+Description=espanso daemon
+
+[Service]
+ExecStart=/nix/store/vi92y1l48fyywmyl5xgxk75zb9la6105-espanso-0.7.3/bin/.espanso-wrapped daemon
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
+

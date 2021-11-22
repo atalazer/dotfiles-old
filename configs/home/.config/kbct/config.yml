@@ -1,0 +1,25 @@
+- keyboards: [ "AT Translated Set 2 keyboard" ]
+  keymap:
+    capslock: rightctrl
+    compose: rightmeta
+  layers:
+    - modifiers: ["leftalt"]
+      keymap:
+        h: home
+        j: pagedown
+        k: pageup
+        l: end
+        w: up
+        a: left
+        s: down
+        d: right
+    - modifiers: ["rightalt"]
+      keymap:
+        h: left
+        j: down
+        k: up
+        l: right
+        w: up
+        a: left
+        s: down
+        d: right
