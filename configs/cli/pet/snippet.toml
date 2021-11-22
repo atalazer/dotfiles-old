@@ -67,3 +67,8 @@
   description = "surf: Open Osu!Lazer Releases Page to Update"
   command = "surf https://github.com/ppy/osu/releases"
   output = ""
+
+[[snippets]]
+  description = "ss: Show open port"
+  command = "sudo ss -tulpn"
+  output = ""

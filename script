@@ -4,12 +4,8 @@
 sync() {
     gstatus=$(git status --porcelain)
     dstatus=$(date +%Y-%m-%d)
-<<<<<<< HEAD
-    msg="Backup <$dstatus>\n$gstatus"
-=======
     msg="Backup <$dstatus>
 $gstatus"
->>>>>>> 161dbb9 (Backup <2021-11-18>)
 
     if [ ${#gstatus} -ne 0 ]; then
         git add --all

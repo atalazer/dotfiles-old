@@ -112,11 +112,11 @@ TO_PATH "$HOME/.local/share/choosenim/toolchains/nim-1.4.8/bin"
 TO_PATH "$HOME/.local/share/nimble/bin"
 TO_PATH "$CARGO_HOME/bin"
 TO_PATH "$GOBIN"
+TO_PATH "$HOME/.local/share/fnm/node-versions/v14.16.1/installation/bin"
+TO_PATH "$HOME/.yarn/bin"
 
 # }}}
 
 # ============================= Others
-# added by Nix installer
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
-    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
-fi
+[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+

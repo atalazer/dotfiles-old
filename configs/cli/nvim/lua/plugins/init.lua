@@ -36,7 +36,10 @@ enabled.hop = false
 enabled.indent_blankline = true
 enabled.lightspeed = true
 enabled.neoscroll = true
--- sc
+-- missc
+enabled.cheat = false
+enabled.dasht = false
+enabled.himalaya = false
 enabled.presence = false
 
 if not packer_ok then
@@ -474,7 +477,7 @@ return packer.startup({
         {
             "mattn/emmet-vim",
             cmd = "EmmetInstall",
-            setup = [[require("plugins.emmet")]]
+            setup = [[require("plugins.emmet")]],
         },
 
         -- Parinfer
@@ -843,6 +846,7 @@ return packer.startup({
         -- ------------------------
         {
             "segeljakt/vim-silicon",
+            disable = not enabled.silicon or true,
             cmd = "Silicon",
             setup = function()
                 vim.g.silicon = {
@@ -868,6 +872,7 @@ return packer.startup({
         -- --------------------------
         {
             "dbeniamine/cheat.sh-vim",
+            disable = not enabled.cheat or true,
             setup = function()
                 -- Stay in origin buffer (set to 0 to keep focus on the cheat sheet buffer)
                 vim.g.CheatSheetStayInOrigBuf = 0
@@ -884,6 +889,18 @@ return packer.startup({
                 vim.g.CheatSheetDefaultMode = 0
                 -- Make plugin silent by  setting bellow variable to 1
                 vim.g.CheatSheetSilent = 0
+            end,
+        },
+
+        -- dasht vim client
+        -- ----------------------------
+        {
+            "sunaku/vim-dasht",
+            disable = not enabled.dasht or true,
+            setup = function()
+                vim.g.dasht_filetype_docsets = {}
+                vim.g.dasht_filetype_docsets["html"] = { "css", "js", "bootstrap" }
+                vim.g.dasht_results_window = "new"
             end,
         },
 

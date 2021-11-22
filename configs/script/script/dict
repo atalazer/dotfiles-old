@@ -2,11 +2,12 @@
 
 DIR=$HOME/Documents/Dictionary
 DIR=$(realpath "$DIR")
-FILE=$DIR/dict-$(date '+%Y-%m-%d').md
+DATE=$(date '+%Y-%m (%B)')
+FILE=$DIR/"$DATE".md
 
 [ -z "$EDITOR" ] && EDITOR=nvim
 [ ! -d "$DIR" ] && mkdir -p "$DIR"
-[ ! -f "$FILE" ] && printf "|Word|Meaning|\n|---|---|\n" >"$FILE"
+[ ! -f "$FILE" ] && printf "# %s\n\n |English|Indonesian|\n|---|---|\n" "$DATE" >"$FILE"
 
 # Tidy up file with vim-table-mode
 _tidy(){
