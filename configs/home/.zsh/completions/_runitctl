@@ -1,0 +1,49 @@
+#compdef runitctl
+
+_get_all_service(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="/etc/sv"
+    _values -C "service" ${$(ls $prefix):-""}
+}
+
+_get_enabled_service(){
+    local IFS=$'\n'
+    local prefix
+    zstyle -s ":completion:${curcontext}:" prefix prefix || prefix="/var/service"
+    _values -C "service" ${$(ls $prefix):-""}
+}
+
+_runitctl () {
+    typeset -A opt_args
+    local ret=1
+	local cmd
+	if (( CURRENT > 2)); then
+		cmd=${words[2]}
+		curcontext="${curcontext%:*:*}:defapps-$cmd"
+		(( CURRENT-- ))
+		shift words
+		# Run the completion for the subcommand
+		case "${cmd}" in
+            (enable) _get_all_service ;;
+            (disable|start|stop|restart|status) _get_enabled_service ;;
+		esac
+	else
+		local -a subcommands
+		subcommands=(
+            "enable:enable service"
+            "disable:disable service"
+            "start:start service"
+            "stop:stop service"
+            "restart:restart service"
+            "status:show service status"
+		)
+		_describe -t commands 'command' subcommands
+		_arguments : \
+			"--help[Show help message]"
+	fi
+
+    return ret
+}
+
+_runitctl

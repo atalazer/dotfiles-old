@@ -1,0 +1,23 @@
+#!/bin/sh
+
+AUTH=sudo
+
+while [ -n "$1" ]; do
+    case "$1" in
+        "enable") shift; SERVICE=$1 ; $AUTH ln -s /etc/sv/$SERVICE /var/service
+            ;;
+        "disable") shift; SERVICE=$1 ; $AUTH rm /var/service/$SERVICE
+            ;;
+        "start") shift; SERVICE=$1 ; $AUTH sv up $SERVICE
+            ;;
+        "stop") shift; SERVICE=$1 ; $AUTH sv down $SERVICE
+            ;;
+        "restart") shift; SERVICE=$1 ; $AUTH sv restart $SERVICE
+            ;;
+        "status") shift; SERVICE=$1 ; $AUTH sv status $SERVICE
+            ;;
+        "-h" | "--help") help ;;
+        *) echo "Invalid" && help ;;
+    esac
+    shift
+done
