@@ -8,7 +8,7 @@ case $OPT in
     echo "Build for $CFG configuration"
 
     # Install nix if not installed
-    [ ! -f $(which nix-shell) ] && curl -L https://nixos.org/nix/install | sh
+    [ ! $(command -v "nix-shell" > /dev/null 2>&1) ] && curl -L https://nixos.org/nix/install | sh
 
     # Build
     nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" \

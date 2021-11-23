@@ -72,3 +72,8 @@
   description = "ss: Show open port"
   command = "sudo ss -tulpn"
   output = ""
+
+[[snippets]]
+  description = "grub: Generate GRUB configuration"
+  command = "sudo grub-mkconfig -o /boot/grub/grub.cfg"
+  output = ""

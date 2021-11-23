@@ -13,11 +13,11 @@ local add = function(lib)
 end
 add("$VIMRUNTIME")
 add("~/.config/nvim")
-add("~/.config/awesome")
-add("/usr/share/awesome/lib")
-add("/usr/share/lua/5.1")
-add("/usr/share/lua/5.3")
-add("/usr/share/lua/5.4")
+-- add("~/.config/awesome")
+-- add("/usr/share/awesome/lib")
+-- add("/usr/share/lua/5.1")
+-- add("/usr/share/lua/5.3")
+-- add("/usr/share/lua/5.4")
 
 M.config = {
     on_attach = Util.lsp_on_attach,

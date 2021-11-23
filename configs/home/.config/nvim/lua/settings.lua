@@ -77,5 +77,4 @@ o.tabstop = 4
 -- o.textwidth = 120
 -- o.timeoutlen = 300
 o.titlelen = 20
-o.titlestring = "NVIM"
 -- o.updatetime = 1000
