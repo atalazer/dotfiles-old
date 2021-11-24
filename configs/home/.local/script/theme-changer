@@ -79,6 +79,7 @@ AFTER() {
         fi
     fi
 
+    check_app polybar && [ -f ~/.config/polybar/scripts/pywal.sh ] && ~/.config/polybar/scripts/pywal.sh
 }
 
 # ============================================================

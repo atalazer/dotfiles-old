@@ -1,7 +1,7 @@
 local cmp = require("cmp")
 
 cmp.setup({
-    completion = { keyword_length = 3 },
+    -- completion = { keyword_length = 3 },
     documentation = { border = Util.borders },
     experimental = {
         native_menu = false,
@@ -12,15 +12,22 @@ cmp.setup({
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    sources = {
-        { name = "buffer" },
-        { name = "luasnip" },
+    sources = cmp.config.sources({
+        { name = "buffer", option = { keyword_length = 3,  } },
+        { name = "calc" },
+        { name = "cmdline" },
+        { name = "dictionary", option = { keyword_length = 2 } },
+        { name = "latex_symbols" },
+        { name = "luasnip", option = { use_show_condition = false } },
         { name = "nvim_lsp" },
         { name = "path" },
+        { name = "rg" },
         { name = "spell" },
-    },
+    }),
+
     sorting = {
         comparators = {
+            function(...) return require("cmp_buffer"):compare_locality(...) end,
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
@@ -35,9 +42,10 @@ cmp.setup({
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s (%s)", require("lsp.kind").presets[vim_item.kind], vim_item.kind)
             vim_item.menu = ({
-                nvim_lua = "[L]",
-                buffer = "[B]",
-                spell = "[S]",
+                nvim_lua = "[LSP]",
+                buffer = "[Buf]",
+                spell = "[Spell]",
+                dictionary = "[Dict]",
             })[entry.source.name] or vim_item.menu
             return vim_item
         end,
@@ -54,4 +62,17 @@ cmp.setup({
             select = true,
         }),
     },
+})
+
+
+cmp.setup.cmdline("/", {
+    sources = {
+        { name = "buffer" }
+    }
+})
+
+cmp.setup.cmdline(":", {
+    sources = cmp.config.sources(
+    { { name = "path" } },
+    { { name = "cmdline" } })
 })

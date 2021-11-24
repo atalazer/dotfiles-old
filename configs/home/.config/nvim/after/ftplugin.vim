@@ -37,6 +37,14 @@ augroup Posts
   au BufRead */posts/**.en.md setlocal spell spelllang=en
 augroup END
 
+" Blog
+" ----------------------
+augroup Spelling
+  au!
+  au BufRead */knowledge/**.md setlocal spell spelllang=id
+  au BufRead */school/**.md setlocal spell spelllang=id
+augroup END
+
 " Term
 " ----------------------
 augroup Term

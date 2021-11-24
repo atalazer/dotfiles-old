@@ -1,7 +1,7 @@
 session: school
-root: ~/Documents/Notes/school
+root: ~/Documents/Notes/knowledge/school
 
 windows:
 - name: Notes
   commands: 
-    - SCHEDULE=~/Documents/Notes/school/jadwal-sekolah.md schedule --show
+    - SCHEDULE=~/Documents/Notes/knowledge/school/jadwal-sekolah.md schedule --show

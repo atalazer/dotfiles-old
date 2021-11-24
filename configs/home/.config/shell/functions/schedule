@@ -2,7 +2,7 @@
 # vim: ft=sh ts=4 sw=4:
 
 schedule() {
-    SCHEDULE=${SCHEDULE:-$HOME/SCHEDULE}
+    SCHEDULE=${SCHEDULE:-$HOME/Documents/Notes/schedule.md}
     if [ ! -f "$SCHEDULE" ]; then
         touch "$SCHEDULE"
         echo "$SCHEDULE Created"

@@ -35,6 +35,7 @@ o.backupcopy = "yes"
 o.clipboard = "unnamedplus"
 -- o.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 o.completeopt:remove("preview")
+o.dictionary = "/usr/share/dict/words"
 o.encoding = "utf-8"
 o.fillchars = { vert = "│", eob = " ", fold = " ", diff = " " }
 -- o.formatoptions = o.formatoptions - "a" - "t" + "c" + "q" - "o" + "r" + "n" + "j" - "2"

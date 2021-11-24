@@ -443,12 +443,17 @@ return packer.startup({
             disable = not enabled.cmp,
             config = [[require("plugins.cmp")]],
             requires = {
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                "hrsh7th/cmp-nvim-lsp",
                 "f3fora/cmp-spell",
-                "saadparwaiz1/cmp_luasnip",
+                "hrsh7th/cmp-buffer",
+                "hrsh7th/cmp-calc",
+                "hrsh7th/cmp-cmdline",
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-path",
+                "kdheepak/cmp-latex-symbols",
+                "lukas-reineke/cmp-rg",
                 "lukas-reineke/cmp-under-comparator",
+                "saadparwaiz1/cmp_luasnip",
+                "uga-rosa/cmp-dictionary",
             },
         },
 
@@ -810,7 +815,7 @@ return packer.startup({
                 vim.g.mkdp_auto_start = 0
                 vim.g.mkdp_auto_close = 0
                 vim.g.mkdp_refresh_slow = 0
-                vim.g.mkdp_browser = os.getenv("BROWSER") or "firefox"
+                vim.g.mkdp_browser = "surf"
             end,
         },
 
