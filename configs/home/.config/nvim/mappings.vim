@@ -113,9 +113,12 @@ nnoremap <C-n> <CMD>nohlsearch<CR>
 vnoremap < <gv
 vnoremap > >gv
 
+" ------------------------------------ Sorting
+vnoremap gs :'<,'>sort<CR>
+
 " ------------------------------------ Spelling
 nnoremap csU <CMD>s/\<./\u&/g<CR><CMD>nohlsearch<CR>
-noremap csu <CMD>s/\<./\l&/g<CR><CMD>nohlsearch<CR>
+nnoremap csu <CMD>s/\<./\l&/g<CR><CMD>nohlsearch<CR>
 
 " ------------------------------------- Workspace
 

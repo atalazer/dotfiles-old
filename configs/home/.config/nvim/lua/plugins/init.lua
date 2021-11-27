@@ -21,11 +21,11 @@ enabled.zenmode = false
 enabled.cmp = true
 enabled.coq = not enabled.cmp
 enabled.luasnip = enabled.cmp
-enabled.sniprun = true
+enabled.sniprun = false
 enabled.treesitter = true
 -- Git
 enabled.fugitive = true
-enabled.gitlinker = true
+enabled.gitlinker = false
 enabled.gitsigns = true
 enabled.lazygit = true
 enabled.neogit = not enabled.fugitive
@@ -36,11 +36,17 @@ enabled.hop = false
 enabled.indent_blankline = true
 enabled.lightspeed = true
 enabled.neoscroll = true
--- missc
+-- misc
 enabled.cheat = false
 enabled.dasht = false
+enabled.escape = true
 enabled.himalaya = false
 enabled.presence = false
+enabled.whitespace = true
+-- markdown
+enabled.headlines = true
+enabled.due = true
+enabled.mkdnflow = false
 
 if not packer_ok then
     return
@@ -110,8 +116,9 @@ return packer.startup({
         -- Colorscheme
         -- ------------------------
         {
-            "atalazer/wally.nvim",
-            run = "cp ./extra/wal/colors.lua ~/.config/wal/templates && wal -R",
+            -- "atalazer/wally.nvim",
+            "~/Documents/Programming/Repo/wally.nvim",
+            run = "./setup.sh",
             setup = function()
                 vim.g.wally_wal_dir = "~/.cache/wal"
                 vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
@@ -363,6 +370,7 @@ return packer.startup({
         -- -------------------------------
         {
             "jakewvincent/mkdnflow.nvim",
+            disable = not enabled.mkdnflow,
             config = function()
                 require("mkdnflow").setup({
                     default_mappings = false,
@@ -376,10 +384,11 @@ return packer.startup({
         },
         {
             "NFrid/due.nvim",
+            disable = not enabled.due,
             config = function()
                 require("due_nvim").setup({
                     ft = "*.md",
-                    prescript = "due: ",
+                    prescript = "   due: ",
                     prescript_hi = "Comment",
                     due_hi = "String",
                     today = "TODAY",
@@ -498,25 +507,25 @@ return packer.startup({
         -- ------------------------
         {
             "numToStr/Comment.nvim",
+            config = [[require("plugins.comment")]],
+        },
+
+        -- Generate Annotation
+        -- -------------------------
+        {
+            "danymat/neogen",
+            wants = "nvim-treesitter",
             config = function()
-                require("Comment").setup({
-                    padding = true,
-                    ignore = "^$",
-                    mappings = {
-                        basic = true,
-                        extra = false,
+                local opts = { silent = true }
+                nnoremap("gca", ":lua require('neogen').generate()<CR>", opts)
+                nnoremap("<C-e>", ":lua require('neogen').jump_next()<CR>", opts)
+
+                require("neogen").setup({
+                    enabled = true,
+                    languages = {
+                        lua = { template = { annotation_convention = "emmylua" } },
+                        python = { template = { annotation_convention = "google_docstrings" } },
                     },
-                    toggler = {
-                        line = "gcc",
-                        block = "gbc",
-                    },
-                    opleader = {
-                        line = "gc",
-                        block = "gb",
-                    },
-                    pre_hook = function()
-                        require("ts_context_commentstring.internal").update_commentstring()
-                    end,
                 })
             end,
         },
@@ -774,12 +783,29 @@ return packer.startup({
         -- ------------------------
         {
             "max397574/better-escape.nvim",
+            disable = not enabled.escape,
             config = function()
                 require("better_escape").setup({
                     mapping = { "jk" },
                     timeout = vim.o.timeoutlen,
                     keys = "<Esc><Esc>",
                 })
+            end,
+        },
+
+        -- Better whitespace
+        -- ------------------------
+        {
+            "ntpeters/vim-better-whitespace",
+            disable = not enabled.whitespace,
+            setup = function()
+                vim.g.better_whitespace_enabled = 1
+                vim.g.strip_whitespace_on_save = 1
+                vim.g.better_whitespace_operator = "<leader>s"
+                vim.g.better_whitespace_filetypes_blacklist = { "markdown" }
+                vim.g.strip_max_file_size = 1000
+                vim.g.strip_whitelines_at_eof = 1
+                vim.g.better_whitespace_skip_empty_lines = 1
             end,
         },
 
@@ -790,6 +816,26 @@ return packer.startup({
             setup = function()
                 vim.g.suda_smart_edit = 1
                 vim.g["suda#prompt"] = "[Suda] Password : "
+            end,
+        },
+
+        -- headlines.nvim
+        -- ------------------------
+        {
+            "lukas-reineke/headlines.nvim",
+            disable = not enabled.headlines,
+            config = function()
+                require("headlines").setup({
+                    markdown = {
+                        source_pattern_start = "^```",
+                        source_pattern_end = "^```$",
+                        dash_pattern = "^---+$",
+                        headline_pattern = "^#+",
+                        -- headline_signs = { "Headline" },
+                        -- codeblock_sign = "CodeBlock",
+                        -- dash_highlight = "Dash",
+                    },
+                })
             end,
         },
 

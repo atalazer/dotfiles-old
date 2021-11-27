@@ -141,12 +141,11 @@ if [ -d $CONFIGS ]; then
     unset f
 fi
 
-export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/TODO.md
-export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/SCHEDULE.md
+export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/todo.md
+export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/schedule.md
 
 # broot, better cd
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/broot/launcher/bash/br" ] &&
-    so ${XDG_CONFIG_HOME:-$HOME/.config}/broot/launcher/bash/br
+so ${XDG_CONFIG_HOME:-$HOME/.config}/broot/launcher/bash/br
 
 # Start CLI Apps
 command -v "zoxide" >/dev/null 2>&1 && eval "$(zoxide init zsh)"

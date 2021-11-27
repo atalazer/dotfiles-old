@@ -54,14 +54,6 @@ augroup Term
   au BufLeave term://* set showtabline=2 laststatus=2 ruler number relativenumber list
 augroup END
 
-" Remove trailing whitespace on save
-" ----------------------
-let g:strip_whitespace = v:false
-augroup Whitespace
-  au!
-  au BufWritePre * if g:strip_whitespace | %s/\s\+$//e
-augroup END
-
 " ===================================================== Plugins
 augroup Emmet
   au!
@@ -70,6 +62,6 @@ augroup END
 
 augroup Alpha
   au!
-  au FileType alpha set showtabline=0 laststatus=0 nolist cmdheight=1 | 
+  au FileType alpha set showtabline=0 laststatus=0 nolist cmdheight=1 |
         \ autocmd BufUnload <buffer> set showtabline=2 laststatus=2 list cmdheight=2
 augroup END

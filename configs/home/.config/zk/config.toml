@@ -33,10 +33,10 @@ template = "school.md"
 # MARKDOWN SETTINGS
 [format.markdown]
 link-format = "wiki"
-link-encode-path = false
+link-encode-path = true
 link-drop-extension = true
 
-hashtags = true
+hashtags = false
 colon-tags = false
 multiword-tags = false
 

@@ -24,20 +24,19 @@ Util.translate = function(lang)
         command = "trans",
         args = { "-b", ":" .. (lang or "id"), word },
     })
-    local ok, result = pcall(function() return vim.trim(job:sync()[1]) end)
+    local ok, result = pcall(function()
+        return vim.trim(job:sync()[1])
+    end)
     if ok then
         print(result)
-        vim.cmd(string.format(
-            [[silent! !echo "%s" | tr --delete "\n" | xclip -selection clipboard ]],
-            result)
-        )
+        vim.cmd(string.format([[silent! !echo "%s" | tr --delete "\n" | xclip -selection clipboard ]], result))
     end
 end
 vim.cmd("command! -range -nargs=? Translate call v:lua.Util.translate(<f-args>)")
 
 Util.check_back_space = function()
-    local col = vim.fn.col(".") - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 -- Use nvim-autopairs cr instead
@@ -78,12 +77,21 @@ end
 -- see lua/plugins/cmp.lua for context
 Util.tab_complete = function(fallback)
     local luasnip_exist, luasnip = pcall(require, "luasnip")
-    if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(Util.t("<C-n>"), "n")
+    local cmp_exist, cmp = pcall(require, "cmp")
+    local neogen_exist, neogen = pcall(require, "neogen")
+
+    if cmp_exist and cmp.visible() then
+        cmp.select_next_item()
     elseif luasnip_exist and luasnip.expand_or_jumpable() then
-        vim.fn.feedkeys(Util.t("<Plug>luasnip-expand-or-jump"), "")
+        luasnip.expand_or_jump()
+    elseif neogen_exist and neogen.jumpable() then
+        require("neogen").jump_next()
     elseif Util.check_back_space() then
-        vim.fn.feedkeys(Util.t("<Tab>"), "n")
+        if cmp_exist then
+            cmp.complete()
+        else
+            vim.fn.feedkeys(Util.t("<Tab>"), "n")
+        end
     else
         fallback()
     end
@@ -92,10 +100,12 @@ end
 -- see lua/plugins/cmp.lua for context
 Util.s_tab_complete = function(fallback)
     local luasnip_exist, luasnip = pcall(require, "luasnip")
-    if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(Util.t("<C-p>"), "n")
+    local cmp_exist, cmp = pcall(require, "cmp")
+
+    if cmp_exist and cmp.visible() then
+        cmp.select_prev_item()
     elseif luasnip_exist and luasnip.jumpable(-1) then
-        vim.fn.feedkeys(Util.t("<Plug>luasnip-jump-prev"), "")
+        luasnip.jump(-1)
     else
         fallback()
     end
@@ -112,7 +122,7 @@ Util.borders = {
     { "│", "FloatBorder" },
 }
 
-Util.lsp_on_attach = function(client, bufnr)
+Util.lsp_on_attach = function(client, _--[[ bufnr ]])
     if client.resolved_capabilities.code_lens then
         vim.cmd([[
             augroup CodeLens
@@ -132,28 +142,14 @@ Util.lsp_on_init = function(client)
     })
 end
 
-vim.g.dont_write = false
-local write = function()
-    vim.g.dont_write = false
-    vim.cmd("write")
-end
-
--- See lua/plugins/firenvim.lua for context
-Util.delay_write = function()
-    if vim.g.dont_write then return end
-    vim.g.dont_write = true
-    vim.defer_fn(function()
-        write()
-    end, 1000)
-end
-
 local session_dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions")
 local last_session = session_dir .. "/last.vim"
-
 Util.session = {
-    last = function() vim.cmd("source " .. last_session) end,
+    last = function()
+        vim.cmd("source " .. last_session)
+    end,
     save = function(session_name)
-        local session = session_dir .. "/" .. ( session_name or "last" ) .. ".vim"
+        local session = session_dir .. "/" .. (session_name or "last") .. ".vim"
         vim.cmd("mksession! " .. session)
     end,
     search = function()
@@ -161,7 +157,7 @@ Util.session = {
             vim_cmd = "source",
             extension = "vim",
             previewer = "bat --style=numbers --color=always",
-            dir = session_dir
+            dir = session_dir,
         })
     end,
 }
@@ -187,7 +183,7 @@ Util.notes = {
             vim_cmd = "edit",
             extension = "md",
             previewer = "glow -s auto",
-            dir = note_dir
+            dir = note_dir,
         })
     end,
 }

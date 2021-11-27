@@ -1,7 +1,10 @@
 local cmp = require("cmp")
 
 cmp.setup({
-    -- completion = { keyword_length = 3 },
+    -- completion = {
+    --     autocomplete = true,
+    --     keyword_length = 2,
+    -- },
     documentation = { border = Util.borders },
     experimental = {
         native_menu = false,
@@ -13,10 +16,9 @@ cmp.setup({
         end,
     },
     sources = cmp.config.sources({
-        { name = "buffer", option = { keyword_length = 3,  } },
+        { name = "buffer", option = { keyword_length = 2 } },
         { name = "calc" },
-        { name = "cmdline" },
-        { name = "dictionary", option = { keyword_length = 2 } },
+        { name = "dictionary", option = { keyword_length = 3 } },
         { name = "latex_symbols" },
         { name = "luasnip", option = { use_show_condition = false } },
         { name = "nvim_lsp" },
@@ -27,7 +29,9 @@ cmp.setup({
 
     sorting = {
         comparators = {
-            function(...) return require("cmp_buffer"):compare_locality(...) end,
+            function(...)
+                return require("cmp_buffer"):compare_locality(...)
+            end,
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
@@ -42,10 +46,14 @@ cmp.setup({
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s (%s)", require("lsp.kind").presets[vim_item.kind], vim_item.kind)
             vim_item.menu = ({
+                path = "[Path]",
                 nvim_lua = "[LSP]",
                 buffer = "[Buf]",
                 spell = "[Spell]",
                 dictionary = "[Dict]",
+                luasnip = "[Snip]",
+                rg = "[RG]",
+                calc = "[Calc]",
             })[entry.source.name] or vim_item.menu
             return vim_item
         end,
@@ -53,10 +61,14 @@ cmp.setup({
     mapping = {
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<A-e>"] = cmp.mapping.close(),
-        -- ["<Tab>"] = cmp.mapping(function(fallback) _G.Util.tab_complete(fallback) end, {"i","s",}),
-        -- ["<S-Tab>"] = cmp.mapping(function(fallback) _G.Util.s_tab_complete(fallback) end, {"i","s",}),
-        ["<S-TAB>"] = cmp.mapping.select_prev_item(),
-        ["<TAB>"] = cmp.mapping.select_next_item(),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            _G.Util.tab_complete(fallback)
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            _G.Util.s_tab_complete(fallback)
+        end, { "i", "s" }),
+        -- ["<S-TAB>"] = cmp.mapping.select_prev_item(),
+        -- ["<TAB>"] = cmp.mapping.select_next_item(),
         ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -64,15 +76,16 @@ cmp.setup({
     },
 })
 
-
 cmp.setup.cmdline("/", {
-    sources = {
-        { name = "buffer" }
-    }
+    sources = cmp.config.sources({
+        { name = "buffer", opts = { keyword_pattern = [=[[^[:blank:]].*]=] } },
+        { name = "rg" },
+    }),
 })
 
 cmp.setup.cmdline(":", {
-    sources = cmp.config.sources(
-    { { name = "path" } },
-    { { name = "cmdline" } })
+    sources = cmp.config.sources({
+        { name = "path" },
+        { name = "cmdline" },
+    }),
 })
