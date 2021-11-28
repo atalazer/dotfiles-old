@@ -39,13 +39,6 @@ alias gcl="git clone --recursive"
 
 alias {lg,lz}="lazygit"
 
-# Better mv/cp
-# ----------------------
-if command -v mvg cpg > /dev/null 2>&1; then
-    alias mv="mvg -g"
-    alias cp="cpg -g"
-fi
-
 # Better ls
 # ----------------------
 if command -v "exa" > /dev/null 2>&1; then

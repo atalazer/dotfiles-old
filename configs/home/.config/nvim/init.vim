@@ -1,7 +1,7 @@
 
 runtime! events.vim
 runtime! mappings.vim
-" runtime! settings.vim
+runtime! settings.vim
 
 if has('nvim-0.5.1') > 0
 lua<< EOF
@@ -34,9 +34,8 @@ EOF
   let g:loaded_matchparen = 1
 
 lua << EOF
-  require("settings")
-  require("keymap")
   require("util")
+  require("mappings")
 EOF
 
   command! PackerInstall packadd packer.nvim | lua require('plugins').install()

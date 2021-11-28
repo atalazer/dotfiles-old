@@ -3,13 +3,19 @@
 nnoremap Q  <Nop>
 nnoremap q: <Nop>
 
+" Disable arrow key
+map <Up> <Nop>
+map <Down> <Nop>
+map <Right> <Nop>
+map <Left> <Nop>
+
 " -------------------------------
 " Map Control-; to :
 nnoremap <C-;> :
 
 " -------------------------------------
 " Source Lua/Vim Files
-nnoremap <localleader>l <CMD>source %<CR>
+nnoremap <localleader>l :source %<CR>
 
 " Edit/Reload Init.Vim
 nnoremap <leader>ec <CMD>tabe ~/.config/nvim/init.*<CR>
@@ -36,9 +42,6 @@ vnoremap <C-y> <Esc><CMD>redo<CR>
 cnoremap <expr> <C-n> wildmenumode() ? "\<c-n>" : "\<down>"
 cnoremap <expr> <C-p> wildmenumode() ? "\<c-p>" : "\<up>"
 
-" Quickly edit your macros
-nnoremap <leader>em  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
-
 " ------------------------------------- Navigation
 " use hjkl in insert mode
 inoremap <A-h> <Left>
@@ -59,8 +62,8 @@ nnoremap <silent> B :<C-u>call Breakline()<CR>
 " move vertically by visual line on wrapped lines
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-nnoremap <expr> <Down> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-nnoremap <expr> <Up> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+" nnoremap <expr> <Down> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+" nnoremap <expr> <Up> v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 " Better Y for copy current line
 nnoremap Y y$
@@ -132,20 +135,6 @@ nnoremap <C-Down> <C-w><C-j>
 nnoremap <C-Up> <C-w><C-k>
 nnoremap <C-Right> <C-w><C-l>
 
-" Cycle tab
-nnoremap <C-PageUp> <CMD>BufferLineCyclePrev<CR>
-nnoremap <C-PageDown> <CMD>BufferLineCycleNext<CR>
-
-" Move tab
-nnoremap <C-Home> <CMD>BufferLineMovePrev<CR>
-nnoremap <C-End> <CMD>BufferLineMoveNext<CR>
-
-nnoremap <A-1> <CMD>lua require'bufferline'.go_to_buffer(1)<CR>
-nnoremap <A-2> <CMD>lua require'bufferline'.go_to_buffer(2)<CR>
-nnoremap <A-3> <CMD>lua require'bufferline'.go_to_buffer(3)<CR>
-nnoremap <A-4> <CMD>lua require'bufferline'.go_to_buffer(4)<CR>
-nnoremap <A-5> <CMD>lua require'bufferline'.go_to_buffer(5)<CR>
-
 " ------------------------------------ Terminal
 " move between window
 tnoremap <C-h> <C-\><C-n><C-w><C-h>
@@ -168,17 +157,3 @@ tnoremap <C-w><C-w> <C-\\><C-n>
 nnoremap <Leader>rl <CMD>luafile %<CR>
 nnoremap <Leader>rn <CMD>!node %<CR>
 nnoremap <localleader>rp <CMD>!python %<CR>
-
-" ------------------------------------- Function
-nnoremap <F1> <CMD>lua Util.session.last()<CR><CMD>echo "Session Restored"<CR>
-nnoremap <F2> <CMD>lua Util.session.save()<CR><CMD>echo "Session Saved"<CR>
-nnoremap <F4> <CMD>lua Util.open()<CR><CMD>echo "Open Current File ..."<CR>
-noremap <F3>
-      \ :exe "let g:strip_whitespace = !g:strip_whitespace"<CR>
-      \ :exe "echo 'Strip whitespace mode toggled!'"<CR>
-
-" ----------------------------------------- Notes
-nnoremap <Leader>ni <CMD>lua Util.notes.index()<CR>
-nnoremap <Leader>nn <CMD>lua Util.notes.search("notes")<CR>
-nnoremap <Leader>ns <CMD>lua Util.notes.search("school")<CR>
-

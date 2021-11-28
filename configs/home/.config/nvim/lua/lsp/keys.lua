@@ -1,8 +1,3 @@
-local k = vim.keymap
-local nnoremap = function(...) k.nnoremap({...}) end
-local vnoremap = function(...) k.vnoremap({...}) end
-local inoremap = function(...) k.inoremap({...}) end
-
 local M = {}
 
 local buf = vim.lsp.buf
@@ -20,7 +15,7 @@ local code_action = function()
     else
         buf.code_action()
     end
-end 
+end
 
 local lsp_reference = function()
     if telescope_exist then

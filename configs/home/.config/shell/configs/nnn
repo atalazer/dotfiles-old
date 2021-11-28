@@ -75,6 +75,6 @@ qnnn () {
 # -------------------------------------
 # Alias NNN File Manager
 # -------------------------------------
-alias fm="nnn -er"
-alias {fmcd,fmq}="qnnn -e -r "
-alias {FM,sfm}='sudo -E nnn -dH'
+alias fm="nnn -ae"
+alias fmp="nnn -aePp"
+alias {fmcd,fmq}="qnnn -e"

@@ -42,17 +42,6 @@ zinit wait"0" lucid light-mode for \
     g-plane/zsh-yarn-autocompletions \
   spwhitt/nix-zsh-completions \
 
-# Custom Source
-# ------------------
-zic(){ zinit ice wait"0" lucid as"completion"; zinit snippet "$1"; }
-zic https://github.com/gopasspw/gopass/blob/master/zsh.completion
-zic https://github.com/chmln/handlr/blob/master/completions/_handlr
-zic https://github.com/xwmx/nb/blob/master/etc/nb-completion.zsh
-zic https://github.com/jarun/nnn/blob/master/misc/auto-completion/zsh/_nnn
-zic https://github.com/knqyf263/pet/blob/master/misc/completions/zsh/_pet
-zic https://github.com/dandavison/delta/blob/master/etc/completion/completion.zsh
-zic https://github.com/ajeetdsouza/zoxide/blob/main/contrib/completions/_zoxide
-
 # fzf-tab
 # ------------------
 # zinit ice wait"0" lucid
@@ -73,31 +62,5 @@ zinit wait"1" lucid light-mode for \
 
 zinit wait"2" lucid light-mode for \
   wfxr/forgit \
-  kazhala/dotbare \
-
-# ============================================= #
-# Extends Your Shell                            #
-# ============================================= #
-
-# # LS_COLORS
-# # ---------------------
-# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-#   atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-#   atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-# zinit light trapd00r/LS_COLORS
-
-# # direnv
-# # ---------------------
-# zinit as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
-#   atpull'%atclone' pick"direnv" src"zhook.zsh" for \
-#   direnv/direnv
-
-# ============================================= #
-# Prompt                                        #
-# ============================================= #
-
-# Starship
-# ---------------------
-zinit ice from"gh-r" as"program" mv"starship* -> starship" pick"starship/starship"
-zinit load starship/starship
+  kazhala/dotbare
 

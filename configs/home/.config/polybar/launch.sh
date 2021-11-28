@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-pgrep -x polybar > /dev/null && pkill polybar
+# Add this script to your wm startup file.
+DIR="$HOME/.config/polybar"
 
-echo "---" | tee -a /tmp/polybar1.log
+# Terminate already running bar instances
+pkill polybar
 
-polybar bspwm-bar -r >>/tmp/polybar1.log 2>&1 & disown
+# Wait until the processes have been shut down
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-echo "Bars launched..."
+# Launch the bar
+polybar -q main -c "$DIR"/config.ini &

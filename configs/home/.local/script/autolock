@@ -3,7 +3,7 @@
 
 delta=5
 lock_timeout=600
-suspend=${SUSPEND_CMD:-"systemctl suspend"}
+suspend=${SUSPEND_CMD:-"suspend"}
 brightness_up="brightnessctl -d $delta up"
 brightness_down="brightnessctl -d $delta down"
 notify="notify-send 'Lockscreen' 'Screen Will Be Lock After 5 Sec'"
@@ -11,7 +11,7 @@ notify="notify-send 'Lockscreen' 'Screen Will Be Lock After 5 Sec'"
 if [ -n "$CHECK_AWESOME_CLIENT" ]; then WM="AWESOME"; else WM="NOT_AWESOME"; fi
 case $WM in
     AWESOME) lock="awesome-client 'lock_screen_show()'" ;;
-    NOT_AWESOME) lock="slock" ;;
+    NOT_AWESOME) lock="betterlockscreen" ;;
     *) lock="" ;;
 esac
 
