@@ -1,4 +1,4 @@
 #!/bin/sh
 
-# Start espanso daemon
-espanso daemon
+exec 2>&1
+exec espanso daemon > /dev/null 2>&1

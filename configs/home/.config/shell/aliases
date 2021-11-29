@@ -51,12 +51,12 @@ fi
 
 # Safety rm
 # ----------------------
-if [ "$TRASH_CMD" = "gio" ]; then
+if command -v "gio" > /dev/null 2>&1 && [ "$TRASH_CMD" = "gio" ]; then
     alias rm="gio trash"
     alias trm="gio trash"
     alias trl="gio trash --list"
     alias trs="gio trash --restore"
-elif [ "$TRASH_CMD" = "trash" ]; then
+elif command -v "trash" > /dev/null 2>&1 && [ "$TRASH_CMD" = "trash" ]; then
     alias rm="trash"
     alias trm="trash"
     alias trl="trash-list"
