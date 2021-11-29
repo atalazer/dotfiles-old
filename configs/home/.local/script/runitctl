@@ -1,20 +1,21 @@
 #!/bin/sh
 
-AUTH=sudo
+SVDIR="/var/service"
+AUTH="sudo"
 
 while [ -n "$1" ]; do
     case "$1" in
-        "enable") shift; SERVICE=$1 ; $AUTH ln -s /etc/sv/$SERVICE /var/service
+        "enable") shift; SERVICE=$1 ; $AUTH ln -s /etc/sv/"$SERVICE" "$SVDIR"
             ;;
-        "disable") shift; SERVICE=$1 ; $AUTH rm /var/service/$SERVICE
+        "disable") shift; SERVICE=$1 ; $AUTH rm "$SVDIR"/"$SERVICE"
             ;;
-        "start") shift; SERVICE=$1 ; $AUTH sv up $SERVICE
+        "start") shift; SERVICE=$1 ; $AUTH sv up "$SERVICE"
             ;;
-        "stop") shift; SERVICE=$1 ; $AUTH sv down $SERVICE
+        "stop") shift; SERVICE=$1 ; $AUTH sv down "$SERVICE"
             ;;
-        "restart") shift; SERVICE=$1 ; $AUTH sv restart $SERVICE
+        "restart") shift; SERVICE=$1 ; $AUTH sv restart "$SERVICE"
             ;;
-        "status") shift; SERVICE=$1 ; $AUTH sv status $SERVICE
+        "status") shift; SERVICE=$1 ; $AUTH sv status "$SERVICE"
             ;;
         "-h" | "--help") help ;;
         *) echo "Invalid" && help ;;

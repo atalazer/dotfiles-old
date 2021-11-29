@@ -22,7 +22,6 @@ light -I                        # Restore Brightness
 
 # Autostart Apps
 gpg-connect-agent updatestartuptty /bye >/dev/null                      # GPG Agent
-/lib/mate-polkit/polkit-mate-authentication-agent-1 >/dev/null 2>&1 &   # Polkit Agent
 clipmenud >/dev/null 2>&1 &                                             # Clipboard Manager
 mpd >/dev/null 2>&1 &                                                   # Music Player Daemon
 # fcitx5 --replace -d >/dev/null 2>&1 &                                 # Input Method for Japanese(mozc) and Arabic(m17n)
@@ -31,3 +30,9 @@ mpd >/dev/null 2>&1 &                                                   # Music 
 picom --config ~/.config/picom/picom.conf \
     --experimental-backends  --daemon >/dev/null 2>&1 &
 
+# Polkit Agent
+if command -v "pacman" > /dev/null 2>&1; then
+    /lib/mate-polkit/polkit-mate-authentication-agent-1 >/dev/null 2>&1 &
+elif command -v "xbps-install" > /dev/null 2>&1; then
+    /usr/libexec/polkit-mate-authentication-agent-1 >/dev/null 2>&1 &
+fi

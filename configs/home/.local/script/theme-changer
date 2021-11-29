@@ -79,7 +79,7 @@ AFTER() {
         fi
     fi
 
-    check_app polybar && [ -f ~/.config/polybar/scripts/pywal.sh ] && ~/.config/polybar/scripts/pywal.sh
+    [ -f ~/.config/polybar/scripts/pywal.sh ] && ~/.config/polybar/scripts/pywal.sh
 }
 
 # ============================================================
@@ -192,27 +192,27 @@ SET() {
             -gtk)
                 shift
                 THEME="$1"
-                change GTK\\_THEME "$THEME" 
+                change GTK\\_THEME "$THEME"
                 ;;
             -icon)
                 shift
                 THEME="$1"
-                change ICON\\_THEME "$THEME" 
+                change ICON\\_THEME "$THEME"
                 ;;
             -cursor)
                 shift
                 THEME="$1"
-                change CURSOR\\_THEME "$THEME" 
+                change CURSOR\\_THEME "$THEME"
                 ;;
             -wal)
                 shift
                 THEME="$1"
-                change WAL\\_THEME "$THEME" 
+                change WAL\\_THEME "$THEME"
                 ;;
             -wallpaper)
                 shift
                 THEME="$1"
-                change WALLPAPER "$THEME" 
+                change WALLPAPER "$THEME"
                 ;;
             -dark)
                 shift
@@ -225,7 +225,7 @@ SET() {
                         VAL=false
                         ;;
                 esac
-                change WAL\\_IS\\_DARK "$VAL" 
+                change WAL\\_IS\\_DARK "$VAL"
                 ;;
             *) pt error "$1 is Invalid" && exit 1 ;;
         esac

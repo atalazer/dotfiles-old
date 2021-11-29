@@ -108,7 +108,7 @@ alias cpuinfo="watch -n1 \"cat /proc/cpuinfo | grep 'MHz'\""
 
 # Archlinux
 # ----------------------
-if cat /etc/*-release | grep "Arch"  > /dev/null 2>&1; then
+if command -v "pacman" > /dev/null 2>&1; then
     alias pacin="$PERMISSION pacman -S"
     alias pacsearch="pacman -Ss"
     alias pacupd="$PERMISSION pacman -Syy"
@@ -126,6 +126,16 @@ if cat /etc/*-release | grep "Arch"  > /dev/null 2>&1; then
     alias paupg="paru -Syu"
     alias parem="paru -Rcns"
     alias parmorp="paru -Qtdq | paru -Rns -"
+fi
+
+# Void Linux
+# ----------------------
+if command -v "xbps-install" > /dev/null 2>&1; then
+    alias pmu="$PERMISSION xbps-install -Su"
+    alias pmi="$PERMISSION xbps-install"
+    alias pmr="$PERMISSION xbps-remove"
+    alias pms="xbps-query -Rs"
+    alias pmc="$PERMISSION -o"
 fi
 
 # youtube-dl

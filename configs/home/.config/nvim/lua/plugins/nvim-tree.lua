@@ -2,7 +2,6 @@ local M = {}
 local dev = true
 
 M.setup = function()
-    vim.g.nvim_tree_gitignore = 0
     vim.g.nvim_tree_quit_on_open = 0
     vim.g.nvim_tree_indent_markers = 1
     vim.g.nvim_tree_git_hl = 1
@@ -64,12 +63,20 @@ M.config = function()
         disable_netrw = false,
         hijack_netrw = true,
         hijack_cursor = true,
-        diagnostics = { enable = true },
         update_cwd = true,
         update_focused_file = {
             enable = true,
             update_cwd = true,
             ignore_list = {},
+        },
+        diagnostics = { enable = false },
+        system_open = { cmd  = "opener", args = {} },
+        filters = { dotfiles = false, custom = {} },
+        trash = { cmd = "trash", require_confirm = true },
+        git = {
+            enable = true,
+            ignore = true,
+            timeout = 500,
         },
         ignore = {
             ".git",

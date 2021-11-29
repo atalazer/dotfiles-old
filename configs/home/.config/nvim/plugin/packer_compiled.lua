@@ -400,16 +400,6 @@ _G.packer_plugins = {
     path = "/home/atalariq/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  sniprun = {
-    commands = { "SnipRun" },
-    config = { "\27LJ\2\2€\1\0\0\3\0\b\0\f6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\5\0006\2\3\0009\2\4\2=\2\4\0015\2\6\0=\2\a\1B\0\2\1K\0\1\0\fdisplay\1\3\0\0\rTerminal\18VirtualTextOk\1\0\0\fborders\tUtil\nsetup\fsniprun\frequire\0" },
-    keys = { { "", "<Plug>SnipRun" }, { "", "<Plug>SnupClose" } },
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/home/atalariq/.local/share/nvim/site/pack/packer/opt/sniprun",
-    url = "https://github.com/michaelb/sniprun"
-  },
   ["sqlite.lua"] = {
     loaded = true,
     needs_bufread = false,
@@ -585,10 +575,6 @@ time([[Setup for dial.nvim]], false)
 time([[packadd for dial.nvim]], true)
 vim.cmd [[packadd dial.nvim]]
 time([[packadd for dial.nvim]], false)
--- Setup for: sniprun
-time([[Setup for sniprun]], true)
-try_loadstring("\27LJ\2\2¹\1\0\0\2\0\3\0\0056\0\0\0009\0\1\0'\1\2\0B\0\2\1K\0\1\0™\1                nmap <leader>sc <Plug>SnipClose\n                nmap <leader>sr <Plug>SnipRun\n                vmap sr <Plug>SnipRun\n                \bcmd\bvim\0", "setup", "sniprun")
-time([[Setup for sniprun]], false)
 -- Setup for: vim-easy-align
 time([[Setup for vim-easy-align]], true)
 try_loadstring("\27LJ\2\2o\0\0\5\0\6\0\r6\0\0\0'\1\1\0'\2\2\0'\3\3\0'\4\4\0B\0\5\0016\0\5\0'\1\1\0'\2\2\0'\3\3\0'\4\4\0B\0\5\1K\0\1\0\rxnoremap\nAlign\vsilent\22<Plug>(EasyAlign)\aga\rnnoremap\0", "setup", "vim-easy-align")
@@ -600,13 +586,13 @@ time([[Setup for curstr.nvim]], false)
 time([[packadd for curstr.nvim]], true)
 vim.cmd [[packadd curstr.nvim]]
 time([[packadd for curstr.nvim]], false)
--- Setup for: vim-sayonara
-time([[Setup for vim-sayonara]], true)
-try_loadstring("\27LJ\2\2p\0\0\6\0\5\0\b5\0\0\0006\1\1\0'\2\2\0'\3\3\0\18\4\0\0'\5\4\0B\1\5\1K\0\1\0\28Close Window/Buffer/Vim\22<CMD>Sayonara<CR>\15<C-w><C-w>\rnnoremap\1\0\1\vsilent\2\0", "setup", "vim-sayonara")
-time([[Setup for vim-sayonara]], false)
-time([[packadd for vim-sayonara]], true)
-vim.cmd [[packadd vim-sayonara]]
-time([[packadd for vim-sayonara]], false)
+-- Setup for: vim-matchup
+time([[Setup for vim-matchup]], true)
+try_loadstring("\27LJ\2\2j\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\0\3\14highlight\vNormal\14fullwidth\2\vmethod\npopup!matchup_matchparen_offscreen\6g\bvim\0", "setup", "vim-matchup")
+time([[Setup for vim-matchup]], false)
+time([[packadd for vim-matchup]], true)
+vim.cmd [[packadd vim-matchup]]
+time([[packadd for vim-matchup]], false)
 -- Setup for: vim-hexokinase
 time([[Setup for vim-hexokinase]], true)
 try_loadstring("\27LJ\2\2›\2\0\0\2\0\b\0\r6\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0005\1\a\0=\1\6\0K\0\1\0\1\0\2\thtml,full_hex,rgb,rgba,hsl,hsla,colour_names\bcss,full_hex,rgb,rgba,hsl,hsla,colour_names\31Hexokinase_ftOptInPatterns\1\6\0\0\rfull_hex\brgb\trgba\bhsl\thsla\29Hexokinase_optInPatterns\1\2\0\0\19backgroundfull\28Hexokinase_highlighters\6g\bvim\0", "setup", "vim-hexokinase")
@@ -657,17 +643,17 @@ time([[Setup for vim-fugitive]], false)
 time([[packadd for vim-fugitive]], true)
 vim.cmd [[packadd vim-fugitive]]
 time([[packadd for vim-fugitive]], false)
--- Setup for: vim-matchup
-time([[Setup for vim-matchup]], true)
-try_loadstring("\27LJ\2\2j\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\0\3\14highlight\vNormal\14fullwidth\2\vmethod\npopup!matchup_matchparen_offscreen\6g\bvim\0", "setup", "vim-matchup")
-time([[Setup for vim-matchup]], false)
-time([[packadd for vim-matchup]], true)
-vim.cmd [[packadd vim-matchup]]
-time([[packadd for vim-matchup]], false)
--- Setup for: vim-markdown
-time([[Setup for vim-markdown]], true)
-try_loadstring('\27LJ\2\2Š\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\1\0=\1\3\0006\0\0\0009\0\1\0)\1\1\0=\1\4\0K\0\1\0\22vim_markdown_math\29vim_markdown_frontmatter"vim_markdown_folding_disabled\6g\bvim\0', "setup", "vim-markdown")
-time([[Setup for vim-markdown]], false)
+-- Setup for: lazygit.nvim
+time([[Setup for lazygit.nvim]], true)
+try_loadstring("\27LJ\2\2ü\2\0\0\5\0\r\1\0276\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\0\0=\1\6\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0006\0\b\0'\1\t\0'\2\n\0'\3\v\0'\4\f\0B\0\5\1K\0\1\0\18Open Lazy Git\vsilent\21<CMD>LazyGit<CR>\15<leader>gt\rnnoremap\30lazygit_use_neovim_remote(lazygit_floating_window_use_plenary\1\5\0\0\bâ•­\bâ•®\bâ•°\bâ•¯)lazygit_floating_window_corner_chars+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvimÍ™³æ\fæÌ©ÿ\3\0", "setup", "lazygit.nvim")
+time([[Setup for lazygit.nvim]], false)
+-- Setup for: vim-sayonara
+time([[Setup for vim-sayonara]], true)
+try_loadstring("\27LJ\2\2p\0\0\6\0\5\0\b5\0\0\0006\1\1\0'\2\2\0'\3\3\0\18\4\0\0'\5\4\0B\1\5\1K\0\1\0\28Close Window/Buffer/Vim\22<CMD>Sayonara<CR>\15<C-w><C-w>\rnnoremap\1\0\1\vsilent\2\0", "setup", "vim-sayonara")
+time([[Setup for vim-sayonara]], false)
+time([[packadd for vim-sayonara]], true)
+vim.cmd [[packadd vim-sayonara]]
+time([[packadd for vim-sayonara]], false)
 -- Setup for: sqlite.lua
 time([[Setup for sqlite.lua]], true)
 try_loadstring("\27LJ\2\2M\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\31/lib64/libsqlite3.so.0.8.6\21sqlite_clib_path\6g\bvim\0", "setup", "sqlite.lua")
@@ -689,10 +675,10 @@ time([[Setup for lightspeed.nvim]], false)
 time([[packadd for lightspeed.nvim]], true)
 vim.cmd [[packadd lightspeed.nvim]]
 time([[packadd for lightspeed.nvim]], false)
--- Setup for: lazygit.nvim
-time([[Setup for lazygit.nvim]], true)
-try_loadstring("\27LJ\2\2ü\2\0\0\5\0\r\1\0276\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\1\0*\1\0\0=\1\3\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0)\1\0\0=\1\6\0006\0\0\0009\0\1\0)\1\0\0=\1\a\0006\0\b\0'\1\t\0'\2\n\0'\3\v\0'\4\f\0B\0\5\1K\0\1\0\18Open Lazy Git\vsilent\21<CMD>LazyGit<CR>\15<leader>gt\rnnoremap\30lazygit_use_neovim_remote(lazygit_floating_window_use_plenary\1\5\0\0\bâ•­\bâ•®\bâ•°\bâ•¯)lazygit_floating_window_corner_chars+lazygit_floating_window_scaling_factor%lazygit_floating_window_winblend\6g\bvimÍ™³æ\fæÌ©ÿ\3\0", "setup", "lazygit.nvim")
-time([[Setup for lazygit.nvim]], false)
+-- Setup for: vim-markdown
+time([[Setup for vim-markdown]], true)
+try_loadstring('\27LJ\2\2Š\1\0\0\2\0\5\0\r6\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\1\0)\1\1\0=\1\3\0006\0\0\0009\0\1\0)\1\1\0=\1\4\0K\0\1\0\22vim_markdown_math\29vim_markdown_frontmatter"vim_markdown_folding_disabled\6g\bvim\0', "setup", "vim-markdown")
+time([[Setup for vim-markdown]], false)
 -- Config for: nvim-lspconfig
 time([[Config for nvim-lspconfig]], true)
 require("lsp")
@@ -795,7 +781,6 @@ time([[Defining lazy-load commands]], true)
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file MarkdownPreview lua require("packer.load")({'markdown-preview.nvim'}, { cmd = "MarkdownPreview", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TableModeToggle lua require("packer.load")({'vim-table-mode'}, { cmd = "TableModeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file EmmetInstall lua require("packer.load")({'emmet-vim'}, { cmd = "EmmetInstall", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file SnipRun lua require("packer.load")({'sniprun'}, { cmd = "SnipRun", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TroubleToggle lua require("packer.load")({'lsp-trouble.nvim'}, { cmd = "TroubleToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime.vim'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Telescope lua require("packer.load")({'telescope.nvim'}, { cmd = "Telescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
@@ -809,10 +794,8 @@ time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[nnoremap <silent> <Leader>f <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>Leader>f", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <Plug>(EasyAlign) <cmd>lua require("packer.load")({'vim-easy-align'}, { keys = "<lt>Plug>(EasyAlign)", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>SnipRun <cmd>lua require("packer.load")({'sniprun'}, { keys = "<lt>Plug>SnipRun", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <Plug>SnupClose <cmd>lua require("packer.load")({'sniprun'}, { keys = "<lt>Plug>SnupClose", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> <Leader>f <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>Leader>f", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
