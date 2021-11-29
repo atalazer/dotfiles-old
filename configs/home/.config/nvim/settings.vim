@@ -28,6 +28,7 @@ set ttyfast
 
 " String
 set clipboard=unnamedplus
+set inccommand=split
 set listchars=tab:\ \ ,eol:↴,nbsp:_,trail:·,extends:❯
 set mouse=a
 set showbreak="↪"

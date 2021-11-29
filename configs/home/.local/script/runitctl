@@ -1,24 +1,57 @@
 #!/bin/sh
 
+SCDIR="/etc/sv"
 SVDIR="/var/service"
 AUTH="sudo"
 
+help() { echo "No help message"; }
+
 while [ -n "$1" ]; do
     case "$1" in
-        "enable") shift; SERVICE=$1 ; $AUTH ln -s /etc/sv/"$SERVICE" "$SVDIR"
-            ;;
-        "disable") shift; SERVICE=$1 ; $AUTH rm "$SVDIR"/"$SERVICE"
-            ;;
-        "start") shift; SERVICE=$1 ; $AUTH sv up "$SERVICE"
-            ;;
-        "stop") shift; SERVICE=$1 ; $AUTH sv down "$SERVICE"
-            ;;
-        "restart") shift; SERVICE=$1 ; $AUTH sv restart "$SERVICE"
-            ;;
-        "status") shift; SERVICE=$1 ; $AUTH sv status "$SERVICE"
-            ;;
-        "-h" | "--help") help ;;
-        *) echo "Invalid" && help ;;
+    "--sc-dir")
+        shift
+        SCDIR=$1
+        ;;
+    "--sv-dir")
+        shift
+        SVDIR=$1
+        ;;
+    "--auth")
+        shift
+        AUTH=$1
+        ;;
+    "enable")
+        shift
+        SERVICE=$1
+        $AUTH ln -s "$SCDIR"/"$SERVICE" "$SVDIR"
+        ;;
+    "disable")
+        shift
+        SERVICE=$1
+        $AUTH rm "$SVDIR"/"$SERVICE"
+        ;;
+    "start")
+        shift
+        SERVICE=$1
+        $AUTH env SVDIR="$SVDIR" sv up "$SERVICE"
+        ;;
+    "stop")
+        shift
+        SERVICE=$1
+        $AUTH env SVDIR="$SVDIR" sv down "$SERVICE"
+        ;;
+    "restart")
+        shift
+        SERVICE=$1
+        $AUTH env SVDIR="$SVDIR" sv restart "$SERVICE"
+        ;;
+    "status")
+        shift
+        SERVICE=$1
+        $AUTH env SVDIR="$SVDIR" sv status "$SERVICE"
+        ;;
+    "-h" | "--help") help ;;
+    *) echo "Invalid" && help ;;
     esac
     shift
 done

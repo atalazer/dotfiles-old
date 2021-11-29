@@ -1,14 +1,14 @@
 
 WORDCHARS=''
 
-# unsetopt FLOWCONTROL
-# unsetopt MENU_COMPLETE      # do not autoselect the first completion entry
-# setopt AUTO_MENU            # show completion menu on successive tab press
-# setopt COMPLETE_IN_WORD
-# setopt ALWAYS_TO_END        # Move cursor to end of word if a full completion is inserted.
+unsetopt FLOWCONTROL
+unsetopt MENU_COMPLETE      # do not autoselect the first completion entry
+setopt AUTO_MENU            # show completion menu on successive tab press
+setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END        # Move cursor to end of word if a full completion is inserted.
 setopt PATH_DIRS            # Perform path search even on command names with slashes in them.
 setopt NO_CASE_GLOB         # Make globbing case insensitive.
-# setopt NO_LIST_BEEP         # Don't beep on ambiguous completions.
+setopt NO_LIST_BEEP         # Don't beep on ambiguous completions.
 
 # =================================================
 # User Section

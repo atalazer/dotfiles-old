@@ -1,0 +1,7 @@
+#!/bin/sh
+
+AUTH=
+SVDIR="$HOME/.config/runit/service"
+SCDIR="$HOME/.config/runit/sv"
+
+runitctl --auth "$AUTH" --sv-dir "$SVDIR" --sc-dir "$SCDIR" "$@"

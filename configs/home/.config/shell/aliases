@@ -41,6 +41,7 @@ alias {lg,lz}="lazygit"
 
 # Better ls
 # ----------------------
+alias {LS,rls}=/bin/ls
 if command -v "exa" > /dev/null 2>&1; then
     alias ls="exa --icons --group-directories-first"
     alias lsa="exa --icons --group-directories-first -a"
@@ -51,6 +52,7 @@ fi
 
 # Safety rm
 # ----------------------
+alias {rrm,RM}=/bin/rm
 if command -v "gio" > /dev/null 2>&1 && [ "$TRASH_CMD" = "gio" ]; then
     alias rm="gio trash"
     alias trm="gio trash"
@@ -136,6 +138,20 @@ if command -v "xbps-install" > /dev/null 2>&1; then
     alias pmr="$PERMISSION xbps-remove"
     alias pms="xbps-query -Rs"
     alias pmc="$PERMISSION -o"
+fi
+
+# runit
+# ---------------------
+if command -v runitctl sv > /dev/null 2>&1; then
+    alias rc="runitctl"
+    alias rcu="runitctl-user"
+fi
+
+# systemctl
+# ---------------------
+if command -v systemctl > /dev/null 2>&1; then
+    alias sc="systemctl"
+    alias scu="systemctl --user"
 fi
 
 # youtube-dl

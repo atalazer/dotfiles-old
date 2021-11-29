@@ -8,9 +8,9 @@ GREEN=$(tput setaf 2); YELLOW=$(tput setaf 3); NORMAL=$(tput sgr0)
 fpath=($ZDIR/completions $fpath)
 
 # @function: source file if exist.
-so() {
+source-file() {
     FILE=$1
-    [ -f "$FILE" ] && . $FILE
+    [ -f "$FILE" ] && source "$FILE"
 }
 
 # }}}
@@ -18,7 +18,7 @@ so() {
 # ===== Plugins ===== {{{
 
 setopt promptsubst
-so $ZDIR/zinit.zsh
+source-file $ZDIR/zinit.zsh
 
 # ---------------- You Should Use
 export YSU_HARDCORE=0
@@ -43,7 +43,6 @@ export ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_UNDERLINE
 # ===== Zsh ===== {{{
 
 setopt autocd		        # Automatically cd into typed directory.
-stty stop undef		        # Disable ctrl-s to freeze terminal.
 setopt interactive_comments # Allow Comment in Interactive Shell
 
 # History
@@ -55,47 +54,17 @@ setopt HIST_IGNORE_DUPS
 setopt SHARE_HISTORY
 
 # Binkeys
- bindkey -e # v = vim || e = emacs
+bindkey -e # v = vim || e = emacs
 KEYTIMEOUT=1
 
 # Zsh Modules
 MODULE_DIR=$ZDIR/modules
 if [ -d $MODULE_DIR ]; then
     for f in $MODULE_DIR/?*; do
-        so $f
+        source $f
     done
     unset f
 fi
-
-# vicmd by default
-# zle-line-init() { zle -K vicmd; }
-# zle -N zle-line-init
-
-# Change cursor shape for different vi modes.
-zle-keymap-select() {
-    if  [[ ${KEYMAP} == vicmd ]] ||
-        [[ $1 = 'block' ]]
-    then
-        echo -ne '\e[1 q'
-    elif [[ ${KEYMAP} == main ]] ||
-        [[ ${KEYMAP} == viins ]] ||
-        [[ ${KEYMAP} = '' ]] ||
-        [[ $1 = 'beam' ]]
-    then
-        echo -ne '\e[5 q'
-    fi
-}
-zle -N zle-keymap-select
-
-# Cursor Beam
-_fix_cursor() { echo -ne '\e[5 q'; }
-precmd_functions+=(_fix_cursor)
-
-# Reload Completions
-rc() {
-  local f; f=($ZDIR/completions/*(.))
-  unfunction $f:t 2> /dev/null; autoload -U $f:t
-}
 
 #}}}
 
@@ -108,26 +77,16 @@ fi
 
 # }}}
 
-set_win_title(){
-    print -Pn "\e]0;%~\a"
-}
-precmd_functions+=(set_win_title)
-
 # ===== User ===== {{{
 # User alias definition
 ALIASES=${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases
-so $ALIASES
-
-# User abbreviations definition
-# ABBREVIATIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/abbreviations
-# so $ABBREVIATIONS
-# abbr import-aliases
+source-file $ALIASES
 
 # User function definition
 FUNCTIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions
 if [ -d $FUNCTIONS ]; then
     for f in $FUNCTIONS/?*; do
-        so $f
+        source $f
     done
     unset f
 fi
@@ -136,16 +95,13 @@ fi
 CONFIGS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/configs
 if [ -d $CONFIGS ]; then
     for f in $CONFIGS/?*; do
-        so $f
+        source $f
     done
     unset f
 fi
 
 export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/todo.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/schedule.md
-
-# broot, better cd
-so ${XDG_CONFIG_HOME:-$HOME/.config}/broot/launcher/bash/br
 
 # Start CLI Apps
 command -v "zoxide" >/dev/null 2>&1 && eval "$(zoxide init zsh)"

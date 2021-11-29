@@ -66,7 +66,7 @@ return packer.startup({
 
         -- A faster version of filetype.vim
         -- ------------------------
-        { "nathom/filetype.nvim" },
+        { "nathom/filetype.nvim", config = [[require("plugins.filetype")]] },
 
         -- Set keybindings
         -- ------------------------
