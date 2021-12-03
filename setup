@@ -4,9 +4,6 @@ OPT="${1:-"help"}"
 
 case $OPT in
   build)
-    CFG=${2:-"linux"}
-    echo "Build for $CFG configuration"
-
     # Install nix if not installed
     [ ! $(command -v "nix-shell" > /dev/null 2>&1) ] && curl -L https://nixos.org/nix/install | sh
 
@@ -15,16 +12,19 @@ case $OPT in
     ;;
   linux)
     [ -f result/activate ] && result/activate
-    stow -d configs -t $HOME -R home
+    stow -d configs -t $HOME -R all
+    stow -d configs -t $HOME -R linux
     ;;
   termux)
+    stow -d configs -t $HOME -R all
     stow -d configs -t $HOME -R termux
     ;;
   help|*)
     echo "Usage:"
     echo "help      Show this message."
-    echo "build     Build configuration. (default: linux)"
-    echo "apply     Activate existing configuration."
+		echo "build     Build configuration with Nix (Only for Linux)"
+    echo "linux     Apply config for linux"
+    echo "termux    Apply config for termux"
   ;;
 esac
 
