@@ -77,3 +77,13 @@
   description = "grub: Generate GRUB configuration"
   command = "sudo grub-mkconfig -o /boot/grub/grub.cfg"
   output = ""
+
+[[snippets]]
+  description = "xev: Identifying keycodes in Xorg"
+  command = "xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf \"%-3s %s\\n\", $5, $8 }'"
+  output = ""
+
+[[snippets]]
+  description = "setxkbmap: Return keyboard-mappings to default US layout"
+  command = "setxkbmap -layout us"
+  output = ""

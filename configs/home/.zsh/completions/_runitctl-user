@@ -25,7 +25,7 @@ _runitctl () {
 		shift words
 		# Run the completion for the subcommand
 		case "${cmd}" in
-            (enable) _get_all_service ;;
+            (enable|edit) _get_all_service ;;
             (disable|start|stop|restart|status) _get_enabled_service ;;
 		esac
 	else
@@ -37,6 +37,7 @@ _runitctl () {
             "stop:stop service"
             "restart:restart service"
             "status:show service status"
+            "edit:edit service"
 		)
 		_describe -t commands 'command' subcommands
 		_arguments : \

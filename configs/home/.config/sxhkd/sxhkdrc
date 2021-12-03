@@ -14,7 +14,7 @@ super + {w,f,e}
 
 # Controller
 # ====================================================
-# ------ brightness 
+# ------ brightness
 XF86MonBrightnessUp
     brightnessctl up
 
@@ -22,23 +22,23 @@ XF86MonBrightnessDown
     brightnessctl down
 
 # --------- Audio
-XF86AudioMute 
+XF86AudioMute
     volumectl mute
 
 XF86AudioRaiseVolume
     volumectl up
 
-XF86AudioLowerVolume 
+XF86AudioLowerVolume
         volumectl down
 
 # ------- Music
-XF86AudioStop 
+XF86AudioStop
     musicctl stop
 
-XF86AudioPlay 
+XF86AudioPlay
     musicctl toggle
 
-XF86AudioNext 
+XF86AudioNext
     musicctl next
 
 XF86AudioPrev
@@ -52,13 +52,16 @@ XF86AudioPrev
 super + {c,n,g,p,t}
     rofi-{calc,network,spotlight,pass,translate -i}
 
+super + semicolon
+  rofi-run
+
 # ----- Clipmenu
 super + Insert
     clipmenu
 
 # BSPWM
 # ====================================================
-# -------- sxhkd 
+# -------- sxhkd
 super + ctrl + s
 	pkill -USR1 -x sxhkd
 
@@ -81,6 +84,9 @@ alt + {_,shift +} F6
 
 alt + F12
     bspc node -t fullscreen
+
+super + Delete
+    xkill
 
 # BSPWM: Layout
 # ====================================================
@@ -112,4 +118,3 @@ super + shift + {h,j,k,l}
 
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
-

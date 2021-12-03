@@ -11,12 +11,14 @@ case $OPT in
     [ ! $(command -v "nix-shell" > /dev/null 2>&1) ] && curl -L https://nixos.org/nix/install | sh
 
     # Build
-    nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" \
-      && echo "Build succes!"
+    nix-shell -p nixUnstable --command "nix build --experimental-features 'nix-command flakes' '.#$CFG'" && echo "Build succes!"
     ;;
-  apply)
+  linux)
     [ -f result/activate ] && result/activate
     stow -d configs -t $HOME -R home
+    ;;
+  termux)
+    stow -d configs -t $HOME -R termux
     ;;
   help|*)
     echo "Usage:"

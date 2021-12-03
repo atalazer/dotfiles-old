@@ -50,6 +50,11 @@ while [ -n "$1" ]; do
         SERVICE=$1
         $AUTH env SVDIR="$SVDIR" sv status "$SERVICE"
         ;;
+    "edit")
+        shift
+        SERVICE=$1
+        $EDITOR "$SVDIR"/"$SERVICE"/run
+        ;;
     "-h" | "--help") help ;;
     *) echo "Invalid" && help ;;
     esac

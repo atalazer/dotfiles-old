@@ -1,5 +1,19 @@
 local cmp = require("cmp")
 
+cmp.setup.cmdline("/", {
+    sources = cmp.config.sources({
+        { name = "buffer", opts = { keyword_pattern = [=[[^[:blank:]].*]=] } },
+        { name = "rg" },
+    }),
+})
+
+cmp.setup.cmdline(":", {
+    sources = cmp.config.sources({
+        { name = "path" },
+        { name = "cmdline" },
+    }),
+})
+
 cmp.setup({
     -- completion = {
     --     autocomplete = true,
@@ -74,18 +88,4 @@ cmp.setup({
             select = true,
         }),
     },
-})
-
-cmp.setup.cmdline("/", {
-    sources = cmp.config.sources({
-        { name = "buffer", opts = { keyword_pattern = [=[[^[:blank:]].*]=] } },
-        { name = "rg" },
-    }),
-})
-
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({
-        { name = "path" },
-        { name = "cmdline" },
-    }),
 })

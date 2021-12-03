@@ -1,4 +1,5 @@
 #!/bin/sh
 
-exec 2>&1
-exec espanso daemon
+USER=atalariq
+HOME="/home/$USER"
+[ -x "$HOME/Applications/bin/espanso-0.7.3" ] && "$HOME/Applications/bin/espanso-0.7.3" daemon

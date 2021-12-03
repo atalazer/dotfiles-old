@@ -1,15 +1,18 @@
 #!/bin/sh
 # vim: ft=sh ts=4 sw=4:
 
-[ -f "$HOME/.profile" ] && source "$HOME/.profile"
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" ] && \
-    source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
+[ -f "$HOME/.profile" ] && . "$HOME/.profile"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
+
+USER_XRESOURCES=$HOME/.Xresources
+USER_XMODMAP=$HOME/.Xmodmap
+SYS_XRESOURCES=/etc/X11/xinit/.Xresources
+SYS_XMODMAP=/etc/X11/xinit/.Xmodmap
 
 # Lunch dbus-launch, this is important for some app
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
     eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
-
 
 # Initialization
 xset -b                 # Disable terminal bell
@@ -36,3 +39,9 @@ if command -v "pacman" > /dev/null 2>&1; then
 elif command -v "xbps-install" > /dev/null 2>&1; then
     /usr/libexec/polkit-mate-authentication-agent-1 >/dev/null 2>&1 &
 fi
+
+# merge in defaults and keymaps
+[ -f $SYS_XRESOURCES ] && xrdb -merge $SYS_XRESOURCES
+[ -f $SYS_XMODMAP ] && xmodmap $SYS_XMODMAP
+[ -f "$USER_XRESOURCES" ] && xrdb -merge "$USER_XRESOURCES"
+[ -f "$USER_XMODMAP" ] && xmodmap "$USER_XMODMAP"

@@ -16,7 +16,7 @@
     # tesseract
 
     ### Services
-    espanso
+    # espanso
     # fusuma
     gcr # for pinentry-gnome3
     mpd

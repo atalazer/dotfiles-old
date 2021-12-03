@@ -33,24 +33,23 @@ window:
     multiplier: 5
 
 font:
-  size: 10.0
+  size: 11.0
   normal:
-    family: JetBrainsMono Nerd Font
-    # family: FiraCode Nerd Font Mono
-    # family: FuraCode Nerd Font Mono
+    # family: JetBrainsMono Nerd Font
+    family: FiraCode Nerd Font Mono
     style: Medium
 
   # bold:
-  #     family: SauceCodePro Nerd Font
-  #     style: Bold
+  #   family: Fira Code Bold Nerd Font Complete
+  #   style: Bold
 
   # italic:
-  #     family: SauceCodePro Nerd Font
-  #     style: Italic
+  #   family: Victor Mono Light Italic Nerd Font Complete
+  #   style: Italic
 
   # bold_italic:
-  #     family: SauceCodePro Nerd Font
-  #     style: Bold Italic
+  #   family: Victor Mono Bold Italic Nerd Font Complete
+  #   style: Bold Italic
 
   offset:
     x: 0
@@ -82,7 +81,6 @@ colors:
 
   color: '#ffffff'
 
-
 background_opacity: 0.9
 
 selection:
@@ -104,9 +102,9 @@ mouse:
   double_click: { threshold: 200 }
   triple_click: { threshold: 200 }
 
-  url:
+  hints:
     launcher:
-        program: xdg-open
+        program: opener
     modifiers: None
 
   mouse_bindings:
@@ -198,4 +196,3 @@ key_bindings:
   - { key: NumpadAdd,      mods: Control,                         action: IncreaseFontSize }
   - { key: Minus,          mods: Control,                         action: DecreaseFontSize }
   - { key: NumpadSubtract, mods: Control,                         action: DecreaseFontSize }
-

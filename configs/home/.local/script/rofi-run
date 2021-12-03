@@ -1,0 +1,4 @@
+#!/bin/sh
+
+command="$(rofi  -location 2 -dmenu -p 'Command' -l 0)"
+exec "$command"
