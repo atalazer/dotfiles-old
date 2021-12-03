@@ -9,8 +9,7 @@ fpath=($ZDIR/completions $fpath)
 
 # @function: source file if exist.
 source-file() {
-    FILE=$1
-    [ -f "$FILE" ] && source "$FILE"
+    [ -f "$1" ] && source "$1"
 }
 
 # }}}
@@ -104,10 +103,14 @@ export TODO=${NOTE_DIR:-$HOME/Documents/Notes}/todo.md
 export SCHEDULE=${NOTE_DIR:-$HOME/Documents/Notes}/schedule.md
 
 # Start CLI Apps
-command -v "zoxide" >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 
-export FNM_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/fnm
-command -v "fnm" >/dev/null 2>&1 && eval "$(fnm env --fnm-dir $FNM_DIR)"
+if command -v "fnm" >/dev/null 2>&; then
+    export FNM_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/fnm
+    eval "$(fnm env --fnm-dir $FNM_DIR)"
+fi
 
 export GPG_TTY="$(tty)"
 

@@ -4,17 +4,35 @@
 
 [[ $DISPLAY ]] && shopt -s checkwinsize
 
-[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
-
 # Config
 export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 
-eval "$(starship init bash)"
-eval "$(zoxide init bash)"
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+command -v zoxide >/dev/null 2>&1 && "$(zoxide init bash)"
 
-function Source(){
+source-file(){
     [ -f "$1" ] && source "$1"
 }
 
-Source "${HOME}/.aliases"
+# ===== User ===== {{{
+# User alias definition
+ALIASES=${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases
+source-file "$ALIASES"
 
+# User function definition
+FUNCTIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions
+if [ -d "$FUNCTIONS" ]; then
+    for f in "$FUNCTIONS"/?*; do
+        source "$f"
+    done
+    unset f
+fi
+
+# User config
+CONFIGS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/configs
+if [ -d "$CONFIGS" ]; then
+    for f in "$CONFIGS"/?*; do
+        source "$f"
+    done
+    unset f
+fi
