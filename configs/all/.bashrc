@@ -19,15 +19,6 @@ source-file(){
 ALIASES=${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliases
 source-file "$ALIASES"
 
-# User function definition
-FUNCTIONS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions
-if [ -d "$FUNCTIONS" ]; then
-    for f in "$FUNCTIONS"/?*; do
-        source "$f"
-    done
-    unset f
-fi
-
 # User config
 CONFIGS=${XDG_CONFIG_HOME:-$HOME/.config}/shell/configs
 if [ -d "$CONFIGS" ]; then

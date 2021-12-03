@@ -107,7 +107,7 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh)"
 fi
 
-if command -v "fnm" >/dev/null 2>&; then
+if command -v "fnm" >/dev/null 2>&1; then
     export FNM_DIR=${XDG_DATA_HOME:-$HOME/.local/share}/fnm
     eval "$(fnm env --fnm-dir $FNM_DIR)"
 fi

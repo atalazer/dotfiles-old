@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # pet
 # Simple command-line snippet manager, written in Go.
 # https://github.com/knqyf263/pet
@@ -20,5 +18,5 @@ zle -N _pet_select
 stty -ixon
 bindkey '^s' _pet_select
 
-alias pa"pet new"
+alias pa="pet new"
 alias pe="pet exec"
