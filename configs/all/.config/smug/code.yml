@@ -3,5 +3,5 @@ root: ~/Documents/Programming
 
 windows:
 - name: Main
-  commands: 
+  commands:
     - clear

@@ -20,8 +20,6 @@ add("~/.config/nvim")
 -- add("/usr/share/lua/5.4")
 
 M.config = {
-    on_attach = Util.lsp_on_attach,
-    on_init = Util.lsp_on_init,
     settings = {
         Lua = {
             runtime = {

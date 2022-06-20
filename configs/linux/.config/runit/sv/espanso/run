@@ -1,5 +1,7 @@
 #!/bin/sh
 
 USER=atalariq
-HOME="/home/$USER"
-[ -x "$HOME/Applications/bin/espanso-0.7.3" ] && "$HOME/Applications/bin/espanso-0.7.3" daemon
+HOME=/home/$USER
+
+ESPANSO_BIN=$HOME/Applications/bin/espanso-0.7.3
+exec sh -c "$ESPANSO_BIN daemon && $ESPANSO_BIN restart"

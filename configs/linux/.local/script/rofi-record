@@ -97,7 +97,7 @@ notify() {
 audioVideo() {
     filename="$OUTDIR/video-$(date '+%y%m%d-%H%M-%S').mkv"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
-    
+
     notify -2 "<b>Start Record Audio and Video</b>"
     emit_signal true
 
@@ -128,7 +128,7 @@ videoOnlyArea() {
         -c:v libx264 -pix_fmt yuv420p -preset veryfast -q:v 1 \
         "$filename" &
 
-    screenkey -s small -p bottom --geometry "$G" --timeout 1.5 &
+    # screenkey -s small -p bottom --geometry "$G" --timeout 1.5 &
 
     echo "$filename" > $recordfilename
     echo $! >$recordid
@@ -156,7 +156,7 @@ video() {
 audio() {
     filename="$OUTDIR/audio-$(date '+%y%m%d-%H%M-%S').mp3"
     dimensions=$(xdpyinfo | grep dimensions | awk '{print $2;}')
-    
+
     notify -2 "<b>Start Recording Audio</b>" "$filename"
 
     ffmpeg -f alsa -i default -ac 2 -acodec libmp3lame -ab 128k "$filename" &

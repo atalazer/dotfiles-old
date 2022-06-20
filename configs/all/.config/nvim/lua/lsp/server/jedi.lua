@@ -2,8 +2,6 @@ local M = {}
 
 M.config = {
     root_dir = vim.loop.cwd,
-    on_attach = Util.lsp_on_attach,
-    on_init = Util.lsp_on_init,
     settings = {
         jedi = {
             enable = true,

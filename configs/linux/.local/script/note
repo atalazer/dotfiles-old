@@ -117,7 +117,6 @@ while [ -n "$1" ]; do
     sync) sync ;;
     "-h" | "--help") help ;;
     "-v" | "--version") version ;;
-    *) echo "Invalid $1" && help && exit ;;
     esac
     shift
 done

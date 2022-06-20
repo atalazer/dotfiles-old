@@ -1,0 +1,584 @@
+openbox_config:
+  -xi: http://www.w3.org/2001/XInclude
+  -xmlns: http://openbox.org/3.4/rc
+  applications: ""
+  desktops:
+    firstdesk: "1"
+    names: ""
+    number: "4"
+    popupTime: "875"
+  dock:
+    autoHide: "no"
+    direction: Vertical
+    floatingX: "0"
+    floatingY: "0"
+    hideDelay: "300"
+    moveButton: Middle
+    noStrut: "no"
+    position: TopLeft
+    showDelay: "300"
+    stacking: Above
+  focus:
+    focusDelay: "200"
+    focusLast: "yes"
+    focusNew: "yes"
+    followMouse: "no"
+    raiseOnFocus: "no"
+    underMouse: "no"
+  keyboard:
+    chainQuitKey: C-g
+    keybind:
+    - -key: W-A-Left
+      action:
+        -name: GoToDesktop
+        to: left
+        wrap: "no"
+    - -key: W-A-Right
+      action:
+        -name: GoToDesktop
+        to: right
+        wrap: "no"
+    # - -key: C-A-Up
+    #   action:
+    #     -name: GoToDesktop
+    #     to: up
+    #     wrap: "no"
+    # - -key: C-A-Down
+    #   action:
+    #     -name: GoToDesktop
+    #     to: down
+    #     wrap: "no"
+    - -key: W-S-Left
+      action:
+        -name: SendToDesktop
+        to: left
+        wrap: "no"
+    - -key: W-S-Right
+      action:
+        -name: SendToDesktop
+        to: right
+        wrap: "no"
+    # - -key: S-A-Up
+    #   action:
+    #     -name: SendToDesktop
+    #     to: up
+    #     wrap: "no"
+    # - -key: S-A-Down
+    #   action:
+    #     -name: SendToDesktop
+    #     to: down
+    #     wrap: "no"
+    - -key: W-1
+      action:
+        -name: GoToDesktop
+        to: "1"
+    - -key: W-2
+      action:
+        -name: GoToDesktop
+        to: "2"
+    - -key: W-3
+      action:
+        -name: GoToDesktop
+        to: "3"
+    - -key: W-4
+      action:
+        -name: GoToDesktop
+        to: "4"
+    - -key: W-d
+      action:
+        -name: ToggleShowDesktop
+    - -key: A-F12
+      action:
+        -name: ToggleFullscreen
+    - -key: A-F3
+      action:
+        -name: Iconify
+    - -key: A-F4
+      action:
+        -name: Close
+    - -key: A-F5
+      action:
+        -name: ToggleMaximize
+    - -key: A-F6
+      action:
+        -name: ToggleDecorations
+    - -key: A-Escape
+      action:
+      - -name: Lower
+      - -name: FocusToBottom
+      - -name: Unfocus
+    - -key: A-space
+      action:
+        -name: ShowMenu
+        menu: client-menu
+    - -key: A-Tab
+      action:
+        -name: NextWindow
+        finalactions:
+          action:
+          - -name: Focus
+          - -name: Raise
+          - -name: Unshade
+    - -key: A-S-Tab
+      action:
+        -name: PreviousWindow
+        finalactions:
+          action:
+          - -name: Focus
+          - -name: Raise
+          - -name: Unshade
+    - -key: W-Right
+      action:
+        -name: DirectionalCycleWindows
+        direction: right
+    - -key: W-Left
+      action:
+        -name: DirectionalCycleWindows
+        direction: left
+    - -key: W-Up
+      action:
+        -name: DirectionalCycleWindows
+        direction: up
+    - -key: W-Down
+      action:
+        -name: DirectionalCycleWindows
+        direction: down
+    - -key: W-l
+      action:
+        -name: DirectionalCycleWindows
+        direction: right
+    - -key: W-h
+      action:
+        -name: DirectionalCycleWindows
+        direction: left
+    - -key: W-k
+      action:
+        -name: DirectionalCycleWindows
+        direction: up
+    - -key: W-j
+      action:
+        -name: DirectionalCycleWindows
+        direction: down
+    - -key: W-S-r
+      action:
+        -name: Reconfigure
+        -name: Restart
+  margins:
+    bottom: "0"
+    left: "0"
+    right: "0"
+    top: "0"
+  menu:
+    file: menu.xml
+    hideDelay: "200"
+    manageDesktops: "yes"
+    middle: "no"
+    showIcons: "yes"
+    submenuHideDelay: "400"
+    submenuShowDelay: "100"
+  mouse:
+    context:
+    - -name: Frame
+      mousebind:
+      - -action: Press
+        -button: A-Left
+        action:
+        - -name: Focus
+        - -name: Raise
+      - -action: Click
+        -button: A-Left
+        action:
+          -name: Unshade
+      - -action: Drag
+        -button: A-Left
+        action:
+          -name: Move
+      - -action: Press
+        -button: A-Right
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Drag
+        -button: A-Right
+        action:
+          -name: Resize
+      - -action: Press
+        -button: A-Middle
+        action:
+        - -name: Lower
+        - -name: FocusToBottom
+        - -name: Unfocus
+      - -action: Click
+        -button: A-Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: A-Down
+        action:
+          -name: GoToDesktop
+          to: next
+      - -action: Click
+        -button: C-A-Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: C-A-Down
+        action:
+          -name: GoToDesktop
+          to: next
+      - -action: Click
+        -button: A-S-Up
+        action:
+          -name: SendToDesktop
+          to: previous
+      - -action: Click
+        -button: A-S-Down
+        action:
+          -name: SendToDesktop
+          to: next
+    - -name: Titlebar
+      mousebind:
+      - -action: Drag
+        -button: Left
+        action:
+          -name: Move
+      - -action: DoubleClick
+        -button: Left
+        action:
+          -name: ToggleMaximize
+      - -action: Click
+        -button: Up
+        action:
+          -name: if
+          shaded: "no"
+          then:
+            action:
+            - -name: Shade
+            - -name: FocusToBottom
+            - -name: Unfocus
+            - -name: Lower
+      - -action: Click
+        -button: Down
+        action:
+          -name: if
+          shaded: "yes"
+          then:
+            action:
+            - -name: Unshade
+            - -name: Raise
+    - -name: Titlebar Top Right Bottom Left TLCorner TRCorner BRCorner BLCorner
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Press
+        -button: Middle
+        action:
+        - -name: Lower
+        - -name: FocusToBottom
+        - -name: Unfocus
+      - -action: Press
+        -button: Right
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: ShowMenu
+          menu: client-menu
+    - -name: Top
+      mousebind:
+        -action: Drag
+        -button: Left
+        action:
+          -name: Resize
+          edge: top
+    - -name: Left
+      mousebind:
+        -action: Drag
+        -button: Left
+        action:
+          -name: Resize
+          edge: left
+    - -name: Right
+      mousebind:
+        -action: Drag
+        -button: Left
+        action:
+          -name: Resize
+          edge: right
+    - -name: Bottom
+      mousebind:
+      - -action: Drag
+        -button: Left
+        action:
+          -name: Resize
+          edge: bottom
+      - -action: Press
+        -button: Right
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: ShowMenu
+          menu: client-menu
+    - -name: TRCorner BRCorner TLCorner BLCorner
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Drag
+        -button: Left
+        action:
+          -name: Resize
+    - -name: Client
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+      - -action: Press
+        -button: Middle
+        action:
+        - -name: Focus
+        - -name: Raise
+      - -action: Press
+        -button: Right
+        action:
+        - -name: Focus
+        - -name: Raise
+    - -name: Icon
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+        - -name: ShowMenu
+          menu: client-menu
+      - -action: Press
+        -button: Right
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: ShowMenu
+          menu: client-menu
+    - -name: AllDesktops
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Click
+        -button: Left
+        action:
+          -name: ToggleOmnipresent
+    - -name: Shade
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+      - -action: Click
+        -button: Left
+        action:
+          -name: ToggleShade
+    - -name: Iconify
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+      - -action: Click
+        -button: Left
+        action:
+          -name: Iconify
+    - -name: Maximize
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Press
+        -button: Middle
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Press
+        -button: Right
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Click
+        -button: Left
+        action:
+          -name: ToggleMaximize
+      - -action: Click
+        -button: Middle
+        action:
+          -name: ToggleMaximize
+          direction: vertical
+      - -action: Click
+        -button: Right
+        action:
+          -name: ToggleMaximize
+          direction: horizontal
+    - -name: Close
+      mousebind:
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+        - -name: Unshade
+      - -action: Click
+        -button: Left
+        action:
+          -name: Close
+    - -name: Desktop
+      mousebind:
+      - -action: Click
+        -button: Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: Down
+        action:
+          -name: GoToDesktop
+          to: next
+      - -action: Click
+        -button: A-Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: A-Down
+        action:
+          -name: GoToDesktop
+          to: next
+      - -action: Click
+        -button: C-A-Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: C-A-Down
+        action:
+          -name: GoToDesktop
+          to: next
+      - -action: Press
+        -button: Left
+        action:
+        - -name: Focus
+        - -name: Raise
+      - -action: Press
+        -button: Right
+        action:
+        - -name: Focus
+        - -name: Raise
+    - -name: Root
+      mousebind:
+      - -action: Press
+        -button: Middle
+        action:
+          -name: ShowMenu
+          menu: client-list-combined-menu
+      - -action: Press
+        -button: Right
+        action:
+          -name: ShowMenu
+          menu: root-menu
+    - -name: MoveResize
+      mousebind:
+      - -action: Click
+        -button: Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: Down
+        action:
+          -name: GoToDesktop
+          to: next
+      - -action: Click
+        -button: A-Up
+        action:
+          -name: GoToDesktop
+          to: previous
+      - -action: Click
+        -button: A-Down
+        action:
+          -name: GoToDesktop
+          to: next
+    doubleClickTime: "500"
+    dragThreshold: "1"
+    screenEdgeWarpMouse: "false"
+    screenEdgeWarpTime: "400"
+  placement:
+    center: "yes"
+    monitor: Primary
+    policy: Smart
+    primaryMonitor: "1"
+  resistance:
+    screen_edge_strength: "20"
+    strength: "10"
+  resize:
+    drawContents: "yes"
+    popupFixedPosition:
+      x: "10"
+      "y": "10"
+    popupPosition: Center
+    popupShow: Nonpixel
+  theme:
+    animateIconify: "yes"
+    font:
+    - -place: ActiveWindow
+      name: sans
+      size: "8"
+      slant: normal
+      weight: bold
+    - -place: InactiveWindow
+      name: sans
+      size: "8"
+      slant: normal
+      weight: bold
+    - -place: MenuHeader
+      name: sans
+      size: "9"
+      slant: normal
+      weight: normal
+    - -place: MenuItem
+      name: sans
+      size: "9"
+      slant: normal
+      weight: normal
+    - -place: ActiveOnScreenDisplay
+      name: sans
+      size: "9"
+      slant: normal
+      weight: bold
+    - -place: InactiveOnScreenDisplay
+      name: sans
+      size: "9"
+      slant: normal
+      weight: bold
+    keepBorder: "yes"
+    name: Clearlooks
+    titleLayout: NLIMC

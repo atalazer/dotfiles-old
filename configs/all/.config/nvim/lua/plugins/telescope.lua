@@ -1,16 +1,10 @@
-local present, telescope = pcall(require, "telescope")
-
-if not present then
-    return
-end
-
+local telescope = require("telescope")
 local previewers = require("telescope.previewers")
 local actions = require("telescope.actions")
 
 local HOME = vim.env.HOME
-local M = {}
 
-M.no_preview = function()
+local no_preview = function()
     return require("telescope.themes").get_dropdown({
         borderchars = {
             { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -112,8 +106,8 @@ telescope.setup({
                 "node_modules",
             },
         },
-        lsp_code_actions = M.no_preview(),
-        oldfiles = M.no_preview(),
+        lsp_code_actions = no_preview(),
+        oldfiles = no_preview(),
     },
     extensions = {
         fzf = {
@@ -147,19 +141,20 @@ telescope.setup({
 })
 
 -- Load Extensions
-pcall(require("telescope").load_extension("fzf"))
-pcall(require("telescope").load_extension("frecency"))
-pcall(require("telescope").load_extension("media_files"))
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("frecency")
+require("telescope").load_extension("media_files")
 
 local builtin = require("telescope.builtin")
-M.builtins = function()
-    builtin.builtin(M.no_preview())
+local builtins = function()
+    builtin.builtin(no_preview())
 end
 
-M.frecency = function()
-    telescope.extensions.frecency.frecency(M.no_preview())
+local frecency = function()
+    telescope.extensions.frecency.frecency(no_preview())
 end
-M.glow_previewer = function()
+
+local glow_previewer = function()
     return require("telescope.builtin").fd({
         previewer = previewers.new_termopen_previewer({
             get_command = function(selection)
@@ -177,11 +172,8 @@ nnoremap( "<leader>fd", "<CMD>Telescope marks<CR>", { silent = true }, "Marks" )
 nnoremap( "<leader>fb", "<CMD>Telescope file_browser<CR>", { silent = true }, "File Browser" )
 nnoremap( "<leader>fk", "<CMD>Telescope keymaps<CR>", { silent = true }, "Keybindings" )
 nnoremap( "<leader>fc", "<CMD>Telescope colorscheme<CR>", { silent = true }, "Colorscheme" )
-nnoremap( "<Leader>ft", M.builtins, { silent = true }, "Built-Ins" )
+nnoremap( "<Leader>ft", builtins, { silent = true }, "Built-Ins" )
 
 -- <CMD>Telescope Extensions
-nnoremap( "<leader>ff", M.frecency, { silent = true }, "Frecency" )
-nnoremap( "<leader>fg", M.glow_previewer, { silent = true }, "Glow Previewer" )
-nnoremap( "<leader>fm", "<CMD>Telescope media_files<CR>", { silent = true }, "Media Files" )
-
-return M
+nnoremap( "<leader>ff", frecency, { silent = true }, "Frecency" )
+nnoremap( "<leader>fg", glow_previewer, { silent = true }, "Glow Previewer" )

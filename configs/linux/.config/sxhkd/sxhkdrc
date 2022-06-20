@@ -2,7 +2,7 @@
 # ====================================================
 # ------ Terminal emulator
 super + Return
-	kitty
+	defapps run terminal
 
 # ------ Launcher
 super + r
@@ -48,12 +48,19 @@ XF86AudioPrev
 {super,shift,alt} + Print
     shot {-i,select,active}
 
+# ------- translate
+super + t
+    rofi-translate -i
+
 # ------ Rofi
-super + {c,n,g,p,t}
-    rofi-{calc,network,spotlight,pass,translate -i}
+super + {c,n,p}
+    rofi-{calc,network,pass}
 
 super + semicolon
   rofi-run
+
+super + F12
+    rofi-record
 
 # ----- Clipmenu
 super + Insert

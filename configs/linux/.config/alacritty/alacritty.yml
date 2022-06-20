@@ -1,12 +1,15 @@
 ---
+live_config_reload: true
 import:
-  - ~/.config/alacritty/themes/ayu_dark.yaml
+  - ~/.cache/wal/colors-alacritty.yaml
+  # - ~/.config/alacritty/themes/ayu_dark.yaml
 
 env:
   TERM: xterm-256color
   # TERM: alacritty
 
 window:
+  opacity: 0.95
   dimensions:
     columns: 0
     lines: 0
@@ -60,28 +63,8 @@ font:
     y: 0
 
   use_thin_strokes: true
-  draw_bold_text_with_bright_colors: false
+  draw_bold_text_with_bright_colors: true
 
-colors:
-  cursor:
-    text: CellBackground
-    cursor: CellForeground
-
-  vi_mode_cursor:
-    text: CellBackground
-    cursor: CellForeground
-
-  line_indicator:
-    foreground: None
-    background: None
-
-  selection:
-    text: CellBackground
-    background: CellForeground
-
-  color: '#ffffff'
-
-background_opacity: 0.9
 
 selection:
     semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
@@ -92,11 +75,9 @@ cursor:
     shape: Block
     blinking: Always
   vi_mode_style: None
-  blink_interval: 500
+  blink_interval: 750
   unfocused_hollow: true
-  thickness: 0.15
-
-live_config_reload: true
+  thickness: 0.25
 
 mouse:
   double_click: { threshold: 200 }

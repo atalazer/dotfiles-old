@@ -1,0 +1,13 @@
+session: learn-golang
+root: ~/Documents/Programming/Journey/Golang
+
+windows:
+- name: Editor
+  root: .
+  layout: main-vertical
+  commands:
+    - clear
+- name: Video
+  root: ~/Videos/Programming/Go/basic
+  commands:
+    - clear

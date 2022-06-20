@@ -122,26 +122,6 @@ Util.borders = {
     { "│", "FloatBorder" },
 }
 
-Util.lsp_on_attach = function(client, _--[[ bufnr ]])
-    if client.resolved_capabilities.code_lens then
-        vim.cmd([[
-            augroup CodeLens
-                au!
-                au InsertEnter,InsertLeave * lua vim.lsp.codelens.refresh()
-            augroup END
-        ]])
-    end
-
-    require("lsp.keys").mappings()
-end
-
-Util.lsp_on_init = function(client)
-    local notify = notify or vim.notify
-    notify("Language Server Client successfully started!", "info", {
-        title = client.name,
-    })
-end
-
 local session_dir = vim.fn.expand(vim.fn.stdpath("cache") .. "/sessions")
 local last_session = session_dir .. "/last.vim"
 Util.session = {

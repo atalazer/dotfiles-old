@@ -47,6 +47,7 @@ rule_floating_center mpv
 # workspace
 rule_desktop (){ bspc rule -a "$2" desktop="^$1"; }
 rule_desktop 1 kitty
+rule_desktop 1 Alacritty
 rule_desktop 2 firefox
 rule_desktop 2 qutebrowser
 rule_desktop 2 Brave-browser

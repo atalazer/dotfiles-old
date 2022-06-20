@@ -1,53 +1,5 @@
 local packer_ok, packer = pcall(require, "packer")
 
--- ==============================
--- Plugins Enabled
--- ==============================
-local enabled = {}
--- UI
-enabled.alpha = true
-enabled.bufferline = true
-enabled.focus = false
-enabled.fzf = true
-enabled.nvim_tree = true
-enabled.shade = false
-enabled.sidebar = false
-enabled.telescope = true
-enabled.twillight = false
-enabled.which_key = true
-enabled.windline = true
-enabled.zenmode = false
--- Editing
-enabled.cmp = true
-enabled.coq = not enabled.cmp
-enabled.luasnip = enabled.cmp
-enabled.sniprun = false
-enabled.treesitter = true
--- Git
-enabled.fugitive = true
-enabled.gitlinker = false
-enabled.gitsigns = true
-enabled.lazygit = true
-enabled.neogit = not enabled.fugitive
--- Experience
-enabled.colorizer = false
-enabled.hexokinase = not enabled.colorizer
-enabled.hop = false
-enabled.indent_blankline = true
-enabled.lightspeed = true
-enabled.neoscroll = true
--- misc
-enabled.cheat = false
-enabled.dasht = false
-enabled.escape = true
-enabled.himalaya = false
-enabled.presence = false
-enabled.whitespace = true
--- markdown
-enabled.headlines = true
-enabled.due = true
-enabled.mkdnflow = false
-
 if not packer_ok then
     return
 end
@@ -120,6 +72,7 @@ return packer.startup({
             "~/Documents/Programming/Repo/wally.nvim",
             run = "./setup.sh",
             setup = function()
+                vim.g.wally_transparent = true
                 vim.g.wally_wal_dir = "~/.cache/wal"
                 vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
             end,
@@ -130,7 +83,6 @@ return packer.startup({
         -- ------------------------
         {
             "hhn-pham/alpha-nvim",
-            disable = not enabled.alpha,
             config = [[require("plugins.alpha")]],
         },
 
@@ -138,7 +90,6 @@ return packer.startup({
         -- ------------------------
         {
             "windwp/windline.nvim",
-            disable = not enabled.windline,
             config = function()
                 require("plugins.windline")
                 vim.defer_fn(function()
@@ -151,35 +102,23 @@ return packer.startup({
         -- ------------------------
         {
             "akinsho/nvim-bufferline.lua",
-            disable = not enabled.bufferline,
             config = [[require("plugins.bufferline")]],
-        },
-
-        -- Customizable Sidebar
-        -- ------------------------
-        {
-            "GustavoKatel/sidebar.nvim",
-            disable = not enabled.sidebar,
-            config = [[require("plugins.sidebar")]],
         },
 
         -- Superfast Tree File
         -- ------------------------
         {
             "kyazdani42/nvim-tree.lua",
-            disable = not enabled.nvim_tree,
             setup = function()
                 nnoremap("`", "<CMD>NvimTreeToggle<CR>", "Toggle Nvim Tree")
-                require("plugins.nvim-tree").setup()
             end,
-            config = require("plugins.nvim-tree").config,
+            config = [[require("plugins.nvim-tree")]],
         },
 
         -- Fuzzy Finder
         -- ------------------------
         {
             "nvim-telescope/telescope.nvim",
-            disable = not enabled.telescope,
             config = [[require("plugins.telescope")]],
             module_pattern = { "telescope", "telescope.*" },
             cmd = "Telescope",
@@ -204,7 +143,6 @@ return packer.startup({
         -- ------------------------
         {
             "ibhagwan/fzf-lua",
-            disable = not enabled.fzf,
             requires = { "vijaymarupudi/nvim-fzf" },
             config = [[require("plugins.fzf")]],
         },
@@ -213,90 +151,13 @@ return packer.startup({
         -- ------------------------
         {
             "folke/which-key.nvim",
-            disable = not enabled.which_key,
             config = [[require("plugins.which-key")]],
-        },
-
-        -- Distraction-free coding for Neovim
-        -- ------------------------
-        {
-            "folke/zen-mode.nvim",
-            disable = not enabled.zenmode,
-            cmd = "ZenMode",
-            setup = function()
-                nnoremap("<leader>gz", "<CR>ZenMode<CR>", "silent")
-            end,
-            config = [[require("plugins.zen-mode")]],
-        },
-
-        -- Dim inactive portions of the code you're editing using TreeSitter.
-        -- ------------------------
-        {
-            "folke/twilight.nvim",
-            disable = not enabled.twillight,
-            cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
-            config = function()
-                require("twilight").setup({
-                    dimming = {
-                        alpha = 0.30,
-                        color = { "Normal", "#ffffff" },
-                        inactive = false,
-                    },
-                    context = 5,
-                    treesitter = true,
-                    expand = {
-                        "function",
-                        "method",
-                        "if_statement",
-                        "table",
-                    },
-                    exclude = {},
-                })
-            end,
-        },
-
-        -- Auto-Focusing and Auto-Resizing Splits/Windows for neovim
-        -- --------------------------
-        {
-            "beauwilliams/focus.nvim",
-            disable = not enabled.focus,
-            config = function()
-                require("focus").setup({
-                    -- cursorline = true,
-                    -- signcolumn = true,
-                    -- number = true,
-                    -- relativenumber = true,
-                    -- hybridnumber = true,
-                    compatible_filetrees = { "filetree", "nvimtree", "nerdtree", "chadtree", "fern" },
-                    excluded_filetypes = { "toggleterm", "TelescopePrompt", "frecency", "fzf" },
-                    excluded_buftypes = { "help", "prompt", "nofile" },
-                })
-            end,
-        },
-
-        -- Shade inactive windows
-        -- ------------------------
-        {
-            "sunjon/shade.nvim",
-            disable = not enabled.shade,
-            config = function()
-                require("shade").setup({
-                    overlay_opacity = 50,
-                    opacity_step = 1,
-                    keys = {
-                        brightness_up = "<C-Up>",
-                        brightness_down = "<C-Down>",
-                        toggle = "<Leader>cs",
-                    },
-                })
-            end,
         },
 
         -- Show Indentation
         -- ------------------------
         {
             "lukas-reineke/indent-blankline.nvim",
-            disable = not enabled.indent_blankline,
             config = [[require("plugins.indent-blankline")]],
         },
 
@@ -325,7 +186,6 @@ return packer.startup({
         -- ------------------------
         {
             "jakewvincent/texmagic.nvim",
-            ft = { "tex", "bib", "latex" },
             config = function()
                 vim.g["tex_flavor"] = "latex"
                 require("texmagic").setup({
@@ -339,7 +199,6 @@ return packer.startup({
                                 "-pv",
                                 "%f",
                             },
-                            isContinuous = false,
                         },
                     },
                 })
@@ -364,44 +223,6 @@ return packer.startup({
             "dhruvasagar/vim-table-mode",
             ft = { "text", "markdown" },
             cmd = { "TableModeRealign", "TableModeToggle" },
-        },
-
-        -- Markdown Notebook Navigation And Management
-        -- -------------------------------
-        {
-            "jakewvincent/mkdnflow.nvim",
-            disable = not enabled.mkdnflow,
-            config = function()
-                require("mkdnflow").setup({
-                    default_mappings = false,
-                    create_dirs = true,
-                    links_relative_to = "first",
-                    filetypes = { md = true, rmd = true, markdown = true },
-                    evaluate_prefix = true,
-                    new_file_prefix = [[os.date('%Y-%m-%d-')]],
-                })
-            end,
-        },
-        {
-            "NFrid/due.nvim",
-            disable = not enabled.due,
-            config = function()
-                require("due_nvim").setup({
-                    ft = "*.md",
-                    prescript = "   due: ",
-                    prescript_hi = "Comment",
-                    due_hi = "String",
-                    today = "TODAY",
-                    today_hi = "Character",
-                    overdue = "OVERDUE",
-                    overdue_hi = "Error",
-                    date_hi = "Conceal",
-                    pattern_start = "<",
-                    pattern_end = ">",
-                    use_clock_time = true,
-                    default_due_time = "midnight",
-                })
-            end,
         },
 
         -- yuck.vim for eww .yuck
@@ -430,26 +251,10 @@ return packer.startup({
             },
         },
 
-        -- Coq.nvim, completion
-        -- ------------------------
-        {
-            "ms-jpq/coq_nvim",
-            disable = not enabled.coq,
-            branch = "coq",
-            run = "COQdeps",
-            requires = {
-                { "ms-jpq/coq.artifacts", branch = "artifacts" },
-                { "ms-jpq/coq.thirdparty", branch = "3p" },
-            },
-            setup = require("plugins.coq").setup,
-            config = require("plugins.coq").config,
-        },
-
         -- Completion
         -- ------------------------
         {
             "hrsh7th/nvim-cmp",
-            disable = not enabled.cmp,
             config = [[require("plugins.cmp")]],
             requires = {
                 "f3fora/cmp-spell",
@@ -507,27 +312,7 @@ return packer.startup({
         -- ------------------------
         {
             "numToStr/Comment.nvim",
-            config = [[require("plugins.comment")]],
-        },
-
-        -- Generate Annotation
-        -- -------------------------
-        {
-            "danymat/neogen",
-            wants = "nvim-treesitter",
-            config = function()
-                local opts = { silent = true }
-                nnoremap("gca", ":lua require('neogen').generate()<CR>", opts)
-                nnoremap("<C-e>", ":lua require('neogen').jump_next()<CR>", opts)
-
-                require("neogen").setup({
-                    enabled = true,
-                    languages = {
-                        lua = { template = { annotation_convention = "emmylua" } },
-                        python = { template = { annotation_convention = "google_docstrings" } },
-                    },
-                })
-            end,
+            config = [[require("plugins.comment").Comment()]],
         },
 
         -- Align
@@ -538,20 +323,6 @@ return packer.startup({
             setup = function()
                 nnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
                 xnoremap("ga", "<Plug>(EasyAlign)", "silent", "Align")
-            end,
-        },
-
-        {
-            "RRethy/nvim-align",
-            setup = function()
-                vim.cmd("command! -range=% -nargs=1 Align lua require'align'.align(<f-args>)")
-            end,
-            config = function()
-                Util.align = function()
-                    print("Align: ")
-                    local toAlign = vim.fn.nr2char(vim.fn.getchar())
-                    vim.cmd("Align " .. toAlign)
-                end
             end,
         },
 
@@ -579,7 +350,6 @@ return packer.startup({
         -- ------------------------
         {
             "phaazon/hop.nvim",
-            disable = not enabled.hop,
             cmd = { "HopWord" },
             setup = function()
                 nnoremap("<leader>w", "<CMD>HopWord<CR>", "Word")
@@ -596,32 +366,27 @@ return packer.startup({
         -- ------------------------
         {
             "ggandor/lightspeed.nvim",
-            disable = not enabled.lightspeed,
-            setup = require("plugins.lightspeed").setup,
-            config = require("plugins.lightspeed").config,
+            config = [[require("plugins.lightspeed")]],
         },
 
         -- Increment and decrement
         -- ------------------------
         {
             "monaqa/dial.nvim",
-            setup = require("plugins.dial").setup,
-            config = require("plugins.dial").config,
+            config = [[require("plugins.dial")]],
         },
 
         -- gf like plugins
         -- ------------------------
         {
             "notomo/curstr.nvim",
-            setup = require("plugins.curstr").setup,
-            config = require("plugins.curstr").config,
+            config = [[require("plugins.curstr")]],
         },
 
         -- Show Color
         -- ------------------------
         {
             "RRethy/vim-hexokinase",
-            disable = not enabled.hexokinase,
             run = "make hexokinase",
             setup = function()
                 vim.g.Hexokinase_highlighters = { "backgroundfull" }
@@ -641,41 +406,14 @@ return packer.startup({
             end,
         },
 
-        -- Show Color
-        -- ------------------------
-        {
-            "norcalli/nvim-colorizer.lua",
-            disable = not enabled.colorizer,
-            cmd = "ColorizerToggle",
-            setup = require("plugins.nvim-colorizer").setup,
-            config = require("plugins.nvim-colorizer").config,
-        },
-
         -- Code runner
         -- ------------------------
         {
             "michaelb/sniprun",
-            disable = not enabled.sniprun,
             run = "sh install.sh",
             keys = { "<Plug>SnipRun", "<Plug>SnupClose" },
             cmd = "SnipRun",
-            setup = function()
-                vim.cmd([[
-                nmap <leader>sc <Plug>SnipClose
-                nmap <leader>sr <Plug>SnipRun
-                vmap sr <Plug>SnipRun
-                ]])
-            end,
-            config = function()
-                require("sniprun").setup({
-                    borders = Util.borders,
-                    display = {
-                        -- "Classic",
-                        "Terminal",
-                        "VirtualTextOk",
-                    },
-                })
-            end,
+            config = [[require("plugins.sniprun")]],
         },
 
         -- ====================================================== Git
@@ -684,7 +422,6 @@ return packer.startup({
         -- ------------------------
         {
             "lewis6991/gitsigns.nvim",
-            disable = not enabled.gitsigns,
             wants = "plenary.nvim",
             event = "BufEnter",
             config = [[require("plugins.gitsigns")]],
@@ -694,7 +431,6 @@ return packer.startup({
         -- ------------------------
         {
             "kdheepak/lazygit.nvim",
-            disable = not enabled.lazygit,
             cmd = { "LazyGit" },
             setup = function()
                 vim.g.lazygit_floating_window_winblend = 0
@@ -707,35 +443,10 @@ return packer.startup({
             end,
         },
 
-        -- Magit clone for Neovim
-        -- ----------------------
-        {
-            "TimUntersberger/neogit",
-            disable = not enabled.neogit,
-            cmd = "Neogit",
-            requires = {
-                {
-                    "sindrets/diffview.nvim",
-                    config = function()
-                        require("diffview").setup()
-                    end,
-                },
-            },
-            config = [[require("plugins.neogit")]],
-            setup = function()
-                mapx.nname("<leader>g", "Git")
-                nmap("<Leader>gg", "<CMD>Neogit<CR>", "Main Menu")
-                nmap("<Leader>gc", "<CMD>Neogit commit<CR>", "Commit")
-                nmap("<Leader>gd", "<CMD>Neogit diff<CR>", "Merge")
-                nmap("<Leader>gb", "<CMD>Neogit branch<CR>", "Branch")
-            end,
-        },
-
         -- GitLinker
         -- ----------------------
         {
             "ruifm/gitlinker.nvim",
-            disable = not enabled.gitlinker,
             config = function()
                 require("gitlinker").setup({
                     mappings = "<leader>gw",
@@ -747,7 +458,6 @@ return packer.startup({
         -- ----------------------
         {
             "tpope/vim-fugitive",
-            disable = not enabled.fugitive,
             setup = function()
                 mapx.nname("<leader>g", "Git")
                 nmap("<Leader>gg", "<CMD>G<CR>", "Main")
@@ -765,7 +475,6 @@ return packer.startup({
         -- ------------------------
         {
             "karb94/neoscroll.nvim",
-            disable = not enabled.neoscroll,
             config = [[require("plugins.neoscroll")]],
         },
 
@@ -783,7 +492,6 @@ return packer.startup({
         -- ------------------------
         {
             "max397574/better-escape.nvim",
-            disable = not enabled.escape,
             config = function()
                 require("better_escape").setup({
                     mapping = { "jk" },
@@ -797,7 +505,6 @@ return packer.startup({
         -- ------------------------
         {
             "ntpeters/vim-better-whitespace",
-            disable = not enabled.whitespace,
             setup = function()
                 vim.g.better_whitespace_enabled = 1
                 vim.g.strip_whitespace_on_save = 1
@@ -823,14 +530,20 @@ return packer.startup({
         -- ------------------------
         {
             "lukas-reineke/headlines.nvim",
-            disable = not enabled.headlines,
             config = function()
+                vim.cmd([[highlight Headline1 guibg=#1e2718]])
+                vim.cmd([[highlight Headline2 guibg=#21262d]])
+                vim.cmd([[highlight CodeBlock guibg=#1c1c1c]])
+                vim.fn.sign_define("Headline1", { linehl = "Headline1" })
+                vim.fn.sign_define("Headline2", { linehl = "Headline2" })
+
                 require("headlines").setup({
                     markdown = {
                         source_pattern_start = "^```",
                         source_pattern_end = "^```$",
                         dash_pattern = "^---+$",
                         headline_pattern = "^#+",
+                        headline_signs = { "Headline1", "Headline2" },
                         -- headline_signs = { "Headline" },
                         -- codeblock_sign = "CodeBlock",
                         -- dash_highlight = "Dash",
@@ -897,7 +610,6 @@ return packer.startup({
         -- ------------------------
         {
             "segeljakt/vim-silicon",
-            disable = not enabled.silicon or true,
             cmd = "Silicon",
             setup = function()
                 vim.g.silicon = {
@@ -917,62 +629,6 @@ return packer.startup({
                 vim.g.silicon.background = "#f8f8f2"
                 vim.g.silicon.output = os.getenv("HOME") .. "/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png"
             end,
-        },
-
-        -- Vim cheat.sh client
-        -- --------------------------
-        {
-            "dbeniamine/cheat.sh-vim",
-            disable = not enabled.cheat or true,
-            setup = function()
-                -- Stay in origin buffer (set to 0 to keep focus on the cheat sheet buffer)
-                vim.g.CheatSheetStayInOrigBuf = 0
-                -- cheat sheet buffer name
-                vim.g.CheatSheetBufferName = "_cheat"
-                -- Default selection in normal mode (line for whole line, word for word under cursor)
-                vim.g.CheatSheetDefaultSelection = "line"
-                -- Default query mode
-                -- 0 => buffer
-                -- 1 => replace (do not use or you might loose some lines of code)
-                -- 2 => pager
-                -- 3 => paste after query
-                -- 4 => paste before query
-                vim.g.CheatSheetDefaultMode = 0
-                -- Make plugin silent by  setting bellow variable to 1
-                vim.g.CheatSheetSilent = 0
-            end,
-        },
-
-        -- dasht vim client
-        -- ----------------------------
-        {
-            "sunaku/vim-dasht",
-            disable = not enabled.dasht or true,
-            setup = function()
-                vim.g.dasht_filetype_docsets = {}
-                vim.g.dasht_filetype_docsets["html"] = { "css", "js", "bootstrap" }
-                vim.g.dasht_results_window = "new"
-            end,
-        },
-
-        -- -- Himalaya, CLI email client
-        -- -- ------------------------
-        -- {
-        --     "soywod/himalaya",
-        --     rtp = "vim",
-        --     disable = not enabled.himalaya,
-        --     setup = function()
-        --         vim.g.himalaya_mailbox_picker = "telescope"
-        --         vim.g.himalaya_telescope_preview_enabled = 1
-        --     end
-        -- },
-
-        -- Discord Rich Presence for Neovim
-        -- ------------------------
-        {
-            "andweeb/presence.nvim",
-            disable = not enabled.presence,
-            config = [[require("plugins.presence")]],
         },
 
         -- Startuptime

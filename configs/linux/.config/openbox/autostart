@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# These things are run when an Openbox X Session is started.
+# You may place a similar script in $HOME/.config/openbox/autostart
+# to run user-specific things.
+#
+
+# Polybar
+~/.config/polybar/launch.sh &
+
+# sxhkd
+pgrep -x sxhkd > /dev/null || sxhkd -c "${XDG_CONFIG_HOME:-$HOME/.config}/sxhkd/sxhkrc-openbox" &

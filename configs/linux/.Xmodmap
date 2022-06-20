@@ -20,3 +20,10 @@ keysym l = l L Right
 ! Set Shift_R and Shift_L for Caps_Lock
 keysym Shift_R = Shift_R Caps_Lock Shift_R
 keysym Shift_L = Shift_L Caps_Lock Shift_L
+
+! Set Mode_switch + n/p
+keysym n = n N Next
+keysym p = p P Prior
+
+! Set Mode_switch + b to Backspace
+keysym b = b B BackSpace

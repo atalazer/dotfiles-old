@@ -11,11 +11,6 @@ wk.register({
     [";s"] = "Stage Hunk",
     [";u"] = "Undo Stage Hunk",
 
-    -- LSP
-    [";l"] = "Hover",
-    ["[l"] = "LSP Diagnostic Previous",
-    ["]l"] = "LSP Diagnostic Next",
-
     -- Misc
     gc = "Comment",
     ga = "Align",
@@ -25,10 +20,6 @@ wk.register({
     -- csU = "Uppercase First Letter",
     ["[e"] = "Move Line to Previous",
     ["]e"] = "Move Line to Next",
-
-
-    ["[e"] = "Add empty lines down",
-    ["]e"] = "Add empty lines up",
 })
 
 -- Leader Key
@@ -63,17 +54,6 @@ wk.register({
         o = "Oldfiles",
         t = "Builtins",
     },
-    l = {
-        name = "LSP",
-        a = "Code Action",
-        c = "Code Lens",
-        d = "Definition",
-        l = "Line Diagnostic",
-        f = "Format",
-        r = "LSP Reference",
-        R = "Rename",
-        t = "LSP Trouble",
-    },
     n = {
         name = "Notes",
         i = "Go To Index",
@@ -83,15 +63,6 @@ wk.register({
         name = "Preview",
         m = "Glow Markdown"
     },
-    r = { name = "Run" },
-    s = {
-        name = "Misc",
-        r = "Sniprun Run",
-        c = "Sniprun Close",
-        a = "Toggle Tree",
-        s = "Toggle Sidebar",
-    },
-    t = { name = "Table" },
 }, {
     prefix = "<leader>",
 })

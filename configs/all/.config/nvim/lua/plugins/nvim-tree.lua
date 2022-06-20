@@ -1,82 +1,76 @@
-local M = {}
-local dev = true
+vim.g.nvim_tree_quit_on_open = 0
+vim.g.nvim_tree_indent_markers = 1
+vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_highlight_opened_files = 1
+vim.g.nvim_tree_root_folder_modifier = ":~"
+vim.g.nvim_tree_add_trailing = 1
+vim.g.nvim_tree_group_empty = 1
+vim.g.nvim_tree_disable_window_picker = 0
+vim.g.nvim_tree_icon_padding = " "
+vim.g.nvim_tree_symlink_arrow = " >> "
+vim.g.nvim_tree_respect_buf_cwd = 1
+vim.g.nvim_tree_refresh_wait = 500
+vim.g.nvim_tree_window_picker_exclude = {
+    filetype = {
+        "notify",
+        "packer",
+        "qf",
+    },
+    buftype = {
+        "terminal",
+    },
+}
+vim.g.nvim_tree_special_files = {
+    ["README.md"] = 1,
+    ["Makefile"] = 1,
+    ["MAKEFILE"] = 1,
+}
+vim.g.nvim_tree_show_icons = {
+    git = 0,
+    folders = 1,
+    files = 1,
+    folder_arrows = 1,
+}
+vim.g.nvim_tree_icons = {
+    default = "",
+    symlink = "",
+    git_icons = {
+        unstaged = "✗",
+        staged = "✓",
+        unmerged = "",
+        renamed = "",
+        untracked = "★",
+        deleted = "",
+        ignored = "◌",
+    },
+    folder_icons = {
+        default = "",
+        open = "",
+        empty = "",
+        empty_open = "",
+    },
+}
 
-M.setup = function()
-    vim.g.nvim_tree_quit_on_open = 0
-    vim.g.nvim_tree_indent_markers = 1
-    vim.g.nvim_tree_git_hl = 1
-    vim.g.nvim_tree_highlight_opened_files = 1
-    vim.g.nvim_tree_root_folder_modifier = ":~"
-    vim.g.nvim_tree_add_trailing = 1
-    vim.g.nvim_tree_group_empty = 1
-    vim.g.nvim_tree_disable_window_picker = 0
-    vim.g.nvim_tree_icon_padding = " "
-    vim.g.nvim_tree_symlink_arrow = " >> "
-    vim.g.nvim_tree_respect_buf_cwd = 1
-    vim.g.nvim_tree_refresh_wait = 500
-    vim.g.nvim_tree_window_picker_exclude = {
-        filetype = {
-            "notify",
-            "packer",
-            "qf",
-        },
-        buftype = {
-            "terminal",
-        },
-    }
-    vim.g.nvim_tree_special_files = {
-        ["README.md"] = 1,
-        ["Makefile"] = 1,
-        ["MAKEFILE"] = 1,
-    }
-    vim.g.nvim_tree_show_icons = {
-        git = 0,
-        folders = 1,
-        files = 1,
-        folder_arrows = 1,
-    }
-    vim.g.nvim_tree_icons = {
-        default = "",
-        symlink = "",
-        git_icons = {
-            unstaged = "✗",
-            staged = "✓",
-            unmerged = "",
-            renamed = "",
-            untracked = "★",
-            deleted = "",
-            ignored = "◌",
-        },
-        folder_icons = {
-            default = "",
-            open = "",
-            empty = "",
-            empty_open = "",
-        },
-    }
-end
-
-M.config = function()
-    local cb = require("nvim-tree.config").nvim_tree_callback
-    require("nvim-tree").setup({
+local cb = require("nvim-tree.config").nvim_tree_callback
+require("nvim-tree").setup({
         hide_dotfiles = 0,
         disable_netrw = false,
         hijack_netrw = true,
         hijack_cursor = true,
         update_cwd = true,
         update_focused_file = {
-            enable = true,
-            update_cwd = true,
-            ignore_list = {},
+        enable = true,
+        update_cwd = true,
+        ignore_list = {},
         },
         diagnostics = { enable = false },
         system_open = { cmd  = "opener", args = {} },
         filters = { dotfiles = false, custom = {} },
         trash = { cmd = "trash", require_confirm = true },
         git = {
-            enable = true,
-            ignore = true,
-            timeout = 500,
+        enable = true,
+        ignore = true,
+        timeout = 500,
         },
         ignore = {
             ".git",
@@ -124,12 +118,4 @@ M.config = function()
                 },
             },
         },
-    })
-end
-
-if dev == "true" then
-    M.setup()
-    M.config()
-end
-
-return M
+})

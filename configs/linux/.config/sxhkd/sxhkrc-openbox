@@ -1,0 +1,71 @@
+# Apps
+# ====================================================
+# ------ Terminal emulator
+super + Return
+	defapps run terminal
+
+# ------ Launcher
+super + r
+	rofi -no-config -show run
+
+# ----- Web Browser, File Manager/Explorer, Text Editor
+super + {w,f,e}
+    defapps run {browser,file,text}
+
+# Controller
+# ====================================================
+# ------ brightness
+XF86MonBrightnessUp
+    brightnessctl up
+
+XF86MonBrightnessDown
+    brightnessctl down
+
+# --------- Audio
+XF86AudioMute
+    volumectl mute
+
+XF86AudioRaiseVolume
+    volumectl up
+
+XF86AudioLowerVolume
+        volumectl down
+
+# ------- Music
+XF86AudioStop
+    musicctl stop
+
+XF86AudioPlay
+    musicctl toggle
+
+XF86AudioNext
+    musicctl next
+
+XF86AudioPrev
+    musicctl prev
+
+# ------- Screenshots
+{super,shift,alt} + Print
+    shot {-i,select,active}
+
+# ------- translate
+super + t
+    rofi-translate -i
+
+# ------ Rofi
+super + {c,n,p}
+    rofi-{calc,network,pass}
+
+super + semicolon
+  rofi-run
+
+super + F12
+    rofi-record
+
+# ----- Clipmenu
+super + Insert
+    clipmenu
+
+# -------- sxhkd
+super + ctrl + s
+	pkill -USR1 -x sxhkd

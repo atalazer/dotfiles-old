@@ -1,6 +1,8 @@
 #!/bin/sh
 
 USER=atalariq
-HOME="/home/$USER"
+HOME=/home/$USER
 
-exec sh -c "xmodmap $HOME/.Xmodmap && xcape -e 'Mode_switch=Escape'"
+XMODMAP=$HOME/.Xmodmap
+
+[ -f "$XMODMAP" ] && exec sh -c "xmodmap $HOME/.Xmodmap && xcape -e 'Mode_switch=Escape'" || exit 0

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+DIR=$(dirname "$(realpath "$0")")
+cd "$DIR" || exit
+
+[ -z "$1" ] && exit 0
+
+# Check if command exist
+check(){
+    command -v "$1" > /dev/null 2>&1 || echo "Please install $1 first!"
+}
+
+# Restart openbox
+restart(){
+    openbox --reconfigure --restart
+}
+
+# Compile config
+compile(){
+    [ -f rc.xml.bak ] && rm rc.xml.bak
+    [ -f rc.xml ] && mv rc.xml{,.bak}
+
+    check dasel
+    [ -f rc.yml ] && dasel select -f rc.yml -r yaml '.' -w xml > rc.xml || exit 0
+    echo "Compile Succes!"
+}
+
+edit(){
+    EDITOR=${EDITOR:-nvim}
+    $EDITOR rc.yml
+}
+
+case "$1" in
+    compile) compile ;;
+    compile-and-restart) compile && restart ;;
+    restart) restart ;;
+    edit) edit ;;
+    *) echo "Invalid $1" ;;
+esac
